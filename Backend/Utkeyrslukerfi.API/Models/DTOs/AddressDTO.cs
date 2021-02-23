@@ -1,7 +1,5 @@
-using System.Collections.Generic;
-
-namespace Utkeyrslukerfi.API.Models.Entities {
-    public class Address {
+namespace Utkeyrslukerfi.API.Models.Dtos{
+    public class AddressDTO{
         public int ID { get ; set; }
         public string StreetName { get; set; }
         public string HouseNumber { get; set; }
