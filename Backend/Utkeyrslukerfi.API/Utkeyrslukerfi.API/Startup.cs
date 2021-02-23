@@ -13,6 +13,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using Utkeyrslukerfi.API.Repositories.Context;
 using Microsoft.EntityFrameworkCore;
+using AutoMapper;
 
 namespace Utkeyrslukerfi.API
 {
@@ -42,6 +43,14 @@ namespace Utkeyrslukerfi.API
                     // }
                     );
             });
+
+            // Adding Mapper
+            var mapperConfig = new MapperConfiguration(mc =>{
+                mc.AddProfile(new MappingProfile());
+            });
+            // adding mapper
+            IMapper mapper = mapperConfig.CreateMapper();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
