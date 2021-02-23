@@ -8,7 +8,7 @@ using Microsoft.Extensions.Logging;
 namespace Utkeyrslukerfi.API.Controllers
 {
     [ApiController]
-    [Route("[Delivery]")]
+    [Route("api/deliveries")]
     public class DeliveryController : ControllerBase
     {
 
