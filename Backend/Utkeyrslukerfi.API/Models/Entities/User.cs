@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace Utkeyrslukerfi.API.Models.Entities {
     public class User {
         public int ID { get ; set; }
@@ -6,5 +8,9 @@ namespace Utkeyrslukerfi.API.Models.Entities {
         public string Password { get; set; }
         public string Email { get; set; }
         public int Role { get; set; }
+
+
+        // Navigation Properties
+        public List<Delivery> Deliveries { get; set; }
     }
 }

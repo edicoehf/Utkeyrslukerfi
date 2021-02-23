@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace Utkeyrslukerfi.API.Models.Entities {
     public class Address {
         public int ID { get ; set; }

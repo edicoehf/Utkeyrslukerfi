@@ -6,27 +6,27 @@ namespace Utkeyrslukerfi.API.Repositories.Context {
         public UtkeyrslukerfiDbContext(DbContextOptions<UtkeyrslukerfiDbContext> options) : base(options){}
 
         protected override void OnModelCreating(ModelBuilder modelBuilder){
-
-            // modelBuilder.Entity<Package>()
-            //     .HasOne(m => m.Delivery);
-
-            // // TODO find out if we have to do something special since Vehicle is nullable
-            // modelBuilder.Entity<Delivery>()
-            //     .HasOne(m => m.Signoff)
-            //     .HasOne(m => m.Vehicle)
-            //     .HasTwo(m => m.Address);
-            
-            // modelBuilder.Entity<Vehicle>()
-            //     .HasOne(m => m.ShoppingCart);
-            
-            // modelBuilder.Entity<Delivery>()
-            //     .HasOne(m => m.User)
-            //     .WithMany(u => u.Addresses);
-        
-            // modelBuilder.Entity<Package>()
-            //     .HasOne(m => m.User)
-            //     .WithOne(u => u.ShoppingCart);
-    
+            // Mapping the one to one relationship between 
+            // Delivery and Signoff
+            modelBuilder.Entity<Signoff>()
+                .HasOne(s => s.Delivery)
+                .WithOne(d => d.Signoff)
+                .HasForeignKey<Signoff>(s => s.DeliveryID);
+            // Mapping the one to many relationship between 
+            // Package and Delivery
+            modelBuilder.Entity<Package>()
+                .HasOne(p => p.Delivery)
+                .WithMany(b => b.Packages);
+            // Mapping the one to many relationship between
+            // User and Delivery
+            modelBuilder.Entity<Delivery>()
+                .HasOne(d => d.Driver)
+                .WithMany(u => u.Deliveries);
+            // Mapping the one to many relationship between
+            // Vehicle and Delivery
+            modelBuilder.Entity<Delivery>()
+                .HasOne(d => d.Vehicle)
+                .WithMany(v => v.Deliveries);
         }
 
         public DbSet<User> Users { get; set; }
