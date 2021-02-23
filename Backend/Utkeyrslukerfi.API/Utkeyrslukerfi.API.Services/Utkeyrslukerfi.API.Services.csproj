@@ -2,7 +2,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Utkeyrslukerfi.API.Models\Utkeyrslukerfi.API.Models.csproj" />
-    <ProjectReference Include="..\Utkeyrslukerfi.API.Repositories\Utkeyrslukerfi.API.Services.csproj" />
+    <ProjectReference Include="..\Utkeyrslukerfi.API.Repositories\Utkeyrslukerfi.API.Repositories.csproj" />
   </ItemGroup>
 
   <PropertyGroup>
