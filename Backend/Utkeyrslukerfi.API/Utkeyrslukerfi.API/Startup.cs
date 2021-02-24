@@ -16,6 +16,10 @@ using Microsoft.EntityFrameworkCore;
 using AutoMapper;
 using System.Reflection;
 using System.IO;
+using Utkeyrslukerfi.API.Services.Interfaces;
+using Utkeyrslukerfi.API.Services.Implementations;
+using Utkeyrslukerfi.API.Repositories.Implementations;
+using Utkeyrslukerfi.API.Repositories.Interfaces;
 
 namespace Utkeyrslukerfi.API
 {
@@ -56,6 +60,17 @@ namespace Utkeyrslukerfi.API
             });
             // adding mapper
             IMapper mapper = mapperConfig.CreateMapper();
+            services.AddSingleton(mapper);
+
+            // Adding Transients
+            // maps the Interface to the Implementation
+            // and adds the Service to every controller
+            services.AddTransient<IDeliveryService, DeliveryService>();
+
+            // Adding Repository Transients
+            // maps the Interface to the Implementation
+            // and adds the repository to every Service
+            services.AddTransient<IDeliveryRepository, DeliveryRepository>();
 
         }
 
