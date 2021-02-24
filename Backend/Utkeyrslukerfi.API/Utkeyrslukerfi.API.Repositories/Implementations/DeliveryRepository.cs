@@ -55,6 +55,7 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations{
 
             // Create Delivery
             var entity = new Delivery {
+                ID = "this is an id",
                 Recipient = delivery.Recipient,
                 Seller = delivery.Seller,
                 Status = delivery.Status,
@@ -68,11 +69,12 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations{
                 Signoff = null
             };
 
-            // _dbContext.Deliveries.Add(entity);
-            // _dbContext.SaveChanges();
+            _dbContext.Deliveries.Add(entity);
+            _dbContext.SaveChanges();
 
             // TODO: Add delivery id to vehicles list of deliveries
             // TODO: Add packages
+            
             return new DeliveryDTO {
                 ID = entity.ID,
                 Recipient = entity.Recipient,
