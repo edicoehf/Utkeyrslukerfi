@@ -47,10 +47,10 @@ namespace Utkeyrslukerfi.API
               options.IncludeXmlComments(xmlPath);
             });
             services.AddDbContext<UtkeyrslukerfiDbContext>(options => {
-                options.UseMySQL(Configuration["MYSQL:connectionString"]
-                    // options => {
-                    //     options.MigrationsAssembly(Assembly.GetExecutingAssembly().FullName);
-                    // }
+                options.UseMySQL(Configuration["MYSQL:connectionString"], 
+                      options => {
+                          options.MigrationsAssembly(Assembly.GetExecutingAssembly().FullName);
+                      }
                     );
             });
 
