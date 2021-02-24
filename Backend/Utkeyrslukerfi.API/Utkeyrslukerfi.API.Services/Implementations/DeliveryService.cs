@@ -13,7 +13,7 @@ namespace Utkeyrslukerfi.API.Services.Implementations{
         }
 
         public DeliveryDTO GetDelivery(string ID){
-            return null;
+            return _deliveryRepo.GetDelivery(ID);
         }
         public IEnumerable<DeliveryDTO> GetDeliveries(){
             return null;
