@@ -13,11 +13,11 @@ namespace Utkeyrslukerfi.API.Models.InputModels{
         public string PickupAddressCity { get; set; }
         public string PickupAddressCountry { get; set; }
         // deliveries address
-        public string DeliverAddressStreetName { get; set; }
-        public string DeliverAddressHouseNumber { get; set; }
-        public string DeliverAddressZipCode { get; set; }
-        public string DeliverAddressCity { get; set; }
-        public string DeliverAddressCountry { get; set; }
+        public string DeliveryAddressStreetName { get; set; }
+        public string DeliveryAddressHouseNumber { get; set; }
+        public string DeliveryAddressZipCode { get; set; }
+        public string DeliveryAddressCity { get; set; }
+        public string DeliveryAddressCountry { get; set; }
         // Foreign keys
         public int VehicleID { get; set; }
         public int DriverID { get; set; }
