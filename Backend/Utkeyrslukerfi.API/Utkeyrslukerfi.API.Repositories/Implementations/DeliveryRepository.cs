@@ -55,7 +55,7 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations{
 
             // Create Delivery
             var entity = new Delivery {
-                ID = "this is an id",
+                ID = delivery.ID,
                 Recipient = delivery.Recipient,
                 Seller = delivery.Seller,
                 Status = delivery.Status,
