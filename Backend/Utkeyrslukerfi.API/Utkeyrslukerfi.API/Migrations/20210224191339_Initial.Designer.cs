@@ -9,8 +9,8 @@ using Utkeyrslukerfi.API.Repositories.Context;
 namespace Utkeyrslukerfi.API.Migrations
 {
     [DbContext(typeof(UtkeyrslukerfiDbContext))]
-    [Migration("20210216194858_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20210224191339_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -50,13 +50,13 @@ namespace Utkeyrslukerfi.API.Migrations
                     b.Property<string>("ID")
                         .HasColumnType("varchar(767)");
 
-                    b.Property<int?>("DeliverAddressID")
+                    b.Property<int>("DeliveryAddressID")
                         .HasColumnType("int");
 
                     b.Property<int?>("DriverID")
                         .HasColumnType("int");
 
-                    b.Property<int?>("PickupAddressID")
+                    b.Property<int>("PickupAddressID")
                         .HasColumnType("int");
 
                     b.Property<string>("Recipient")
@@ -64,9 +64,6 @@ namespace Utkeyrslukerfi.API.Migrations
 
                     b.Property<string>("Seller")
                         .HasColumnType("text");
-
-                    b.Property<int?>("SignoffID")
-                        .HasColumnType("int");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
@@ -76,13 +73,11 @@ namespace Utkeyrslukerfi.API.Migrations
 
                     b.HasKey("ID");
 
-                    b.HasIndex("DeliverAddressID");
+                    b.HasIndex("DeliveryAddressID");
 
                     b.HasIndex("DriverID");
 
                     b.HasIndex("PickupAddressID");
-
-                    b.HasIndex("SignoffID");
 
                     b.HasIndex("VehicleID");
 
@@ -122,6 +117,9 @@ namespace Utkeyrslukerfi.API.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
+                    b.Property<string>("DeliveryID")
+                        .HasColumnType("varchar(767)");
+
                     b.Property<string>("ImageURI")
                         .HasColumnType("text");
 
@@ -132,6 +130,9 @@ namespace Utkeyrslukerfi.API.Migrations
                         .HasColumnType("text");
 
                     b.HasKey("ID");
+
+                    b.HasIndex("DeliveryID")
+                        .IsUnique();
 
                     b.ToTable("Signoffs");
                 });
@@ -184,33 +185,31 @@ namespace Utkeyrslukerfi.API.Migrations
 
             modelBuilder.Entity("Utkeyrslukerfi.API.Models.Entities.Delivery", b =>
                 {
-                    b.HasOne("Utkeyrslukerfi.API.Models.Entities.Address", "DeliverAddress")
+                    b.HasOne("Utkeyrslukerfi.API.Models.Entities.Address", "DeliveryAddress")
                         .WithMany()
-                        .HasForeignKey("DeliverAddressID");
+                        .HasForeignKey("DeliveryAddressID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Utkeyrslukerfi.API.Models.Entities.User", "Driver")
-                        .WithMany()
+                        .WithMany("Deliveries")
                         .HasForeignKey("DriverID");
 
                     b.HasOne("Utkeyrslukerfi.API.Models.Entities.Address", "PickupAddress")
                         .WithMany()
-                        .HasForeignKey("PickupAddressID");
-
-                    b.HasOne("Utkeyrslukerfi.API.Models.Entities.Signoff", "Signoff")
-                        .WithMany()
-                        .HasForeignKey("SignoffID");
+                        .HasForeignKey("PickupAddressID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Utkeyrslukerfi.API.Models.Entities.Vehicle", "Vehicle")
-                        .WithMany()
+                        .WithMany("Deliveries")
                         .HasForeignKey("VehicleID");
 
-                    b.Navigation("DeliverAddress");
+                    b.Navigation("DeliveryAddress");
 
                     b.Navigation("Driver");
 
                     b.Navigation("PickupAddress");
-
-                    b.Navigation("Signoff");
 
                     b.Navigation("Vehicle");
                 });
@@ -218,10 +217,36 @@ namespace Utkeyrslukerfi.API.Migrations
             modelBuilder.Entity("Utkeyrslukerfi.API.Models.Entities.Package", b =>
                 {
                     b.HasOne("Utkeyrslukerfi.API.Models.Entities.Delivery", "Delivery")
-                        .WithMany()
+                        .WithMany("Packages")
                         .HasForeignKey("DeliveryID");
 
                     b.Navigation("Delivery");
+                });
+
+            modelBuilder.Entity("Utkeyrslukerfi.API.Models.Entities.Signoff", b =>
+                {
+                    b.HasOne("Utkeyrslukerfi.API.Models.Entities.Delivery", "Delivery")
+                        .WithOne("Signoff")
+                        .HasForeignKey("Utkeyrslukerfi.API.Models.Entities.Signoff", "DeliveryID");
+
+                    b.Navigation("Delivery");
+                });
+
+            modelBuilder.Entity("Utkeyrslukerfi.API.Models.Entities.Delivery", b =>
+                {
+                    b.Navigation("Packages");
+
+                    b.Navigation("Signoff");
+                });
+
+            modelBuilder.Entity("Utkeyrslukerfi.API.Models.Entities.User", b =>
+                {
+                    b.Navigation("Deliveries");
+                });
+
+            modelBuilder.Entity("Utkeyrslukerfi.API.Models.Entities.Vehicle", b =>
+                {
+                    b.Navigation("Deliveries");
                 });
 #pragma warning restore 612, 618
         }

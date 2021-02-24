@@ -3,7 +3,7 @@ using MySql.EntityFrameworkCore.Metadata;
 
 namespace Utkeyrslukerfi.API.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -22,21 +22,6 @@ namespace Utkeyrslukerfi.API.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Addresses", x => x.ID);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Signoffs",
-                columns: table => new
-                {
-                    ID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
-                    ImageURI = table.Column<string>(type: "text", nullable: true),
-                    SignatureUri = table.Column<string>(type: "text", nullable: true),
-                    Recipient = table.Column<string>(type: "text", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Signoffs", x => x.ID);
                 });
 
             migrationBuilder.CreateTable(
@@ -78,34 +63,27 @@ namespace Utkeyrslukerfi.API.Migrations
                     ID = table.Column<string>(type: "varchar(767)", nullable: false),
                     Recipient = table.Column<string>(type: "text", nullable: true),
                     Seller = table.Column<string>(type: "text", nullable: true),
-                    VehicleID = table.Column<int>(type: "int", nullable: true),
-                    PickupAddressID = table.Column<int>(type: "int", nullable: true),
-                    DeliverAddressID = table.Column<int>(type: "int", nullable: true),
-                    DriverID = table.Column<int>(type: "int", nullable: true),
                     Status = table.Column<int>(type: "int", nullable: false),
-                    SignoffID = table.Column<int>(type: "int", nullable: true)
+                    PickupAddressID = table.Column<int>(type: "int", nullable: false),
+                    DeliveryAddressID = table.Column<int>(type: "int", nullable: false),
+                    VehicleID = table.Column<int>(type: "int", nullable: true),
+                    DriverID = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Deliveries", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_Deliveries_Addresses_DeliverAddressID",
-                        column: x => x.DeliverAddressID,
+                        name: "FK_Deliveries_Addresses_DeliveryAddressID",
+                        column: x => x.DeliveryAddressID,
                         principalTable: "Addresses",
                         principalColumn: "ID",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Deliveries_Addresses_PickupAddressID",
                         column: x => x.PickupAddressID,
                         principalTable: "Addresses",
                         principalColumn: "ID",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Deliveries_Signoffs_SignoffID",
-                        column: x => x.SignoffID,
-                        principalTable: "Signoffs",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Deliveries_Users_DriverID",
                         column: x => x.DriverID,
@@ -125,11 +103,11 @@ namespace Utkeyrslukerfi.API.Migrations
                 columns: table => new
                 {
                     ID = table.Column<string>(type: "varchar(767)", nullable: false),
-                    DeliveryID = table.Column<string>(type: "varchar(767)", nullable: true),
                     Weight = table.Column<double>(type: "double", nullable: false),
                     Length = table.Column<double>(type: "double", nullable: false),
                     Height = table.Column<double>(type: "double", nullable: false),
-                    Width = table.Column<double>(type: "double", nullable: false)
+                    Width = table.Column<double>(type: "double", nullable: false),
+                    DeliveryID = table.Column<string>(type: "varchar(767)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -142,10 +120,32 @@ namespace Utkeyrslukerfi.API.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Signoffs",
+                columns: table => new
+                {
+                    ID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    ImageURI = table.Column<string>(type: "text", nullable: true),
+                    SignatureUri = table.Column<string>(type: "text", nullable: true),
+                    Recipient = table.Column<string>(type: "text", nullable: true),
+                    DeliveryID = table.Column<string>(type: "varchar(767)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Signoffs", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_Signoffs_Deliveries_DeliveryID",
+                        column: x => x.DeliveryID,
+                        principalTable: "Deliveries",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
             migrationBuilder.CreateIndex(
-                name: "IX_Deliveries_DeliverAddressID",
+                name: "IX_Deliveries_DeliveryAddressID",
                 table: "Deliveries",
-                column: "DeliverAddressID");
+                column: "DeliveryAddressID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Deliveries_DriverID",
@@ -158,11 +158,6 @@ namespace Utkeyrslukerfi.API.Migrations
                 column: "PickupAddressID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Deliveries_SignoffID",
-                table: "Deliveries",
-                column: "SignoffID");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Deliveries_VehicleID",
                 table: "Deliveries",
                 column: "VehicleID");
@@ -171,6 +166,12 @@ namespace Utkeyrslukerfi.API.Migrations
                 name: "IX_Packages_DeliveryID",
                 table: "Packages",
                 column: "DeliveryID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Signoffs_DeliveryID",
+                table: "Signoffs",
+                column: "DeliveryID",
+                unique: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -179,13 +180,13 @@ namespace Utkeyrslukerfi.API.Migrations
                 name: "Packages");
 
             migrationBuilder.DropTable(
+                name: "Signoffs");
+
+            migrationBuilder.DropTable(
                 name: "Deliveries");
 
             migrationBuilder.DropTable(
                 name: "Addresses");
-
-            migrationBuilder.DropTable(
-                name: "Signoffs");
 
             migrationBuilder.DropTable(
                 name: "Users");
