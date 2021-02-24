@@ -4,6 +4,12 @@
     <TargetFramework>net5.0</TargetFramework>
     <UserSecretsId>b635fe70-7adc-414c-96dd-3e8bc9030106</UserSecretsId>
   </PropertyGroup>
+  <!--To add XML comments in swagger -->
+  <PropertyGroup>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <NoWarn>$(NoWarn);1591</NoWarn>
+  </PropertyGroup>
+
 
   <ItemGroup>
     <PackageReference Include="Automapper" Version="10.1.1" />
