@@ -12,8 +12,8 @@ namespace Utkeyrslukerfi.API.Models.Entities {
         public int PickupAddressID { get; set; }
         public Address PickupAddress { get; set; }
         [ForeignKey("Address")]
-        public int DeliverAddressID { get; set; }
-        public Address DeliverAddress { get; set; }
+        public int DeliveryAddressID { get; set; }
+        public Address DeliveryAddress { get; set; }
 
         // Navigation Properties
         public Vehicle Vehicle { get; set; }

@@ -8,7 +8,7 @@ namespace Utkeyrslukerfi.API.Models.Dtos{
         public int Status { get; set; }
         public UserDTO Driver { get; set; }
         public AddressDTO PickupAddress { get; set; }
-        public AddressDTO DeliverAddress { get; set; }
+        public AddressDTO DeliveryAddress { get; set; }
         public VehicleDTO Vehicle { get; set; }
         public List<PackageDTO> Packages { get; set; }
     }
