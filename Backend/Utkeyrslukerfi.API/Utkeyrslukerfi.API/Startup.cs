@@ -14,6 +14,8 @@ using Microsoft.OpenApi.Models;
 using Utkeyrslukerfi.API.Repositories.Context;
 using Microsoft.EntityFrameworkCore;
 using AutoMapper;
+using System.Reflection;
+using System.IO;
 
 namespace Utkeyrslukerfi.API
 {
@@ -32,9 +34,13 @@ namespace Utkeyrslukerfi.API
         { 
             System.Console.WriteLine();
             services.AddControllers();
-            services.AddSwaggerGen(c =>
+            services.AddSwaggerGen(options =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Utkeyrslukerfi", Version = "v1" });
+              options.SwaggerDoc("v1", new OpenApiInfo { Title = "Utkeyrslukerfi", Version = "v1" });
+              // Set the comments path for the Swagger JSON and UI.
+              var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+              var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+              options.IncludeXmlComments(xmlPath);
             });
             services.AddDbContext<UtkeyrslukerfiDbContext>(options => {
                 options.UseMySQL(Configuration["MYSQL:connectionString"]
