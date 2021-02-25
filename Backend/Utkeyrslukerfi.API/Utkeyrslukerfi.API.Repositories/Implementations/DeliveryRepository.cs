@@ -170,7 +170,6 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
             if (deliveryAddress == null) { throw new System.Exception("Delivery Address not found."); }
 
             // Delivery
-            // tempDelivery.ID = delivery.ID;
             tempDelivery.Recipient = delivery.Recipient;
             tempDelivery.Seller = delivery.Seller;
             tempDelivery.Status = delivery.Status;
