@@ -75,6 +75,10 @@ namespace Utkeyrslukerfi.API.Controllers
         ///     }
         ///
         /// </remarks>
+        /// <returns>A delivery with the given ID</returns>
+        /// <response code="200">Returns the delivery with the given ID</response>
+        /// <response code="401">The Auth token was invalid </response>
+        /// <response code="404">There is no delivery with the given ID</response> 
         [HttpGet]
         [Route("{id}", Name="GetDeliveryByID")]
         public IActionResult GetDelivery(string ID){
