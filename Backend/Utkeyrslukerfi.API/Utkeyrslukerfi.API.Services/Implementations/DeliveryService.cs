@@ -21,8 +21,8 @@ namespace Utkeyrslukerfi.API.Services.Implementations{
         public DeliveryDTO CreateDelivery(DeliveryInputModel delivery){
             return _deliveryRepo.CreateDelivery(delivery);
         }
-        public void UpdateDelivery(DeliveryInputModel delivery){
-            
+        public void UpdateDelivery(DeliveryInputModel delivery, string id){
+            _deliveryRepo.UpdateDelivery(delivery, id);
         }
     }
 }
