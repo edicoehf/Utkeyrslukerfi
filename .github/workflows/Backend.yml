@@ -30,5 +30,6 @@ jobs:
       - name: build API
         #working-directory: ./Backend/
         run: |
+          cd ..
           ls
           pwd
