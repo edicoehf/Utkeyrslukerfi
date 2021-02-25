@@ -22,8 +22,69 @@ namespace Utkeyrslukerfi.API.Controllers
             _logger = logger;
             _deliveryService = deliveryService;
         }
-
-        // get deliveries
+        /// <summary>
+        /// Returns a specific delivery by ID/Barcode
+        /// </summary>
+        /// <param name="ID">ID/Barcode</param>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     GET api/deliveries/1234567890128
+        ///     {
+        ///        "ID": "1234567890128",
+        ///        "Recipient": "Item1",
+        ///        "Seller": "Item1",
+        ///        "Status": 2,
+        ///        "Driver": {
+        ///                     "ID": 123,
+        ///                     "Name": "Mikael Máni Jónsson",
+        ///                     "Email": "Mikaeelmani99@gmail.com",
+        ///                     "Role": 3
+        ///                   },
+        ///        "PickupAddress": {
+        ///                     "ID": 45,
+        ///                     "StreetName": "Álfkonuhvarf",
+        ///                     "HouseNumber": "19",
+        ///                     "ZipCode": "203",
+        ///                     "City": "Kópavogur",
+        ///                     "Country": "Ísland"     
+        ///                   },
+        ///        "DeliverAddress": {
+        ///                     "ID": 46,
+        ///                     "StreetName": "Nestún",
+        ///                     "HouseNumber": "9a",
+        ///                     "ZipCode": "340",
+        ///                     "City": "Stykkishólmur",
+        ///                     "Country": "Ísland"     
+        ///                   },
+        ///        "Vehicle": {
+        ///                     "ID": 12,
+        ///                     "LicensePlate": "OUI30",
+        ///                     "Length": 3.45,
+        ///                     "Height": 1.89,
+        ///                     "Width": 1.05
+        ///                   },
+        ///        "Packages": [
+        ///                       {
+        ///                           "ID": "1234567890129"
+        ///                       },
+        ///                       {
+        ///                           "ID": "1234567890133"
+        ///                       },
+        ///                   ]
+        ///     }
+        ///
+        /// </remarks>
+        /// <returns>A delivery with the given ID</returns>
+        /// <response code="200">Returns the delivery with the given ID</response>
+        /// <response code="401">The Auth token was invalid </response>
+        /// <response code="404">There is no delivery with the given ID</response> 
+        [HttpGet]
+        [Route("{id}", Name="GetDeliveryByID")]
+        public IActionResult GetDelivery(string ID){
+            var delivery = _deliveryService.GetDelivery(ID);
+            return Ok(delivery);
+        }
         // get delivery
         // update delivery
         // create delivery
