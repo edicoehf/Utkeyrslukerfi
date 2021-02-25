@@ -28,6 +28,6 @@ jobs:
           dotnet-version: 5.0.103
       # Runs a set of commands using the runners shell
       - name: build API
-        # working-directory: ./Utkeyrslukerfi/Backend/Utkeyrslukerfi.API/Utkeyrslukerfi.API
+        working-directory: ./Backend/
         run: |
           ls
