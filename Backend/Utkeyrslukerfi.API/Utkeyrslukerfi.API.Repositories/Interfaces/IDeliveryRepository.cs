@@ -7,6 +7,6 @@ namespace Utkeyrslukerfi.API.Repositories.Interfaces{
         DeliveryDTO GetDelivery(string ID);
         IEnumerable<DeliveryDTO> GetDeliveries();
         DeliveryDTO CreateDelivery(DeliveryInputModel delivery);
-        void UpdateDelivery();
+        void UpdateDelivery(DeliveryInputModel delivery, string id);
     }
 }

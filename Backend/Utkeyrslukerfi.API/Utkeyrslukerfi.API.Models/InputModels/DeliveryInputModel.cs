@@ -1,9 +1,12 @@
 using System.ComponentModel.DataAnnotations;
 using Utkeyrslukerfi.API.Models.Entities;
 
-namespace Utkeyrslukerfi.API.Models.InputModels{
-    public class DeliveryInputModel{
+namespace Utkeyrslukerfi.API.Models.InputModels
+{
+    public class DeliveryInputModel
+    {
         public string Recipient { get; set; }
+        public string ID { get; set; }
         public string Seller { get; set; }
         public int Status { get; set; }
         // pickup address
