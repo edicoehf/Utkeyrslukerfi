@@ -107,45 +107,20 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
             // TODO: Add delivery id to vehicles list of deliveries
             // TODO: Add packages
 
-            return new DeliveryDTO
-            {
+            var u = _mapper.Map<UserDTO>(driver);
+            var p = _mapper.Map<AddressDTO>(pickupAddress);
+            var d = _mapper.Map<AddressDTO>(deliveryAddress);
+            var v = _mapper.Map<VehicleDTO>(vehicle);
+            
+            return new DeliveryDTO {
                 ID = entity.ID,
                 Recipient = entity.Recipient,
                 Seller = entity.Seller,
                 Status = entity.Status,
-                Driver = new UserDTO
-                {
-                    ID = driver.ID,
-                    Name = driver.Name,
-                    Email = driver.Email,
-                    Role = driver.Role
-                },
-                PickupAddress = new AddressDTO
-                {
-                    ID = pickupAddress.ID,
-                    StreetName = pickupAddress.StreetName,
-                    HouseNumber = pickupAddress.HouseNumber,
-                    ZipCode = pickupAddress.ZipCode,
-                    City = pickupAddress.City,
-                    Country = pickupAddress.Country
-                },
-                DeliveryAddress = new AddressDTO
-                {
-                    ID = deliveryAddress.ID,
-                    StreetName = deliveryAddress.StreetName,
-                    HouseNumber = deliveryAddress.HouseNumber,
-                    ZipCode = deliveryAddress.ZipCode,
-                    City = deliveryAddress.City,
-                    Country = deliveryAddress.Country
-                },
-                Vehicle = new VehicleDTO
-                {
-                    ID = vehicle.ID,
-                    LicensePlate = vehicle.LicensePlate,
-                    Length = vehicle.Length,
-                    Height = vehicle.Height,
-                    Width = vehicle.Width
-                },
+                Driver = u,
+                PickupAddress = p,
+                DeliveryAddress = d,
+                Vehicle = v,
                 Packages = null
             };
         }
