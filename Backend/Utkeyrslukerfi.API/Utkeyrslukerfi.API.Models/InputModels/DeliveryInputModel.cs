@@ -1,12 +1,11 @@
 using System.ComponentModel.DataAnnotations;
 using Utkeyrslukerfi.API.Models.Entities;
 
-namespace Utkeyrslukerfi.API.Models.InputModels
-{
-    public class DeliveryInputModel
-    {
-        public string Recipient { get; set; }
+namespace Utkeyrslukerfi.API.Models.InputModels{
+    public class DeliveryInputModel{
+        [Required(ErrorMessage = "Id is required")]
         public string ID { get; set; }
+        public string Recipient { get; set; }
         public string Seller { get; set; }
         public int Status { get; set; }
         // pickup address

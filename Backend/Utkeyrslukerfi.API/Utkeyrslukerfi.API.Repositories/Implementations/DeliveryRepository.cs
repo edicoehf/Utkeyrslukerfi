@@ -24,7 +24,33 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
 
         public DeliveryDTO GetDelivery(string ID)
         {
-            return null;
+            var delivery = _dbContext.Deliveries.FirstOrDefault(d => d.ID == ID);
+            if (delivery == null)
+            {
+                // TODO implement Excepition handling
+                System.Console.WriteLine($"Fann ekki delivery með id {ID}");
+                return null;
+            }
+            // loading the foreign key values
+            _dbContext.Entry(delivery).Reference(c => c.DeliveryAddress).Load();
+            _dbContext.Entry(delivery).Reference(c => c.PickupAddress).Load();
+            _dbContext.Entry(delivery).Reference(c => c.Driver).Load();
+            _dbContext.Entry(delivery).Reference(c => c.Vehicle).Load();
+            // fetcing all the packages
+            delivery.Packages = new List<Package>(
+              from item in _dbContext.Packages
+              where item.Delivery.ID == delivery.ID
+              select new Package
+              {
+                  ID = item.ID,
+                  Weight = item.Weight,
+                  Length = item.Length,
+                  Height = item.Height,
+                  Width = item.Width
+              }
+            );
+
+            return _mapper.Map<DeliveryDTO>(delivery);
         }
 
         public IEnumerable<DeliveryDTO> GetDeliveries()
@@ -126,35 +152,38 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
 
         public void UpdateDelivery(DeliveryInputModel delivery, string id)
         {
-            System.Console.WriteLine("on top");
             // Get delivery
             var tempDelivery = _dbContext.Deliveries.FirstOrDefault(d => d.ID == id);
             if (tempDelivery == null) { throw new System.Exception("Delivery not found."); }
 
             // Get vehicle
             var vehicle = _dbContext.Vehicles.FirstOrDefault(v => v.ID == delivery.VehicleID);
-            if (vehicle == null) { throw new System.Exception("Vehicle not registered."); }
+            if (vehicle == null) { throw new System.Exception("Vehicle not found!"); }
 
             var driver = _dbContext.Users.FirstOrDefault(u => u.ID == delivery.DriverID);
             if (driver == null) { throw new System.Exception("User not found."); }
 
-            System.Console.WriteLine("This here!");
+            var pickupAddress = _dbContext.Addresses.FirstOrDefault(a => a.ID == tempDelivery.PickupAddressID);
+            if (pickupAddress == null) { throw new System.Exception("Pickup Address not found."); }
+
+            var deliveryAddress = _dbContext.Addresses.FirstOrDefault(a => a.ID == tempDelivery.DeliveryAddressID);
+            if (deliveryAddress == null) { throw new System.Exception("Delivery Address not found."); }
+
             // Delivery
-            tempDelivery.ID = delivery.ID;
-            tempDelivery.ID = delivery.ID;
+            // tempDelivery.ID = delivery.ID;
             tempDelivery.Recipient = delivery.Recipient;
             tempDelivery.Seller = delivery.Seller;
             tempDelivery.Status = delivery.Status;
             // Address
-            // tempDelivery.PickupAddressID = pickupAddress.ID;
-            // tempDelivery.PickupAddress = pickupAddress;
-            // tempDelivery.DeliveryAddressID = deliveryAddress.ID;
-            // tempDelivery.DeliveryAddress = deliveryAddress;
+            tempDelivery.PickupAddressID = pickupAddress.ID;
+            tempDelivery.PickupAddress = pickupAddress;
+            tempDelivery.DeliveryAddressID = deliveryAddress.ID;
+            tempDelivery.DeliveryAddress = deliveryAddress;
             // Vehicle
             tempDelivery.Vehicle = vehicle;
             tempDelivery.Driver = driver;
-            tempDelivery.Packages = null;
-            tempDelivery.Signoff = null;
+            tempDelivery.Packages = tempDelivery.Packages;
+            tempDelivery.Signoff = tempDelivery.Signoff;
             // Save changes
             _dbContext.SaveChanges();
         }
