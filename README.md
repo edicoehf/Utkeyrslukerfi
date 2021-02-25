@@ -1,4 +1,4 @@
-![example event parameter]https://github.com/edicoehf/Utkeyrslukerfi/actions/workflows/Backend.yml/badge.svg?event=pull_request
+![example event parameter](https://github.com/edicoehf/Utkeyrslukerfi/actions/workflows/Backend.yml/badge.svg?event=pull_request)
 # Utkeyrslukerfi
 Lokaverkefni gert í samstarfi og fyrir Edico af nemendum í Háskólanum í Reykjavík
 
