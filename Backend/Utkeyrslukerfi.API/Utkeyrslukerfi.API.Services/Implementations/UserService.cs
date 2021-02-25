@@ -3,7 +3,7 @@ using Utkeyrslukerfi.API.Models.Dtos;
 using Utkeyrslukerfi.API.Models.InputModels;
 
 namespace Utkeyrslukerfi.API.Services.Implementations{
-    public interface IUserService{
+    public interface UserService{
         UserDTO GetUser(string ID){
           return  null;
         }
