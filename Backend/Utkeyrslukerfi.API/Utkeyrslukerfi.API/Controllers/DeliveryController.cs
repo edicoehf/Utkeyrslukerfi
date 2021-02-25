@@ -26,11 +26,28 @@ namespace Utkeyrslukerfi.API.Controllers
         // get deliveries
         // get delivery
         // update delivery
+        [HttpPatch]
+        [Route("{id}", Name = "UpdateDeliveriy")]
+        public IActionResult UpdateDelivery([FromBody] DeliveryInputModel delivery, string id)
+        {
+            System.Console.WriteLine("arrived here");
+            System.Console.WriteLine("ID " + id);
+            if (!ModelState.IsValid)
+            {
+                return BadRequest("Model is not valid!");
+            }
+            // some check if it is authorized
+            // TODO: Authorization service.
+            _deliveryService.UpdateDelivery(delivery, id);
+            return NoContent();
+        }
         // create delivery
         [HttpPost]
-        [Route("", Name="CreateDelivery")]
-        public IActionResult CreateDelivery([FromBody] DeliveryInputModel delivery){
-            if (!ModelState.IsValid){
+        [Route("", Name = "CreateDelivery")]
+        public IActionResult CreateDelivery([FromBody] DeliveryInputModel delivery)
+        {
+            if (!ModelState.IsValid)
+            {
                 throw new Exception("Error in CreateDelivery controller");
             }
             var new_delivery = _deliveryService.CreateDelivery(delivery);
