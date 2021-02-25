@@ -1,8 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 namespace Utkeyrslukerfi.API.Models.InputModels{
     public class UserInputModel{
-        [Required(ErrorMessage = "Id is required")]
-        public string ID { get; set; }
         [Required(ErrorMessage = "Name is required")]
         public string Name { get; set; }
         [Required(ErrorMessage = "Email is required")]
