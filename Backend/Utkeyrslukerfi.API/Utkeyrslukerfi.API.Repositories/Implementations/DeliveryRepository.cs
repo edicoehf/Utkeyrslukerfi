@@ -106,23 +106,8 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
 
             // TODO: Add delivery id to vehicles list of deliveries
             // TODO: Add packages
-
-            var u = _mapper.Map<UserDTO>(driver);
-            var p = _mapper.Map<AddressDTO>(pickupAddress);
-            var d = _mapper.Map<AddressDTO>(deliveryAddress);
-            var v = _mapper.Map<VehicleDTO>(vehicle);
             
-            return new DeliveryDTO {
-                ID = entity.ID,
-                Recipient = entity.Recipient,
-                Seller = entity.Seller,
-                Status = entity.Status,
-                Driver = u,
-                PickupAddress = p,
-                DeliveryAddress = d,
-                Vehicle = v,
-                Packages = null
-            };
+            return _mapper.Map<DeliveryDTO>(entity);
         }
 
         public void UpdateDelivery(DeliveryInputModel delivery, string id)
