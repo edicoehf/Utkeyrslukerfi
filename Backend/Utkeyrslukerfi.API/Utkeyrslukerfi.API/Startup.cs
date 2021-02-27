@@ -66,12 +66,14 @@ namespace Utkeyrslukerfi.API
             // maps the Interface to the Implementation
             // and adds the Service to every controller
             services.AddTransient<IDeliveryService, DeliveryService>();
+            services.AddTransient<IUserService, UserService>();
 
             // Adding Repository Transients
             // maps the Interface to the Implementation
             // and adds the repository to every Service
             services.AddTransient<IDeliveryRepository, DeliveryRepository>();
             services.AddTransient<IAddressRepository, AddressRepository>();
+            services.AddTransient<IUserRepository, IUserRepository>();
 
         }
 
