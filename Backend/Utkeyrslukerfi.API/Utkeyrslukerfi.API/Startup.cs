@@ -73,7 +73,7 @@ namespace Utkeyrslukerfi.API
             // and adds the repository to every Service
             services.AddTransient<IDeliveryRepository, DeliveryRepository>();
             services.AddTransient<IAddressRepository, AddressRepository>();
-            services.AddTransient<IUserRepository, IUserRepository>();
+            services.AddTransient<IUserRepository, UserRepository>();
 
         }
 
