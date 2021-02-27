@@ -1,19 +1,27 @@
 using System.Collections.Generic;
 using Utkeyrslukerfi.API.Models.Dtos;
 using Utkeyrslukerfi.API.Models.InputModels;
+using Utkeyrslukerfi.API.Repositories.Interfaces;
+using Utkeyrslukerfi.API.Services.Interfaces;
 
 namespace Utkeyrslukerfi.API.Services.Implementations{
-    public interface UserService{
-        UserDTO GetUser(string ID){
+    public class UserService : IUserService {
+        private readonly IUserRepository _userRepo;
+
+        public UserService(IUserRepository userRepository){
+          _userRepo = userRepository;
+        }
+        
+        public UserDTO GetUser(int ID){
           return  null;
         }
-        IEnumerable<UserDTO> GetUsers(){
+        public IEnumerable<UserDTO> GetUsers(){
           return null;
         }
-        UserDTO CreateUser(UserInputModel delivery){
+        public UserDTO CreateUser(UserInputModel delivery){
           return null;
         }
-        void UpdateUser(UserInputModel delivery, int ID){
+        public void UpdateUser(UserInputModel delivery, int ID){
 
         }
     }

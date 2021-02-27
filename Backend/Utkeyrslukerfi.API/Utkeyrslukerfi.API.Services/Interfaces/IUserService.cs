@@ -4,7 +4,7 @@ using Utkeyrslukerfi.API.Models.InputModels;
 
 namespace Utkeyrslukerfi.API.Services.Interfaces{
     public interface IUserService{
-        UserDTO GetUser(string ID);
+        UserDTO GetUser(int ID);
         IEnumerable<UserDTO> GetUsers();
         UserDTO CreateUser(UserInputModel delivery);
         void UpdateUser(UserInputModel delivery, int ID);

@@ -1,19 +1,30 @@
 using System.Collections.Generic;
+using AutoMapper;
 using Utkeyrslukerfi.API.Models.Dtos;
 using Utkeyrslukerfi.API.Models.InputModels;
+using Utkeyrslukerfi.API.Repositories.Context;
+using Utkeyrslukerfi.API.Repositories.Interfaces;
 
 namespace Utkeyrslukerfi.API.Repositories.Implementations{
-    public interface UserRepository{
-        UserDTO GetUser(string ID){
+    public class UserRepository: IUserRepository{
+        private readonly UtkeyrslukerfiDbContext _dbContext;
+        private readonly IMapper _mapper;
+
+        public UserRepository(IMapper mapper, UtkeyrslukerfiDbContext dbContext){
+            _dbContext = dbContext;
+            _mapper = mapper;
+        }
+
+        public UserDTO GetUser(int ID){
           return null;
         }
-        IEnumerable<UserDTO> GetUsers(){
+        public IEnumerable<UserDTO> GetUsers(){
           return null;
         }
-        UserDTO CreateUser(UserInputModel delivery){
+        public UserDTO CreateUser(UserInputModel delivery){
           return null;
         }
-        void UpdateUser(UserInputModel delivery, int ID){
+        public void UpdateUser(UserInputModel delivery, int ID){
           
         }
     }
