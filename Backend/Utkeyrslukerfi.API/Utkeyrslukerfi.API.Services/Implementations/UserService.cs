@@ -13,7 +13,7 @@ namespace Utkeyrslukerfi.API.Services.Implementations{
         }
         
         public UserDTO GetUser(int ID){
-          return  null;
+          return _userRepo.GetUser(ID);
         }
         public IEnumerable<UserDTO> GetUsers(){
           return null;

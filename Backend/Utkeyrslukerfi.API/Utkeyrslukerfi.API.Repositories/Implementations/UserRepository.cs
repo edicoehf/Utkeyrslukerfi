@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using AutoMapper;
 using Utkeyrslukerfi.API.Models.Dtos;
 using Utkeyrslukerfi.API.Models.InputModels;
@@ -16,7 +17,13 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations{
         }
 
         public UserDTO GetUser(int ID){
-          return null;
+          var user = _dbContext.Users.FirstOrDefault(u => u.ID == ID);
+          if(user == null){
+            // TODO implement Excepition handling
+            System.Console.WriteLine($"No user with id: {ID}");
+            return null;
+          }
+          return _mapper.Map<UserDTO>(user);
         }
         public IEnumerable<UserDTO> GetUsers(){
           return null;
