@@ -7,6 +7,6 @@ namespace Utkeyrslukerfi.API.Services.Interfaces{
         UserDTO GetUser(int ID);
         IEnumerable<UserDTO> GetUsers();
         UserDTO CreateUser(UserInputModel delivery);
-        void UpdateUser(UserInputModel delivery, int ID);
+        void UpdateUser(UserInputModel delivery, int id);
     }
 }
