@@ -5,6 +5,7 @@ using Utkeyrslukerfi.API.Models.Dtos;
 using Utkeyrslukerfi.API.Models.InputModels;
 using Utkeyrslukerfi.API.Repositories.Context;
 using Utkeyrslukerfi.API.Repositories.Interfaces;
+using Utkeyrslukerfi.API.Models.Exceptions;
 
 namespace Utkeyrslukerfi.API.Repositories.Implementations
 {
@@ -24,9 +25,7 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
             var user = _dbContext.Users.FirstOrDefault(u => u.ID == ID);
             if (user == null)
             {
-                // TODO implement Excepition handling
-                System.Console.WriteLine($"No user with id: {ID}");
-                return null;
+                throw new NotFoundException($"No user with id: {ID}");
             }
             return _mapper.Map<UserDTO>(user);
         }
@@ -41,7 +40,7 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
         public void UpdateUser(UserInputModel user, int id)
         {
             var tempUser = _dbContext.Users.FirstOrDefault(u => u.ID == id);
-            if (tempUser == null) { throw new System.Exception("User not found."); }
+            if (tempUser == null) { throw new NotFoundException("User not found!"); }
             
             // Update old user with the new user
             tempUser.Name = user.Name;
