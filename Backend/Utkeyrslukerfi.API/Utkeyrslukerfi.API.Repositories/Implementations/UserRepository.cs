@@ -42,15 +42,14 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
         {
             var tempUser = _dbContext.Users.FirstOrDefault(u => u.ID == id);
             if (tempUser == null) { throw new System.Exception("User not found."); }
-
-            // var deliveries = _dbContext.Deliveries.FirstOrDefault(d => d.Driver.ID == id);
             
+            // Update old user with the new user
             tempUser.Name = user.Name;
             tempUser.Password = user.Password;
             tempUser.Role = user.Role;
             tempUser.Email = user.Email;
-            // tempUser.Deliveries = deliveries;
 
+            // save changes
             _dbContext.SaveChanges();
         }
     }
