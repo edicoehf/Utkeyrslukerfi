@@ -16,7 +16,7 @@ namespace Utkeyrslukerfi.API.Services.Implementations{
           return _userRepo.GetUser(ID);
         }
         public IEnumerable<UserDTO> GetUsers(){
-          return null;
+          return _userRepo.GetUsers();
         }
         public UserDTO CreateUser(UserInputModel delivery){
           return null;
