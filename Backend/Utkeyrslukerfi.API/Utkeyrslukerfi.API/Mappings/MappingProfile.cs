@@ -1,6 +1,7 @@
 using AutoMapper;
 using Utkeyrslukerfi.API.Models.Dtos;
 using Utkeyrslukerfi.API.Models.Entities;
+using Utkeyrslukerfi.API.Models.InputModels;
 
 namespace Utkeyrslukerfi.API{
     public class MappingProfile : Profile{
@@ -8,6 +9,7 @@ namespace Utkeyrslukerfi.API{
             CreateMap<Delivery, DeliveryDTO>();
             CreateMap<Package, PackageDTO>();
             CreateMap<User, UserDTO>();
+            CreateMap<UserInputModel, User>();
             CreateMap<Address, AddressDTO>();
             CreateMap<Vehicle, VehicleDTO>();
         }

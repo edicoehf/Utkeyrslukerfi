@@ -6,6 +6,7 @@ using Utkeyrslukerfi.API.Models.InputModels;
 using Utkeyrslukerfi.API.Repositories.Context;
 using Utkeyrslukerfi.API.Repositories.Interfaces;
 using Utkeyrslukerfi.API.Models.Exceptions;
+using Utkeyrslukerfi.API.Models.Entities;
 
 namespace Utkeyrslukerfi.API.Repositories.Implementations
 {
@@ -33,9 +34,13 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
         {
             return null;
         }
-        public UserDTO CreateUser(UserInputModel delivery)
+        public UserDTO CreateUser(UserInputModel user)
         {
-            return null;
+            var entity = _mapper.Map<User>(user);
+            _dbContext.Users.Add(entity);
+            _dbContext.SaveChanges();
+            
+            return _mapper.Map<UserDTO>(entity);
         }
         public void UpdateUser(UserInputModel user, int id)
         {

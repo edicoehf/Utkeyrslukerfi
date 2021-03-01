@@ -25,7 +25,7 @@ namespace Utkeyrslukerfi.API.Services.Implementations
         }
         public UserDTO CreateUser(UserInputModel user)
         {
-            return null;
+            return _userRepo.CreateUser(user);
         }
         public void UpdateUser(UserInputModel user, int id)
         {
