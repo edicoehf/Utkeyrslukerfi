@@ -58,9 +58,15 @@ namespace Utkeyrslukerfi.API.Controllers
         }
 
         [HttpPost]
-        public IActionResult RegisterUser([FromBody] UserInputModel inputModel)
+        [Route("", Name = "RegisterUser")]
+        public IActionResult RegisterUser([FromBody] UserInputModel user)
         {
-            return NoContent();
+            if (!ModelState.IsValid)
+            {
+                throw new Exception("Error in RegisterUser controller");
+            }
+            var new_user = _userService.RegisterUser(user);
+            return CreatedAtRoute("RegisterUser", new_user, null);
         }
 
         [HttpPut]
