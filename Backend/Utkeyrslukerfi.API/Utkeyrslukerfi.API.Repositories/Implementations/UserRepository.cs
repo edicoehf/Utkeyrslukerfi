@@ -34,7 +34,7 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
         {
             return null;
         }
-        public UserDTO RegisterUser(UserInputModel user)
+        public UserDTO CreateUser(UserInputModel user)
         {
             var entity = _mapper.Map<User>(user);
             _dbContext.Users.Add(entity);
