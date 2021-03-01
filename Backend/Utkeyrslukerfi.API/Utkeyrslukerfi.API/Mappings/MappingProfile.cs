@@ -8,7 +8,6 @@ namespace Utkeyrslukerfi.API{
         public MappingProfile(){
             CreateMap<Delivery, DeliveryDTO>();
             CreateMap<Package, PackageDTO>();
-            CreateMap<PackageInputModel, Package>();
             CreateMap<User, UserDTO>();
             CreateMap<UserInputModel, User>();
             CreateMap<Address, AddressDTO>();

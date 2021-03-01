@@ -29,9 +29,24 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
         {
             return null;
         }
-        public PackageDTO CreatePackage(PackageInputModel Package)
+        public PackageDTO CreatePackage(PackageInputModel package)
         {
-            return null;
+            var delivery = _dbContext.Deliveries.FirstOrDefault(d => d.ID == package.DeliveryID);
+            if (delivery == null) { throw new NotFoundException("Delivery not found!"); }   
+            
+            var entity = new Package
+            {
+                ID = package.ID,
+                Weight = package.Weight,
+                Length = package.Length,
+                Height = package.Height,
+                Width = package.Width,
+                Delivery = delivery
+            };
+            _dbContext.Packages.Add(entity);
+            _dbContext.SaveChanges();
+            
+            return _mapper.Map<PackageDTO>(entity);
         }
     }
 }

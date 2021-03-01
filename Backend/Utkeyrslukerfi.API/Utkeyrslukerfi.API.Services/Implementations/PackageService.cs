@@ -25,7 +25,7 @@ namespace Utkeyrslukerfi.API.Services.Implementations
         }
         public PackageDTO CreatePackage(PackageInputModel package)
         {
-            return null;
+            return _packageRepo.CreatePackage(package);
         }
     }
 }

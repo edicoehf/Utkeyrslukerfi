@@ -60,7 +60,12 @@ namespace Utkeyrslukerfi.API.Controllers
         [Route("", Name = "CreatePackage")]
         public IActionResult CreatePackage([FromBody] PackageInputModel package)
         {
-           return NoContent();
+            if (!ModelState.IsValid)
+            {
+                throw new Exception("Error in CreatePackage controller");
+            }
+            var new_package = _packageService.CreatePackage(package);
+            return CreatedAtRoute("CreatePackage", new_package, null);
         }
     }
 }
