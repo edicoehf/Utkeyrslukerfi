@@ -7,5 +7,7 @@ namespace Utkeyrslukerfi.API.Models.InputModels{
         public double Length { get; set; }
         public double Height { get; set; }
         public double Width { get; set; }
+        [Required(ErrorMessage = "Delivery ID is required")]
+        public string DeliveryID { get; set; }
     }
 }
