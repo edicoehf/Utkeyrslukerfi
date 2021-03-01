@@ -23,7 +23,7 @@ namespace Utkeyrslukerfi.API.Controllers
             _userService = userService;
         }
         /// <summary>
-        /// Returns a specific delivery by ID/Barcode
+        /// Returns a specific user by ID/Barcode
         /// </summary>
         /// <param name="id">ID</param>
         /// <remarks>
@@ -44,14 +44,14 @@ namespace Utkeyrslukerfi.API.Controllers
         /// <response code="404">There is no user with the given ID</response> 
         [HttpGet]
         [Route("{id:int}")]
-        public IActionResult getUser(int id)
+        public IActionResult GetUser(int id)
         {
             var user = _userService.GetUser(id);
             return Ok(user);
         }
 
         [HttpGet]
-        public IActionResult getUsers()
+        public IActionResult GetUsers()
         {
             System.Console.WriteLine("Getting all users");
             return NoContent();
