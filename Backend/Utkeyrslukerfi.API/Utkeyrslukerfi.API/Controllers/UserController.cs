@@ -44,24 +44,35 @@ namespace Utkeyrslukerfi.API.Controllers
         /// <response code="404">There is no user with the given ID</response> 
         [HttpGet]
         [Route("{id:int}")]
-        public IActionResult getUser(int id){
+        public IActionResult getUser(int id)
+        {
             var user = _userService.GetUser(id);
             return Ok(user);
         }
 
         [HttpGet]
-        public IActionResult getUsers(){
+        public IActionResult getUsers()
+        {
             System.Console.WriteLine("Getting all users");
             return NoContent();
         }
 
         [HttpPost]
-        public IActionResult RegisterUser([FromBody] UserInputModel inputModel){
+        public IActionResult RegisterUser([FromBody] UserInputModel inputModel)
+        {
             return NoContent();
         }
 
         [HttpPut]
-        public IActionResult UpdateUser([FromBody] UserInputModel inputModel){
+        [Route("{id:int}", Name = "UpdateUser")]
+        public IActionResult UpdateUser([FromBody] UserInputModel user, int id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest("User is not valid!");
+            }
+            // TODO: check if it has proper authorization
+            _userService.UpdateUser(user, id);
             return NoContent();
         }
     }
