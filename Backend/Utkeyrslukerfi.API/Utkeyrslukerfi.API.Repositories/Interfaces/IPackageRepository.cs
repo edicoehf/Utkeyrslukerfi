@@ -5,7 +5,7 @@ using Utkeyrslukerfi.API.Models.InputModels;
 namespace Utkeyrslukerfi.API.Repositories.Interfaces{
     public interface IPackageRepository{
         PackageDTO GetPackage(string ID);
-        IEnumerable<PackageDTO> GetPackages();
+        IEnumerable<PackageDetailsDTO> GetPackages();
         PackageDTO CreatePackage(PackageInputModel package);
     }
 }
