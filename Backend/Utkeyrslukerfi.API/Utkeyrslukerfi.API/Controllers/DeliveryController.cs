@@ -32,6 +32,8 @@ namespace Utkeyrslukerfi.API.Controllers
         ///        "ID": "1234567890128",
         ///        "Recipient": "Item1",
         ///        "Seller": "Item1",
+        ///        "DriverComment": "I threw it in his backyard.",
+        ///        "CustomerComment": "Throw it in my backyard.",
         ///        "Status": 2,
         ///        "Driver": {
         ///                     "ID": 123,
