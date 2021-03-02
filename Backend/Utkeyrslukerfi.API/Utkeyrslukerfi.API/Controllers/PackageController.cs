@@ -13,7 +13,6 @@ namespace Utkeyrslukerfi.API.Controllers
     [Route("api/packages")]
     public class PackageController : ControllerBase
     {
-
         private readonly ILogger<PackageController> _logger;
         private readonly IPackageService _packageService;
 

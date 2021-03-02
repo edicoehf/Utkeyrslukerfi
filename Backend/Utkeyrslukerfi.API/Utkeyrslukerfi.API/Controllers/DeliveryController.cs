@@ -13,10 +13,8 @@ namespace Utkeyrslukerfi.API.Controllers
     [Route("api/deliveries")]
     public class DeliveryController : ControllerBase
     {
-
         private readonly ILogger<DeliveryController> _logger;
         private readonly IDeliveryService _deliveryService;
-
         public DeliveryController(ILogger<DeliveryController> logger, IDeliveryService deliveryService)
         {
             _logger = logger;
@@ -80,8 +78,9 @@ namespace Utkeyrslukerfi.API.Controllers
         /// <response code="401">The Auth token was invalid </response>
         /// <response code="404">There is no delivery with the given ID</response> 
         [HttpGet]
-        [Route("{id}", Name="GetDeliveryByID")]
-        public IActionResult GetDelivery(string ID){
+        [Route("{id}", Name = "GetDeliveryByID")]
+        public IActionResult GetDelivery(string ID)
+        {
             var delivery = _deliveryService.GetDelivery(ID);
             return Ok(delivery);
         }
