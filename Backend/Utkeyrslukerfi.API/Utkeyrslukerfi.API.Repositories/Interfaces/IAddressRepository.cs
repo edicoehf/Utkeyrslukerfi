@@ -4,7 +4,7 @@ using Utkeyrslukerfi.API.Models.Entities;
 
 namespace Utkeyrslukerfi.API.Repositories.Interfaces{
     public interface IAddressRepository {
-        AddressDTO GetAddress(string ID);
+        AddressDTO GetAddress(int ID);
         Address CreateAddress(string streetName, string houseNumber, string zipCode, string city, string country);
     }
 }

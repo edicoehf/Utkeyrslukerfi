@@ -23,7 +23,7 @@ namespace Utkeyrslukerfi.API.Controllers
             _userService = userService;
         }
         /// <summary>
-        /// Returns a specific delivery by ID/Barcode
+        /// Returns a specific user by ID/Barcode
         /// </summary>
         /// <param name="id">ID</param>
         /// <remarks>
@@ -44,7 +44,8 @@ namespace Utkeyrslukerfi.API.Controllers
         /// <response code="404">There is no user with the given ID</response> 
         [HttpGet]
         [Route("{id:int}")]
-        public IActionResult getUser(int id){
+        public IActionResult GetUser(int id)
+        {
             var user = _userService.GetUser(id);
             return Ok(user);
         }
@@ -56,12 +57,27 @@ namespace Utkeyrslukerfi.API.Controllers
         }
 
         [HttpPost]
-        public IActionResult RegisterUser([FromBody] UserInputModel inputModel){
-            return NoContent();
+        [Route("", Name = "CreateUser")]
+        public IActionResult CreateUser([FromBody] UserInputModel user)
+        {
+            if (!ModelState.IsValid)
+            {
+                throw new Exception("Error in CreateUser controller");
+            }
+            var new_user = _userService.CreateUser(user);
+            return CreatedAtRoute("CreateUser", new_user, null);
         }
 
         [HttpPut]
-        public IActionResult UpdateUser([FromBody] UserInputModel inputModel){
+        [Route("{id:int}", Name = "UpdateUser")]
+        public IActionResult UpdateUser([FromBody] UserInputModel user, int id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest("User is not valid!");
+            }
+            // TODO: check if it has proper authorization
+            _userService.UpdateUser(user, id);
             return NoContent();
         }
     }

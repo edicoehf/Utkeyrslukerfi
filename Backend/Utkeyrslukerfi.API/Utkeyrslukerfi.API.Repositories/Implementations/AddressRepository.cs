@@ -14,7 +14,8 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations{
             _mapper = mapper;
         }
 
-        public AddressDTO GetAddress(string ID){
+        public AddressDTO GetAddress(int ID){
+            // TODO: implement
             return null;
         }
 
