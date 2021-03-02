@@ -51,10 +51,9 @@ namespace Utkeyrslukerfi.API.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetUsers()
-        {
-            System.Console.WriteLine("Getting all users");
-            return NoContent();
+        public IActionResult getUsers(){
+            var users = _userService.GetUsers();
+            return Ok(users);
         }
 
         [HttpPost]
