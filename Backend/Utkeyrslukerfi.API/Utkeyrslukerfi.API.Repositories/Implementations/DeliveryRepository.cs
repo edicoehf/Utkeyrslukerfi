@@ -55,7 +55,7 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
 
         public IEnumerable<DeliveryDTO> GetDeliveries()
         {
-            return null;
+            return _mapper.Map<IEnumerable<DeliveryDTO>>(_dbContext.Deliveries);
         }
 
         public DeliveryDTO CreateDelivery(DeliveryInputModel delivery)

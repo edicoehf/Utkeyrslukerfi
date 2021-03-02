@@ -26,7 +26,7 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations{
           return _mapper.Map<UserDTO>(user);
         }
         public IEnumerable<UserDTO> GetUsers(){
-          return null;
+          return _mapper.Map<IEnumerable<UserDTO>>(_dbContext.Users);
         }
         public UserDTO CreateUser(UserInputModel delivery){
           return null;
