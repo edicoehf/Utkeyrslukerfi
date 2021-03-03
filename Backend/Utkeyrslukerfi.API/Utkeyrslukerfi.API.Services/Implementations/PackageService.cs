@@ -19,9 +19,9 @@ namespace Utkeyrslukerfi.API.Services.Implementations
         {
             return null;
         }
-        public IEnumerable<PackageDTO> GetPackages()
+        public IEnumerable<PackageDetailsDTO> GetPackages()
         {
-            return null;
+            return _packageRepo.GetPackages();
         }
         public PackageDTO CreatePackage(PackageInputModel package)
         {
