@@ -9,12 +9,10 @@ namespace Utkeyrslukerfi.API.Services.Implementations
     public class PackageService : IPackageService
     {
         private readonly IPackageRepository _packageRepo;
-
         public PackageService(IPackageRepository packageRepository)
         {
             _packageRepo = packageRepository;
         }
-
         public PackageDTO GetPackage(string ID)
         {
             return null;
