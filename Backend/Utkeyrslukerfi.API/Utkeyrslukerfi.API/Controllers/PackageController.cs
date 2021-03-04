@@ -52,7 +52,8 @@ namespace Utkeyrslukerfi.API.Controllers
         [HttpGet]
         public IActionResult GetPackages()
         {
-            return NoContent();
+            var packages = _packageService.GetPackages();
+            return Ok(packages);
         }
 
         [HttpPost]

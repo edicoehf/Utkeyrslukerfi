@@ -54,7 +54,28 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
 
         public IEnumerable<DeliveryDTO> GetDeliveries()
         {
-            return null;
+            var deliveries = _dbContext.Deliveries.ToList();
+            foreach (var delivery in deliveries) {
+                _dbContext.Entry(delivery).Reference(c => c.DeliveryAddress).Load();
+                _dbContext.Entry(delivery).Reference(c => c.PickupAddress).Load();
+                _dbContext.Entry(delivery).Reference(c => c.Driver).Load();
+                _dbContext.Entry(delivery).Reference(c => c.Vehicle).Load();
+                // fetcing all the packages
+                delivery.Packages = new List<Package>(
+                from item in _dbContext.Packages
+                where item.Delivery.ID == delivery.ID
+                select new Package
+                {
+                    ID = item.ID,
+                    Weight = item.Weight,
+                    Length = item.Length,
+                    Height = item.Height,
+                    Width = item.Width
+                }
+                );
+            }
+
+            return _mapper.Map<IEnumerable<DeliveryDTO>>(deliveries);
         }
 
         public DeliveryDTO CreateDelivery(DeliveryInputModel delivery)

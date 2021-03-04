@@ -25,9 +25,10 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
         {
             return null;
         }
-        public IEnumerable<PackageDTO> GetPackages()
+        public IEnumerable<PackageDetailsDTO> GetPackages()
         {
-            return null;
+            var packages = _dbContext.Packages;
+            return _mapper.Map<IEnumerable<PackageDetailsDTO>>(packages);
         }
         public PackageDTO CreatePackage(PackageInputModel package)
         {
