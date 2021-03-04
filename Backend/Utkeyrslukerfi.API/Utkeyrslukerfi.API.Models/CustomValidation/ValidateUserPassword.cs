@@ -10,9 +10,7 @@ namespace Utkeyrslukerfi.API.Models {
             if (role != 3 && string.IsNullOrEmpty(password)) {
                 return new ValidationResult("User must have a password.");                
             }
-            else {
-                return ValidationResult.Success;
-            }
+            return ValidationResult.Success;
         }
     }
 }
