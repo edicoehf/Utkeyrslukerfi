@@ -68,6 +68,7 @@ namespace Utkeyrslukerfi.API
             services.AddTransient<IDeliveryService, DeliveryService>();
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IPackageService, PackageService>();
+            services.AddTransient<IAddressService, AddressService>();
 
             // Adding Repository Transients
             // maps the Interface to the Implementation

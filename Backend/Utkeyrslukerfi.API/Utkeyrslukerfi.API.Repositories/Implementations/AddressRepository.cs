@@ -35,10 +35,8 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
                 Country = country,
                 City = city
             };
-
             _dbContext.Addresses.Add(entity);
             _dbContext.SaveChanges();
-
             return entity;
         }
     }

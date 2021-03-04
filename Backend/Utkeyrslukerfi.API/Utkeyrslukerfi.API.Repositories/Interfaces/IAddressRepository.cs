@@ -8,7 +8,5 @@ namespace Utkeyrslukerfi.API.Repositories.Interfaces
     {
         AddressDTO GetAddress(int ID);
         Address CreateAddress(string streetName, string houseNumber, string zipCode, string city, string country);
-        IEnumerable<AddressDTO> GetAddresses();
-        void UpdateAddress(AddressInputModel address, string id);
     }
 }
