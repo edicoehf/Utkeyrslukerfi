@@ -49,11 +49,7 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
         public IEnumerable<VehicleDTO> GetVehicles()
         {
             var vehicles = _dbContext.Vehicles.ToList();
-
-            // TODO: 
-
-            // return _mapper.Map<IEnumerable<VehiclesDTO>>(vehicles);
-            return null;
+            return _mapper.Map<IEnumerable<VehicleDTO>>(vehicles);
         }
 
     }
