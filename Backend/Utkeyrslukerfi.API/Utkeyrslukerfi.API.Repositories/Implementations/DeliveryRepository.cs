@@ -28,9 +28,7 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
             var delivery = _dbContext.Deliveries.FirstOrDefault(d => d.ID == ID);
             if (delivery == null)
             {
-                // TODO implement Excepition handling
-                System.Console.WriteLine($"Fann ekki delivery með id {ID}");
-                return null;
+                throw new NotFoundException($"Did not found delivery with id {ID}");
             }
             // loading the foreign key values
             _dbContext.Entry(delivery).Reference(c => c.DeliveryAddress).Load();
@@ -112,6 +110,8 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
                 ID = delivery.ID,
                 Recipient = delivery.Recipient,
                 Seller = delivery.Seller,
+                DriverComment = delivery.DriverComment,
+                CustomerComment = delivery.CustomerComment,
                 Status = delivery.Status,
                 PickupAddressID = pickupAddress.ID,
                 PickupAddress = pickupAddress,
@@ -128,7 +128,7 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
 
             // TODO: Add delivery id to vehicles list of deliveries
             // TODO: Add packages
-            
+
             return _mapper.Map<DeliveryDTO>(entity);
         }
 
@@ -142,17 +142,22 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
             var vehicle = _dbContext.Vehicles.FirstOrDefault(v => v.ID == delivery.VehicleID);
             if (vehicle == null) { throw new NotFoundException("Vehicle not found!"); }
 
+            // Get driver 
             var driver = _dbContext.Users.FirstOrDefault(u => u.ID == delivery.DriverID);
             if (driver == null) { throw new NotFoundException("User not found."); }
 
+            // Get pickupAddress
             var pickupAddress = _dbContext.Addresses.FirstOrDefault(a => a.ID == tempDelivery.PickupAddressID);
             if (pickupAddress == null) { throw new NotFoundException("Pickup Address not found."); }
 
+            // Get deliveryAddress
             var deliveryAddress = _dbContext.Addresses.FirstOrDefault(a => a.ID == tempDelivery.DeliveryAddressID);
             if (deliveryAddress == null) { throw new NotFoundException("Delivery Address not found."); }
 
             // Delivery
             tempDelivery.Recipient = delivery.Recipient;
+            tempDelivery.DriverComment = delivery.DriverComment;
+            tempDelivery.CustomerComment = delivery.CustomerComment;
             tempDelivery.Seller = delivery.Seller;
             tempDelivery.Status = delivery.Status;
             // Address
@@ -168,6 +173,5 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
             // Save changes
             _dbContext.SaveChanges();
         }
-
     }
 }
