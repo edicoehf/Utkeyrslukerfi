@@ -54,9 +54,10 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
             return _mapper.Map<DeliveryDTO>(delivery);
         }
 
-        public IEnumerable<DeliveryDTO> GetDeliveries()
+        public IEnumerable<DeliveryDTO> GetDeliveries(int status)
         {
-            var deliveries = _dbContext.Deliveries.ToList();
+            // TODO: Fix it so if status can be by default null and you can get everything if that is the case
+            var deliveries = _dbContext.Deliveries.Where(d => d.Status == status).ToList();
             foreach (var delivery in deliveries) {
                 _dbContext.Entry(delivery).Reference(c => c.DeliveryAddress).Load();
                 _dbContext.Entry(delivery).Reference(c => c.PickupAddress).Load();

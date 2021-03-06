@@ -52,7 +52,8 @@ namespace Utkeyrslukerfi.API.Controllers
 
         [HttpGet]
         public IActionResult getUsers(){
-            var users = _userService.GetUsers();
+            var role = 0;
+            var users = _userService.GetUsers(role);
             return Ok(users);
         }
 

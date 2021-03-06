@@ -15,8 +15,8 @@ namespace Utkeyrslukerfi.API.Services.Implementations{
         public DeliveryDTO GetDelivery(string ID){
             return _deliveryRepo.GetDelivery(ID);
         }
-        public IEnumerable<DeliveryDTO> GetDeliveries(){
-            return _deliveryRepo.GetDeliveries();
+        public IEnumerable<DeliveryDTO> GetDeliveries(int status){
+            return _deliveryRepo.GetDeliveries(status);
         }
         public DeliveryDTO CreateDelivery(DeliveryInputModel delivery){
             return _deliveryRepo.CreateDelivery(delivery);

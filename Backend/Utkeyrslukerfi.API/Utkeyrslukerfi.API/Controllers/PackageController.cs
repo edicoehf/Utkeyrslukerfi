@@ -53,7 +53,8 @@ namespace Utkeyrslukerfi.API.Controllers
         [HttpGet]
         public IActionResult GetPackages()
         {
-            var packages = _packageService.GetPackages();
+            string fakeID = "test";
+            var packages = _packageService.GetPackages(fakeID);
             return Ok(packages);
         }
 
