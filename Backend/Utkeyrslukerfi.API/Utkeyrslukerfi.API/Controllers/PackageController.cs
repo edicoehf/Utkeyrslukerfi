@@ -50,10 +50,9 @@ namespace Utkeyrslukerfi.API.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetPackages()
+        public IActionResult GetPackages([FromQuery] string ID, int pageSize = 25, int pageNumber = 0)
         {
-            string fakeID = "test";
-            var packages = _packageService.GetPackages(fakeID);
+            var packages = _packageService.GetPackages(ID);
             return Ok(packages);
         }
 
