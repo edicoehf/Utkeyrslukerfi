@@ -92,7 +92,7 @@ namespace Utkeyrslukerfi.API.Controllers
         [Route("", Name = "GetDeliveries")]
         public IActionResult GetDeliveries([FromQuery] int status = 0, int pageSize = 25, int pageNumber = 0)
         {
-            var deliveries = _deliveryService.GetDeliveries(status);
+            var deliveries = _deliveryService.GetDeliveries(status, pageSize, pageNumber);
             return Ok(deliveries);
         }
         // update delivery

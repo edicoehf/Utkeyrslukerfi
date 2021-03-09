@@ -52,7 +52,7 @@ namespace Utkeyrslukerfi.API.Controllers
         [HttpGet]
         public IActionResult GetPackages([FromQuery] string ID, int pageSize = 25, int pageNumber = 0)
         {
-            var packages = _packageService.GetPackages(ID);
+            var packages = _packageService.GetPackages(ID, pageSize, pageNumber);
             return Ok(packages);
         }
 
