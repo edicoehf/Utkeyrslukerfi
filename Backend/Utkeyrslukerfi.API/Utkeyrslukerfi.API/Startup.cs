@@ -35,27 +35,30 @@ namespace Utkeyrslukerfi.API
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
-        { 
+        {
             System.Console.WriteLine();
             services.AddControllers();
             services.AddSwaggerGen(options =>
             {
-              options.SwaggerDoc("v1", new OpenApiInfo { Title = "Utkeyrslukerfi", Version = "v1" });
-              // Set the comments path for the Swagger JSON and UI.
-              var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-              var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
-              options.IncludeXmlComments(xmlPath);
+                options.SwaggerDoc("v1", new OpenApiInfo { Title = "Utkeyrslukerfi", Version = "v1" });
+                // Set the comments path for the Swagger JSON and UI.
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                options.IncludeXmlComments(xmlPath);
             });
-            services.AddDbContext<UtkeyrslukerfiDbContext>(options => {
-                options.UseMySQL(Configuration["MYSQL:connectionString"], 
-                      options => {
+            services.AddDbContext<UtkeyrslukerfiDbContext>(options =>
+            {
+                options.UseMySQL(Configuration["MYSQL:connectionString"],
+                      options =>
+                      {
                           options.MigrationsAssembly(Assembly.GetExecutingAssembly().FullName);
                       }
                     );
             });
 
             // Adding Mapper
-            var mapperConfig = new MapperConfiguration(mc =>{
+            var mapperConfig = new MapperConfiguration(mc =>
+            {
                 mc.AddProfile(new MappingProfile());
             });
             // adding mapper

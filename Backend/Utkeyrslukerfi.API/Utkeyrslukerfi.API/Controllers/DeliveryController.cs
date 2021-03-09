@@ -89,8 +89,9 @@ namespace Utkeyrslukerfi.API.Controllers
         }
         // get deliveries
         [HttpGet]
-        [Route("", Name="GetDeliveries")]
-        public IActionResult GetDeliveries(){
+        [Route("", Name = "GetDeliveries")]
+        public IActionResult GetDeliveries()
+        {
             var deliveries = _deliveryService.GetDeliveries();
             return Ok(deliveries);
         }
