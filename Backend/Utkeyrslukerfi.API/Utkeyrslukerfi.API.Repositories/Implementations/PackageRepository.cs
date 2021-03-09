@@ -7,6 +7,7 @@ using Utkeyrslukerfi.API.Repositories.Context;
 using Utkeyrslukerfi.API.Repositories.Interfaces;
 using Utkeyrslukerfi.API.Models.Exceptions;
 using Utkeyrslukerfi.API.Models.Entities;
+using Utkeyrslukerfi.API.Models.Envelope;
 
 namespace Utkeyrslukerfi.API.Repositories.Implementations
 {
@@ -25,10 +26,11 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
         {
             return null;
         }
-        public IEnumerable<PackageDetailsDTO> GetPackages()
+        public IEnumerable<PackageDetailsDTO> GetPackages(string ID, int pageSize, int pageNumber)
         {
-            var packages = _dbContext.Packages;
-            return _mapper.Map<IEnumerable<PackageDetailsDTO>>(packages);
+            var packages = _dbContext.Packages.Where(p => p.Delivery.ID == ID);
+            Envelope<Package> envelope = new Envelope<Package>(pageNumber, pageSize, packages);
+            return _mapper.Map<IEnumerable<PackageDetailsDTO>>(envelope.Items);
         }
         public PackageDTO CreatePackage(PackageInputModel package)
         {

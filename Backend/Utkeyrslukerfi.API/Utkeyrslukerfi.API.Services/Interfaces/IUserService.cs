@@ -7,7 +7,7 @@ namespace Utkeyrslukerfi.API.Services.Interfaces
     public interface IUserService
     {
         UserDTO GetUser(int ID);
-        IEnumerable<UserDTO> GetUsers();
+        IEnumerable<UserDTO> GetUsers(int role, int pageSize, int pageNumber);
         UserDTO CreateUser(UserInputModel user);
         void UpdateUser(UserInputModel user, int id);
     }

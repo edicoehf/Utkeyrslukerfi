@@ -7,6 +7,7 @@ using Utkeyrslukerfi.API.Repositories.Context;
 using Utkeyrslukerfi.API.Repositories.Interfaces;
 using Utkeyrslukerfi.API.Models.Exceptions;
 using Utkeyrslukerfi.API.Models.Entities;
+using Utkeyrslukerfi.API.Models.Envelope;
 
 namespace Utkeyrslukerfi.API.Repositories.Implementations
 {
@@ -30,10 +31,17 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
             }
             return _mapper.Map<UserDTO>(user);
         }
-        public IEnumerable<UserDTO> GetUsers()
+        public IEnumerable<UserDTO> GetUsers(int pageSize, int pageNumber)
         {
             var users = _dbContext.Users;
-            return _mapper.Map<IEnumerable<UserDTO>>(users);
+            Envelope<User> envelope = new Envelope<User>(pageNumber, pageSize, users);
+            return _mapper.Map<IEnumerable<UserDTO>>(envelope.Items);
+        }
+        public IEnumerable<UserDTO> GetUsersByRole(int role, int pageSize, int pageNumber)
+        {
+            var users = _dbContext.Users.Where(u => u.Role == role);
+            Envelope<User> envelope = new Envelope<User>(pageNumber, pageSize, users);
+            return _mapper.Map<IEnumerable<UserDTO>>(envelope.Items);
         }
         public UserDTO CreateUser(UserInputModel user)
         {
