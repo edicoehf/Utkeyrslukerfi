@@ -33,11 +33,12 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
         }
         public IEnumerable<UserDTO> GetUsers(int role, int pageSize, int pageNumber)
         {
-            // if (role != 0)
-            // {
-            //     var usersRole = _dbContext.Users.Where(u => u.Role == role);
-            //     return _mapper.Map<IEnumerable<UserDTO>>(usersRole);
-            // }
+            if (role != 0)
+            {
+                var usersRole = _dbContext.Users.Where(u => u.Role == role);
+                Envelope<User> envelopeRole = new Envelope<User>(pageNumber, pageSize, usersRole);
+                return _mapper.Map<IEnumerable<UserDTO>>(envelopeRole.Items);
+            }
             var users = _dbContext.Users;
             Envelope<User> envelope = new Envelope<User>(pageNumber, pageSize, users);
             return _mapper.Map<IEnumerable<UserDTO>>(envelope.Items);
