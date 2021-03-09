@@ -21,7 +21,12 @@ namespace Utkeyrslukerfi.API.Services.Implementations
         }
         public IEnumerable<UserDTO> GetUsers(int role, int pageSize, int pageNumber)
         {
-            return _userRepo.GetUsers(role, pageSize, pageNumber);
+            if (role == 0)
+            {
+                return _userRepo.GetUsers(pageSize, pageNumber);
+            }
+            return _userRepo.GetUsersByRole(role, pageSize, pageNumber);
+
         }
         public UserDTO CreateUser(UserInputModel user)
         {
