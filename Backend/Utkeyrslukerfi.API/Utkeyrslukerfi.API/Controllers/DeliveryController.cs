@@ -13,10 +13,8 @@ namespace Utkeyrslukerfi.API.Controllers
     [Route("api/deliveries")]
     public class DeliveryController : ControllerBase
     {
-
         private readonly ILogger<DeliveryController> _logger;
         private readonly IDeliveryService _deliveryService;
-
         public DeliveryController(ILogger<DeliveryController> logger, IDeliveryService deliveryService)
         {
             _logger = logger;
@@ -34,6 +32,8 @@ namespace Utkeyrslukerfi.API.Controllers
         ///        "ID": "1234567890128",
         ///        "Recipient": "Item1",
         ///        "Seller": "Item1",
+        ///        "DriverComment": "I threw it in his backyard.",
+        ///        "CustomerComment": "Throw it in my backyard.",
         ///        "Status": 2,
         ///        "Driver": {
         ///                     "ID": 123,
@@ -81,8 +81,9 @@ namespace Utkeyrslukerfi.API.Controllers
         /// <response code="404">There is no delivery with the given ID</response> 
         // get delivery
         [HttpGet]
-        [Route("{id}", Name="GetDeliveryByID")]
-        public IActionResult GetDelivery(string ID){
+        [Route("{id}", Name = "GetDeliveryByID")]
+        public IActionResult GetDelivery(string ID)
+        {
             var delivery = _deliveryService.GetDelivery(ID);
             return Ok(delivery);
         }
