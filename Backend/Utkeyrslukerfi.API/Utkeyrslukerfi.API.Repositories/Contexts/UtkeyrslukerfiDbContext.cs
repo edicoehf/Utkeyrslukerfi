@@ -1,11 +1,14 @@
 using Utkeyrslukerfi.API.Models.Entities;
-using Microsoft.EntityFrameworkCore; 
+using Microsoft.EntityFrameworkCore;
 
-namespace Utkeyrslukerfi.API.Repositories.Context {
-    public class UtkeyrslukerfiDbContext: DbContext {
-        public UtkeyrslukerfiDbContext(DbContextOptions<UtkeyrslukerfiDbContext> options) : base(options){}
+namespace Utkeyrslukerfi.API.Repositories.Context
+{
+    public class UtkeyrslukerfiDbContext : DbContext
+    {
+        public UtkeyrslukerfiDbContext(DbContextOptions<UtkeyrslukerfiDbContext> options) : base(options) { }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder){
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
             // Mapping the one to one relationship between 
             // Delivery and Signoff
             modelBuilder.Entity<Signoff>()
@@ -35,6 +38,6 @@ namespace Utkeyrslukerfi.API.Repositories.Context {
         public DbSet<Vehicle> Vehicles { get; set; }
         public DbSet<Delivery> Deliveries { get; set; }
         public DbSet<Package> Packages { get; set; }
-        
+
     }
 }

@@ -23,6 +23,30 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
             _addressRepository = addressRepository;
         }
 
+        private void LoadDelivery(Delivery delivery)
+        {
+            _dbContext.Entry(delivery).Reference(c => c.DeliveryAddress).Load();
+            _dbContext.Entry(delivery).Reference(c => c.PickupAddress).Load();
+            _dbContext.Entry(delivery).Reference(c => c.Driver).Load();
+            _dbContext.Entry(delivery).Reference(c => c.Vehicle).Load();
+        }
+
+        private List<Package> GetPackages(string deliveryID)
+        {
+            return new List<Package>(
+                    from item in _dbContext.Packages
+                    where item.Delivery.ID == deliveryID
+                    select new Package
+                    {
+                        ID = item.ID,
+                        Weight = item.Weight,
+                        Length = item.Length,
+                        Height = item.Height,
+                        Width = item.Width
+                    }
+                    );
+        }
+
         public DeliveryDTO GetDelivery(string ID)
         {
             var delivery = _dbContext.Deliveries.FirstOrDefault(d => d.ID == ID);
@@ -31,23 +55,9 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
                 throw new NotFoundException($"Did not found delivery with id {ID}");
             }
             // loading the foreign key values
-            _dbContext.Entry(delivery).Reference(c => c.DeliveryAddress).Load();
-            _dbContext.Entry(delivery).Reference(c => c.PickupAddress).Load();
-            _dbContext.Entry(delivery).Reference(c => c.Driver).Load();
-            _dbContext.Entry(delivery).Reference(c => c.Vehicle).Load();
+            LoadDelivery(delivery);
             // fetcing all the packages
-            delivery.Packages = new List<Package>(
-              from item in _dbContext.Packages
-              where item.Delivery.ID == delivery.ID
-              select new Package
-              {
-                  ID = item.ID,
-                  Weight = item.Weight,
-                  Length = item.Length,
-                  Height = item.Height,
-                  Width = item.Width
-              }
-            );
+            delivery.Packages = GetPackages(delivery.ID);
 
             return _mapper.Map<DeliveryDTO>(delivery);
         }
@@ -55,24 +65,11 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
         public IEnumerable<DeliveryDTO> GetDeliveries()
         {
             var deliveries = _dbContext.Deliveries.ToList();
-            foreach (var delivery in deliveries) {
-                _dbContext.Entry(delivery).Reference(c => c.DeliveryAddress).Load();
-                _dbContext.Entry(delivery).Reference(c => c.PickupAddress).Load();
-                _dbContext.Entry(delivery).Reference(c => c.Driver).Load();
-                _dbContext.Entry(delivery).Reference(c => c.Vehicle).Load();
+            foreach (var delivery in deliveries)
+            {
+                LoadDelivery(delivery);
                 // fetcing all the packages
-                delivery.Packages = new List<Package>(
-                from item in _dbContext.Packages
-                where item.Delivery.ID == delivery.ID
-                select new Package
-                {
-                    ID = item.ID,
-                    Weight = item.Weight,
-                    Length = item.Length,
-                    Height = item.Height,
-                    Width = item.Width
-                }
-                );
+                delivery.Packages = GetPackages(delivery.ID);
             }
 
             return _mapper.Map<IEnumerable<DeliveryDTO>>(deliveries);

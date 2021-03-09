@@ -30,23 +30,24 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
             }
             return _mapper.Map<UserDTO>(user);
         }
-        public IEnumerable<UserDTO> GetUsers(){
-          var users = _dbContext.Users;
-          return _mapper.Map<IEnumerable<UserDTO>>(users);
+        public IEnumerable<UserDTO> GetUsers()
+        {
+            var users = _dbContext.Users;
+            return _mapper.Map<IEnumerable<UserDTO>>(users);
         }
         public UserDTO CreateUser(UserInputModel user)
         {
             var entity = _mapper.Map<User>(user);
             _dbContext.Users.Add(entity);
             _dbContext.SaveChanges();
-            
+
             return _mapper.Map<UserDTO>(entity);
         }
         public void UpdateUser(UserInputModel user, int id)
         {
             var tempUser = _dbContext.Users.FirstOrDefault(u => u.ID == id);
             if (tempUser == null) { throw new NotFoundException("User not found!"); }
-            
+
             // Update old user with the new user
             tempUser.Name = user.Name;
             tempUser.Password = user.Password;
