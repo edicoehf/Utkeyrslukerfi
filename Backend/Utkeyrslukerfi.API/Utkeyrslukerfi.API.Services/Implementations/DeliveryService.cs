@@ -23,9 +23,9 @@ namespace Utkeyrslukerfi.API.Services.Implementations
         {
             if (status == 0)
             {
-                return _deliveryRepo.GetDeliveriesByStatus(status, pageSize, pageNumber);
+                return _deliveryRepo.GetDeliveries(pageSize, pageNumber);
             }
-            return _deliveryRepo.GetDeliveries(pageSize, pageNumber);
+            return _deliveryRepo.GetDeliveriesByStatus(status, pageSize, pageNumber);
         }
         public DeliveryDTO CreateDelivery(DeliveryInputModel delivery)
         {
