@@ -7,6 +7,7 @@ using Utkeyrslukerfi.API.Repositories.Context;
 using Utkeyrslukerfi.API.Repositories.Interfaces;
 using Utkeyrslukerfi.API.Models.Exceptions;
 using Utkeyrslukerfi.API.Models.Entities;
+using Utkeyrslukerfi.API.Models.Envelope;
 
 namespace Utkeyrslukerfi.API.Repositories.Implementations
 {
@@ -30,27 +31,30 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
             }
             return _mapper.Map<UserDTO>(user);
         }
-        public IEnumerable<UserDTO> GetUsers(int role){
-            if (role != 0) {
-                var usersRole = _dbContext.Users.Where(u => u.Role == role);
-                return _mapper.Map<IEnumerable<UserDTO>>(usersRole);
-            }
+        public IEnumerable<UserDTO> GetUsers(int role, int pageSize, int pageNumber)
+        {
+            // if (role != 0)
+            // {
+            //     var usersRole = _dbContext.Users.Where(u => u.Role == role);
+            //     return _mapper.Map<IEnumerable<UserDTO>>(usersRole);
+            // }
             var users = _dbContext.Users;
-            return _mapper.Map<IEnumerable<UserDTO>>(users);
+            Envelope<User> envelope = new Envelope<User>(pageNumber, pageSize, users);
+            return _mapper.Map<IEnumerable<UserDTO>>(envelope.Items);
         }
         public UserDTO CreateUser(UserInputModel user)
         {
             var entity = _mapper.Map<User>(user);
             _dbContext.Users.Add(entity);
             _dbContext.SaveChanges();
-            
+
             return _mapper.Map<UserDTO>(entity);
         }
         public void UpdateUser(UserInputModel user, int id)
         {
             var tempUser = _dbContext.Users.FirstOrDefault(u => u.ID == id);
             if (tempUser == null) { throw new NotFoundException("User not found!"); }
-            
+
             // Update old user with the new user
             tempUser.Name = user.Name;
             tempUser.Password = user.Password;

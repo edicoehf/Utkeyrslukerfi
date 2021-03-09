@@ -7,6 +7,7 @@ using Utkeyrslukerfi.API.Models.InputModels;
 using Utkeyrslukerfi.API.Repositories.Context;
 using Utkeyrslukerfi.API.Repositories.Interfaces;
 using Utkeyrslukerfi.API.Models.Exceptions;
+using Utkeyrslukerfi.API.Models.Envelope;
 
 namespace Utkeyrslukerfi.API.Repositories.Implementations
 {
@@ -52,11 +53,13 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
             return _mapper.Map<DeliveryDTO>(delivery);
         }
 
-        public IEnumerable<DeliveryDTO> GetDeliveries(int status)
+        public IEnumerable<DeliveryDTO> GetDeliveries(int status, int pageSize, int pageNumber)
         {
+
             // TODO: Fix it so if status can be by default null and you can get everything if that is the case
             var deliveries = _dbContext.Deliveries.Where(d => d.Status == status).ToList();
-            foreach (var delivery in deliveries) {
+            foreach (var delivery in deliveries)
+            {
                 _dbContext.Entry(delivery).Reference(c => c.DeliveryAddress).Load();
                 _dbContext.Entry(delivery).Reference(c => c.PickupAddress).Load();
                 _dbContext.Entry(delivery).Reference(c => c.Driver).Load();
@@ -76,7 +79,8 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
                 );
             }
 
-            return _mapper.Map<IEnumerable<DeliveryDTO>>(deliveries);
+            Envelope<Delivery> envelope = new Envelope<Delivery>(pageNumber, pageSize, deliveries);
+            return _mapper.Map<IEnumerable<DeliveryDTO>>(envelope.Items);
         }
 
         public DeliveryDTO CreateDelivery(DeliveryInputModel delivery)
