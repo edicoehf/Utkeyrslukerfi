@@ -5,17 +5,17 @@ using Utkeyrslukerfi.API.Models.InputModels;
 
 namespace Utkeyrslukerfi.API
 {
-  public class MappingProfile : Profile
-  {
-    public MappingProfile()
+    public class MappingProfile : Profile
     {
-      CreateMap<Delivery, DeliveryDTO>();
-      CreateMap<Package, PackageDetailsDTO>();
-      CreateMap<Package, PackageDTO>();
-      CreateMap<User, UserDTO>();
-      CreateMap<UserInputModel, User>();
-      CreateMap<Address, AddressDTO>();
-      CreateMap<Vehicle, VehicleDTO>();
+        public MappingProfile()
+        {
+            CreateMap<Delivery, DeliveryDTO>();
+            CreateMap<Package, PackageDetailsDTO>();
+            CreateMap<Package, PackageDTO>();
+            CreateMap<User, UserDTO>();
+            CreateMap<UserInputModel, User>();
+            CreateMap<Address, AddressDTO>();
+            CreateMap<Vehicle, VehicleDTO>();
+        }
     }
-  }
 }

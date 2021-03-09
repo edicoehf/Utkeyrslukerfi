@@ -1,5 +1,5 @@
-![example event parameter](https://github.com/edicoehf/Utkeyrslukerfi/actions/workflows/Backend.yml/badge.svg?event=pull_request)
 # Utkeyrslukerfi
+![example event parameter](https://github.com/edicoehf/Utkeyrslukerfi/actions/workflows/Backend.yml/badge.svg?event=pull_request)
 Lokaverkefni gert í samstarfi og fyrir Edico af nemendum í Háskólanum í Reykjavík
 
 Ná í migrations pakkann
