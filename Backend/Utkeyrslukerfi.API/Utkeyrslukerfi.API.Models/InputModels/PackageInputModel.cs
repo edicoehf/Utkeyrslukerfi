@@ -1,6 +1,8 @@
 using System.ComponentModel.DataAnnotations;
-namespace Utkeyrslukerfi.API.Models.InputModels{
-    public class PackageInputModel{
+namespace Utkeyrslukerfi.API.Models.InputModels
+{
+    public class PackageInputModel
+    {
         [Required(ErrorMessage = "ID is required")]
         public string ID { get; set; }
         public double Weight { get; set; }

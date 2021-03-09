@@ -1,5 +1,7 @@
-namespace Utkeyrslukerfi.API.Models.Dtos{
-    public class PackageDTO{
-        public string ID { get ; set; }
+namespace Utkeyrslukerfi.API.Models.Dtos
+{
+    public class PackageDTO
+    {
+        public string ID { get; set; }
     }
 }

@@ -33,8 +33,8 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
         public PackageDTO CreatePackage(PackageInputModel package)
         {
             var delivery = _dbContext.Deliveries.FirstOrDefault(d => d.ID == package.DeliveryID);
-            if (delivery == null) { throw new NotFoundException("Delivery not found!"); }   
-            
+            if (delivery == null) { throw new NotFoundException("Delivery not found!"); }
+
             var entity = new Package
             {
                 ID = package.ID,
@@ -46,7 +46,7 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
             };
             _dbContext.Packages.Add(entity);
             _dbContext.SaveChanges();
-            
+
             return _mapper.Map<PackageDTO>(entity);
         }
     }
