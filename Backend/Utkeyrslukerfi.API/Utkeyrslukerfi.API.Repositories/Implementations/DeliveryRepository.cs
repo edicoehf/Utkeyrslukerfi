@@ -32,6 +32,16 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
             _dbContext.Entry(delivery).Reference(c => c.Vehicle).Load();
         }
 
+        private void LoadDeliveries(IEnumerable<Delivery> deliveries)
+        {
+            foreach (var delivery in deliveries)
+            {
+                LoadDelivery(delivery);
+                // fetcing all the packages
+                delivery.Packages = GetPackages(delivery.ID);
+            }
+        }
+
         private List<Package> GetPackages(string deliveryID)
         {
             return new List<Package>(
@@ -66,12 +76,7 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
         public IEnumerable<DeliveryDTO> GetDeliveries(int pageSize, int pageNumber)
         {
             var deliveries = _dbContext.Deliveries.ToList();
-            foreach (var delivery in deliveries)
-            {
-                LoadDelivery(delivery);
-                // fetcing all the packages
-                delivery.Packages = GetPackages(delivery.ID);
-            }
+            LoadDeliveries(deliveries);
             Envelope<Delivery> envelope = new Envelope<Delivery>(pageNumber, pageSize, deliveries);
             return _mapper.Map<IEnumerable<DeliveryDTO>>(envelope.Items);
         }
