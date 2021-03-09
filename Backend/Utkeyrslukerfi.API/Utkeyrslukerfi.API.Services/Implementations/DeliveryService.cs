@@ -21,7 +21,11 @@ namespace Utkeyrslukerfi.API.Services.Implementations
         }
         public IEnumerable<DeliveryDTO> GetDeliveries(int status, int pageSize, int pageNumber)
         {
-            return _deliveryRepo.GetDeliveries(status, pageSize, pageNumber);
+            if (status == 0)
+            {
+                return _deliveryRepo.GetDeliveriesByStatus(status, pageSize, pageNumber);
+            }
+            return _deliveryRepo.GetDeliveries(pageSize, pageNumber);
         }
         public DeliveryDTO CreateDelivery(DeliveryInputModel delivery)
         {

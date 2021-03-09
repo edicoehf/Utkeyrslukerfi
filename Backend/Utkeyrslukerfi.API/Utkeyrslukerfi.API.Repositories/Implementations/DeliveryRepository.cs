@@ -63,7 +63,7 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
             return _mapper.Map<DeliveryDTO>(delivery);
         }
 
-        public IEnumerable<DeliveryDTO> GetDeliveries(int status, int pageSize, int pageNumber)
+        public IEnumerable<DeliveryDTO> GetDeliveries(int pageSize, int pageNumber)
         {
             var deliveries = _dbContext.Deliveries.ToList();
             foreach (var delivery in deliveries)
@@ -72,7 +72,19 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
                 // fetcing all the packages
                 delivery.Packages = GetPackages(delivery.ID);
             }
+            Envelope<Delivery> envelope = new Envelope<Delivery>(pageNumber, pageSize, deliveries);
+            return _mapper.Map<IEnumerable<DeliveryDTO>>(envelope.Items);
+        }
 
+        public IEnumerable<DeliveryDTO> GetDeliveriesByStatus(int status, int pageSize, int pageNumber)
+        {
+            var deliveries = _dbContext.Deliveries.Where(d => d.Status == status).ToList();
+            foreach (var delivery in deliveries)
+            {
+                LoadDelivery(delivery);
+                // fetcing all the packages
+                delivery.Packages = GetPackages(delivery.ID);
+            }
             Envelope<Delivery> envelope = new Envelope<Delivery>(pageNumber, pageSize, deliveries);
             return _mapper.Map<IEnumerable<DeliveryDTO>>(envelope.Items);
         }
