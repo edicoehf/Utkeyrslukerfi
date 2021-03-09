@@ -1,5 +1,7 @@
-namespace Utkeyrslukerfi.API.Models.Entities {
-    public class Package {
+namespace Utkeyrslukerfi.API.Models.Entities
+{
+    public class Package
+    {
         public string ID { get; set; }
         public double Weight { get; set; }
         public double Length { get; set; }

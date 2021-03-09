@@ -90,9 +90,15 @@ namespace Utkeyrslukerfi.API.Controllers
         // get deliveries
         [HttpGet]
         [Route("", Name = "GetDeliveries")]
+<<<<<<< HEAD
         public IActionResult GetDeliveries([FromQuery] int status = 0, int pageSize = 25, int pageNumber = 0)
         {
             var deliveries = _deliveryService.GetDeliveries(status, pageSize, pageNumber);
+=======
+        public IActionResult GetDeliveries()
+        {
+            var deliveries = _deliveryService.GetDeliveries();
+>>>>>>> main
             return Ok(deliveries);
         }
         // update delivery

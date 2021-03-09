@@ -19,8 +19,9 @@ namespace Utkeyrslukerfi.API.Services.Implementations
         {
             return _vehicleRepo.GetVehicle(ID);
         }
-        public IEnumerable<VehicleDTO> GetVehicles(){
-          return _vehicleRepo.GetVehicles();
+        public IEnumerable<VehicleDTO> GetVehicles()
+        {
+            return _vehicleRepo.GetVehicles();
         }
         public VehicleDTO CreateVehicle(VehicleInputModel vehicle)
         {
