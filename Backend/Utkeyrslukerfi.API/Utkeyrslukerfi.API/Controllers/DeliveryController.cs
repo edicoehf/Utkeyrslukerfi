@@ -13,10 +13,8 @@ namespace Utkeyrslukerfi.API.Controllers
     [Route("api/deliveries")]
     public class DeliveryController : ControllerBase
     {
-
         private readonly ILogger<DeliveryController> _logger;
         private readonly IDeliveryService _deliveryService;
-
         public DeliveryController(ILogger<DeliveryController> logger, IDeliveryService deliveryService)
         {
             _logger = logger;
@@ -34,6 +32,8 @@ namespace Utkeyrslukerfi.API.Controllers
         ///        "ID": "1234567890128",
         ///        "Recipient": "Item1",
         ///        "Seller": "Item1",
+        ///        "DriverComment": "I threw it in his backyard.",
+        ///        "CustomerComment": "Throw it in my backyard.",
         ///        "Status": 2,
         ///        "Driver": {
         ///                     "ID": 123,
@@ -79,19 +79,42 @@ namespace Utkeyrslukerfi.API.Controllers
         /// <response code="200">Returns the delivery with the given ID</response>
         /// <response code="401">The Auth token was invalid </response>
         /// <response code="404">There is no delivery with the given ID</response> 
+        // get delivery
         [HttpGet]
-        [Route("{id}", Name="GetDeliveryByID")]
-        public IActionResult GetDelivery(string ID){
+        [Route("{id}", Name = "GetDeliveryByID")]
+        public IActionResult GetDelivery(string ID)
+        {
             var delivery = _deliveryService.GetDelivery(ID);
             return Ok(delivery);
         }
-        // get delivery
+        // get deliveries
+        [HttpGet]
+        [Route("", Name="GetDeliveries")]
+        public IActionResult GetDeliveries(){
+            var deliveries = _deliveryService.GetDeliveries();
+            return Ok(deliveries);
+        }
         // update delivery
+        [HttpPatch]
+        [Route("{id}", Name = "UpdateDelivery")]
+        public IActionResult UpdateDelivery([FromBody] DeliveryInputModel delivery, string id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest("Model is not valid!");
+            }
+            // some check if it is authorized
+            // TODO: Authorization service.
+            _deliveryService.UpdateDelivery(delivery, id);
+            return NoContent();
+        }
         // create delivery
         [HttpPost]
-        [Route("", Name="CreateDelivery")]
-        public IActionResult CreateDelivery([FromBody] DeliveryInputModel delivery){
-            if (!ModelState.IsValid){
+        [Route("", Name = "CreateDelivery")]
+        public IActionResult CreateDelivery([FromBody] DeliveryInputModel delivery)
+        {
+            if (!ModelState.IsValid)
+            {
                 throw new Exception("Error in CreateDelivery controller");
             }
             var new_delivery = _deliveryService.CreateDelivery(delivery);
