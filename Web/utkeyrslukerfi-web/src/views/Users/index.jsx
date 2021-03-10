@@ -9,8 +9,6 @@ const Users = ({ getUsers, users }) => {
         getUsers();
     }, []);
 
-    console.log(users)
-
     return (
         <div className="users">
             { users.map(u => <User
