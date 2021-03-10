@@ -1,13 +1,13 @@
-import React from 'react';
+import React from 'react'
 
-const User = ({name, email, role}) => {
-    return (
-        <React.Fragment>
-            <p>{name}</p>
-            <p>{email}</p>
-            <p>{role}</p>
-        </React.Fragment>
-    );
-};
+const User = ({ name, email, role }) => {
+  return (
+    <>
+      <p>{name}</p>
+      <p>{email}</p>
+      <p>{role}</p>
+    </>
+  )
+}
 
-export default User;
+export default User

@@ -12,7 +12,8 @@ import thunk from 'redux-thunk'
 ReactDOM.render(
   <React.StrictMode>
     <Provider
-    store={ createStore(reducers, applyMiddleware(thunk)) }>
+      store={createStore(reducers, applyMiddleware(thunk))}
+    >
       <Router>
         <App />
       </Router>
