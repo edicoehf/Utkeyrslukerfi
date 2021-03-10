@@ -17,9 +17,9 @@ namespace Utkeyrslukerfi.API.Services.Implementations
         {
             return _packageRepo.GetPackage(ID);
         }
-        public IEnumerable<PackageDetailsDTO> GetPackages()
+        public IEnumerable<PackageDetailsDTO> GetPackages(string id, int pageSize, int pageNumber)
         {
-            return _packageRepo.GetPackages();
+            return _packageRepo.GetPackages(id, pageSize, pageNumber);
         }
         public PackageDTO CreatePackage(PackageInputModel package)
         {

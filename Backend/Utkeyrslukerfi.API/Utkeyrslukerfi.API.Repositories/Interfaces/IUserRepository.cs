@@ -7,7 +7,8 @@ namespace Utkeyrslukerfi.API.Repositories.Interfaces
     public interface IUserRepository
     {
         UserDTO GetUser(int ID);
-        IEnumerable<UserDTO> GetUsers();
+        IEnumerable<UserDTO> GetUsers(int pageSize, int pageNumber);
+        IEnumerable<UserDTO> GetUsersByRole(int role, int pageSize, int pageNumber);
         UserDTO CreateUser(UserInputModel user);
         void UpdateUser(UserInputModel user, int ID);
     }

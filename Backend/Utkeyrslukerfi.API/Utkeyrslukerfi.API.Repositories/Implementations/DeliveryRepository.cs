@@ -7,6 +7,7 @@ using Utkeyrslukerfi.API.Models.InputModels;
 using Utkeyrslukerfi.API.Repositories.Context;
 using Utkeyrslukerfi.API.Repositories.Interfaces;
 using Utkeyrslukerfi.API.Models.Exceptions;
+using Utkeyrslukerfi.API.Models.Envelope;
 
 namespace Utkeyrslukerfi.API.Repositories.Implementations
 {
@@ -29,6 +30,16 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
             _dbContext.Entry(delivery).Reference(c => c.PickupAddress).Load();
             _dbContext.Entry(delivery).Reference(c => c.Driver).Load();
             _dbContext.Entry(delivery).Reference(c => c.Vehicle).Load();
+        }
+
+        private void LoadDeliveries(IEnumerable<Delivery> deliveries)
+        {
+            foreach (var delivery in deliveries)
+            {
+                LoadDelivery(delivery);
+                // fetcing all the packages
+                delivery.Packages = GetPackages(delivery.ID);
+            }
         }
 
         private List<Package> GetPackages(string deliveryID)
@@ -62,17 +73,25 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
             return _mapper.Map<DeliveryDTO>(delivery);
         }
 
-        public IEnumerable<DeliveryDTO> GetDeliveries()
+        public IEnumerable<DeliveryDTO> GetDeliveries(int pageSize, int pageNumber)
         {
             var deliveries = _dbContext.Deliveries.ToList();
+            LoadDeliveries(deliveries);
+            Envelope<Delivery> envelope = new Envelope<Delivery>(pageNumber, pageSize, deliveries);
+            return _mapper.Map<IEnumerable<DeliveryDTO>>(envelope.Items);
+        }
+
+        public IEnumerable<DeliveryDTO> GetDeliveriesByStatus(int status, int pageSize, int pageNumber)
+        {
+            var deliveries = _dbContext.Deliveries.Where(d => d.Status == status).ToList();
             foreach (var delivery in deliveries)
             {
                 LoadDelivery(delivery);
                 // fetcing all the packages
                 delivery.Packages = GetPackages(delivery.ID);
             }
-
-            return _mapper.Map<IEnumerable<DeliveryDTO>>(deliveries);
+            Envelope<Delivery> envelope = new Envelope<Delivery>(pageNumber, pageSize, deliveries);
+            return _mapper.Map<IEnumerable<DeliveryDTO>>(envelope.Items);
         }
 
         public DeliveryDTO CreateDelivery(DeliveryInputModel delivery)

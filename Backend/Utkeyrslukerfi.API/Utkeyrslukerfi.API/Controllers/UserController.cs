@@ -51,9 +51,9 @@ namespace Utkeyrslukerfi.API.Controllers
         }
 
         [HttpGet]
-        public IActionResult getUsers()
+        public IActionResult getUsers([FromQuery] int role = 0, int pageSize = 25, int pageNumber = 0)
         {
-            var users = _userService.GetUsers();
+            var users = _userService.GetUsers(role, pageSize, pageNumber);
             return Ok(users);
         }
 

@@ -8,6 +8,7 @@ namespace Utkeyrslukerfi.API.Services.Interfaces
     {
         PackageDetailsDTO GetPackage(string ID);
         IEnumerable<PackageDetailsDTO> GetPackages();
+        IEnumerable<PackageDetailsDTO> GetPackages(string id, int pageSize, int pageNumber);
         PackageDTO CreatePackage(PackageInputModel package);
     }
 }
