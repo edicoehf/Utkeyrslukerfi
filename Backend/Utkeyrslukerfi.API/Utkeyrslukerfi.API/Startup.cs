@@ -25,6 +25,7 @@ namespace Utkeyrslukerfi.API
 {
     public class Startup
     {
+        readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
         public Startup(IConfiguration configuration)
         {
@@ -54,6 +55,15 @@ namespace Utkeyrslukerfi.API
                           options.MigrationsAssembly(Assembly.GetExecutingAssembly().FullName);
                       }
                     );
+            });
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy(name: MyAllowSpecificOrigins,
+                                    builder =>
+                                    {
+                                        builder.WithOrigins("http://localhost:3000");
+                                    });
             });
 
             // Adding Mapper
@@ -98,6 +108,8 @@ namespace Utkeyrslukerfi.API
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors(MyAllowSpecificOrigins);
 
             app.UseAuthorization();
 
