@@ -1,3 +1,5 @@
+using System;
+using System.Text;
 using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
@@ -8,6 +10,7 @@ using Utkeyrslukerfi.API.Repositories.Interfaces;
 using Utkeyrslukerfi.API.Models.Exceptions;
 using Utkeyrslukerfi.API.Models.Entities;
 using Utkeyrslukerfi.API.Models.Envelope;
+using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 
 namespace Utkeyrslukerfi.API.Repositories.Implementations
 {
@@ -15,11 +18,23 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
     {
         private readonly UtkeyrslukerfiDbContext _dbContext;
         private readonly IMapper _mapper;
-
+        private string _salt = "wmwj8iols3euy03c2zol285yzgy3sdwj";
+        
         public UserRepository(IMapper mapper, UtkeyrslukerfiDbContext dbContext)
         {
             _dbContext = dbContext;
             _mapper = mapper;
+        }
+        private byte[] CreateSalt() => Convert.FromBase64String(Convert.ToBase64String(Encoding.UTF8.GetBytes(_salt)));
+
+        private string HashPassword(string password)
+        {
+            return Convert.ToBase64String(KeyDerivation.Pbkdf2(
+            password: password,
+            salt: CreateSalt(),
+            prf: KeyDerivationPrf.HMACSHA1,
+            iterationCount: 10000,
+            numBytesRequested: 256 / 8));
         }
 
         public UserDTO GetUser(int ID)
@@ -45,7 +60,18 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
         }
         public UserDTO CreateUser(UserInputModel user)
         {
-            var entity = _mapper.Map<User>(user);
+            var tempPass = HashPassword(user.Password);
+            var tempUser = _dbContext.Users.FirstOrDefault(u => u.Email == user.Email);
+            if (user != null) { throw new InvalidLoginException($"User with email: {user.Email} already exists!");}
+            
+            // create new entity with the hashed password
+            var entity = new User{
+                Name = user.Name,
+                Password = tempPass,
+                Role = user.Role,
+                Email = user.Email
+            };
+        
             _dbContext.Users.Add(entity);
             _dbContext.SaveChanges();
 
@@ -53,12 +79,13 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
         }
         public void UpdateUser(UserInputModel user, int id)
         {
+            var tempPass = HashPassword(user.Password);
             var tempUser = _dbContext.Users.FirstOrDefault(u => u.ID == id);
-            if (tempUser == null) { throw new NotFoundException("User not found!"); }
+            if (tempUser == null) { throw new NotFoundException($"User with id: {id} is not found!"); }
 
             // Update old user with the new user
             tempUser.Name = user.Name;
-            tempUser.Password = user.Password;
+            tempUser.Password = tempPass;
             tempUser.Role = user.Role;
             tempUser.Email = user.Email;
 
