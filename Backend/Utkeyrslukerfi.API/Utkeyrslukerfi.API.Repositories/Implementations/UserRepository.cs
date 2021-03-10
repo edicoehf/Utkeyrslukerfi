@@ -19,7 +19,7 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
         private readonly UtkeyrslukerfiDbContext _dbContext;
         private readonly IMapper _mapper;
         private string _salt = "wmwj8iols3euy03c2zol285yzgy3sdwj";
-        
+
         public UserRepository(IMapper mapper, UtkeyrslukerfiDbContext dbContext)
         {
             _dbContext = dbContext;
@@ -62,16 +62,17 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
         {
             var tempPass = HashPassword(user.Password);
             var tempUser = _dbContext.Users.FirstOrDefault(u => u.Email == user.Email);
-            if (user != null) { throw new InvalidLoginException($"User with email: {user.Email} already exists!");}
-            
+            if (user != null) { throw new InvalidLoginException($"User with email: {user.Email} already exists!"); }
+
             // create new entity with the hashed password
-            var entity = new User{
+            var entity = new User
+            {
                 Name = user.Name,
                 Password = tempPass,
                 Role = user.Role,
                 Email = user.Email
             };
-        
+
             _dbContext.Users.Add(entity);
             _dbContext.SaveChanges();
 
