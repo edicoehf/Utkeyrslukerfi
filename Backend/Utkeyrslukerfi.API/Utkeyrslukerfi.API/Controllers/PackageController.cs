@@ -43,10 +43,11 @@ namespace Utkeyrslukerfi.API.Controllers
         /// <response code="401">The Auth token was invalid </response>
         /// <response code="404">There is no package with the given ID</response> 
         [HttpGet]
-        [Route("{id:int}")]
+        [Route("{id}")]
         public IActionResult GetPackage(string id)
         {
-            return NoContent();
+            var package = _packageService.GetPackage(id);
+            return Ok(package);
         }
 
         [HttpGet]

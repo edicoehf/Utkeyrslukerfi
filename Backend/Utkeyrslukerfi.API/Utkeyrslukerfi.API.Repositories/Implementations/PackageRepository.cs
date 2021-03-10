@@ -21,9 +21,10 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
             _mapper = mapper;
         }
 
-        public PackageDTO GetPackage(string ID)
+        public PackageDetailsDTO GetPackage(string ID)
         {
-            return null;
+            var package = _dbContext.Packages.FirstOrDefault(p => p.ID == ID);
+            return _mapper.Map<PackageDetailsDTO>(package);
         }
         public IEnumerable<PackageDetailsDTO> GetPackages()
         {
