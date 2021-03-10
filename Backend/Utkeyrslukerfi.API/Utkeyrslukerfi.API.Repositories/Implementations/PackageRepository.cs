@@ -22,9 +22,12 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
             _mapper = mapper;
         }
 
-        public PackageDetailsDTO GetPackage(string ID)
+        public PackageDetailsDTO GetPackage(string DeliveryID, string ID)
         {
+            var delivery = _dbContext.Deliveries.FirstOrDefault(d => d.ID == DeliveryID);
+            if (delivery == null) { throw new NotFoundException("Delivery not found!"); }
             var package = _dbContext.Packages.FirstOrDefault(p => p.ID == ID);
+            if (package == null) { throw new NotFoundException("Package not found!"); }
             return _mapper.Map<PackageDetailsDTO>(package);
         }
         public IEnumerable<PackageDetailsDTO> GetPackages(string ID, int pageSize, int pageNumber)
@@ -33,9 +36,9 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
             Envelope<Package> envelope = new Envelope<Package>(pageNumber, pageSize, packages);
             return _mapper.Map<IEnumerable<PackageDetailsDTO>>(envelope.Items);
         }
-        public PackageDTO CreatePackage(PackageInputModel package)
+        public PackageDTO CreatePackage(string DeliveryID, PackageInputModel package)
         {
-            var delivery = _dbContext.Deliveries.FirstOrDefault(d => d.ID == package.DeliveryID);
+            var delivery = _dbContext.Deliveries.FirstOrDefault(d => d.ID == DeliveryID);
             if (delivery == null) { throw new NotFoundException("Delivery not found!"); }
 
             var entity = new Package

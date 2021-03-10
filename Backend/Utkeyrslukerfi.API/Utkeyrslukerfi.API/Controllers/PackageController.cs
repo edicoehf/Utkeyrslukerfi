@@ -10,7 +10,7 @@ using Utkeyrslukerfi.API.Services.Interfaces;
 namespace Utkeyrslukerfi.API.Controllers
 {
     [ApiController]
-    [Route("api/packages")]
+    [Route("api/deliveries/{deliveryID}/packages")]
     public class PackageController : ControllerBase
     {
         private readonly ILogger<PackageController> _logger;
@@ -43,29 +43,29 @@ namespace Utkeyrslukerfi.API.Controllers
         /// <response code="401">The Auth token was invalid </response>
         /// <response code="404">There is no package with the given ID</response> 
         [HttpGet]
-        [Route("{id}")]
-        public IActionResult GetPackage(string id)
+        [Route("{id}", Name = "GetPackage")]
+        public IActionResult GetPackage(string deliveryID, string id)
         {
-            var package = _packageService.GetPackage(id);
+            var package = _packageService.GetPackage(deliveryID, id);
             return Ok(package);
         }
 
         [HttpGet]
-        public IActionResult GetPackages([FromQuery] string ID, int pageSize = 25, int pageNumber = 0)
+        public IActionResult GetPackages(string deliveryID, [FromQuery] int pageSize = 25, int pageNumber = 0)
         {
-            var packages = _packageService.GetPackages(ID, pageSize, pageNumber);
+            var packages = _packageService.GetPackages(deliveryID, pageSize, pageNumber);
             return Ok(packages);
         }
 
         [HttpPost]
         [Route("", Name = "CreatePackage")]
-        public IActionResult CreatePackage([FromBody] PackageInputModel package)
+        public IActionResult CreatePackage(string DeliveryID, [FromBody] PackageInputModel package)
         {
             if (!ModelState.IsValid)
             {
                 throw new Exception("Error in CreatePackage controller");
             }
-            var new_package = _packageService.CreatePackage(package);
+            var new_package = _packageService.CreatePackage(DeliveryID, package);
             return CreatedAtRoute("CreatePackage", new_package, null);
         }
     }
