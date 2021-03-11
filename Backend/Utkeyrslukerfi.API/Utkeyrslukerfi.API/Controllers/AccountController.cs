@@ -41,8 +41,8 @@ namespace Utkeyrslukerfi.API.Controllers
         /// <response code="404">There is no user with the given ID</response> 
 
         [HttpPost]
-        [Route("signin")]
-        public IActionResult SignInUser([FromBody] LoginInputModel login)
+        [Route("login")]
+        public IActionResult Login([FromBody] LoginInputModel login)
         {
             if (!ModelState.IsValid)
             {
@@ -53,8 +53,8 @@ namespace Utkeyrslukerfi.API.Controllers
         }
 
         [HttpGet]
-        [Route("signout")]
-        public IActionResult SignOutUser()
+        [Route("logout")]
+        public IActionResult Logout()
         {
             // TODO: implement
             return NoContent();

@@ -1,0 +1,18 @@
+using Utkeyrslukerfi.API.Repositories.Interfaces;
+using Utkeyrslukerfi.API.Services.Interfaces;
+
+namespace Utkeyrslukerfi.API.Services.Implementations
+{
+    public class JwtTokenService : IJwtTokenService
+    {
+        private readonly ITokenRepository _tokenRepository;
+        public JwtTokenService(ITokenRepository tokenRepository)
+        {
+            _tokenRepository = tokenRepository;
+        }
+        public bool IsTokenBlacklisted(int tokenId)
+        {
+            return _tokenRepository.IsTokenBlacklisted(tokenId);
+        }
+    }
+}

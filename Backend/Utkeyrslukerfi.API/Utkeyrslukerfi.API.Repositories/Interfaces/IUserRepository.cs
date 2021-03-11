@@ -11,5 +11,6 @@ namespace Utkeyrslukerfi.API.Repositories.Interfaces
         IEnumerable<UserDTO> GetUsersByRole(int role, int pageSize, int pageNumber);
         UserDTO CreateUser(UserInputModel user);
         void UpdateUser(UserInputModel user, int ID);
+        UserDTO AuthenticateUser(LoginInputModel loginInputModel);
     }
 }

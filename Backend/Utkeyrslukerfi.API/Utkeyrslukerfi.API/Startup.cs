@@ -1,15 +1,9 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using Utkeyrslukerfi.API.Repositories.Context;
 using Microsoft.EntityFrameworkCore;
@@ -20,6 +14,8 @@ using Utkeyrslukerfi.API.Services.Interfaces;
 using Utkeyrslukerfi.API.Services.Implementations;
 using Utkeyrslukerfi.API.Repositories.Implementations;
 using Utkeyrslukerfi.API.Repositories.Interfaces;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Utkeyrslukerfi.API.Middleware;
 
 namespace Utkeyrslukerfi.API
 {
@@ -56,7 +52,11 @@ namespace Utkeyrslukerfi.API
                       }
                     );
             });
-
+            services.AddAuthentication(config =>
+            {
+                config.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+                config.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtTokenAuthentication(Configuration);
             services.AddCors(options =>
             {
                 options.AddPolicy(name: MyAllowSpecificOrigins,
@@ -83,6 +83,17 @@ namespace Utkeyrslukerfi.API
             services.AddTransient<IPackageService, PackageService>();
             services.AddTransient<IAddressService, AddressService>();
             services.AddTransient<IVehicleService, VehicleService>();
+            services.AddTransient<IJwtTokenService, JwtTokenService>();
+            services.AddTransient<IAccountService, AccountService>();
+
+            // Since token service constructor takes in strings
+            var jwtConfig = Configuration.GetSection("JwtConfig");
+            services.AddTransient<ITokenService>((c) =>
+                new TokenService(
+                    jwtConfig.GetSection("secret").Value,
+                    jwtConfig.GetSection("expirationInMinutes").Value,
+                    jwtConfig.GetSection("issuer").Value,
+                    jwtConfig.GetSection("audience").Value));
 
             // Adding Repository Transients
             // maps the Interface to the Implementation
@@ -90,6 +101,7 @@ namespace Utkeyrslukerfi.API
             services.AddTransient<IDeliveryRepository, DeliveryRepository>();
             services.AddTransient<IAddressRepository, AddressRepository>();
             services.AddTransient<IUserRepository, UserRepository>();
+            services.AddTransient<ITokenRepository, TokenRepository>();
             services.AddTransient<IPackageRepository, PackageRepository>();
             services.AddTransient<IVehicleRepository, VehicleRepository>();
 
@@ -110,6 +122,8 @@ namespace Utkeyrslukerfi.API
             app.UseRouting();
 
             app.UseCors(MyAllowSpecificOrigins);
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 

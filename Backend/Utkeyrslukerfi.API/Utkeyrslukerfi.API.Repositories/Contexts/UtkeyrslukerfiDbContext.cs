@@ -38,6 +38,7 @@ namespace Utkeyrslukerfi.API.Repositories.Context
         public DbSet<Vehicle> Vehicles { get; set; }
         public DbSet<Delivery> Deliveries { get; set; }
         public DbSet<Package> Packages { get; set; }
+        public DbSet<JwtToken> JwtTokens { get; set; }
 
     }
 }
