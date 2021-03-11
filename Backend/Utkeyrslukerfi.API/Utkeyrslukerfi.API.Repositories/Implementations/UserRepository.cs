@@ -1,7 +1,5 @@
-using System;
-using System.Text;
-using System.Collections.Generic;
 using System.Linq;
+using System.Collections.Generic;
 using AutoMapper;
 using Utkeyrslukerfi.API.Models.Dtos;
 using Utkeyrslukerfi.API.Models.InputModels;
@@ -10,33 +8,21 @@ using Utkeyrslukerfi.API.Repositories.Interfaces;
 using Utkeyrslukerfi.API.Models.Exceptions;
 using Utkeyrslukerfi.API.Models.Entities;
 using Utkeyrslukerfi.API.Models.Envelope;
-using Microsoft.AspNetCore.Cryptography.KeyDerivation;
+using Utkeyrslukerfi.API.Repositories.Helpers;
 
 namespace Utkeyrslukerfi.API.Repositories.Implementations
 {
     public class UserRepository : IUserRepository
     {
         private readonly UtkeyrslukerfiDbContext _dbContext;
+        private readonly ITokenRepository _tokenRepository;
         private readonly IMapper _mapper;
-        private string _salt = "wmwj8iols3euy03c2zol285yzgy3sdwj";
-
-        public UserRepository(IMapper mapper, UtkeyrslukerfiDbContext dbContext)
+        public UserRepository(IMapper mapper, UtkeyrslukerfiDbContext dbContext, ITokenRepository tokenRepository)
         {
             _dbContext = dbContext;
             _mapper = mapper;
+            _tokenRepository = tokenRepository;
         }
-        private byte[] CreateSalt() => Convert.FromBase64String(Convert.ToBase64String(Encoding.UTF8.GetBytes(_salt)));
-
-        private string HashPassword(string password)
-        {
-            return Convert.ToBase64String(KeyDerivation.Pbkdf2(
-            password: password,
-            salt: CreateSalt(),
-            prf: KeyDerivationPrf.HMACSHA1,
-            iterationCount: 10000,
-            numBytesRequested: 256 / 8));
-        }
-
         public UserDTO GetUser(int ID)
         {
             var user = _dbContext.Users.FirstOrDefault(u => u.ID == ID);
@@ -60,7 +46,7 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
         }
         public UserDTO CreateUser(UserInputModel user)
         {
-            var tempPass = HashPassword(user.Password);
+            var tempPass = HashingHelper.HashPassword(user.Password);
             var tempUser = _dbContext.Users.FirstOrDefault(u => u.Email == user.Email);
             if (user != null) { throw new InvalidLoginException($"User with email: {user.Email} already exists!"); }
 
@@ -80,7 +66,7 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
         }
         public void UpdateUser(UserInputModel user, int id)
         {
-            var tempPass = HashPassword(user.Password);
+            var tempPass = HashingHelper.HashPassword(user.Password);
             var tempUser = _dbContext.Users.FirstOrDefault(u => u.ID == id);
             if (tempUser == null) { throw new NotFoundException($"User with id: {id} is not found!"); }
 
@@ -93,10 +79,23 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
             // save changes
             _dbContext.SaveChanges();
         }
-        public UserDTO AuthenticateUser(LoginInputModel loginInputModel)
+        public UserDTO Login(LoginInputModel loginInputModel)
         {
-            // TODO: implement
-            return null;
+            var user = _dbContext.Users.FirstOrDefault(u =>
+                u.Email == loginInputModel.Email &&
+                u.Password == HashingHelper.HashPassword(loginInputModel.Password));
+            if (user == null) { return null; }
+
+            var token = _tokenRepository.CreateNewToken();
+
+            return new UserDTO
+            {
+                ID = user.ID,
+                Name = user.Name,
+                Email = user.Email,
+                Role = user.Role,
+                TokenID = token.ID
+            };
         }
     }
 }

@@ -8,7 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Utkeyrslukerfi.API.Services.Interfaces;
 
-namespace Utkeyrslukerfi.API.Middleware
+namespace Utkeyrslukerfi.API.Middlewares
 {
     public static class JwtAuthenticationMiddleware
     {

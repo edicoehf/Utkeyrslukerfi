@@ -17,8 +17,7 @@ namespace Utkeyrslukerfi.API.Services.Implementations
 
         public UserDTO Login(LoginInputModel loginInputModel)
         {
-            // TODO: implement
-            return null;
+            return _userRepository.Login(loginInputModel);
         }
 
         public void Logout(int tokenId)

@@ -6,7 +6,7 @@ namespace Utkeyrslukerfi.API.Repositories.Helpers
 {
     public static class HashingHelper
     {
-        private static string _salt = "<insert-some-salt-here>";
+        private static string _salt = "wmwj8iols3euy03c2zol285yzgy3sdwj";
         public static string HashPassword(string password)
         {
             return Convert.ToBase64String(KeyDerivation.Pbkdf2(

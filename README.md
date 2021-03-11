@@ -1,4 +1,5 @@
 # Utkeyrslukerfi
+
 ![example event parameter](https://github.com/edicoehf/Utkeyrslukerfi/actions/workflows/Backend.yml/badge.svg?event=pull_request)
 Lokaverkefni gert í samstarfi og fyrir Edico af nemendum í Háskólanum í Reykjavík
 
@@ -9,7 +10,7 @@ Uppfæra migrations pakkann
 dotnet tool update --global dotnet-ef
 
 Búa til migrations
-dotnet ef migrations add InitialCreate
+dotnet ef migrations add <name>
 
-uppfæra migrations
+Uppfæra gagnagrunn með nýju migrations
 dotnet ef database update
