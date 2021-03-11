@@ -57,5 +57,10 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
             // save changes
             _dbContext.SaveChanges();
         }
+        public UserDTO AuthenticateUser(LoginInputModel loginInputModel)
+        {
+            // TODO: implement
+            return null;
+        }
     }
 }

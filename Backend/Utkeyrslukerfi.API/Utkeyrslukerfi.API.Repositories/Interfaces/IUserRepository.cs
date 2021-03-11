@@ -10,5 +10,6 @@ namespace Utkeyrslukerfi.API.Repositories.Interfaces
         IEnumerable<UserDTO> GetUsers();
         UserDTO CreateUser(UserInputModel user);
         void UpdateUser(UserInputModel user, int ID);
+        UserDTO AuthenticateUser(LoginInputModel loginInputModel);
     }
 }
