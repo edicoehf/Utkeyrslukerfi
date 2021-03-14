@@ -15,7 +15,7 @@ using Utkeyrslukerfi.API.Services.Implementations;
 using Utkeyrslukerfi.API.Repositories.Implementations;
 using Utkeyrslukerfi.API.Repositories.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Utkeyrslukerfi.API.Middleware;
+using Utkeyrslukerfi.API.Middlewares;
 
 namespace Utkeyrslukerfi.API
 {

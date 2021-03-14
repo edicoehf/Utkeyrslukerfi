@@ -1,7 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Utkeyrslukerfi.API.Models.InputModels;
@@ -9,18 +6,19 @@ using Utkeyrslukerfi.API.Services.Interfaces;
 
 namespace Utkeyrslukerfi.API.Controllers
 {
+    [Authorize]
     [ApiController]
-    [Route("api/users")]
+    [Route("api/account")]
     public class AccountController : ControllerBase
     {
 
         private readonly ILogger<AccountController> _logger;
-        private readonly IUserService _userService;
+        private readonly IAccountService _accountService;
 
-        public AccountController(ILogger<AccountController> logger, IUserService userService)
+        public AccountController(ILogger<AccountController> logger, IAccountService accountService)
         {
             _logger = logger;
-            _userService = userService;
+            _accountService = accountService;
         }
         /// <summary>
         /// Athenticates users by credentials
@@ -40,6 +38,7 @@ namespace Utkeyrslukerfi.API.Controllers
         /// <response code="401">The Auth token was invalid </response>
         /// <response code="404">There is no user with the given ID</response> 
 
+        [AllowAnonymous]
         [HttpPost]
         [Route("login")]
         public IActionResult Login([FromBody] LoginInputModel login)
@@ -48,7 +47,8 @@ namespace Utkeyrslukerfi.API.Controllers
             {
                 return BadRequest("User creadentials are invalid!");
             }
-            // TODO: authenticate user
+            var user = _accountService.Login(login);
+            if (user == null) { return Unauthorized(); }
             return NoContent();
         }
 
