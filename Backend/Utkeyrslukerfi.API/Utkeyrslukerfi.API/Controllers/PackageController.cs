@@ -65,7 +65,7 @@ namespace Utkeyrslukerfi.API.Controllers
                 throw new Exception("Error in CreatePackage controller");
             }
             var new_package = _packageService.CreatePackage(DeliveryID, package);
-            return CreatedAtRoute("CreatePackage", new_package, null);
+            return CreatedAtRoute("CreatePackage", new_package.ID, new_package);
         }
     }
 }
