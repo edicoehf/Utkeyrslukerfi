@@ -7,7 +7,7 @@ import Container from './components/Container'
 import React from 'react'
 import Login from './components/Login'
 import useToken from './hooks/useToken'
-import Navbar from './components/Navbar'
+// import Navbar from './components/Navbar'
 import CreateUserForm from './views/CreateUserForm'
 
 const App = () => {
