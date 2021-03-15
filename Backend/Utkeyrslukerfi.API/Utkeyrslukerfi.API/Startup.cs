@@ -38,8 +38,8 @@ namespace Utkeyrslukerfi.API
             services.AddSwaggerGen(options =>
             {
                 options.SwaggerDoc("v1", new OpenApiInfo { Title = "Utkeyrslukerfi", Version = "v1" });
-                // Set the comments path for the Swagger JSON and UI.
-                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+          // Set the comments path for the Swagger JSON and UI.
+          var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
                 options.IncludeXmlComments(xmlPath);
             });
@@ -48,8 +48,8 @@ namespace Utkeyrslukerfi.API
                 options.UseMySQL(Configuration["MYSQL:connectionString"],
                       options =>
                       {
-                          options.MigrationsAssembly(Assembly.GetExecutingAssembly().FullName);
-                      }
+                              options.MigrationsAssembly(Assembly.GetExecutingAssembly().FullName);
+                          }
                     );
             });
             services.AddAuthentication(config =>
@@ -62,8 +62,10 @@ namespace Utkeyrslukerfi.API
                 options.AddPolicy(name: MyAllowSpecificOrigins,
                                     builder =>
                                     {
-                                        builder.WithOrigins("http://localhost:3000");
-                                    });
+                                            builder.WithOrigins("http://localhost:3000")
+                                                      .AllowAnyHeader()
+                                                      .AllowAnyMethod(); ;
+                                        });
             });
 
             // Adding Mapper
