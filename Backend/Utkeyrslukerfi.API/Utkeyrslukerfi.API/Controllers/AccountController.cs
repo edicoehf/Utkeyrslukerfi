@@ -53,7 +53,6 @@ namespace Utkeyrslukerfi.API.Controllers
             var user = _accountService.Login(login);
             if (user == null) { return Unauthorized(); }
             var token = _tokenService.GenerateJwtToken(user);
-            System.Console.WriteLine(token);
             return Ok(token);
         }
 
