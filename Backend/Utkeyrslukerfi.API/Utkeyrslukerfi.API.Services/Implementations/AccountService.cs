@@ -22,7 +22,7 @@ namespace Utkeyrslukerfi.API.Services.Implementations
 
         public void Logout(int tokenID)
         {
-            // TODO: implement
+            _tokenRepository.VoidToken(tokenID);
         }
     }
 }
