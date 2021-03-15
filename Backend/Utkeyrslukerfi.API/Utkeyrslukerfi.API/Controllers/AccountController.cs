@@ -1,3 +1,4 @@
+using System.Linq;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
@@ -60,7 +61,8 @@ namespace Utkeyrslukerfi.API.Controllers
         [Route("logout")]
         public IActionResult Logout()
         {
-            // TODO: implement
+            int.TryParse(User.Claims.FirstOrDefault(c => c.Type == "tokenID").Value, out var tokenId);
+            _accountService.Logout(tokenId);
             return NoContent();
         }
     }

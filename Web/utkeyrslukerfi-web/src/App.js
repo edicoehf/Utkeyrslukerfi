@@ -7,6 +7,8 @@ import Container from './components/Container'
 import React from 'react';
 import Login from './components/Login';
 import useToken from './hooks/useToken';
+import Navbar from './components/Navbar'
+import CreateUserForm from './views/CreateUserForm'
 
 const App = () => {
   const { token, setToken } = useToken();
@@ -20,11 +22,12 @@ const App = () => {
         <Container>
           <Switch>
             <Route exact path='/users' component={Users} />
+            <Route exact path='/users/create' component={CreateUserForm} />
             <Route exact path='/deliveries' component={Deliveries} />
           </Switch>
         </Container>
       </BrowserRouter>
-    </div>
+    </div >
   )
 }
 

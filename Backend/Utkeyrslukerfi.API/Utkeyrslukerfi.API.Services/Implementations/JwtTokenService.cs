@@ -10,9 +10,9 @@ namespace Utkeyrslukerfi.API.Services.Implementations
         {
             _tokenRepository = tokenRepository;
         }
-        public bool IsTokenBlacklisted(int tokenId)
+        public bool IsTokenBlacklisted(int tokenID)
         {
-            return _tokenRepository.IsTokenBlacklisted(tokenId);
+            return _tokenRepository.IsTokenBlacklisted(tokenID);
         }
     }
 }

@@ -2,6 +2,6 @@ namespace Utkeyrslukerfi.API.Services.Interfaces
 {
     public interface IJwtTokenService
     {
-        bool IsTokenBlacklisted(int tokenId);
+        bool IsTokenBlacklisted(int tokenID);
     }
 }
