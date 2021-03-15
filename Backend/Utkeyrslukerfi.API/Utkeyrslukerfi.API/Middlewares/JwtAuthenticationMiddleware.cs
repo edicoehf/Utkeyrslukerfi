@@ -38,7 +38,7 @@ namespace Utkeyrslukerfi.API.Middlewares
                 {
                     OnTokenValidated = async context =>
                     {
-                        var claim = context.Principal.Claims.FirstOrDefault(c => c.Type == "tokenId")?.Value;
+                        var claim = context.Principal.Claims.FirstOrDefault(c => c.Type == "tokenID")?.Value;
                         int.TryParse(claim, out var tokenId);
                         var jwtTokenService = context.HttpContext.RequestServices.GetService<IJwtTokenService>();
 
