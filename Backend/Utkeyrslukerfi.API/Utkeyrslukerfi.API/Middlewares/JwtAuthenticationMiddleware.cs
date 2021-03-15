@@ -33,21 +33,21 @@ namespace Utkeyrslukerfi.API.Middlewares
                     ValidIssuer = issuer,
                     ValidAudience = audience,
                     NameClaimType = "email" // User.Identity.Email
-                };
+          };
                 x.Events = new JwtBearerEvents
                 {
                     OnTokenValidated = async context =>
                     {
-                        var claim = context.Principal.Claims.FirstOrDefault(c => c.Type == "tokenId")?.Value;
-                        int.TryParse(claim, out var tokenId);
-                        var jwtTokenService = context.HttpContext.RequestServices.GetService<IJwtTokenService>();
+                          var claim = context.Principal.Claims.FirstOrDefault(c => c.Type == "tokenID")?.Value;
+                          int.TryParse(claim, out var tokenId);
+                          var jwtTokenService = context.HttpContext.RequestServices.GetService<IJwtTokenService>();
 
-                        if (jwtTokenService.IsTokenBlacklisted(tokenId))
-                        {
-                            context.Response.StatusCode = 401;
-                            await context.Response.WriteAsync("JWT token provided is invalid.");
-                        }
-                    }
+                          if (jwtTokenService.IsTokenBlacklisted(tokenId))
+                          {
+                              context.Response.StatusCode = 401;
+                              await context.Response.WriteAsync("JWT token provided is invalid.");
+                          }
+                      }
                 };
             });
             return builder;
