@@ -14,11 +14,13 @@ namespace Utkeyrslukerfi.API.Controllers
 
         private readonly ILogger<AccountController> _logger;
         private readonly IAccountService _accountService;
+        private readonly ITokenService _tokenService;
 
-        public AccountController(ILogger<AccountController> logger, IAccountService accountService)
+        public AccountController(ILogger<AccountController> logger, IAccountService accountService, ITokenService tokenService)
         {
             _logger = logger;
             _accountService = accountService;
+            _tokenService = tokenService;
         }
         /// <summary>
         /// Athenticates users by credentials
@@ -49,7 +51,7 @@ namespace Utkeyrslukerfi.API.Controllers
             }
             var user = _accountService.Login(login);
             if (user == null) { return Unauthorized(); }
-            return NoContent();
+            return Ok(_tokenService.GenerateJwtToken(user));
         }
 
         [HttpGet]
