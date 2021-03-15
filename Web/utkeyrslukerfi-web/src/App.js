@@ -1,18 +1,18 @@
 import './styles/navbar.css'
 import './styles/main.css'
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import Users from './views/Users'
 import Deliveries from './views/Deliveries'
 import Container from './components/Container'
-import React from 'react';
-import Login from './components/Login';
-import useToken from './hooks/useToken';
+import React from 'react'
+import Login from './components/Login'
+import useToken from './hooks/useToken'
 import Navbar from './components/Navbar'
 import CreateUserForm from './views/CreateUserForm'
 
 const App = () => {
-  const { token, setToken } = useToken();
-  console.log(token);
+  const { token, setToken } = useToken()
+  console.log(token)
   if (!token) {
     return <Login setToken={setToken} />
   }
@@ -27,8 +27,8 @@ const App = () => {
           </Switch>
         </Container>
       </BrowserRouter>
-    </div >
+    </div>
   )
 }
 
-export default App;
+export default App
