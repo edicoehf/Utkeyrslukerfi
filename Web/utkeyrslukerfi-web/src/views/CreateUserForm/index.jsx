@@ -20,7 +20,7 @@ const CreateUserForm = ({ createUser }) => {
   const [roleError, setRoleError] = useState('')
 
   const validateForm = () => {
-    let valid = true
+    let valid = true // TODO: add better validation
 
     if (name === '') {
       setNameError('Name is required.')
