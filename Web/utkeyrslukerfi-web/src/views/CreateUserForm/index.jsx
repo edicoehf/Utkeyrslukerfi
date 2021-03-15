@@ -11,7 +11,7 @@ const CreateUserForm = ({ createUser }) => {
   const [name, setName] = useState('')
   const [password, setPassword] = useState('')
   const [email, setEmail] = useState('')
-  const [role, setRole] = useState('')
+  const [role, setRole] = useState('0')
 
   // Error messages
   const [nameError, setNameError] = useState('')
@@ -20,40 +20,43 @@ const CreateUserForm = ({ createUser }) => {
   const [roleError, setRoleError] = useState('')
 
   const validateForm = () => {
+    let valid = true
+
     if (name === '') {
       setNameError('Name is required.')
+      valid = false
     }
     if (password === '') {
       setPasswordError('Password is required.')
+      valid = false
     }
     if (email === '') {
       setEmailError('Email is required.')
+      valid = false
     }
     if (role === '') {
       setEmailError('Role is required.')
+      valid = false
     }
 
-    if (nameError === '' && passwordError === '' && emailError === '' && roleError === '') {
-      return true
-    }
-    return false
+    return valid
   }
 
   const submitForm = (e) => {
     e.preventDefault()
 
-    if (!validateForm()) {
-      console.log('The form was not successfully submitted!')
-    } else {
+    if (validateForm()) {
       console.log('The form was successfully submitted!')
       createUser({ name, password, email, role })
+    } else {
+      console.log('The form was not successfully submitted!')
     }
   }
 
   return (
     <Form onSubmit={(e) => submitForm(e)} className='form form-horizontal'>
       <Form.Group as={Row} controlId='formCreateUserName'>
-        <Form.Label column sm={3} className='text'>
+        <Form.Label column sm={3}>
           Name:
         </Form.Label>
         <Col sm={5}>
@@ -73,7 +76,7 @@ const CreateUserForm = ({ createUser }) => {
         </Col>
       </Form.Group>
       <Form.Group as={Row} controlId='formCreateUserPassword'>
-        <Form.Label column sm={3} className='text'>
+        <Form.Label column sm={3}>
           Password:
         </Form.Label>
         <Col sm={5}>
@@ -93,7 +96,7 @@ const CreateUserForm = ({ createUser }) => {
         </Col>
       </Form.Group>
       <Form.Group as={Row} controlId='formCreateUserEmail'>
-        <Form.Label column sm={3} className='text'>
+        <Form.Label column sm={3}>
           Email:
         </Form.Label>
         <Col sm={5}>
@@ -113,20 +116,22 @@ const CreateUserForm = ({ createUser }) => {
         </Col>
       </Form.Group>
       <Form.Group as={Row} controlId='formCreateUserRole'>
-        <Form.Label column sm={3} className='text'>
+        <Form.Label column sm={3}>
           Role:
         </Form.Label>
         <Col sm={5}>
           <Form.Control
-            name='email'
-            placeholder='Insert role...'
-            type='text'
-            value={role}
-            onInput={(e) => {
+            as='select'
+            custom
+            onChange={(e) => {
               setRole(e.target.value)
               setRoleError('')
             }}
-          />
+          >
+            <option value='0'>Admin</option>
+            <option value='1'>Office</option>
+            <option value='2'>Driver</option>
+          </Form.Control>
         </Col>
         <Col sm={4}>
           <span className='error'>{roleError}</span>
