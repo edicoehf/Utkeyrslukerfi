@@ -25,7 +25,6 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
         public bool IsTokenBlacklisted(int tokenID)
         {
             var token = _dbContext.JwtTokens.FirstOrDefault(t => t.ID == tokenID);
-            System.Console.WriteLine(tokenID);
             if (token == null) { return true; }
             return token.Blacklisted;
         }
