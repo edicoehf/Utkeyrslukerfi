@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Utkeyrslukerfi.API.Models.InputModels;
@@ -51,7 +52,9 @@ namespace Utkeyrslukerfi.API.Controllers
             }
             var user = _accountService.Login(login);
             if (user == null) { return Unauthorized(); }
-            return Ok(_tokenService.GenerateJwtToken(user));
+            var token = _tokenService.GenerateJwtToken(user);
+            System.Console.WriteLine(token);
+            return Ok(token);
         }
 
         [HttpGet]
