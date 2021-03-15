@@ -11,7 +11,7 @@ const CreateUserForm = ({ createUser }) => {
   const [name, setName] = useState('')
   const [password, setPassword] = useState('')
   const [email, setEmail] = useState('')
-  const [role, setRole] = useState('0')
+  const [role, setRole] = useState('0') // TODO: define the roles and use configuration to add them
 
   // Error messages
   const [nameError, setNameError] = useState('')
