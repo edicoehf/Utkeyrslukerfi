@@ -1,0 +1,8 @@
+
+.navbar {
+  height: 5em;
+  background-color: #31507A;
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
