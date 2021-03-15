@@ -6,6 +6,6 @@ namespace Utkeyrslukerfi.API.Services.Interfaces
     public interface IAccountService
     {
         UserDTO Login(LoginInputModel loginInputModel);
-        void Logout(int tokenId);
+        void Logout(int tokenID);
     }
 }

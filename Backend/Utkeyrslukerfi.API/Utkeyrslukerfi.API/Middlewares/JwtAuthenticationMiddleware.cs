@@ -39,10 +39,10 @@ namespace Utkeyrslukerfi.API.Middlewares
                     OnTokenValidated = async context =>
                     {
                         var claim = context.Principal.Claims.FirstOrDefault(c => c.Type == "tokenID")?.Value;
-                        int.TryParse(claim, out var tokenId);
+                        int.TryParse(claim, out var tokenID);
                         var jwtTokenService = context.HttpContext.RequestServices.GetService<IJwtTokenService>();
 
-                        if (jwtTokenService.IsTokenBlacklisted(tokenId))
+                        if (jwtTokenService.IsTokenBlacklisted(tokenID))
                         {
                             context.Response.StatusCode = 401;
                             await context.Response.WriteAsync("JWT token provided is invalid.");
