@@ -1,12 +1,12 @@
-import './styles/navbar.css';
-import './styles/main.css';
+import './styles/navbar.css'
+import './styles/main.css'
 import { Switch, Route } from 'react-router-dom'
 import Users from './views/Users'
 import Deliveries from './views/Deliveries'
-import Navbar from './components/Navbar';
-import Container from './components/Container';
+import Navbar from './components/Navbar'
+import Container from './components/Container'
 
-function App() {
+function App () {
   return (
     <div className='App'>
       <Navbar />

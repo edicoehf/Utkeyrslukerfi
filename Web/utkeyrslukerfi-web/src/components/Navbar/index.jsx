@@ -1,17 +1,17 @@
-import React from 'react';
-import { NavLink } from 'react-router-dom';
+import React from 'react'
+import { NavLink } from 'react-router-dom'
 
-function Navbar() {
+function Navbar () {
   return (
-    <nav className="navbar">
+    <nav className='navbar'>
       <NavLink
         exact
-        to="/home"
-        className="navigation-link"
+        to='/home'
+        className='navigation-link'
       >Home
-        </NavLink>
-    </nav >
-  );
+      </NavLink>
+    </nav>
+  )
 }
 
-export default Navbar;
+export default Navbar
