@@ -9,6 +9,7 @@ import Login from './components/Login'
 import useToken from './hooks/useToken'
 // import Navbar from './components/Navbar'
 import CreateUserForm from './views/CreateUserForm'
+import NotFound from './views/NotFound'
 
 const App = () => {
   const { token, setToken } = useToken()
@@ -23,6 +24,7 @@ const App = () => {
             <Route exact path='/users' component={Users} />
             <Route exact path='/users/create' component={CreateUserForm} />
             <Route exact path='/deliveries' component={Deliveries} />
+            <Route exact path='*' component={NotFound} />
           </Switch>
         </Container>
       </BrowserRouter>

@@ -1,0 +1,25 @@
+.wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.wrapper .notfound {
+  display: flex;
+  flex-direction: column;
+}
+
+.navigation-link {
+  text-decoration: none;
+  color: white;
+  background-color: #31507a;
+  border-radius: 0.4em;
+  padding: 0.5em;
+  box-shadow: 0 0 5px 0 #31507aff;
+}
+
+.navigation-link:hover {
+  text-decoration: none;
+  color: white;
+  box-shadow: 0 0 20px -5px #31507aff;
+}
