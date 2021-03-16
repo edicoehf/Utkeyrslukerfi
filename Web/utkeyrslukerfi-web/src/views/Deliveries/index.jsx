@@ -1,20 +1,31 @@
-import React from 'react'
-// import { connect } from 'react-redux'
+import React, { useEffect } from 'react'
+import { connect } from 'react-redux'
+import { getDeliveries } from '../../actions/deliveryActions'
+import Delivery from '../../components/Delivery'
 
-const Deliveries = () => {
-  return (
-    <div>
-      something
-    </div>
-  )
+const Deliveries = ({ getDeliveries, deliveries }) => {
+	useEffect(() => {
+		getDeliveries()
+	}, [])
+	return (
+		<div className='deliveries'>
+			{deliveries.map(d =>
+				<Delivery
+					key={d.deliveryId}
+					recipient={d.recipient}
+					seller={d.seller}
+					driverComment={d.driverComment}
+					customerComment={d.customerComment}
+					status={d.status}
+				/>)}
+		</div>
+	)
 }
 
-export default Deliveries
+const mapStateToProps = reduxStoreState => {
+	return {
+		deliveries: reduxStoreState.deliveries
+	}
+}
 
-// const mapStateToProps = reduxStoreState => {
-//   return {
-//     deliveries: reduxStoreState.deliveries
-//   }
-// }
-
-// export default connect(mapStateToProps, getDeliveries)(Users)
+export default connect(mapStateToProps, {getDeliveries})(Deliveries)
