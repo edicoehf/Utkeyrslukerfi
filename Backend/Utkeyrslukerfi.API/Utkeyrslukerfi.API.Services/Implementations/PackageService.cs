@@ -13,17 +13,17 @@ namespace Utkeyrslukerfi.API.Services.Implementations
         {
             _packageRepo = packageRepository;
         }
-        public PackageDTO GetPackage(string ID)
+        public PackageDetailsDTO GetPackage(string DeliveryID, string ID)
         {
-            return null;
+            return _packageRepo.GetPackage(DeliveryID, ID);
         }
         public IEnumerable<PackageDetailsDTO> GetPackages(string id, int pageSize, int pageNumber)
         {
             return _packageRepo.GetPackages(id, pageSize, pageNumber);
         }
-        public PackageDTO CreatePackage(PackageInputModel package)
+        public PackageDTO CreatePackage(string DeliveryID, PackageInputModel package)
         {
-            return _packageRepo.CreatePackage(package);
+            return _packageRepo.CreatePackage(DeliveryID, package);
         }
     }
 }

@@ -88,6 +88,20 @@ namespace Utkeyrslukerfi.API.Migrations
                     b.ToTable("Deliveries");
                 });
 
+            modelBuilder.Entity("Utkeyrslukerfi.API.Models.Entities.JwtToken", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<bool>("Blacklisted")
+                        .HasColumnType("tinyint(1)");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("JwtTokens");
+                });
+
             modelBuilder.Entity("Utkeyrslukerfi.API.Models.Entities.Package", b =>
                 {
                     b.Property<string>("ID")

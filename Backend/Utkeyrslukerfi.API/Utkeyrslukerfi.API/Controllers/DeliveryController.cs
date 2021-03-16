@@ -1,7 +1,5 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Utkeyrslukerfi.API.Models.InputModels;
@@ -9,6 +7,7 @@ using Utkeyrslukerfi.API.Services.Interfaces;
 
 namespace Utkeyrslukerfi.API.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/deliveries")]
     public class DeliveryController : ControllerBase
@@ -119,7 +118,7 @@ namespace Utkeyrslukerfi.API.Controllers
                 throw new Exception("Error in CreateDelivery controller");
             }
             var new_delivery = _deliveryService.CreateDelivery(delivery);
-            return CreatedAtRoute("CreateDelivery", new_delivery, null);
+            return CreatedAtRoute("CreateDelivery", new_delivery.ID, new_delivery);
         }
     }
 }

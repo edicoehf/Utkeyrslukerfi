@@ -11,9 +11,6 @@ namespace Utkeyrslukerfi.API.Models.InputModels
         public string Email { get; set; }
         [Required(ErrorMessage = "Role is required")] // Role 1: admin, 2: office, 3: driver
         public int Role { get; set; }
-        // TODO custom data anotations for password
-        // which makes it depend on the Role chosen
-        // [Required(ErrorMessage = "Password Field is required")]
         [ValidateUserPassword]
         public string Password { get; set; }
 

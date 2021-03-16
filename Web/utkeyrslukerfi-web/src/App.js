@@ -1,21 +1,32 @@
-import './App.css'
+import './styles/navbar.css'
+import './styles/main.css'
+import { BrowserRouter, Route, Switch } from 'react-router-dom'
+import Users from './views/Users'
+import Deliveries from './views/Deliveries'
+import Container from './components/Container'
+import React from 'react'
+import Login from './components/Login'
+import useToken from './hooks/useToken'
+// import Navbar from './components/Navbar'
+import CreateUserForm from './views/CreateUserForm'
 
-function App () {
+const App = () => {
+  const { token, setToken } = useToken()
+  console.log(token)
+  if (!token) {
+    return <Login setToken={setToken} />
+  }
   return (
     <div className='App'>
-      <header className='App-header'>
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className='App-link'
-          href='https://reactjs.org'
-          target='_blank'
-          rel='noopener noreferrer'
-        >
-          Learn React
-        </a>
-      </header>
+      <BrowserRouter>
+        <Container>
+          <Switch>
+            <Route exact path='/users' component={Users} />
+            <Route exact path='/users/create' component={CreateUserForm} />
+            <Route exact path='/deliveries' component={Deliveries} />
+          </Switch>
+        </Container>
+      </BrowserRouter>
     </div>
   )
 }

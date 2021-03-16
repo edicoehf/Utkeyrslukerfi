@@ -1,7 +1,5 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Utkeyrslukerfi.API.Models.InputModels;
@@ -9,6 +7,7 @@ using Utkeyrslukerfi.API.Services.Interfaces;
 
 namespace Utkeyrslukerfi.API.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/users")]
     public class UserController : ControllerBase
@@ -66,7 +65,7 @@ namespace Utkeyrslukerfi.API.Controllers
                 throw new Exception("Error in CreateUser controller");
             }
             var new_user = _userService.CreateUser(user);
-            return CreatedAtRoute("CreateUser", new_user, null);
+            return CreatedAtRoute("CreateUser", new_user.ID, new_user);
         }
 
         [HttpPut]
