@@ -28,4 +28,4 @@ const mapStateToProps = reduxStoreState => {
 	}
 }
 
-export default connect(mapStateToProps, getDeliveries)(Deliveries)
+export default connect(mapStateToProps, {getDeliveries})(Deliveries)
