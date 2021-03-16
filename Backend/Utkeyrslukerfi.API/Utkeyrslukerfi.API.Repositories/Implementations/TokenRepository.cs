@@ -22,17 +22,16 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
             return token;
         }
 
-        public bool IsTokenBlacklisted(int tokenId)
+        public bool IsTokenBlacklisted(int tokenID)
         {
-            var token = _dbContext.JwtTokens.FirstOrDefault(t => t.ID == tokenId);
-            System.Console.WriteLine(tokenId);
+            var token = _dbContext.JwtTokens.FirstOrDefault(t => t.ID == tokenID);
             if (token == null) { return true; }
             return token.Blacklisted;
         }
 
-        public void VoidToken(int tokenId)
+        public void VoidToken(int tokenID)
         {
-            var token = _dbContext.JwtTokens.FirstOrDefault(t => t.ID == tokenId);
+            var token = _dbContext.JwtTokens.FirstOrDefault(t => t.ID == tokenID);
             if (token == null) { return; }
             token.Blacklisted = true;
             _dbContext.SaveChanges();

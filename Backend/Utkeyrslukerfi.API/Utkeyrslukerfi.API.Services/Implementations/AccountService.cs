@@ -20,9 +20,9 @@ namespace Utkeyrslukerfi.API.Services.Implementations
             return _userRepository.Login(loginInputModel);
         }
 
-        public void Logout(int tokenId)
+        public void Logout(int tokenID)
         {
-            // TODO: implement
+            _tokenRepository.VoidToken(tokenID);
         }
     }
 }

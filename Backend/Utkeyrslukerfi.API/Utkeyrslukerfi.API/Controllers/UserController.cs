@@ -65,7 +65,7 @@ namespace Utkeyrslukerfi.API.Controllers
                 throw new Exception("Error in CreateUser controller");
             }
             var new_user = _userService.CreateUser(user);
-            return CreatedAtRoute("CreateUser", new_user, null);
+            return CreatedAtRoute("CreateUser", new_user.ID, new_user);
         }
 
         [HttpPut]

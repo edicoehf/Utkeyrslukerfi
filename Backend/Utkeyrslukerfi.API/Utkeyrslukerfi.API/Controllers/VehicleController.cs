@@ -79,7 +79,7 @@ namespace Utkeyrslukerfi.API.Controllers
                 throw new Exception("Error in CreateVehicle controller");
             }
             var newVehicle = _vehicleService.CreateVehicle(vehicle);
-            return CreatedAtRoute("CreateVehicle", newVehicle, null);
+            return CreatedAtRoute("CreateVehicle", newVehicle.ID, newVehicle);
         }
     }
 }

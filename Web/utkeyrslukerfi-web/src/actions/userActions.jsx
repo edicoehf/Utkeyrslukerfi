@@ -1,4 +1,4 @@
-import { GET_USERS } from '../constants'
+import { GET_USERS, CREATE_USER } from '../constants'
 import userService from '../services/userService'
 
 export const getUsers = () => async (dispatch) => {
@@ -13,4 +13,18 @@ export const getUsers = () => async (dispatch) => {
 const getUsersSuccess = (users) => ({
   type: GET_USERS,
   payload: users
+})
+
+export const createUser = (user) => async (dispatch) => {
+  try {
+    const body = await userService.createUser(user)
+    dispatch(createUserSuccess({ id: body.id, ...user }))
+  } catch (err) {
+    console.log('Bad request, please try again later.')
+  }
+}
+
+const createUserSuccess = (user) => ({
+  type: CREATE_USER,
+  payload: user
 })

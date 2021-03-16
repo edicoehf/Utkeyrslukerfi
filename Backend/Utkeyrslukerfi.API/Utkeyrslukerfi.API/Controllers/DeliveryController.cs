@@ -118,7 +118,7 @@ namespace Utkeyrslukerfi.API.Controllers
                 throw new Exception("Error in CreateDelivery controller");
             }
             var new_delivery = _deliveryService.CreateDelivery(delivery);
-            return CreatedAtRoute("CreateDelivery", new_delivery, null);
+            return CreatedAtRoute("CreateDelivery", new_delivery.ID, new_delivery);
         }
     }
 }
