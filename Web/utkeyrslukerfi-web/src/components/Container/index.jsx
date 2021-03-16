@@ -1,5 +1,6 @@
 import React from 'react'
 
-const Container = ({ children }) => <div className='wrapper'> {children} </div>
+// container class from bootstrap
+const Container = ({ children }) => <div className='wrapper container'> {children} </div>
 
 export default Container
