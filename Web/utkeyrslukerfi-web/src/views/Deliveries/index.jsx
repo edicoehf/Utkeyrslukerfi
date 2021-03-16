@@ -1,16 +1,24 @@
 import React, { useEffect } from 'react'
+import { useHistory  } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { getDeliveries } from '../../actions/deliveryActions'
 import Delivery from '../../components/Delivery'
 
 const Deliveries = ({ getDeliveries, deliveries }) => {
+	const history = useHistory();
+	
 	useEffect(() => {
 		getDeliveries()
 	}, [])
+	
+	const navigateToDelivery = (obj) => {
+		history.push(`/deliveries/${obj.id}`,{"params":obj});
+	}
+	
 	const renderRows = () => {
 		return deliveries.map(function(obj, id) {
 			return (
-				<tr key={id} onClick={() => console.log("navigate to item")}>
+				<tr key={id} onClick={() => navigateToDelivery(obj)}>
 					<td>{obj.id}</td>
 					<td>{obj.status}</td>
 					<td>{obj.recipient}</td>
@@ -22,6 +30,7 @@ const Deliveries = ({ getDeliveries, deliveries }) => {
 			)
 		})
 	}
+	
 	return (
 		<div className='deliveries'>
         <table className="table">
