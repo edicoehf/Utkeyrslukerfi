@@ -12,7 +12,6 @@ import CreateUserForm from './views/CreateUserForm'
 
 const App = () => {
   const { token, setToken } = useToken()
-  console.log(token)
   if (!token) {
     return <Login setToken={setToken} />
   }

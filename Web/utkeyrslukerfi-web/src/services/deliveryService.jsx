@@ -1,9 +1,14 @@
 import { DELIVERY_URL } from '../constants'
 
-const getDeliveryService = () => {
+const deliveryService = () => {
+  const token = JSON.parse(localStorage.getItem('token'));
   return {
-    getDeliveries: () => fetch(DELIVERY_URL).then(d => d.json()).then(d => d)
+    getDeliveries: () => fetch(DELIVERY_URL, {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    }).then(d => d.json()).then(d => d),
   }
 }
 
-export default getDeliveryService()
+export default deliveryService()
