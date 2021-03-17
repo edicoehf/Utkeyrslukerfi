@@ -18,19 +18,17 @@ steps:
 - task: UseDotNet@2
   inputs:
     version: '5.0.x'
+- script: dotnet build --configuration $(buildConfiguration)
+  displayName: 'dotnet publish $(buildConfiguration)'
 
 - task: DotNetCoreCLI@2
   displayName: Publish
   inputs:
     command: publish
-    publishWebProjects: false
+    publishWebProjects: True
     projects: '$(projectDirectory)\Utkeyrslukefi.API.csproj'
     arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)'
-    zipAfterPublish: true
+    zipAfterPublish: True
 
-- task: AzureWebApp@1
-  displayName: Azure Web App Deploy
-  inputs:
-    azureSubscription: $(azureSubscription)
-    appName: samplewebapp
-    package: $(Build.ArtifactStagingDirectory)/**/*.zip
+- task: PublishBuildArtifacts@1
+  displayName: 'publish artifacts'
