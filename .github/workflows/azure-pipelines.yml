@@ -1,34 +1,39 @@
-# ASP.NET Core (.NET Framework)
-# Build and test ASP.NET Core projects targeting the full .NET Framework.
-# Add steps that publish symbols, save build artifacts, and more:
-# https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
+name: CD for Utkeyrslukerfi
+on: [push] 
+env: 
+  AZURE_WEBAPP_PACKAGE_PATH: '.'      # set this to the path to your web app project, defaults to the repository root 
+  DOTNET_VERSION: '5.0.103'           # this is set to the GA version of .NET 5
+jobs: 
+  build: 
+    runs-on: windows-latest 
+    steps: 
+      # Checkout the repo 
+      - uses: actions/checkout@master 
+      - uses: azure/login@v1 
+        with: 
+          creds: $ 
+       
+      # Setup .NET Core SDK 
+      - name: Setup .NET Core 
+        uses: actions/setup-dotnet@v1 
+        with: 
+          dotnet-version: $  
+       
+      # Run dotnet build and publish 
+      - name: dotnet build and publish 
+        run: | 
+          dotnet restore 
+          dotnet build --configuration Release 
+          dotnet publish -c Release -o '$/myapp'  
+           
+      # Deploy to Azure Web apps 
+      - name: 'Run Azure webapp deploy action using azure credentials' 
+        uses: azure/webapps-deploy@v2 
+        with:  
+          app-name: Utkeyrslukerfi
+          package: '$/myapp' 
+       
+      - name: logout 
+        run: | 
+          az logout
 
-trigger:
-- main
-
-pool:
-  vmImage: 'windows-latest'
-
-variables:
-  solution: '**/*.sln'
-  buildPlatform: 'Any CPU'
-  buildConfiguration: 'Release'
-
-steps:
-- task: UseDotNet@2
-  inputs:
-    version: '5.0.103'
-- script: dotnet build --configuration $(buildConfiguration)
-  displayName: 'dotnet publish $(buildConfiguration)'
-
-- task: DotNetCoreCLI@2
-  displayName: Publish
-  inputs:
-    command: publish
-    publishWebProjects: True
-    projects: '$(projectDirectory)\Backend\Utkeyrslukerfi.API\Utkeyrslukerfi.API\Utkeyrslukefi.API.csproj'
-    arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)'
-    zipAfterPublish: True
-
-- task: PublishBuildArtifacts@1
-  displayName: 'publish artifacts'
