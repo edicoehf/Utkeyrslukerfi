@@ -24,7 +24,7 @@ steps:
   inputs:
     command: publish
     publishWebProjects: false
-    projects: '$(projectDirectory)\hadar.csproj'
+    projects: '$(projectDirectory)\Utkeyrslukefi.API.csproj'
     arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)'
     zipAfterPublish: true
 
