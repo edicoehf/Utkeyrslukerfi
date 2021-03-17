@@ -12,14 +12,11 @@ jobs:
           credentials: ${{ secrets.AZURE_CREDENTIALS }}
         env: # Or as an environment variable
           credentials: ${{ secrets.AZURE_CREDENTIALS }}
-      # Checkout the repo 
-      - uses: actions/checkout@master 
-      # Setup .NET Core SDK 
-      - name: Setup .NET Core 
         uses: actions/setup-dotnet@v1 
         with: 
           dotnet-version: $  
-       
+      # Checkout the repo 
+      - uses: actions/checkout@master 
       # Run dotnet build and publish 
       - name: dotnet build and publish 
         run: | 
