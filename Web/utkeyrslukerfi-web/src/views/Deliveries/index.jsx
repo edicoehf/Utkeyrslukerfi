@@ -1,22 +1,21 @@
 import React, { useEffect } from 'react'
-import { useHistory  } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { getDeliveries } from '../../actions/deliveryActions'
-import Delivery from '../../components/Delivery'
 
 const Deliveries = ({ getDeliveries, deliveries }) => {
 	const history = useHistory();
-	
+
 	useEffect(() => {
 		getDeliveries()
 	}, [])
-	
+
 	const navigateToDelivery = (obj) => {
-		history.push(`/deliveries/${obj.id}`,{"params":obj});
+		history.push(`/deliveries/${obj.id}`, { "params": obj });
 	}
-	
+
 	const renderRows = () => {
-		return deliveries.map(function(obj, id) {
+		return deliveries.map(function (obj, id) {
 			return (
 				<tr key={id} onClick={() => navigateToDelivery(obj)}>
 					<td>{obj.id}</td>
@@ -30,40 +29,40 @@ const Deliveries = ({ getDeliveries, deliveries }) => {
 			)
 		})
 	}
-	
+
 	return (
 		<div className='deliveries'>
-        <table className="table">
-          <thead className="thead-dark">
-            <tr>
-              <th>
-                ID
+			<table className="table">
+				<thead className="thead-dark">
+					<tr>
+						<th>
+							ID
               </th>
-							<th>
-                Status
+						<th>
+							Status
               </th>
-              <th>
-                Recepient
+						<th>
+							Recepient
               </th>
-							<th>
-                Seller
+						<th>
+							Seller
               </th>
-							<th>
-                Driver
+						<th>
+							Driver
               </th>
-							<th>
-                Delivery Address
+						<th>
+							Delivery Address
               </th>
-							<th>
-                Pickup Address
+						<th>
+							Pickup Address
               </th>
-            </tr>
-          </thead>
-          <tbody>
-            {renderRows()}
-          </tbody>
-        </table>
-        <hr/>
+					</tr>
+				</thead>
+				<tbody>
+					{renderRows()}
+				</tbody>
+			</table>
+			<hr />
 		</div>
 	)
 }
