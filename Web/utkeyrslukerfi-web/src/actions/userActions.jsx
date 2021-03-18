@@ -28,3 +28,11 @@ const createUserSuccess = (user) => ({
   type: CREATE_USER,
   payload: user
 })
+
+export const updatePassword = (id, user) => async () => {
+  try {
+    await userService.updatePassword(id, user)
+  } catch (err) {
+    console.log('Bad request, please try again later.')
+  }
+}
