@@ -32,6 +32,15 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
             }
             return _mapper.Map<UserDTO>(user);
         }
+        public UserDTO GetUserByEmail(string email)
+        {
+            var user = _dbContext.Users.FirstOrDefault(u => u.Email == email);
+            if (user == null)
+            {
+                throw new NotFoundException($"No user with email: {email}");
+            }
+            return _mapper.Map<UserDTO>(user);
+        }
         public IEnumerable<UserDTO> GetUsers(int pageSize, int pageNumber)
         {
             var users = _dbContext.Users;

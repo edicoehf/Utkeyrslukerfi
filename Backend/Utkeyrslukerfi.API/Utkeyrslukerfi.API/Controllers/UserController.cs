@@ -50,6 +50,18 @@ namespace Utkeyrslukerfi.API.Controllers
         }
 
         [HttpGet]
+        [Route("by-email")]
+        public IActionResult GetUserByEmail([FromQuery] string email = "")
+        {
+            if (email == "")
+            {
+                throw new Exception("Error in GetUserByEmail controller");
+            }
+            var user = _userService.GetUserByEmail(email);
+            return Ok(user);
+        }
+
+        [HttpGet]
         public IActionResult GetUsers([FromQuery] int role = 0, int pageSize = 25, int pageNumber = 0)
         {
             var users = _userService.GetUsers(role, pageSize, pageNumber);
