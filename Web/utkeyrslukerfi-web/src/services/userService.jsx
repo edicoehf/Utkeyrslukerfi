@@ -8,7 +8,7 @@ const userService = () => {
         Authorization: `Bearer ${token}`
       }
     }).then(d => d.json()).then(d => d),
-    createUSer: (user) => fetch(USER_URL, {
+    createUser: (user) => fetch(USER_URL, {
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`
