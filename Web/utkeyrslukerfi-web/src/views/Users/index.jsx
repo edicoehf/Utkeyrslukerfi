@@ -1,23 +1,57 @@
 import React, { useEffect } from 'react'
+import { useHistory } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { getUsers } from '../../actions/userActions'
-import User from '../../components/User'
 
 const Users = ({ getUsers, users }) => {
+  const history = useHistory();
+
   useEffect(() => {
     getUsers()
   }, [])
 
+  const navigateToDelivery = (obj) => {
+		history.push(`/users/${obj.id}`, { "params": obj });
+	}
+
+  const renderRows = () => {
+    return users.map(function (obj, id) {
+      return (
+        <tr key={id} onClick={() => navigateToDelivery(obj)}>
+					<td>{obj.id}</td>
+					<td>{obj.name}</td>
+					<td>{obj.email}</td>
+					<td>{obj.role}</td>
+				</tr>
+      )
+    })
+  }
+
   return (
     <div className='users'>
-      {users.map(u =>
-        <User
-          key={u.id}
-          name={u.name}
-          email={u.email}
-          role={u.role}
-        />)}
-    </div>
+			<table className="table">
+				<thead className="thead-dark">
+					<tr>
+						<th>
+							ID
+              </th>
+						<th>
+							Name
+              </th>
+						<th>
+							Email
+              </th>
+						<th>
+							Role
+              </th>
+					</tr>
+				</thead>
+				<tbody>
+					{renderRows()}
+				</tbody>
+			</table>
+			<hr />
+		</div>
   )
 }
 
