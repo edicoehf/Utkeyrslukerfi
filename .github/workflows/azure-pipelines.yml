@@ -8,10 +8,10 @@ jobs:
     runs-on: windows-latest 
     steps: 
       # Checkout the repo 
-      - uses: actions/checkout@master 
+      - uses: actions/checkout@ermir 
       - uses: azure/login@v1 
         with: 
-          creds: $ 
+          credentials: ${{ secrets.AZURE_CREDENTIALS }}
        
       # Setup .NET Core SDK 
       - name: Setup .NET Core 
