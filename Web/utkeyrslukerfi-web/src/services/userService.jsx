@@ -16,7 +16,7 @@ const userService = () => {
       method: 'POST',
       body: JSON.stringify(user)
     }).then(r => r.json()),
-    updateUser: (id, user) => fetch(USER_URL+id, {
+    updateUser: (id, user) => fetch(USER_URL+'/'+id, {
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`
