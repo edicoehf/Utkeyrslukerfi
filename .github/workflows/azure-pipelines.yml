@@ -1,8 +1,11 @@
+# This is a basic workflow to help you get started with Actions
+
 name: CD for Utkeyrslukerfi
 on: [push] 
 env: 
   AZURE_WEBAPP_PACKAGE_PATH: './Backend/Utkeyrslukerfi.API/Utkeyrslukerfi.API/'
   DOTNET_VERSION: '5.0.103'
+
 jobs: 
   build: 
     runs-on: windows-latest 

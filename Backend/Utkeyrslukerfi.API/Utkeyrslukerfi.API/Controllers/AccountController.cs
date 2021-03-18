@@ -47,6 +47,7 @@ namespace Utkeyrslukerfi.API.Controllers
         [Route("login")]
         public IActionResult Login([FromBody] LoginInputModel login)
         {
+            System.Console.WriteLine("Someone Called?");
             if (!ModelState.IsValid)
             {
                 return BadRequest("User creadentials are invalid!");
