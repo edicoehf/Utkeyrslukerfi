@@ -1,8 +1,8 @@
 name: CD for Utkeyrslukerfi
 on: [push] 
 env: 
-  AZURE_WEBAPP_PACKAGE_PATH: '.'      # set this to the path to your web app project, defaults to the repository root 
-  DOTNET_VERSION: '5.0.103'           # this is set to the GA version of .NET 5
+  AZURE_WEBAPP_PACKAGE_PATH: './Backend/Utkeyrslukerfi.API/Utkeyrslukerfi.API/'
+  DOTNET_VERSION: '5.0.103'
 jobs: 
   build: 
     runs-on: windows-latest 
@@ -13,22 +13,23 @@ jobs:
         env: # Or as an environment variable
           credentials: ${{ secrets.AZURE_CREDENTIALS }}
       - uses: actions/setup-dotnet@v1 
+      - name: switch
       # Checkout the repo 
-      - uses: actions/checkout@main 
+      - uses: actions/checkout@ermir 
       # Run dotnet build and publish 
       - name: dotnet build and publish 
         working-directory: ./Backend/Utkeyrslukerfi.API/Utkeyrslukerfi.API/
         run: | 
           dotnet restore 
           dotnet build --configuration Release 
-          dotnet publish -c Release -o '$/myapp'  
+          dotnet publish -c Release -o '$/myApp'  
            
       # Deploy to Azure Web apps 
       - name: 'Run Azure webapp deploy action using azure credentials' 
         uses: azure/webapps-deploy@v2 
         with:  
           app-name: Utkeyrslukerfi
-          package: '$/myapp' 
+          package: '$/myApp' 
        
       - name: logout 
         run: | 
