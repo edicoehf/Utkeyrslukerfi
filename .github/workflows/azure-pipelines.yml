@@ -33,7 +33,7 @@ jobs:
       - name: 'Run Azure webapp deploy action using azure credentials' 
         uses: azure/webapps-deploy@v2 
         with:  
-          app-name: myiApp
+          app-name: myApp
           package: '$/myApp' 
        
       - name: logout 
