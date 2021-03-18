@@ -21,7 +21,7 @@ const CreateUserForm = ({ createUser }) => {
         <Form.Label column sm={3}>
           Name:
         </Form.Label>
-        <Col sm={5}>
+        <Col sm={8}>
           <Form.Control
             name='name'
             placeholder='Insert name...'
@@ -47,7 +47,7 @@ const CreateUserForm = ({ createUser }) => {
         <Form.Label column sm={3}>
           Password:
         </Form.Label>
-        <Col sm={5}>
+        <Col sm={8}>
           <Form.Control
             name='password'
             placeholder='Insert password...'
@@ -73,7 +73,7 @@ const CreateUserForm = ({ createUser }) => {
         <Form.Label column sm={3}>
           Email:
         </Form.Label>
-        <Col sm={5}>
+        <Col sm={8}>
           <Form.Control
             name='email'
             placeholder='Insert email...'
@@ -99,10 +99,11 @@ const CreateUserForm = ({ createUser }) => {
         <Form.Label column sm={3}>
           Role:
         </Form.Label>
-        <Col sm={5}>
+        <Col sm={8}>
           <Form.Control
             as='select'
             custom
+            name='role'
             ref={register}
           >
             <option value='0'>Admin</option>
@@ -110,9 +111,6 @@ const CreateUserForm = ({ createUser }) => {
             <option value='2'>Driver</option>
           </Form.Control>
         </Col>
-        {/* <Col sm={4}>
-          {errors.role && <p>{errors.role.message}</p>}
-        </Col> */}
       </Form.Group>
 
       <Form.Group as={Row}>
