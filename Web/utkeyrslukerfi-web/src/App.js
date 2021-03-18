@@ -1,6 +1,7 @@
 import './styles/navbar.css'
 import './styles/main.css'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
+import Home from './views/Home'
 import Users from './views/Users'
 import Deliveries from './views/Deliveries'
 import Container from './components/Container'
@@ -16,11 +17,13 @@ const App = () => {
   if (!token) {
     return <Login setToken={setToken} />
   }
+  console.log("get here");
   return (
     <div className='App'>
       <BrowserRouter>
         <Container>
           <Switch>
+            <Route exact path='/home' component={Home} />
             <Route exact path='/users' component={Users} />
             <Route exact path='/users/create' component={CreateUserForm} />
             <Route exact path='/deliveries' component={Deliveries} />
