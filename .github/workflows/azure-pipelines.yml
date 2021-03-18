@@ -1,7 +1,9 @@
+# This is a basic workflow to help you get started with Actions
+
 name: CD for Utkeyrslukerfi
 on: [push] 
 env: 
-  AZURE_WEBAPP_PACKAGE_PATH: '.'      # set this to the path to your web app project, defaults to the repository root 
+  AZURE_WEBAPP_PACKAGE_PATH: './Backend/Utkeyrslukerfi.API/Utkeyrslukerfi.API/'      # set this to the path to your web app project, defaults to the repository root 
   DOTNET_VERSION: '5.0.103'           # this is set to the GA version of .NET 5
 jobs: 
   build: 
