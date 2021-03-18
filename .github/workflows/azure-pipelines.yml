@@ -1,27 +1,26 @@
-# This is a basic workflow to help you get started with Actions
-
-name: CD for Utkeyrslukerfi
+name: .NET Core 
 on: [push] 
 env: 
-  AZURE_WEBAPP_PACKAGE_PATH: './Backend/Utkeyrslukerfi.API/Utkeyrslukerfi.API/'
+  AZURE_WEBAPP_PACKAGE_PATH: './Backend/Utkeyrslukerfi.API/'
   DOTNET_VERSION: '5.0.103'
-
 jobs: 
   build: 
     runs-on: windows-latest 
     steps: 
-      - name: Sample Azure action
-        with: # Set Azure credentials secret as an input
-          credentials: ${{ secrets.AZURE_CREDENTIALS }}
-        env: # Or as an environment variable
-          credentials: ${{ secrets.AZURE_CREDENTIALS }}
-      - uses: actions/setup-dotnet@v1 
-      - name: switch
       # Checkout the repo 
-      - uses: actions/checkout@ermir 
+      - uses: actions/checkout@master 
+      - uses: azure/login@v1 
+        with: 
+          creds: $ 
+       
+      # Setup .NET Core SDK 
+      - name: Setup .NET Core 
+        uses: actions/setup-dotnet@v1 
+        with: 
+          dotnet-version: $  
+       
       # Run dotnet build and publish 
       - name: dotnet build and publish 
-        working-directory: ./Backend/Utkeyrslukerfi.API/Utkeyrslukerfi.API/
         run: | 
           dotnet restore 
           dotnet build --configuration Release 
@@ -31,10 +30,9 @@ jobs:
       - name: 'Run Azure webapp deploy action using azure credentials' 
         uses: azure/webapps-deploy@v2 
         with:  
-          app-name: Utkeyrslukerfi
+          app-name: $ # Replace with your app name 
           package: '$/myApp' 
        
       - name: logout 
         run: | 
           az logout
-
