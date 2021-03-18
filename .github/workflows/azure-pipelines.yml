@@ -9,6 +9,7 @@ jobs:
     steps: 
       # Checkout the repo 
       - uses: actions/checkout@master 
+      # Login at Azure
       - uses: azure/login@v1 
         env:
           CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS }}
@@ -32,8 +33,8 @@ jobs:
       - name: 'Run Azure webapp deploy action using azure credentials' 
         uses: azure/webapps-deploy@v2 
         with:  
-          app-name: UtkeyrslukerfiApp
-          package: '$/utkeyrslukerfiApp' 
+          app-name: myiApp
+          package: '$/myApp' 
        
       - name: logout 
         run: | 
