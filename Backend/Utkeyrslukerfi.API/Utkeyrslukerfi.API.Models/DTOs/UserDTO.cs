@@ -7,5 +7,6 @@ namespace Utkeyrslukerfi.API.Models.Dtos
         public string Email { get; set; }
         public int Role { get; set; }
         public int TokenID { get; set; }
+        public bool ChangePassword { get; set; }
     }
 }
