@@ -11,10 +11,7 @@ jobs:
       - uses: actions/checkout@master 
       - uses: azure/login@v1 
         with: 
-          credentials: ${{ secrets.AZURE_CREDENTIALS }}
-        env: # Or as an environment variable
-          credentials: ${{ secrets.AZURE_CREDENTIALS }}
-       
+          creds: $
       # Setup .NET Core SDK 
       - name: Setup .NET Core 
         uses: actions/setup-dotnet@v1 
