@@ -10,8 +10,10 @@ jobs:
       # Checkout the repo 
       - uses: actions/checkout@master 
       - uses: azure/login@v1 
-        with: 
-          creds: $
+        env:
+          CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS }}
+        with:
+          creds: $CREDENTIALS
       # Setup .NET Core SDK 
       - name: Setup .NET Core 
         uses: actions/setup-dotnet@v1 
