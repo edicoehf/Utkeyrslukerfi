@@ -51,7 +51,7 @@ const CreateUserForm = ({ createUser }) => {
           <Form.Control
             name='password'
             placeholder='Insert password...'
-            type='text'
+            type='password'
             ref={register({
               required: 'This field is required.',
               minLength: {
