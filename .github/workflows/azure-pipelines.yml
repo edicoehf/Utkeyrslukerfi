@@ -34,7 +34,7 @@ jobs:
         uses: azure/webapps-deploy@v2 
         with:  
           app-name: utkeyrslukerfi
-          package: './utkeyrslukerfiApp' 
+          package: './Backend/Utkeyrslukerfi.API/Utkeyrslukerfi.API/utkeyrslukerfiApp' 
        
       - name: logout 
         run: | 
