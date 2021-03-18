@@ -8,7 +8,7 @@ jobs:
     runs-on: windows-latest 
     steps: 
       # Checkout the repo 
-      - uses: actions/checkout@ermir 
+      - uses: actions/checkout@master 
       - uses: azure/login@v1 
         with: 
           credentials: ${{ secrets.AZURE_CREDENTIALS }}
