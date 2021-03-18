@@ -12,11 +12,12 @@ jobs:
           credentials: ${{ secrets.AZURE_CREDENTIALS }}
         env: # Or as an environment variable
           credentials: ${{ secrets.AZURE_CREDENTIALS }}
-        uses: actions/setup-dotnet@v1 
+      - uses: actions/setup-dotnet@v1 
       # Checkout the repo 
       - uses: actions/checkout@master 
       # Run dotnet build and publish 
       - name: dotnet build and publish 
+        working-directory: ./Backend/Utkeyrslukerfi.API/Utkeyrslukerfi.API/
         run: | 
           dotnet restore 
           dotnet build --configuration Release 
