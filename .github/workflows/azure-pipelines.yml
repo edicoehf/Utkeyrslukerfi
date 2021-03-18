@@ -33,7 +33,7 @@ jobs:
       - name: 'Run Azure webapp deploy action using azure credentials' 
         uses: azure/webapps-deploy@v2 
         with:  
-          app-name: utkeyrslukerfiApp
+          app-name: UtkeyrslukerfiApp
           package: './Backend/Utkeyrslukerfi.API/Utkeyrslukerfi.API/utkeyrslukerfiApp' 
        
       - name: logout 
