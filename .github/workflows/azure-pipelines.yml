@@ -1,7 +1,7 @@
-name: .NET Core 
+name: CD for Utkeryrslukerfi
 on: [push] 
 env: 
-  AZURE_WEBAPP_PACKAGE_PATH: './Backend/Utkeyrslukerfi.API/'
+  AZURE_WEBAPP_PACKAGE_PATH: './Backend/Utkeyrslukerfi.API/Utkeyrslukerfi.API/'
   DOTNET_VERSION: '5.0.103'
 jobs: 
   build: 
@@ -11,6 +11,8 @@ jobs:
       - uses: actions/checkout@master 
       - uses: azure/login@v1 
         with: 
+          credentials: ${{ secrets.AZURE_CREDENTIALS }}
+        env: # Or as an environment variable
           credentials: ${{ secrets.AZURE_CREDENTIALS }}
        
       # Setup .NET Core SDK 
