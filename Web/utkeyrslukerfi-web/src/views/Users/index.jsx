@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { getUsers } from '../../actions/userActions'
+import { getUsers } from '../../actions/usersActions'
 
 const Users = ({ getUsers, users }) => {
   const history = useHistory();

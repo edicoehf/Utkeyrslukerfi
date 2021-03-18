@@ -1,6 +1,7 @@
 import './styles/navbar.css'
 import './styles/main.css'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
+import { connect } from 'react-redux'
 import Users from './views/Users'
 import Deliveries from './views/Deliveries'
 import Container from './components/Container'
@@ -13,10 +14,14 @@ import CreateUserForm from './views/CreateUserForm'
 import NotFound from './views/NotFound'
 import UpdatePasswordForm from './views/UpdatePasswordForm'
 
-const App = () => {
+const App = ({ user }) => {
   const { token, setToken } = useToken()
+  
   if (!token) {
     return <Login setToken={setToken} />
+  }
+  if (user && user.changePassword) {
+    return <UpdatePasswordForm />
   }
   return (
     <div className='App'>
@@ -25,7 +30,7 @@ const App = () => {
           <Switch>
             <Route exact path='/users' component={Users} />
             <Route exact path='/users/create' component={CreateUserForm} />
-            <Route exact path='/users/:id' component={UpdatePasswordForm} />
+            {/* <Route exact path='/users/:id' component={UpdatePasswordForm} /> */}
             <Route exact path='/deliveries' component={Deliveries} />
             <Route exact path='/deliveries/:id' component={Delivery} />
             <Route exact path='*' component={NotFound} />
@@ -36,4 +41,10 @@ const App = () => {
   )
 }
 
-export default App
+const mapStateToProps = reduxStoreState => {
+  return {
+    user: reduxStoreState.user
+  }
+}
+
+export default connect(mapStateToProps, {})(App)
