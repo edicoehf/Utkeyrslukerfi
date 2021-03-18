@@ -4,7 +4,7 @@ import Form from 'react-bootstrap/Form'
 import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
 import Button from 'react-bootstrap/Button'
-import { createUser } from '../../actions/userActions'
+import { createUser } from '../../actions/usersActions'
 import { connect } from 'react-redux'
 
 const CreateUserForm = ({ createUser }) => {
