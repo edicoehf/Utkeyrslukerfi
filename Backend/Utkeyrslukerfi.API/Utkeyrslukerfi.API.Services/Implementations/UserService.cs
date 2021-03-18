@@ -19,6 +19,10 @@ namespace Utkeyrslukerfi.API.Services.Implementations
         {
             return _userRepo.GetUser(ID);
         }
+         public UserDTO GetUserByEmail(string email)
+        {
+            return _userRepo.GetUserByEmail(email);
+        }
         public IEnumerable<UserDTO> GetUsers(int role, int pageSize, int pageNumber)
         {
             if (role == 0)
