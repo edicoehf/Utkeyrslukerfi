@@ -8,6 +8,11 @@ const userService = () => {
         Authorization: `Bearer ${token}`
       }
     }).then(d => d.json()).then(d => d),
+    getUser: (email) => fetch(USER_URL+`/by-email?email=${email}`, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }).then(d => d.json()).then(d => d),
     createUser: (user) => fetch(USER_URL, {
       headers: {
         'Content-Type': 'application/json',

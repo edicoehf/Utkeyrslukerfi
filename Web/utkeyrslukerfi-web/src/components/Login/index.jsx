@@ -3,8 +3,10 @@ import '../../styles/login.css'
 import PropTypes from 'prop-types'
 
 import loginUser from '../../services/accountService'
+import { connect } from 'react-redux'
+import { getUser } from '../../actions/userActions'
 
-const Login = ({ setToken }) => {
+const Login = ({ setToken, getUser }) => {
   const [email, setUserName] = useState()
   const [password, setPassword] = useState()
 
@@ -15,6 +17,7 @@ const Login = ({ setToken }) => {
       Password: password
     })
     setToken(token)
+    getUser(email)
   }
 
   return (
@@ -41,4 +44,4 @@ Login.propTypes = {
   setToken: PropTypes.func.isRequired
 }
 
-export default Login
+export default connect(null, { getUser })(Login)

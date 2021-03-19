@@ -23,6 +23,7 @@ const App = ({ user }) => {
   if (user && user.changePassword) {
     return <UpdatePasswordForm />
   }
+  console.log("User in app", user)
   return (
     <div className='App'>
       <BrowserRouter>
