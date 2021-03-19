@@ -1,4 +1,4 @@
-name: CD for Utkeryrslukerfi
+name: CD for Utkeyrslukerfi
 on: [push] 
 env: 
   AZURE_WEBAPP_PACKAGE_PATH: './Backend/Utkeyrslukerfi.API/Utkeyrslukerfi.API/'
