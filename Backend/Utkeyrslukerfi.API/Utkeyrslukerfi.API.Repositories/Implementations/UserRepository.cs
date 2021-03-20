@@ -9,6 +9,7 @@ using Utkeyrslukerfi.API.Models.Exceptions;
 using Utkeyrslukerfi.API.Models.Entities;
 using Utkeyrslukerfi.API.Models.Envelope;
 using Utkeyrslukerfi.API.Repositories.Helpers;
+using System;
 
 namespace Utkeyrslukerfi.API.Repositories.Implementations
 {
@@ -88,23 +89,18 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
             // save changes
             _dbContext.SaveChanges();
         }
-        public UserDTO Login(LoginInputModel loginInputModel)
+        public User Login(LoginInputModel loginInputModel)
         {
             var user = _dbContext.Users.FirstOrDefault(u =>
                 u.Email == loginInputModel.Email &&
                 u.Password == HashingHelper.HashPassword(loginInputModel.Password));
-            if (user == null) { return null; }
+            // TODO Throw custom exception here
+            if (user == null) { throw new Exception("wow"); }
 
             var token = _tokenRepository.CreateNewToken();
-
-            return new UserDTO
-            {
-                ID = user.ID,
-                Name = user.Name,
-                Email = user.Email,
-                Role = user.Role,
-                TokenID = token.ID
-            };
+            user.TokenID = token.ID;
+            _dbContext.SaveChanges();
+            return user;
         }
     }
 }

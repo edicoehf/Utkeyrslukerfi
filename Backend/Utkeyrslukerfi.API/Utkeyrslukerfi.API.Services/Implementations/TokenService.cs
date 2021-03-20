@@ -5,6 +5,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Text;
 using System.Security.Claims;
 using System;
+using Utkeyrslukerfi.API.Models.Entities;
 
 namespace Utkeyrslukerfi.API.Services.Implementations
 {
@@ -21,7 +22,7 @@ namespace Utkeyrslukerfi.API.Services.Implementations
             _issuer = issuer;
             _audience = audience;
         }
-        public string GenerateJwtToken(UserDTO user)
+        public string GenerateJwtToken(User user)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
             var tokenDescriptor = GetSecurityTokenDescriptor(user);
@@ -29,7 +30,7 @@ namespace Utkeyrslukerfi.API.Services.Implementations
             return tokenHandler.WriteToken(token);
         }
 
-        private SecurityTokenDescriptor GetSecurityTokenDescriptor(UserDTO user)
+        private SecurityTokenDescriptor GetSecurityTokenDescriptor(User user)
         {
             var key = Encoding.ASCII.GetBytes(_secret);
             return new SecurityTokenDescriptor

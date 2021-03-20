@@ -10,7 +10,7 @@ namespace Utkeyrslukerfi.API.Models.Entities
         public string Email { get; set; }
         public int Role { get; set; }
         public bool ChangePassword { get; set; }
-
+        public int TokenID { get; set; }
 
         // Navigation Properties
         public List<Delivery> Deliveries { get; set; }
