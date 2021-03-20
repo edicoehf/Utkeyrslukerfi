@@ -1,8 +1,10 @@
+using System;
 using System.Linq;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Utkeyrslukerfi.API.Models.Dtos;
 using Utkeyrslukerfi.API.Models.InputModels;
 using Utkeyrslukerfi.API.Services.Interfaces;
 
@@ -47,15 +49,22 @@ namespace Utkeyrslukerfi.API.Controllers
         [Route("login")]
         public IActionResult Login([FromBody] LoginInputModel login)
         {
-            System.Console.WriteLine("Someone Called?");
             if (!ModelState.IsValid)
             {
                 return BadRequest("User creadentials are invalid!");
             }
-            var user = _accountService.Login(login);
-            if (user == null) { return Unauthorized(); }
-            var token = _tokenService.GenerateJwtToken(user);
-            return Ok(token);
+            try
+            {
+                var user = _accountService.Login(login);
+                var token = _tokenService.GenerateJwtToken(user);
+
+                return Ok(new LoginDto() { Token = token, ChangePassword = user.ChangePassword });
+
+            }
+            catch (Exception e)
+            {
+                return Unauthorized();
+            }
         }
 
         [HttpGet]

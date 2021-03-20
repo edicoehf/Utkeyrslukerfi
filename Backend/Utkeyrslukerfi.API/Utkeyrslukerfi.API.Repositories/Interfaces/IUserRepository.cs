@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Utkeyrslukerfi.API.Models.Dtos;
+using Utkeyrslukerfi.API.Models.Entities;
 using Utkeyrslukerfi.API.Models.InputModels;
 
 namespace Utkeyrslukerfi.API.Repositories.Interfaces
@@ -12,6 +13,6 @@ namespace Utkeyrslukerfi.API.Repositories.Interfaces
         IEnumerable<UserDTO> GetUsersByRole(int role, int pageSize, int pageNumber);
         UserDTO CreateUser(UserInputModel user);
         void UpdateUser(UserInputModel user, int ID);
-        UserDTO Login(LoginInputModel loginInputModel);
+        User Login(LoginInputModel loginInputModel);
     }
 }
