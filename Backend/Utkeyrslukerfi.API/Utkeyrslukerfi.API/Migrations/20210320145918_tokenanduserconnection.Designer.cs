@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Utkeyrslukerfi.API.Repositories.Context;
 
 namespace Utkeyrslukerfi.API.Migrations
 {
     [DbContext(typeof(UtkeyrslukerfiDbContext))]
-    partial class UtkeyrslukerfiDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210320145918_tokenanduserconnection")]
+    partial class tokenanduserconnection
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

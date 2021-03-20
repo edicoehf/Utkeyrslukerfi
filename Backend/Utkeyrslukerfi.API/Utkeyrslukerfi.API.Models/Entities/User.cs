@@ -14,5 +14,6 @@ namespace Utkeyrslukerfi.API.Models.Entities
 
         // Navigation Properties
         public List<Delivery> Deliveries { get; set; }
+        public List<JwtToken> JwtTokens { get; set; }
     }
 }
