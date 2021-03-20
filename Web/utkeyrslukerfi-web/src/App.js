@@ -9,14 +9,14 @@ import React from 'react'
 import Login from './components/Login'
 import Delivery from './components/Delivery'
 import useToken from './hooks/useToken'
-// import Navbar from './components/Navbar'
+import Navbar from './components/Navbar'
 import CreateUserForm from './views/CreateUserForm'
 import NotFound from './views/NotFound'
 import UpdatePasswordForm from './views/UpdatePasswordForm'
 
 const App = ({ user }) => {
   const { token, setToken } = useToken()
-  
+
   if (!token) {
     return <Login setToken={setToken} />
   }
@@ -27,6 +27,7 @@ const App = ({ user }) => {
     <div className='App'>
       <BrowserRouter>
         <Container>
+          <Navbar />
           <Switch>
             <Route exact path='/users' component={Users} />
             <Route exact path='/users/create' component={CreateUserForm} />
