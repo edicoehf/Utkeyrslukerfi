@@ -1,7 +1,7 @@
 import { USER_URL } from '../constants'
 
 const userService = () => {
-  const token = JSON.parse(localStorage.getItem('token'))
+  const token = localStorage.getItem('token')
   return {
     getUsers: () => fetch(USER_URL, {
       headers: {
@@ -16,7 +16,7 @@ const userService = () => {
       method: 'POST',
       body: JSON.stringify(user)
     }).then(r => r.json()),
-    updateUser: (id, user) => fetch(USER_URL+'/'+id, {
+    updateUser: (id, user) => fetch(USER_URL + '/' + id, {
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`

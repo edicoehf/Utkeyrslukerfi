@@ -13,7 +13,7 @@ const loginUser = async (credentials) => {
       mode: 'cors',
       body: JSON.stringify(credentials)
     })
-    return response.text()
+    return response.json()
   } catch (err) {
     console.error(err)
   }
