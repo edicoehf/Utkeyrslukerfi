@@ -1,20 +1,15 @@
 import React, { useState } from 'react'
 import '../../styles/login.css'
-import PropTypes from 'prop-types'
-import loginUser from '../../services/accountService'
+import { connect } from 'react-redux'
+import { setLogin } from '../../actions/loginActions'
 
-const Login = ({ setToken, setEmail }) => {
+const Login = ({ setLogin }) => {
   const [email, setUserName] = useState()
   const [password, setPassword] = useState()
 
-  const handleSubmit = async e => {
+  const handleSubmit = (e) => {
     e.preventDefault()
-    const token = await loginUser({
-      Email: email,
-      Password: password
-    })
-    setToken(token)
-    // setEmail(email) // If authentication success then call this
+    setLogin(email, password)
   }
 
   return (
@@ -37,9 +32,4 @@ const Login = ({ setToken, setEmail }) => {
   )
 }
 
-Login.propTypes = {
-  setToken: PropTypes.func.isRequired,
-  setEmail: PropTypes.func.isRequired
-}
-
-export default Login
+export default connect(null, { setLogin })(Login)

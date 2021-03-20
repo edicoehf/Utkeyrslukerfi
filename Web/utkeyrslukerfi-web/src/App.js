@@ -8,32 +8,31 @@ import Container from './components/Container'
 import React, { useEffect } from 'react'
 import Login from './components/Login'
 import Delivery from './components/Delivery'
-import useToken from './hooks/useToken'
-import useEmail from './hooks/useEmail'
 // import Navbar from './components/Navbar'
 import CreateUserForm from './views/CreateUserForm'
 import NotFound from './views/NotFound'
 import UpdatePasswordForm from './views/UpdatePasswordForm'
 import { getUser } from './actions/userActions'
+import { getLogin } from './actions/loginActions'
 
-const App = ({ user, getUser }) => {
-  const { token, setToken } = useToken()
-  const { email, setEmail } = useEmail()
+const App = ({ user, email, getUser, getLogin }) => {
+
+  useEffect(() => {
+    getLogin()
+  }, [])
 
   useEffect(() => {
     if(email){
-      console.log(email)
       getUser(email)
     }
   }, [email])
   
-  if (!token) {
-    return <Login setToken={setToken} setEmail={setEmail} />
+  if (!email) {
+    return <Login />
   }
   if (user && user.changePassword) {
     return <UpdatePasswordForm />
   }
-  console.log("User in app", user)
   return (
     <div className='App'>
       <BrowserRouter>
@@ -41,7 +40,6 @@ const App = ({ user, getUser }) => {
           <Switch>
             <Route exact path='/users' component={Users} />
             <Route exact path='/users/create' component={CreateUserForm} />
-            {/* <Route exact path='/users/:id' component={UpdatePasswordForm} /> */}
             <Route exact path='/deliveries' component={Deliveries} />
             <Route exact path='/deliveries/:id' component={Delivery} />
             <Route exact path='*' component={NotFound} />
@@ -54,8 +52,9 @@ const App = ({ user, getUser }) => {
 
 const mapStateToProps = reduxStoreState => {
   return {
-    user: reduxStoreState.user
+    user: reduxStoreState.user,
+    email: reduxStoreState.login
   }
 }
 
-export default connect(mapStateToProps, { getUser })(App)
+export default connect(mapStateToProps, { getUser, getLogin })(App)

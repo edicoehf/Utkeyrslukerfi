@@ -2,7 +2,6 @@ import { USER_URL } from '../constants'
 
 const userService = () => {
   const token = JSON.parse(localStorage.getItem('token'))
-  console.log("User service "+token)
   return {
     getUsers: () => fetch(USER_URL, {
       headers: {
