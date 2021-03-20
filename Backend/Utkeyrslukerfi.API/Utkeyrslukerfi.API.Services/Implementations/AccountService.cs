@@ -2,6 +2,7 @@ using Utkeyrslukerfi.API.Repositories.Interfaces;
 using Utkeyrslukerfi.API.Services.Interfaces;
 using Utkeyrslukerfi.API.Models.InputModels;
 using Utkeyrslukerfi.API.Models.Dtos;
+using Utkeyrslukerfi.API.Models.Entities;
 
 namespace Utkeyrslukerfi.API.Services.Implementations
 {
@@ -15,7 +16,7 @@ namespace Utkeyrslukerfi.API.Services.Implementations
             _tokenRepository = tokenRepository;
         }
 
-        public UserDTO Login(LoginInputModel loginInputModel)
+        public User Login(LoginInputModel loginInputModel)
         {
             return _userRepository.Login(loginInputModel);
         }

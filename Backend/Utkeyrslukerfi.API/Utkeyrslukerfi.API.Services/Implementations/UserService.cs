@@ -19,7 +19,7 @@ namespace Utkeyrslukerfi.API.Services.Implementations
         {
             return _userRepo.GetUser(ID);
         }
-         public UserDTO GetUserByEmail(string email)
+        public UserDTO GetUserByEmail(string email)
         {
             return _userRepo.GetUserByEmail(email);
         }

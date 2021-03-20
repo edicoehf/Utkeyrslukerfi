@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Utkeyrslukerfi.API.Repositories.Context;
 
 namespace Utkeyrslukerfi.API.Migrations
 {
     [DbContext(typeof(UtkeyrslukerfiDbContext))]
-    partial class UtkeyrslukerfiDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210320150655_UserTableChanged")]
+    partial class UserTableChanged
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -97,12 +99,7 @@ namespace Utkeyrslukerfi.API.Migrations
                     b.Property<bool>("Blacklisted")
                         .HasColumnType("tinyint(1)");
 
-                    b.Property<int?>("UserID")
-                        .HasColumnType("int");
-
                     b.HasKey("ID");
-
-                    b.HasIndex("UserID");
 
                     b.ToTable("JwtTokens");
                 });
@@ -243,15 +240,6 @@ namespace Utkeyrslukerfi.API.Migrations
                     b.Navigation("Vehicle");
                 });
 
-            modelBuilder.Entity("Utkeyrslukerfi.API.Models.Entities.JwtToken", b =>
-                {
-                    b.HasOne("Utkeyrslukerfi.API.Models.Entities.User", "User")
-                        .WithMany("JwtTokens")
-                        .HasForeignKey("UserID");
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("Utkeyrslukerfi.API.Models.Entities.Package", b =>
                 {
                     b.HasOne("Utkeyrslukerfi.API.Models.Entities.Delivery", "Delivery")
@@ -280,8 +268,6 @@ namespace Utkeyrslukerfi.API.Migrations
             modelBuilder.Entity("Utkeyrslukerfi.API.Models.Entities.User", b =>
                 {
                     b.Navigation("Deliveries");
-
-                    b.Navigation("JwtTokens");
                 });
 
             modelBuilder.Entity("Utkeyrslukerfi.API.Models.Entities.Vehicle", b =>
