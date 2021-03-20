@@ -11,6 +11,8 @@ namespace Utkeyrslukerfi.API.Models.InputModels
         public string Email { get; set; }
         [Required(ErrorMessage = "Role is required")] // Role 1: admin, 2: office, 3: driver
         public int Role { get; set; }
+        [Required(ErrorMessage = "ChangePassword is required")] 
+        public bool ChangePassword { get; set; }
         [ValidateUserPassword]
         public string Password { get; set; }
 
