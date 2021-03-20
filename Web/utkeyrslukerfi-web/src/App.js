@@ -5,20 +5,30 @@ import { connect } from 'react-redux'
 import Users from './views/Users'
 import Deliveries from './views/Deliveries'
 import Container from './components/Container'
-import React from 'react'
+import React, { useEffect } from 'react'
 import Login from './components/Login'
 import Delivery from './components/Delivery'
 import useToken from './hooks/useToken'
+import useEmail from './hooks/useEmail'
 // import Navbar from './components/Navbar'
 import CreateUserForm from './views/CreateUserForm'
 import NotFound from './views/NotFound'
 import UpdatePasswordForm from './views/UpdatePasswordForm'
+import { getUser } from './actions/userActions'
 
-const App = ({ user }) => {
+const App = ({ user, getUser }) => {
   const { token, setToken } = useToken()
+  const { email, setEmail } = useEmail()
+
+  useEffect(() => {
+    if(email){
+      console.log(email)
+      getUser(email)
+    }
+  }, [email])
   
   if (!token) {
-    return <Login setToken={setToken} />
+    return <Login setToken={setToken} setEmail={setEmail} />
   }
   if (user && user.changePassword) {
     return <UpdatePasswordForm />
@@ -48,4 +58,4 @@ const mapStateToProps = reduxStoreState => {
   }
 }
 
-export default connect(mapStateToProps, {})(App)
+export default connect(mapStateToProps, { getUser })(App)
