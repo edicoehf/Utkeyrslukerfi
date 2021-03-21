@@ -4,7 +4,7 @@ import '../../styles/notfound.css'
 
 const NotFound = () => {
   return (
-    <div className="notfound">
+    <div className='notfound'>
       <h1>Error 404</h1>
       <h2>Page not found</h2>
       <NavLink
@@ -14,7 +14,7 @@ const NotFound = () => {
       >Go back home
       </NavLink>
     </div>
-  );
+  )
 }
 
 export default NotFound

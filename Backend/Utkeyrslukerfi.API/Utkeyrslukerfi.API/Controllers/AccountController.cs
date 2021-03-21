@@ -53,18 +53,11 @@ namespace Utkeyrslukerfi.API.Controllers
             {
                 return BadRequest("User creadentials are invalid!");
             }
-            try
-            {
-                var user = _accountService.Login(login);
-                var token = _tokenService.GenerateJwtToken(user);
+            var user = _accountService.Login(login);
+            var token = _tokenService.GenerateJwtToken(user);
 
-                return Ok(new LoginDto() { Token = token, ChangePassword = user.ChangePassword });
+            return Ok(new LoginDto() { Token = token, ChangePassword = user.ChangePassword });
 
-            }
-            catch (Exception e)
-            {
-                return Unauthorized();
-            }
         }
 
         [HttpGet]

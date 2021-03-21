@@ -7,31 +7,48 @@ import loginUser from '../../services/accountService'
 const Login = ({ setToken }) => {
   const [email, setUserName] = useState()
   const [password, setPassword] = useState()
+  const [errorMessage, setErrorMessage] = useState()
 
   const handleSubmit = async e => {
     e.preventDefault()
-    const token = await loginUser({
-      Email: email,
-      Password: password
-    })
-    setToken(token)
+    try {
+      const token = await loginUser({
+        Email: email,
+        Password: password
+      })
+      setToken(token)
+    } catch (err) {
+      console.error(err)
+      if (err?.errors) {
+        let msg = ''
+        // eslint-disable-next-line no-unused-vars
+        for (const [key, value] of Object.entries(err.errors)) {
+          msg += `${value}\n`
+        }
+        const element = document.getElementById('err-msg')
+        element.classList.remove('d-none')
+        setErrorMessage(msg)
+        return
+      }
+      setErrorMessage('Could not reach the login servers')
+    }
   }
 
   return (
     <div className='login-wrapper'>
-      <h1>Please Log In</h1>
       <form onSubmit={handleSubmit}>
         <label>
-          <p>Username</p>
+          <p>Tölvupóstur:</p>
           <input type='text' onChange={e => setUserName(e.target.value)} />
         </label>
         <label>
-          <p>Password</p>
+          <p>Lykilorð: </p>
           <input type='password' onChange={e => setPassword(e.target.value)} />
         </label>
-        <div>
-          <button type='submit'>Submit</button>
+        <div className='btn-wrapper'>
+          <button className='btn btn-secondary' type='submit'>Innskrá</button>
         </div>
+        <div id='err-msg' className='error-message alert alert-danger d-none'>{errorMessage}</div>
       </form>
     </div>
   )
