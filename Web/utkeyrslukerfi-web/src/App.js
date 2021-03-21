@@ -16,7 +16,7 @@ import UpdatePasswordForm from './views/UpdatePasswordForm'
 
 const App = ({ user }) => {
   const { token, setToken } = useToken()
-  
+
   if (!token) {
     return <Login setToken={setToken} />
   }

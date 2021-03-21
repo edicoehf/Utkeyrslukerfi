@@ -10,7 +10,7 @@ import { connect } from 'react-redux'
 const UpdatePasswordForm = ({ updatePassword }) => {
   const { register, handleSubmit, errors, watch } = useForm()
   const password = useRef({})
-  password.current = watch("password", "")
+  password.current = watch('password', '')
 
   const submitForm = (data) => {
     console.log('The form was successfully submitted!')
@@ -56,7 +56,7 @@ const UpdatePasswordForm = ({ updatePassword }) => {
             placeholder='Settu inn lykilorð...'
             type='password'
             ref={register({
-              validate: value => 
+              validate: value =>
                 value === password.current || 'Lykilorðin eru ekki þau sömu.'
             })}
           />

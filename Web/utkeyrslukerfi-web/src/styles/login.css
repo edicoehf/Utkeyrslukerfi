@@ -1,5 +1,40 @@
+#root {
+  height: 100vh;
+  background-size: cover;
+}
+
 .login-wrapper {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  height: 100%;
+}
+
+.login-wrapper form {
+  display: flex;
+  height: 100%;
+  width: 24%;
+  align-self: flex-end;
+  padding: 2em;
+  flex-direction: column;
+  background-color: #4a79bae0;
+  justify-content: center;
+}
+
+.login-wrapper form label p {
+  margin: 0;
+  font-size: 2em;
+}
+
+.login-wrapper form label input {
+  width: 100%;
+  font-size: 1.5em;
+}
+
+.btn-wrapper {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.error-message {
+  margin-top: 1em;
 }

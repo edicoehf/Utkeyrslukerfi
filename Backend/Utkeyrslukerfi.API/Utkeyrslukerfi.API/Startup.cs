@@ -119,6 +119,8 @@ namespace Utkeyrslukerfi.API
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Utkeyrslukerfi v1"));
             }
 
+            app.UseMiddleware(typeof(ErrorHandlingMiddleware));
+
             app.UseHttpsRedirection();
 
             app.UseRouting();

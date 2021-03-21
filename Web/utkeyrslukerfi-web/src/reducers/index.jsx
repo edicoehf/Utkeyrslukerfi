@@ -5,6 +5,6 @@ import user from './userReducer'
 
 export default combineReducers({
   user,
-  users, 
-  deliveries,
+  users,
+  deliveries
 })
