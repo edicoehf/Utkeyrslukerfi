@@ -40,8 +40,8 @@ const App = ({ loggedInUser, email, token, getLoggedInUser, getLogin }) => {
         <Switch>
           {/* <Route exact path='/' component={HomePage} /> */}
           <Route exact path='/users' component={Users} />
-          <Route exact path='/users/:id' component={User} />
           <Route exact path='/users/create' component={CreateUserForm} />
+          <Route exact path='/users/:id' component={User} />
           <Route exact path='/deliveries' component={Deliveries} />
           <Route exact path='/deliveries/:id' component={Delivery} />
           <Route exact path='*' component={NotFound} />
