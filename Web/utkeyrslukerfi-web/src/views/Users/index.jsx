@@ -19,6 +19,10 @@ const Users = ({ getUsers, users, token }) => {
     history.push(`/users/${user.id}`, { params: user })
   }
 
+  const navigateToCreateUser = () => {
+    history.push('/users/create')
+  }
+
   const renderRows = () => {
     return users.map(function (user, id) {
       return (
@@ -60,7 +64,7 @@ const Users = ({ getUsers, users, token }) => {
           }
           {/* Loading the Add user plus */}
           <tr>
-            <td><ImPlus size='2em' /></td>
+            <td onClick={() => navigateToCreateUser()}><ImPlus size='2em' /></td>
             <td />
             <td />
             <td />
