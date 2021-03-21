@@ -8,7 +8,7 @@ function Navbar () {
         exact
         to='/home'
         className='navigation-link'
-      >Home
+      >Heim
       </NavLink>
     </nav>
   )

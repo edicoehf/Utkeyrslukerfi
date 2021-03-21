@@ -19,7 +19,7 @@ const CreateUserForm = ({ token, createUser }) => {
     <Form onSubmit={handleSubmit(submitForm)} className='form form-horizontal'>
       <Form.Group as={Row} controlId='formCreateUserName'>
         <Form.Label column sm={3}>
-          Name:
+          Nafn:
         </Form.Label>
         <Col sm={8}>
           <Form.Control
@@ -43,35 +43,9 @@ const CreateUserForm = ({ token, createUser }) => {
           {errors.name && <p>{errors.name.message}</p>}
         </Col>
       </Form.Group>
-      <Form.Group as={Row} controlId='formCreateUserPassword'>
-        <Form.Label column sm={3}>
-          Password:
-        </Form.Label>
-        <Col sm={8}>
-          <Form.Control
-            name='password'
-            placeholder='Insert password...'
-            type='password'
-            ref={register({
-              required: 'This field is required.',
-              minLength: {
-                value: 2,
-                message: 'Please insert your password.'
-              },
-              pattern: {
-                value: /^[^()[\]{}*&^%$#@!]+$/,
-                message: 'Please insert a valid password.'
-              }
-            })}
-          />
-        </Col>
-        <Col sm={4}>
-          {errors.password && <p>{errors.password.message}</p>}
-        </Col>
-      </Form.Group>
       <Form.Group as={Row} controlId='formCreateUserEmail'>
         <Form.Label column sm={3}>
-          Email:
+          Netfang:
         </Form.Label>
         <Col sm={8}>
           <Form.Control
@@ -95,9 +69,35 @@ const CreateUserForm = ({ token, createUser }) => {
           {errors.email && <p>{errors.email.message}</p>}
         </Col>
       </Form.Group>
+      <Form.Group as={Row} controlId='formCreateUserPassword'>
+        <Form.Label column sm={3}>
+          Tímabundið lykilorð:
+        </Form.Label>
+        <Col sm={8}>
+          <Form.Control
+            name='password'
+            placeholder='Insert password...'
+            type='password'
+            ref={register({
+              required: 'This field is required.',
+              minLength: {
+                value: 2,
+                message: 'Please insert your password.'
+              },
+              pattern: {
+                value: /^[^()[\]{}*&^%$#@!]+$/,
+                message: 'Please insert a valid password.'
+              }
+            })}
+          />
+        </Col>
+        <Col sm={4}>
+          {errors.password && <p>{errors.password.message}</p>}
+        </Col>
+      </Form.Group>
       <Form.Group as={Row} controlId='formCreateUserRole'>
         <Form.Label column sm={3}>
-          Role:
+          Starf:
         </Form.Label>
         <Col sm={8}>
           <Form.Control
