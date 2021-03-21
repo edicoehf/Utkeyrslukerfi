@@ -22,12 +22,12 @@ const Users = ({ getUsers, users, token }) => {
   const renderRows = () => {
     return users.map(function (user, id) {
       return (
-        <tr key={id} onClick={() => navigateToUser(user)}>
+        <tr key={id}>
           <td>{user.id}</td>
           <td>{user.name}</td>
           <td>{user.email}</td>
           <td>{user.role}</td>
-          <td><BsPencilSquare size='1.5em' /></td>
+          <td onClick={() => navigateToUser(user)}><BsPencilSquare size='1.5em' /></td>
         </tr>
       )
     })
