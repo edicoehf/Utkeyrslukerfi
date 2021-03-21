@@ -1,30 +1,65 @@
-import { GET_USER, UPDATE_USER } from '../constants'
+import { GET_LOGGED_IN_USER, UPDATE_LOGGED_IN_USER, GET_VIEWING_USER, SET_VIEWING_USER, UPDATE_VIEWING_USER } from '../constants'
 import userService from '../services/userService'
 
-export const getUser = (token, email) => async (dispatch) => {
+// --------------- User logged in ---------------
+export const getLoggedInUser = (token, email) => async (dispatch) => {
   try {
-    const user = await userService.getUser(token, email)
-    dispatch(getUserSuccess(user))
+    const user = await userService.getUserByEmail(token, email)
+    dispatch(getLoggedInUserSuccess(user))
   } catch (err) {
     console.log('Bad request, please try loading again.')
   }
 }
 
-const getUserSuccess = (user) => ({
-  type: GET_USER,
+const getLoggedInUserSuccess = (user) => ({
+  type: GET_LOGGED_IN_USER,
   payload: user
 })
 
 export const updatePassword = (token, id, user) => async (dispatch) => {
   try {
-    await userService.updatePassword(token, id, user)
-    dispatch(updateUserSuccess({ id, ...user }))
+    await userService.updateUser(token, id, user)
+    dispatch(updateLoggedInUserSuccess({ id, ...user }))
   } catch (err) {
     console.log('Bad request, please try again later.')
   }
 }
 
-const updateUserSuccess = (user) => ({
-  type: UPDATE_USER,
+const updateLoggedInUserSuccess = (user) => ({
+  type: UPDATE_LOGGED_IN_USER,
+  payload: user
+})
+
+// --------------- User being viewed ---------------
+export const setViewingUser = (user) => ({
+  type: SET_VIEWING_USER,
+  payload: user
+})
+
+export const getViewingUser = (token, id) => async (dispatch) => {
+  try {
+    const user = await userService.getUser(token, id)
+    dispatch(getViewingUserSuccess(user))
+  } catch (err) {
+    console.log('Bad request, please try loading again.')
+  }
+}
+
+const getViewingUserSuccess = (user) => ({
+  type: GET_VIEWING_USER,
+  payload: user
+})
+
+export const updateUser = (token, id, user) => async (dispatch) => {
+  try {
+    await userService.updateUser(token, id, user)
+    dispatch(updateViewingUserSuccess({ id, ...user }))
+  } catch (err) {
+    console.log('Bad request, please try again later.')
+  }
+}
+
+const updateViewingUserSuccess = (user) => ({
+  type: UPDATE_VIEWING_USER,
   payload: user
 })
