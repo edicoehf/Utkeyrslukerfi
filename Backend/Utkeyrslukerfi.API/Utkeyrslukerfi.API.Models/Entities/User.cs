@@ -6,11 +6,11 @@ namespace Utkeyrslukerfi.API.Models.Entities
     {
         public int ID { get; set; }
         public string Name { get; set; }
-        // TODO change to hashed and stuff
         public string Password { get; set; }
         public string Email { get; set; }
         public int Role { get; set; }
-
+        public bool ChangePassword { get; set; }
+        public int TokenID { get; set; }
 
         // Navigation Properties
         public List<Delivery> Deliveries { get; set; }

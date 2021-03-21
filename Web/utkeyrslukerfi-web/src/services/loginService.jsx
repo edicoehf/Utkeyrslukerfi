@@ -1,8 +1,8 @@
 import { LOGIN_URL } from '../constants'
 
-const loginUser = async (credentials) => {
-  try {
-    const response = await fetch(LOGIN_URL, {
+const loginService = () => {
+  return {
+    login: (credentials) => fetch(LOGIN_URL, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -12,10 +12,8 @@ const loginUser = async (credentials) => {
       },
       mode: 'cors',
       body: JSON.stringify(credentials)
-    })
-    return response.text()
-  } catch (err) {
-    console.error(err)
+    }).then(d => d.json())
   }
 }
-export default loginUser
+
+export default loginService()

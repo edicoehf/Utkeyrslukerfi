@@ -4,17 +4,17 @@ import '../../styles/notfound.css'
 
 const NotFound = () => {
   return (
-    <div className="notfound">
-      <h1>Error 404</h1>
-      <h2>Page not found</h2>
+    <div className='notfound'>
+      <h1>404 Villa</h1>
+      <h2>Síða fannst ekki</h2>
       <NavLink
         exact
         to='/home'
         className='navigation-link'
-      >Go back home
+      >Fara aftur á forsíðu
       </NavLink>
     </div>
-  );
+  )
 }
 
 export default NotFound
