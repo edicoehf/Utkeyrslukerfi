@@ -16,21 +16,6 @@ const NavLinks = () => (
           Home
         </NavLink>
       </li>
-      <li className='nav-item'>
-        <NavLink exact to='/deliveries' className='nav-link'>
-          Deliveries
-        </NavLink>
-      </li>
-      <li className='nav-item'>
-        <NavLink exact to='/users' className='nav-link'>
-          Users
-        </NavLink>
-      </li>
-      <li className='nav-item'>
-        <NavLink exact to='/about' className='nav-link'>
-          About
-        </NavLink>
-      </li>
     </ul>
   </div>
 )
