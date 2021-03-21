@@ -12,7 +12,16 @@ export const UPDATE_LOGGED_IN_USER = 'UPDATE_LOGGED_IN_USER'
 export const GET_DELIVERIES = 'GET_DELIVERIES'
 export const GET_DELIVERY = 'GET_DELIVERY'
 export const UPDATE_DELIVERY = 'UPDATE_DELIVERY'
+<<<<<<< HEAD
 
+=======
+export const SET_DELIVERY = 'SET_DELIVERY'
+export const SET_USER = 'SET_USER'
+export const GET_USER = 'GET_USER'
+export const SET_EMAIL = 'SET_EMAIL'
+export const GET_EMAIL = 'GET_EMAIL'
+export const UPDATE_USER = 'UPDATE_USER'
+>>>>>>> 29b931bdb684c633ae4bb28b5ffd81a30b45d03f
 export const SET_TOKEN = 'SET_TOKEN'
 export const GET_TOKEN = 'GET_TOKEN'
 // URLS
