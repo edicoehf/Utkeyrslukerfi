@@ -32,7 +32,6 @@ const Users = ({ getUsers, users, token }) => {
       )
     })
   }
-  console.log(users)
   return (
     <div className='users pt-3'>
       <table className='table table-bordered'>

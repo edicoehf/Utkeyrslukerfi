@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { getDeliveries } from '../../actions/deliveriesActions'
 import { setDelivery } from '../../actions/deliveryActions'
 
-const Deliveries = ({ getDeliveries, deliveries, setDelivery ,token }) => {
+const Deliveries = ({ getDeliveries, deliveries, setDelivery , token }) => {
   const history = useHistory()
 
   useEffect(() => {
