@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { connect } from 'react-redux'
 import { getDelivery } from '../../actions/deliveryActions'
 
 const Delivery = ({ getDelivery, delivery, token }) => {
   let pathId = window.location.pathname.split('/')[2];
-  let tokeN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Ik1pa2FlZWxtYW5pOTlAZ21haWwuY29tIiwibmFtZSI6Ik1pa2FlbCBNw6FuaSBKw7Nuc3NvbiIsInRva2VuSUQiOiIyMTAiLCJuYmYiOjE2MTYzNDY5OTEsImV4cCI6MTYxNjQzMzM5MSwiaWF0IjoxNjE2MzQ2OTkxLCJpc3MiOiJsb2NhbGhvc3QiLCJhdWQiOiJsb2NhbGhvc3QifQ.dxmQ12AMYXe9VGgLYkIgsOPZg_GSXP67JAHeMQQ-ll4"
+
   if (Object.entries(delivery).length === 0) {
-    getDelivery(tokeN, pathId)
+    getDelivery(token, pathId)
   }
 
   const { id, recipient, seller, status } = delivery
