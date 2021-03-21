@@ -6,7 +6,7 @@ import reportWebVitals from './reportWebVitals'
 import { BrowserRouter as Router } from 'react-router-dom'
 import { Provider } from 'react-redux'
 import { createStore, applyMiddleware } from 'redux'
-import {composeWithDevTools} from 'redux-devtools-extension';
+import { composeWithDevTools } from 'redux-devtools-extension'
 import reducers from './reducers'
 import thunk from 'redux-thunk'
 import 'bootstrap/dist/css/bootstrap.min.css'
@@ -14,7 +14,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 ReactDOM.render(
   <React.StrictMode>
     <Provider
-      store={createStore(reducers, composeWithDevTools(applyMiddleware(thunk)))}
+      store={ createStore(reducers, composeWithDevTools(applyMiddleware(thunk))) }
     >
       <Router>
         <App />
