@@ -31,8 +31,10 @@ const createUserSuccess = (user) => ({
 
 export const updatePassword = (id, user) => async () => {
   try {
-    await userService.updatePassword(id, user)
+    const res = await userService.updatePassword(id, user)
+    console.log(res)
   } catch (err) {
+    console.log(err)
     console.log('Bad request, please try again later.')
   }
 }

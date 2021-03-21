@@ -1,6 +1,6 @@
 import './styles/navbar.css'
 import './styles/main.css'
-import { BrowserRouter, Route, Switch } from 'react-router-dom'
+import { Route, Switch } from 'react-router-dom'
 import { connect } from 'react-redux'
 import Users from './views/Users'
 import Deliveries from './views/Deliveries'
@@ -27,25 +27,24 @@ const App = ({ user, email, getUser, getLogin }) => {
     }
   }, [email])
   
-  if (!email) {
+  if (!email || email == '') {
     return <Login />
   }
-  if (user && user.changePassword) {
+  console.log(user)
+  if (user && true) {
     return <UpdatePasswordForm />
   }
   return (
     <div className='App'>
-      <BrowserRouter>
-        <Container>
-          <Switch>
-            <Route exact path='/users' component={Users} />
-            <Route exact path='/users/create' component={CreateUserForm} />
-            <Route exact path='/deliveries' component={Deliveries} />
-            <Route exact path='/deliveries/:id' component={Delivery} />
-            <Route exact path='*' component={NotFound} />
-          </Switch>
-        </Container>
-      </BrowserRouter>
+      <Container>
+        <Switch>
+          <Route exact path='/users' component={Users} />
+          <Route exact path='/users/create' component={CreateUserForm} />
+          <Route exact path='/deliveries' component={Deliveries} />
+          <Route exact path='/deliveries/:id' component={Delivery} />
+          <Route exact path='*' component={NotFound} />
+        </Switch>
+      </Container>
     </div>
   )
 }
