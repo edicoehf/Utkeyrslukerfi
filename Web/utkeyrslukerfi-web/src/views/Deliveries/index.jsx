@@ -46,7 +46,7 @@ const Deliveries = ({ getDeliveries, deliveries, setDelivery , token }) => {
               Staða
             </th>
             <th>
-              Mótakandi
+              Móttakandi
             </th>
             <th>
               Sendandi
