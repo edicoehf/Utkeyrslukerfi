@@ -9,7 +9,7 @@ const NotFound = () => {
       <h2>Síða fannst ekki</h2>
       <NavLink
         exact
-        to='/home'
+        to='/'
         className='navigation-link'
       >Fara aftur á forsíðu
       </NavLink>

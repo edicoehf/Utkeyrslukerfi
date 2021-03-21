@@ -19,7 +19,7 @@ const deliveryService = () => {
       },
       method: 'PATCH',
       body: JSON.stringify(delivery)
-    }).then(d => d.json())
+    }).then(d => d.json()),
   }
 }
 
