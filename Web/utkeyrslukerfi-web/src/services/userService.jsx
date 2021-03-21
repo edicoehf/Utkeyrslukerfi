@@ -7,7 +7,7 @@ const userService = () => {
         Authorization: `Bearer ${token}`
       }
     }).then(d => d.json()).then(d => d),
-    getUser: (token, email) => fetch(USER_URL+`/by-email?email=${email}`, {
+    getUser: (token, email) => fetch(USER_URL + `/by-email?email=${email}`, {
       headers: {
         Authorization: `Bearer ${token}`
       }
