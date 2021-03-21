@@ -7,17 +7,17 @@ import Button from 'react-bootstrap/Button'
 import { updatePassword } from '../../actions/userActions'
 import { connect } from 'react-redux'
 
-const UpdatePasswordForm = ({ updatePassword, user }) => {
+const UpdatePasswordForm = ({ updatePassword, user, token }) => {
   const { register, handleSubmit, errors, watch } = useForm()
   const password = useRef({})
   password.current = watch("password", "")
 
   const submitForm = (data) => {
     console.log('The form was successfully submitted!')
-    console.log(data)
     updatePassword(
-      user.id, {
-        name: user.name, 
+      token,
+      user.id, 
+      { name: user.name, 
         email: user.email, 
         password: data.password, 
         changePassword: false
@@ -85,7 +85,8 @@ const UpdatePasswordForm = ({ updatePassword, user }) => {
 
 const mapStateToProps = reduxStoreState => {
   return {
-    user: reduxStoreState.user
+    user: reduxStoreState.user,
+    token: reduxStoreState.token
   }
 }
 

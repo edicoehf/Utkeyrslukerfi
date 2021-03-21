@@ -23,7 +23,7 @@ const App = ({ user, email, token, getUser, getLogin }) => {
 
   useEffect(() => {
     if(email && token){
-      getUser(email)
+      getUser(token, email)
     }
   }, [email, token])
   

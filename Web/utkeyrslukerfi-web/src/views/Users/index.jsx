@@ -7,7 +7,9 @@ const Users = ({ getUsers, users, token }) => {
   const history = useHistory();
 
   useEffect(() => {
-    getUsers()
+	if(token){
+		getUsers(token)
+	}
   }, [token])
 
   const navigateToDelivery = (obj) => {
