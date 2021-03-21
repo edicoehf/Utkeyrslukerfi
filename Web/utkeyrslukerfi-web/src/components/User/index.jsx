@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import { useLocation, useParams } from 'react-router-dom'
 import { setViewingUser, getViewingUser } from '../../actions/userActions'
+import UpdateUserForm from '../UpdateUserForm'
 
 const User = ({ token, viewingUser, setViewingUser, getViewingUser }) => {
   const location = useLocation()
@@ -17,9 +18,7 @@ const User = ({ token, viewingUser, setViewingUser, getViewingUser }) => {
 
   return (
     <>
-      <p>{viewingUser.name}</p>
-      <p>{viewingUser.email}</p>
-      <p>{viewingUser.role}</p>
+      <UpdateUserForm user={viewingUser} />
     </>
   )
 }
