@@ -19,7 +19,7 @@ const Login = ({ setLogin }) => {
           msg += `${value}\n`
         }
         const element = document.getElementById('err-msg')
-        element.classList.remove('hidden')
+        element.classList.remove('d-none')
         setErrorMessage(msg)
       } else {
         setErrorMessage('Could not reach the login servers')
@@ -41,7 +41,7 @@ const Login = ({ setLogin }) => {
         <div className='btn-wrapper'>
           <button className='btn btn-secondary' type='submit'>Innskrá</button>
         </div>
-        <div id='err-msg' className='error-message alert alert-danger hidden'>{errorMessage}</div>
+        <div id='err-msg' className='error-message alert alert-danger d-none'>{errorMessage}</div>
       </form>
     </div>
   )
