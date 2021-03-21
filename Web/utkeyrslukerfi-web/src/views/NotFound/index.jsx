@@ -9,7 +9,7 @@ const NotFound = () => {
       <h2>Page not found</h2>
       <NavLink
         exact
-        to='/home'
+        to='/'
         className='navigation-link'
       >Go back home
       </NavLink>

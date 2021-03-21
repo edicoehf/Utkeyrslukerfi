@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { getDeliveries } from '../../actions/deliveryActions'
+import { getDeliveries } from '../../actions/deliveriesActions'
+import { setDelivery } from '../../actions/deliveryActions'
 
-const Deliveries = ({ getDeliveries, deliveries }) => {
+const Deliveries = ({ getDeliveries, setDelivery, deliveries }) => {
   const history = useHistory()
 
   useEffect(() => {
@@ -11,7 +12,8 @@ const Deliveries = ({ getDeliveries, deliveries }) => {
   }, [])
 
   const navigateToDelivery = (obj) => {
-    history.push(`/deliveries/${obj.id}`, { params: obj })
+    setDelivery(obj)
+    history.push(`/deliveries/${obj.id}`)
   }
 
   const renderRows = () => {
@@ -31,7 +33,7 @@ const Deliveries = ({ getDeliveries, deliveries }) => {
   }
 
   return (
-    <div className='deliveries'>
+    <div className='deliveries pt-3'>
       <table className='table'>
         <thead className='thead-dark'>
           <tr>
@@ -69,8 +71,9 @@ const Deliveries = ({ getDeliveries, deliveries }) => {
 
 const mapStateToProps = reduxStoreState => {
   return {
-    deliveries: reduxStoreState.deliveries
+    deliveries: reduxStoreState.deliveries,
+    delivery: reduxStoreState.delivery,
   }
 }
 
-export default connect(mapStateToProps, { getDeliveries })(Deliveries)
+export default connect(mapStateToProps, { getDeliveries, setDelivery })(Deliveries)

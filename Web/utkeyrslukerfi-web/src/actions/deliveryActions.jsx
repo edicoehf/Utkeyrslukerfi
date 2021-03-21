@@ -1,16 +1,24 @@
-import { GET_DELIVERIES } from '../constants'
+import { GET_DELIVERY, SET_DELIVERY } from '../constants'
 import deliveryService from '../services/deliveryService'
 
-export const getDeliveries = () => async (dispatch) => {
+
+
+export const getDelivery = (id) => async (dispatch) => {
   try {
-    const deliveries = await deliveryService.getDeliveries()
-    dispatch(getDeliveriesSuccess(deliveries))
+    console.log("here: ", id);
+    const delivery = await deliveryService.getDelivery(id)
+    dispatch(getDeliverySuccess(delivery))
   } catch (err) {
     console.log('Bad request, please try loading again.')
   }
 }
 
-const getDeliveriesSuccess = (deliveries) => ({
-  type: GET_DELIVERIES,
-  payload: deliveries
+const getDeliverySuccess = (delivery) => ({
+  type: GET_DELIVERY,
+  payload: delivery
+})
+
+export const setDelivery = (obj) => ({
+  type: SET_DELIVERY,
+  payload: obj
 })

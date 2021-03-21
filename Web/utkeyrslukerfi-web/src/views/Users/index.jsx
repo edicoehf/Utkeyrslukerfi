@@ -28,7 +28,7 @@ const Users = ({ getUsers, users }) => {
   }
 
   return (
-    <div className='users'>
+    <div className='users pt-3'>
       <table className='table'>
         <thead className='thead-dark'>
           <tr>

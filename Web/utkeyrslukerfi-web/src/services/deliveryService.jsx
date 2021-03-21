@@ -12,7 +12,7 @@ const deliveryService = () => {
       headers: {
         Authorization: `Bearer ${token}`
       }
-    }).then(d => d.json()).then(d => d),
+    }).then(d => d.json()),
     updateDelivery: (delivery) => fetch(`DELIVERY_URL/${delivery.id}`, {
       headers: {
         'Content-Type': 'application/json',
@@ -20,7 +20,7 @@ const deliveryService = () => {
       },
       method: 'PATCH',
       body: JSON.stringify(delivery)
-    }).then(d => d.json())
+    }).then(d => d.json()),
   }
 }
 
