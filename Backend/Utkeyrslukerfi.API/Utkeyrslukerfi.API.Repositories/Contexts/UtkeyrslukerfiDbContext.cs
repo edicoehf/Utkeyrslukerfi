@@ -32,13 +32,13 @@ namespace Utkeyrslukerfi.API.Repositories.Context
                 .WithMany(v => v.Deliveries);
         }
 
+        public DbSet<JwtToken> JwtTokens { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Address> Addresses { get; set; }
         public DbSet<Signoff> Signoffs { get; set; }
         public DbSet<Vehicle> Vehicles { get; set; }
         public DbSet<Delivery> Deliveries { get; set; }
         public DbSet<Package> Packages { get; set; }
-        public DbSet<JwtToken> JwtTokens { get; set; }
 
     }
 }

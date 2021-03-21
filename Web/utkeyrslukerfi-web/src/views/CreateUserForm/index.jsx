@@ -7,12 +7,12 @@ import Button from 'react-bootstrap/Button'
 import { createUser } from '../../actions/usersActions'
 import { connect } from 'react-redux'
 
-const CreateUserForm = ({ createUser }) => {
+const CreateUserForm = ({ token, createUser }) => {
   const { register, handleSubmit, errors } = useForm() // TODO: define the roles and use configuration to add them
 
   const submitForm = (data) => {
     console.log('The form was successfully submitted!')
-    createUser(data)
+    createUser(token, data)
   }
 
   return (
@@ -124,4 +124,10 @@ const CreateUserForm = ({ createUser }) => {
   )
 }
 
-export default connect(null, { createUser })(CreateUserForm)
+const mapStateToProps = reduxStoreState => {
+  return {
+    token: reduxStoreState.token
+  }
+}
+
+export default connect(mapStateToProps, { createUser })(CreateUserForm)
