@@ -3,12 +3,14 @@ import { useHistory } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { getDeliveries } from '../../actions/deliveryActions'
 
-const Deliveries = ({ getDeliveries, deliveries }) => {
+const Deliveries = ({ getDeliveries, deliveries, token }) => {
   const history = useHistory()
 
   useEffect(() => {
-    getDeliveries()
-  }, [])
+    if (token) {
+      getDeliveries(token)
+    }
+  }, [token])
 
   const navigateToDelivery = (obj) => {
     history.push(`/deliveries/${obj.id}`, { params: obj })
@@ -69,7 +71,8 @@ const Deliveries = ({ getDeliveries, deliveries }) => {
 
 const mapStateToProps = reduxStoreState => {
   return {
-    deliveries: reduxStoreState.deliveries
+    deliveries: reduxStoreState.deliveries,
+    token: reduxStoreState.token
   }
 }
 
