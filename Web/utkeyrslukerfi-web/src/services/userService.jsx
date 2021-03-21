@@ -20,7 +20,7 @@ const userService = () => {
       method: 'POST',
       body: JSON.stringify(user)
     }).then(r => r.json()),
-    updatePassword: (token, id, user) => fetch(USER_URL+'/'+id, {
+    updatePassword: (token, id, user) => fetch(USER_URL + '/' + id, {
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`

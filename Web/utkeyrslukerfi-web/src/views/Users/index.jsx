@@ -34,10 +34,18 @@ const Users = ({ getUsers, users, token }) => {
       <table className='table'>
         <thead className='thead-dark'>
           <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Role</th>
+            <th>
+              ID
+            </th>
+            <th>
+              Name
+            </th>
+            <th>
+              Email
+            </th>
+            <th>
+              Role
+            </th>
           </tr>
         </thead>
         <tbody>

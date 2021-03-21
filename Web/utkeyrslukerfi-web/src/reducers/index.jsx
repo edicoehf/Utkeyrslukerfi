@@ -8,7 +8,7 @@ import token from './tokenReducer'
 export default combineReducers({
   login,
   user,
-  users, 
+  users,
   deliveries,
   token
 })

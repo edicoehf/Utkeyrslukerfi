@@ -24,6 +24,7 @@ namespace Utkeyrslukerfi.API.Controllers
         /// Returns a specific package by ID/Barcode
         /// </summary>
         /// <param name="id">ID</param>
+        /// <param name="deliveryID">deliveryID</param>
         /// <remarks>
         /// Sample request:
         ///

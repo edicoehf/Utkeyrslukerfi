@@ -51,7 +51,7 @@ namespace Utkeyrslukerfi.API.Middlewares
                 message = "🤡 Oppsie the server fucked up 🤡";
             }
 
-            var result = JsonConvert.SerializeObject(new { error = message, stacktrace = stackTrace });
+            var result = JsonConvert.SerializeObject(new { errors = new { Message = new string[] { message } }, stacktrace = stackTrace });
             context.Response.ContentType = "application/json";
             context.Response.StatusCode = (int)status;
             return context.Response.WriteAsync(result.ToString());

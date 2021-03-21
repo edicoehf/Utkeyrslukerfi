@@ -96,7 +96,7 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
                 u.Email == loginInputModel.Email &&
                 u.Password == HashingHelper.HashPassword(loginInputModel.Password));
             // TODO Throw custom exception here
-            if (user == null) { throw new Exception("wow"); }
+            if (user == null) { throw new InvalidLoginException("Either Email or Password is incorrect!"); }
 
             var token = _tokenRepository.CreateNewToken();
             user.TokenID = token.ID;
