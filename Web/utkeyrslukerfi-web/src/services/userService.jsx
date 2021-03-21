@@ -26,7 +26,7 @@ const userService = () => {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`
       },
-      method: 'PATCH',
+      method: 'PUT',
       body: JSON.stringify(user)
     }).then(r => r.json())
   }
