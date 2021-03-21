@@ -12,8 +12,16 @@ const CreateUserForm = ({ token, createUser }) => {
   const [errorMessage, setErrorMessage] = useState()
   const [success, setSuccess] = useState()
 
+  const clearMessages = () => {
+    const elErr = document.getElementById('err-msg')
+    elErr.classList.add('d-none')
+    const elSuccess = document.getElementById('success')
+    elSuccess.classList.add('d-none')
+  }
+
   const submitForm = async (data) => {
-    console.log('The form was successfully submitted!')
+    clearMessages()
+
     const err = await createUser(token, { ...data, changePassword: true })
     if (err) {
       if (err?.errors) {
