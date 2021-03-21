@@ -3,12 +3,12 @@ import { useHistory } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { getUsers } from '../../actions/usersActions'
 
-const Users = ({ getUsers, users }) => {
+const Users = ({ getUsers, users, token }) => {
   const history = useHistory();
 
   useEffect(() => {
     getUsers()
-  }, [])
+  }, [token])
 
   const navigateToDelivery = (obj) => {
 		history.push(`/users/${obj.id}`, { "params": obj });
@@ -57,7 +57,8 @@ const Users = ({ getUsers, users }) => {
 
 const mapStateToProps = reduxStoreState => {
   return {
-    users: reduxStoreState.users
+    users: reduxStoreState.users,
+	token: reduxStoreState.token
   }
 }
 

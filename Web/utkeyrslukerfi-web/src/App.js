@@ -15,22 +15,21 @@ import UpdatePasswordForm from './views/UpdatePasswordForm'
 import { getUser } from './actions/userActions'
 import { getLogin } from './actions/loginActions'
 
-const App = ({ user, email, getUser, getLogin }) => {
+const App = ({ user, email, token, getUser, getLogin }) => {
 
   useEffect(() => {
     getLogin()
   }, [])
 
   useEffect(() => {
-    if(email){
+    if(email && token){
       getUser(email)
     }
-  }, [email])
+  }, [email, token])
   
   if (!email || email == '') {
     return <Login />
   }
-  console.log(user)
   if (user && user.changePassword) {
     return <UpdatePasswordForm />
   }
@@ -52,7 +51,8 @@ const App = ({ user, email, getUser, getLogin }) => {
 const mapStateToProps = reduxStoreState => {
   return {
     user: reduxStoreState.user,
-    email: reduxStoreState.login
+    email: reduxStoreState.login,
+    token: reduxStoreState.token
   }
 }
 

@@ -7,6 +7,8 @@ export const GET_USER = 'GET_USER'
 export const SET_EMAIL = 'SET_EMAIL'
 export const GET_EMAIL = 'GET_EMAIL'
 export const UPDATE_USER = 'UPDATE_USER'
+export const SET_TOKEN = 'SET_TOKEN'
+export const GET_TOKEN = 'GET_TOKEN'
 // URLS
 export const USER_URL = 'https://localhost:5001/api/users'
 export const DELIVERY_URL = 'https://localhost:5001/api/deliveries'
