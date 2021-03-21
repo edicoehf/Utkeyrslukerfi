@@ -6,6 +6,7 @@ export const UPDATE_DELIVERY = 'UPDATE_DELIVERY'
 export const GET_USER = 'GET_USER'
 export const SET_EMAIL = 'SET_EMAIL'
 export const GET_EMAIL = 'GET_EMAIL'
+export const UPDATE_USER = 'UPDATE_USER'
 // URLS
 export const USER_URL = 'https://localhost:5001/api/users'
 export const DELIVERY_URL = 'https://localhost:5001/api/deliveries'

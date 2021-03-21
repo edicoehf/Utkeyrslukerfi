@@ -28,7 +28,7 @@ const userService = () => {
       },
       method: 'PUT',
       body: JSON.stringify(user)
-    }).then(r => r.json())
+    }).then(r => r)
   }
 }
 

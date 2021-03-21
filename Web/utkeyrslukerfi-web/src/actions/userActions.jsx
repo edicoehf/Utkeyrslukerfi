@@ -1,4 +1,4 @@
-import { GET_USER } from '../constants'
+import { GET_USER, UPDATE_USER } from '../constants'
 import userService from '../services/userService'
 
 export const getUser = (email) => async (dispatch) => {
@@ -15,3 +15,18 @@ const getUserSuccess = (user) => ({
   payload: user
 })
 
+
+export const updatePassword = (id, user) => async (dispatch) => {
+  try {
+    await userService.updatePassword(id, user)
+    dispatch(updateUserSuccess({id, ...user}))
+  } catch (err) {
+    console.log(err)
+    console.log('Bad request, please try again later.')
+  }
+}
+
+const updateUserSuccess = (user) => ({
+  type: UPDATE_USER,
+  payload: user
+})

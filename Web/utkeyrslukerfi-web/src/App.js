@@ -31,7 +31,7 @@ const App = ({ user, email, getUser, getLogin }) => {
     return <Login />
   }
   console.log(user)
-  if (user && true) {
+  if (user && user.changePassword) {
     return <UpdatePasswordForm />
   }
   return (

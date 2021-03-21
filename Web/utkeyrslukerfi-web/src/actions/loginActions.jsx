@@ -19,7 +19,7 @@ export const setLogin = (email, password) => async (dispatch) => {
 const setEmailSuccess = (email) => ({
     type: SET_EMAIL,
     payload: email
-  })
+})
 
 export const getLogin = () => async (dispatch) => {
   try {
@@ -34,4 +34,4 @@ export const getLogin = () => async (dispatch) => {
 const getEmailSuccess = (email) => ({
     type: GET_EMAIL,
     payload: email
-  })
+})
