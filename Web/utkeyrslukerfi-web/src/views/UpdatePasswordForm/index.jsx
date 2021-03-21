@@ -86,7 +86,7 @@ const UpdatePasswordForm = ({ updatePassword, user, token }) => {
 
 const mapStateToProps = reduxStoreState => {
   return {
-    user: reduxStoreState.user,
+    user: reduxStoreState.user.loggedInUser,
     token: reduxStoreState.token
   }
 }

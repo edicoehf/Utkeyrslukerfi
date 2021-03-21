@@ -7,7 +7,12 @@ const userService = () => {
         Authorization: `Bearer ${token}`
       }
     }).then(d => d.json()).then(d => d),
-    getUser: (token, email) => fetch(USER_URL + `/by-email?email=${email}`, {
+    getUser: (token, id) => fetch(USER_URL + `/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }).then(d => d.json()).then(d => d),
+    getUserByEmail: (token, email) => fetch(USER_URL + `/by-email?email=${email}`, {
       headers: {
         Authorization: `Bearer ${token}`
       }
@@ -20,7 +25,7 @@ const userService = () => {
       method: 'POST',
       body: JSON.stringify(user)
     }).then(r => r.json()),
-    updatePassword: (token, id, user) => fetch(USER_URL + '/' + id, {
+    updateUser: (token, id, user) => fetch(USER_URL + `/${id}`, {
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`

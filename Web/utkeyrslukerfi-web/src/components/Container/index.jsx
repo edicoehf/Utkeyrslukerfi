@@ -1,6 +1,5 @@
 import React from 'react'
 
-// would consider using container class from bootstrap instead of wrapper
-const Container = ({ children }) => <div className='wrapper'> {children} </div>
+const Container = ({ children }) => <div className='container'> {children} </div>
 
 export default Container
