@@ -16,10 +16,11 @@ const UpdatePasswordForm = ({ updatePassword, user, token }) => {
     console.log('The form was successfully submitted!')
     updatePassword(
       token,
-      user.id, 
-      { name: user.name, 
-        email: user.email, 
-        password: data.password, 
+      user.id,
+      {
+        name: user.name,
+        email: user.email,
+        password: data.password,
         changePassword: false
       })
   }
