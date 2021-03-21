@@ -22,6 +22,8 @@ const Login = ({ setLogin }) => {
         element.classList.remove('d-none')
         setErrorMessage(msg)
       } else {
+        const element = document.getElementById('err-msg')
+        element.classList.remove('d-none')
         setErrorMessage('Could not reach the login servers')
       }
     }
