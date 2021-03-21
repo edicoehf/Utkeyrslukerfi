@@ -32,25 +32,12 @@ const App = ({ user, email, token, getUser, getLogin }) => {
   if (user && user.changePassword) {
     return <UpdatePasswordForm />
   }
-  console.log("get here");
+  console.log('get here')
   return (
     <div className='App'>
-<<<<<<< HEAD
-  <BrowserRouter>
-    <Container>
-      <Switch>
-        <Route exact path='/' component={Home} />
-        <Route exact path='/users' component={Users} />
-        <Route exact path='/users/create' component={CreateUserForm} />
-        <Route exact path='/deliveries' component={Deliveries} />
-        <Route exact path='/deliveries/:id' component={Delivery} />
-        <Route exact path='*' component={NotFound} />
-      </Switch>
-    </Container>
-  </BrowserRouter>
-=======
       <Container>
         <Switch>
+          <Route exact path='/' component={Home} />
           <Route exact path='/users' component={Users} />
           <Route exact path='/users/create' component={CreateUserForm} />
           <Route exact path='/deliveries' component={Deliveries} />
@@ -58,8 +45,7 @@ const App = ({ user, email, token, getUser, getLogin }) => {
           <Route exact path='*' component={NotFound} />
         </Switch>
       </Container>
->>>>>>> d86c7a81ec50f324b3e866d852397672b12ecb74
-    </div >
+    </div>
   )
 }
 

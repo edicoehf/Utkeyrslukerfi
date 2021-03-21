@@ -1,9 +1,13 @@
 import React from 'react'
 import { useLocation } from 'react-router-dom'
+import { getPackages } from '../../actions/deliveryActions'
+import { useHistory } from 'react-router-dom'
+import { connect } from 'react-redux'
 
 const Delivery = () => {
   // might need to use getDeliveryById or something similar instead
   const location = useLocation()
+  const history = useHistory();
   const obj = location.state.params
   const { id, recipient, seller, status } = obj
   const driver = obj.driver.name
@@ -11,6 +15,10 @@ const Delivery = () => {
   const pickupAddress = `${obj.pickupAddress.streetName}  ${obj.pickupAddress.houseNumber}`
   const vehicle = obj.vehicle.licensePlate
 
+  const navigateToPackage = (obj) => {
+	  history.push(`/deliveries/${id}/${obj.id}`, { params: obj })
+  }	
+  
   const handleSubmit = (event) => {
     // this has to be modified to update the form, instead of displaying data
     event.preventDefault()
