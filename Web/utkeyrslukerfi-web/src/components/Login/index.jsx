@@ -31,7 +31,7 @@ const Login = ({ setLogin }) => {
     <div className='login-wrapper'>
       <form onSubmit={handleSubmit}>
         <label>
-          <p>Tölvupóstur:</p>
+          <p>Netfang:</p>
           <input type='text' onChange={e => setUserName(e.target.value)} />
         </label>
         <label>

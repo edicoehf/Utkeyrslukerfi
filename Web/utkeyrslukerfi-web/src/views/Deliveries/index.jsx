@@ -39,22 +39,22 @@ const Deliveries = ({ getDeliveries, deliveries }) => {
               ID
             </th>
             <th>
-              Status
+              Staða
             </th>
             <th>
-              Recepient
+              Mótakandi
             </th>
             <th>
-              Seller
+              Sendandi
             </th>
             <th>
-              Driver
+              Bílstjóri
             </th>
             <th>
-              Delivery Address
+              Heimilisfang móttakanda
             </th>
             <th>
-              Pickup Address
+              Heimilisfang sendanda
             </th>
           </tr>
         </thead>

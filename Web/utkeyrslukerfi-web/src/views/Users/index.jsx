@@ -38,13 +38,13 @@ const Users = ({ getUsers, users, token }) => {
               ID
             </th>
             <th>
-              Name
+              Nafn
             </th>
             <th>
-              Email
+              Netfang
             </th>
             <th>
-              Role
+              Starf
             </th>
           </tr>
         </thead>
