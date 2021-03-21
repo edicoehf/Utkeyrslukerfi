@@ -2,6 +2,7 @@ import './styles/navbar.css'
 import './styles/main.css'
 import { Route, Switch } from 'react-router-dom'
 import { connect } from 'react-redux'
+import User from './components/User'
 // import HomePage from './components/HomePage'
 import Users from './views/Users'
 import Deliveries from './views/Deliveries'
@@ -13,23 +14,23 @@ import Navbar from './components/Navbar'
 import CreateUserForm from './views/CreateUserForm'
 import NotFound from './views/NotFound'
 import UpdatePasswordForm from './views/UpdatePasswordForm'
-import { getUser } from './actions/userActions'
+import { getLoggedInUser } from './actions/userActions'
 import { getLogin } from './actions/loginActions'
 
-const App = ({ user, email, token, getUser, getLogin }) => {
+const App = ({ loggedInUser, email, token, getLoggedInUser, getLogin }) => {
   useEffect(() => {
     getLogin()
   }, [])
 
   useEffect(() => {
     if (email && token) {
-      getUser(token, email)
+      getLoggedInUser(token, email)
     }
   }, [email, token])
   if (!email || email === '') {
     return <Login />
   }
-  if (user && user.changePassword) {
+  if (loggedInUser && loggedInUser.changePassword) {
     return <UpdatePasswordForm />
   }
   return (
@@ -39,6 +40,7 @@ const App = ({ user, email, token, getUser, getLogin }) => {
         <Switch>
           {/* <Route exact path='/' component={HomePage} /> */}
           <Route exact path='/users' component={Users} />
+          <Route exact path='/users/:id' component={User} />
           <Route exact path='/users/create' component={CreateUserForm} />
           <Route exact path='/deliveries' component={Deliveries} />
           <Route exact path='/deliveries/:id' component={Delivery} />
@@ -51,10 +53,10 @@ const App = ({ user, email, token, getUser, getLogin }) => {
 
 const mapStateToProps = reduxStoreState => {
   return {
-    user: reduxStoreState.user,
+    loggedInUser: reduxStoreState.user.loggedInUser,
     email: reduxStoreState.login,
     token: reduxStoreState.token
   }
 }
 
-export default connect(mapStateToProps, { getUser, getLogin })(App)
+export default connect(mapStateToProps, { getLoggedInUser, getLogin })(App)

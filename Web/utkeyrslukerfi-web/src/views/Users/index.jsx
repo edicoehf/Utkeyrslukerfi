@@ -15,19 +15,23 @@ const Users = ({ getUsers, users, token }) => {
     }
   }, [token])
 
-  const navigateToDelivery = (obj) => {
-    history.push(`/users/${obj.id}`, { params: obj })
+  const navigateToUser = (user) => {
+    history.push(`/users/${user.id}`, { params: user })
+  }
+
+  const navigateToCreateUser = () => {
+    history.push('/users/create')
   }
 
   const renderRows = () => {
-    return users.map(function (obj, id) {
+    return users.map(function (user, id) {
       return (
-        <tr key={id} onClick={() => navigateToDelivery(obj)}>
-          <td>{obj.id}</td>
-          <td>{obj.name}</td>
-          <td>{obj.email}</td>
-          <td>{obj.role}</td>
-          <td><BsPencilSquare size='1.5em' /></td>
+        <tr key={id}>
+          <td>{user.id}</td>
+          <td>{user.name}</td>
+          <td>{user.email}</td>
+          <td>{user.role}</td>
+          <td onClick={() => navigateToUser(user)}><BsPencilSquare size='1.5em' /></td>
         </tr>
       )
     })
@@ -60,7 +64,7 @@ const Users = ({ getUsers, users, token }) => {
           }
           {/* Loading the Add user plus */}
           <tr>
-            <td><ImPlus size='2em' /></td>
+            <td onClick={() => navigateToCreateUser()}><ImPlus size='2em' /></td>
             <td />
             <td />
             <td />

@@ -4,20 +4,20 @@ import Form from 'react-bootstrap/Form'
 import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
 import Button from 'react-bootstrap/Button'
-import { createUser } from '../../actions/userActions'
+import { updateUser } from '../../actions/userActions'
 import { connect } from 'react-redux'
 
-const CreateUserForm = ({ token, createUser }) => {
+const UpdateUserForm = ({ user, token, updateUser }) => {
   const { register, handleSubmit, errors } = useForm() // TODO: define the roles and use configuration to add them
 
   const submitForm = (data) => {
     console.log('The form was successfully submitted!')
-    createUser(token, { ...data, changePassword: true })
+    updateUser(token, user.id, { ...data, changePassword: true })
   }
 
   return (
     <Form onSubmit={handleSubmit(submitForm)} className='form form-horizontal'>
-      <Form.Group as={Row} controlId='formCreateUserName'>
+      <Form.Group as={Row} controlId='formUpdateUserName'>
         <Form.Label column sm={3}>
           Nafn:
         </Form.Label>
@@ -25,6 +25,7 @@ const CreateUserForm = ({ token, createUser }) => {
           <Form.Control
             name='name'
             placeholder='Insert name...'
+            defaultValue={user.name}
             type='text'
             ref={register({
               required: 'This field is required.',
@@ -43,7 +44,7 @@ const CreateUserForm = ({ token, createUser }) => {
           {errors.name && <p>{errors.name.message}</p>}
         </Col>
       </Form.Group>
-      <Form.Group as={Row} controlId='formCreateUserEmail'>
+      <Form.Group as={Row} controlId='formUpdateUserEmail'>
         <Form.Label column sm={3}>
           Netfang:
         </Form.Label>
@@ -51,6 +52,7 @@ const CreateUserForm = ({ token, createUser }) => {
           <Form.Control
             name='email'
             placeholder='Insert email...'
+            defaultValue={user.email}
             type='text'
             ref={register({
               required: 'This field is required.',
@@ -69,7 +71,7 @@ const CreateUserForm = ({ token, createUser }) => {
           {errors.email && <p>{errors.email.message}</p>}
         </Col>
       </Form.Group>
-      <Form.Group as={Row} controlId='formCreateUserPassword'>
+      <Form.Group as={Row} controlId='formUpdateUserPassword'>
         <Form.Label column sm={3}>
           Tímabundið lykilorð:
         </Form.Label>
@@ -95,7 +97,7 @@ const CreateUserForm = ({ token, createUser }) => {
           {errors.password && <p>{errors.password.message}</p>}
         </Col>
       </Form.Group>
-      <Form.Group as={Row} controlId='formCreateUserRole'>
+      <Form.Group as={Row} controlId='formUpdateUserRole'>
         <Form.Label column sm={3}>
           Starf:
         </Form.Label>
@@ -103,6 +105,7 @@ const CreateUserForm = ({ token, createUser }) => {
           <Form.Control
             as='select'
             custom
+            defaultValue={user.role}
             name='role'
             ref={register}
           >
@@ -130,4 +133,4 @@ const mapStateToProps = reduxStoreState => {
   }
 }
 
-export default connect(mapStateToProps, { createUser })(CreateUserForm)
+export default connect(mapStateToProps, { updateUser })(UpdateUserForm)

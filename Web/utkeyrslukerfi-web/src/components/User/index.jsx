@@ -1,13 +1,33 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { connect } from 'react-redux'
+import { useLocation, useParams } from 'react-router-dom'
+import { setViewingUser, getViewingUser } from '../../actions/userActions'
+import UpdateUserForm from '../UpdateUserForm'
 
-const User = ({ name, email, role }) => {
+const User = ({ token, viewingUser, setViewingUser, getViewingUser }) => {
+  const location = useLocation()
+  const id = useParams()
+  useEffect(() => {
+    if (location) {
+      const user = location.state.params
+      setViewingUser(user)
+    } else {
+      getViewingUser(token, id)
+    }
+  }, [])
+
   return (
     <>
-      <p>{name}</p>
-      <p>{email}</p>
-      <p>{role}</p>
+      <UpdateUserForm user={viewingUser} />
     </>
   )
 }
 
-export default User
+const mapStateToProps = reduxStoreState => {
+  return {
+    token: reduxStoreState.token,
+    viewingUser: reduxStoreState.user.viewingUser
+  }
+}
+
+export default connect(mapStateToProps, { setViewingUser, getViewingUser })(User)
