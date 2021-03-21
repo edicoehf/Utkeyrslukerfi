@@ -1,17 +1,10 @@
 import React from 'react'
-import { NavLink } from 'react-router-dom'
+import NavLinks from '../NavLinks'
 
-function Navbar () {
-  return (
-    <nav className='navbar'>
-      <NavLink
-        exact
-        to='/home'
-        className='navigation-link'
-      >Home
-      </NavLink>
-    </nav>
-  )
-}
+const Navbar = () => (
+  <nav className='navbar navbar-expand-lg navbar-dark bg-primary'>
+    <NavLinks />
+  </nav>
+)
 
 export default Navbar

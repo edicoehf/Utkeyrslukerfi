@@ -26,8 +26,8 @@ const App = ({ user }) => {
   return (
     <div className='App'>
       <BrowserRouter>
+        <Navbar />
         <Container>
-          <Navbar />
           <Switch>
             <Route exact path='/users' component={Users} />
             <Route exact path='/users/create' component={CreateUserForm} />
