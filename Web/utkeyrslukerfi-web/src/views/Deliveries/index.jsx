@@ -4,12 +4,14 @@ import { connect } from 'react-redux'
 import { getDeliveries } from '../../actions/deliveriesActions'
 import { setDelivery } from '../../actions/deliveryActions'
 
-const Deliveries = ({ getDeliveries, setDelivery, deliveries }) => {
+const Deliveries = ({ getDeliveries, deliveries, setDelivery ,token }) => {
   const history = useHistory()
 
   useEffect(() => {
-    getDeliveries()
-  }, [])
+    if (token) {
+      getDeliveries(token)
+    }
+  }, [token])
 
   const navigateToDelivery = (obj) => {
     setDelivery(obj)
@@ -41,22 +43,22 @@ const Deliveries = ({ getDeliveries, setDelivery, deliveries }) => {
               ID
             </th>
             <th>
-              Status
+              Staða
             </th>
             <th>
-              Recepient
+              Mótakandi
             </th>
             <th>
-              Seller
+              Sendandi
             </th>
             <th>
-              Driver
+              Bílstjóri
             </th>
             <th>
-              Delivery Address
+              Heimilisfang móttakanda
             </th>
             <th>
-              Pickup Address
+              Heimilisfang sendanda
             </th>
           </tr>
         </thead>
@@ -73,6 +75,7 @@ const mapStateToProps = reduxStoreState => {
   return {
     deliveries: reduxStoreState.deliveries,
     delivery: reduxStoreState.delivery,
+    token: reduxStoreState.token
   }
 }
 

@@ -97,7 +97,12 @@ namespace Utkeyrslukerfi.API.Migrations
                     b.Property<bool>("Blacklisted")
                         .HasColumnType("tinyint(1)");
 
+                    b.Property<int?>("UserID")
+                        .HasColumnType("int");
+
                     b.HasKey("ID");
+
+                    b.HasIndex("UserID");
 
                     b.ToTable("JwtTokens");
                 });
@@ -238,6 +243,15 @@ namespace Utkeyrslukerfi.API.Migrations
                     b.Navigation("Vehicle");
                 });
 
+            modelBuilder.Entity("Utkeyrslukerfi.API.Models.Entities.JwtToken", b =>
+                {
+                    b.HasOne("Utkeyrslukerfi.API.Models.Entities.User", "User")
+                        .WithMany("JwtTokens")
+                        .HasForeignKey("UserID");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Utkeyrslukerfi.API.Models.Entities.Package", b =>
                 {
                     b.HasOne("Utkeyrslukerfi.API.Models.Entities.Delivery", "Delivery")
@@ -266,6 +280,8 @@ namespace Utkeyrslukerfi.API.Migrations
             modelBuilder.Entity("Utkeyrslukerfi.API.Models.Entities.User", b =>
                 {
                     b.Navigation("Deliveries");
+
+                    b.Navigation("JwtTokens");
                 });
 
             modelBuilder.Entity("Utkeyrslukerfi.API.Models.Entities.Vehicle", b =>

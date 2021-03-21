@@ -1,9 +1,7 @@
 import { GET_DELIVERY, SET_DELIVERY } from '../constants'
 import deliveryService from '../services/deliveryService'
 
-
-
-export const getDelivery = (id) => async (dispatch) => {
+const getDelivery = (id) => async (dispatch) => {
   try {
     console.log("here: ", id);
     const delivery = await deliveryService.getDelivery(id)
@@ -18,7 +16,9 @@ const getDeliverySuccess = (delivery) => ({
   payload: delivery
 })
 
-export const setDelivery = (obj) => ({
+const setDelivery = (obj) => ({
   type: SET_DELIVERY,
   payload: obj
 })
+
+export {getDelivery, setDelivery }

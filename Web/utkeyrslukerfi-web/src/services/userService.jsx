@@ -1,14 +1,18 @@
 import { USER_URL } from '../constants'
 
 const userService = () => {
-  const token = localStorage.getItem('token')
   return {
-    getUsers: () => fetch(USER_URL, {
+    getUsers: (token) => fetch(USER_URL, {
       headers: {
         Authorization: `Bearer ${token}`
       }
     }).then(d => d.json()).then(d => d),
-    createUser: (user) => fetch(USER_URL, {
+    getUser: (token, email) => fetch(USER_URL + `/by-email?email=${email}`, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }).then(d => d.json()).then(d => d),
+    createUser: (token, user) => fetch(USER_URL, {
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`
@@ -16,14 +20,14 @@ const userService = () => {
       method: 'POST',
       body: JSON.stringify(user)
     }).then(r => r.json()),
-    updateUser: (id, user) => fetch(USER_URL + '/' + id, {
+    updatePassword: (token, id, user) => fetch(USER_URL + '/' + id, {
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`
       },
-      method: 'PATCH',
+      method: 'PUT',
       body: JSON.stringify(user)
-    }).then(r => r.json())
+    }).then(r => r)
   }
 }
 

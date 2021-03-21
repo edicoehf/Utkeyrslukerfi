@@ -1,24 +1,17 @@
 import React, { useState } from 'react'
 import '../../styles/login.css'
-import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+import { setLogin } from '../../actions/loginActions'
 
-import loginUser from '../../services/accountService'
-
-const Login = ({ setToken }) => {
+const Login = ({ setLogin }) => {
   const [email, setUserName] = useState()
   const [password, setPassword] = useState()
   const [errorMessage, setErrorMessage] = useState()
 
-  const handleSubmit = async e => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    try {
-      const token = await loginUser({
-        Email: email,
-        Password: password
-      })
-      setToken(token)
-    } catch (err) {
-      console.error(err)
+    const err = await setLogin(email, password)
+    if (err) {
       if (err?.errors) {
         let msg = ''
         // eslint-disable-next-line no-unused-vars
@@ -28,9 +21,9 @@ const Login = ({ setToken }) => {
         const element = document.getElementById('err-msg')
         element.classList.remove('d-none')
         setErrorMessage(msg)
-        return
+      } else {
+        setErrorMessage('Could not reach the login servers')
       }
-      setErrorMessage('Could not reach the login servers')
     }
   }
 
@@ -38,7 +31,7 @@ const Login = ({ setToken }) => {
     <div className='login-wrapper'>
       <form onSubmit={handleSubmit}>
         <label>
-          <p>Tölvupóstur:</p>
+          <p>Netfang:</p>
           <input type='text' onChange={e => setUserName(e.target.value)} />
         </label>
         <label>
@@ -54,8 +47,4 @@ const Login = ({ setToken }) => {
   )
 }
 
-Login.propTypes = {
-  setToken: PropTypes.func.isRequired
-}
-
-export default Login
+export default connect(null, { setLogin })(Login)

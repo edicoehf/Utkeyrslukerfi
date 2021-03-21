@@ -7,19 +7,19 @@ import Button from 'react-bootstrap/Button'
 import { createUser } from '../../actions/usersActions'
 import { connect } from 'react-redux'
 
-const CreateUserForm = ({ createUser }) => {
+const CreateUserForm = ({ token, createUser }) => {
   const { register, handleSubmit, errors } = useForm() // TODO: define the roles and use configuration to add them
 
   const submitForm = (data) => {
     console.log('The form was successfully submitted!')
-    createUser(data)
+    createUser(token, data)
   }
 
   return (
     <Form onSubmit={handleSubmit(submitForm)} className='form form-horizontal'>
       <Form.Group as={Row} controlId='formCreateUserName'>
         <Form.Label column sm={3}>
-          Name:
+          Nafn:
         </Form.Label>
         <Col sm={8}>
           <Form.Control
@@ -43,35 +43,9 @@ const CreateUserForm = ({ createUser }) => {
           {errors.name && <p>{errors.name.message}</p>}
         </Col>
       </Form.Group>
-      <Form.Group as={Row} controlId='formCreateUserPassword'>
-        <Form.Label column sm={3}>
-          Password:
-        </Form.Label>
-        <Col sm={8}>
-          <Form.Control
-            name='password'
-            placeholder='Insert password...'
-            type='password'
-            ref={register({
-              required: 'This field is required.',
-              minLength: {
-                value: 2,
-                message: 'Please insert your password.'
-              },
-              pattern: {
-                value: /^[^()[\]{}*&^%$#@!]+$/,
-                message: 'Please insert a valid password.'
-              }
-            })}
-          />
-        </Col>
-        <Col sm={4}>
-          {errors.password && <p>{errors.password.message}</p>}
-        </Col>
-      </Form.Group>
       <Form.Group as={Row} controlId='formCreateUserEmail'>
         <Form.Label column sm={3}>
-          Email:
+          Netfang:
         </Form.Label>
         <Col sm={8}>
           <Form.Control
@@ -95,9 +69,35 @@ const CreateUserForm = ({ createUser }) => {
           {errors.email && <p>{errors.email.message}</p>}
         </Col>
       </Form.Group>
+      <Form.Group as={Row} controlId='formCreateUserPassword'>
+        <Form.Label column sm={3}>
+          Tímabundið lykilorð:
+        </Form.Label>
+        <Col sm={8}>
+          <Form.Control
+            name='password'
+            placeholder='Insert password...'
+            type='password'
+            ref={register({
+              required: 'This field is required.',
+              minLength: {
+                value: 2,
+                message: 'Please insert your password.'
+              },
+              pattern: {
+                value: /^[^()[\]{}*&^%$#@!]+$/,
+                message: 'Please insert a valid password.'
+              }
+            })}
+          />
+        </Col>
+        <Col sm={4}>
+          {errors.password && <p>{errors.password.message}</p>}
+        </Col>
+      </Form.Group>
       <Form.Group as={Row} controlId='formCreateUserRole'>
         <Form.Label column sm={3}>
-          Role:
+          Starf:
         </Form.Label>
         <Col sm={8}>
           <Form.Control
@@ -124,4 +124,10 @@ const CreateUserForm = ({ createUser }) => {
   )
 }
 
-export default connect(null, { createUser })(CreateUserForm)
+const mapStateToProps = reduxStoreState => {
+  return {
+    token: reduxStoreState.token
+  }
+}
+
+export default connect(mapStateToProps, { createUser })(CreateUserForm)

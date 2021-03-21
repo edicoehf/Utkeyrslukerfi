@@ -85,6 +85,7 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
             tempUser.Password = tempPass;
             tempUser.Role = user.Role;
             tempUser.Email = user.Email;
+            tempUser.ChangePassword = user.ChangePassword;
 
             // save changes
             _dbContext.SaveChanges();
