@@ -18,7 +18,7 @@ const getUserSuccess = (user) => ({
 export const updatePassword = (token, id, user) => async (dispatch) => {
   try {
     await userService.updatePassword(token, id, user)
-    dispatch(updateUserSuccess({id, ...user}))
+    dispatch(updateUserSuccess({ id, ...user }))
   } catch (err) {
     console.log('Bad request, please try again later.')
   }

@@ -16,18 +16,16 @@ import { getUser } from './actions/userActions'
 import { getLogin } from './actions/loginActions'
 
 const App = ({ user, email, token, getUser, getLogin }) => {
-
   useEffect(() => {
     getLogin()
   }, [])
 
   useEffect(() => {
-    if(email && token){
+    if (email && token) {
       getUser(token, email)
     }
   }, [email, token])
-  
-  if (!email || email == '') {
+  if (!email || email === '') {
     return <Login />
   }
   if (user && user.changePassword) {
