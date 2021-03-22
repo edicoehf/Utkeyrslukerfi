@@ -1,11 +1,21 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import { useHistory } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import { getDelivery } from '../../actions/deliveryActions'
+import { getPackages } from '../../actions/packageActions'
 
-const Delivery = ({ getDelivery, delivery, token }) => {
+
+const Delivery = ({ getDelivery, delivery, getPackages, packages, token }) => {
   let pathId = useParams().id
   const [deliveryObj, setDeliveryObj] = useState(delivery);
+
+  useEffect(() => {
+    if (token) {
+      getPackages(token, { id }.id)
+    }
+  }, [token])
+
 
   if (Object.entries(deliveryObj).length === 0) {
     getDelivery(token, pathId)
@@ -75,9 +85,10 @@ const Delivery = ({ getDelivery, delivery, token }) => {
 
 const mapStateToProps = reduxStoreState => {
   return {
+    packages: reduxStoreState.packages,
     delivery: reduxStoreState.delivery,
     token: reduxStoreState.token
   }
 }
 
-export default connect(mapStateToProps, { getDelivery })(Delivery)
+export default connect(mapStateToProps, { getPackages, getDelivery})(Delivery)

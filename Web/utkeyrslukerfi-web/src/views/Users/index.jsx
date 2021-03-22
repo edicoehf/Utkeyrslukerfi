@@ -37,7 +37,7 @@ const Users = ({ getUsers, users, token }) => {
     })
   }
   return (
-    <div className='users pt-3'>
+    <div className='users'>
       <table className='table table-bordered'>
         <thead className='thead-dark'>
           <tr>
