@@ -2,9 +2,9 @@ import './styles/navbar.css'
 import './styles/main.css'
 import { Route, Switch } from 'react-router-dom'
 import { connect } from 'react-redux'
-import User from './components/User'
-// import HomePage from './components/HomePage'
+import Home from './views/Home'
 import Users from './views/Users'
+import User from './components/User'
 import Deliveries from './views/Deliveries'
 import Container from './components/Container'
 import React, { useEffect } from 'react'
@@ -33,12 +33,13 @@ const App = ({ loggedInUser, email, token, getLoggedInUser, getLogin }) => {
   if (loggedInUser && loggedInUser.changePassword) {
     return <UpdatePasswordForm />
   }
+  console.log('get here')
   return (
     <div className='App'>
       <Navbar />
       <Container>
         <Switch>
-          {/* <Route exact path='/' component={HomePage} /> */}
+          <Route exact path='/' component={Home} />
           <Route exact path='/users' component={Users} />
           <Route exact path='/users/create' component={CreateUserForm} />
           <Route exact path='/users/:id' component={User} />

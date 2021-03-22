@@ -14,4 +14,3 @@ const getUsersSuccess = (users) => ({
   type: GET_USERS,
   payload: users
 })
-
