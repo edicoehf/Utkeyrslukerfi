@@ -5,8 +5,10 @@ import '../../styles/home.css'
 const Home = () => {
   return (
     <div class='homepage'>
-      <NavLink class="left btn-lg btn btn-primary" to='/users'>Users</NavLink>
-      <NavLink class="right btn-lg btn btn-primary" to='/deliveries'>Deliveries</NavLink>
+      <div>
+        <NavLink className="home-btn" to='/users'><span>Notendur</span></NavLink>
+        <NavLink className="home-btn" to='/deliveries'><span>Sendingar</span></NavLink>
+      </div>
     </div>
   )
 }

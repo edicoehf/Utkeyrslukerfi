@@ -7,12 +7,12 @@ const deliveryService = () => {
         Authorization: `Bearer ${token}`
       }
     }).then(d => d.json()).then(d => d),
-    getDelivery: (token, id) => fetch(`DELIVERY_URL/${id}`, {
+    getDelivery: (token, id) => fetch(`${DELIVERY_URL}/${id}`, {
       headers: {
         Authorization: `Bearer ${token}`
       }
     }).then(d => d.json()).then(d => d),
-    updateDelivery: (token, delivery) => fetch(`DELIVERY_URL/${delivery.id}`, {
+    updateDelivery: (token, delivery) => fetch(`${DELIVERY_URL}/${delivery.id}`, {
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`
