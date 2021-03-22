@@ -8,6 +8,7 @@ using Utkeyrslukerfi.API.Repositories.Context;
 using Utkeyrslukerfi.API.Repositories.Interfaces;
 using Utkeyrslukerfi.API.Models.Exceptions;
 using Utkeyrslukerfi.API.Models.Envelope;
+using Microsoft.EntityFrameworkCore;
 
 namespace Utkeyrslukerfi.API.Repositories.Implementations
 {
@@ -24,73 +25,48 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
             _addressRepository = addressRepository;
         }
 
-        private void LoadDelivery(Delivery delivery)
-        {
-            _dbContext.Entry(delivery).Reference(c => c.DeliveryAddress).Load();
-            _dbContext.Entry(delivery).Reference(c => c.PickupAddress).Load();
-            _dbContext.Entry(delivery).Reference(c => c.Driver).Load();
-            _dbContext.Entry(delivery).Reference(c => c.Vehicle).Load();
-        }
-
-        private void LoadDeliveries(IEnumerable<Delivery> deliveries)
-        {
-            foreach (var delivery in deliveries)
-            {
-                LoadDelivery(delivery);
-                // fetcing all the packages
-                delivery.Packages = GetPackages(delivery.ID);
-            }
-        }
-
-        private List<Package> GetPackages(string deliveryID)
-        {
-            return new List<Package>(
-                    from item in _dbContext.Packages
-                    where item.Delivery.ID == deliveryID
-                    select new Package
-                    {
-                        ID = item.ID,
-                        Weight = item.Weight,
-                        Length = item.Length,
-                        Height = item.Height,
-                        Width = item.Width
-                    }
-                    );
-        }
-
         public DeliveryDTO GetDelivery(string ID)
         {
-            var delivery = _dbContext.Deliveries.FirstOrDefault(d => d.ID == ID);
+            var delivery = _dbContext.Deliveries
+                            .Include(d => d.PickupAddress)
+                            .Include(d => d.DeliveryAddress)
+                            .Include(d => d.Driver)
+                            .Include(d => d.Vehicle)
+                            .Include(d => d.Packages)
+                            .FirstOrDefault(d => d.ID == ID);
             if (delivery == null)
             {
-                throw new NotFoundException($"Did not found delivery with id {ID}");
+                throw new NotFoundException($"Did not find delivery with id {ID}");
             }
-            // loading the foreign key values
-            LoadDelivery(delivery);
-            // fetcing all the packages
-            delivery.Packages = GetPackages(delivery.ID);
 
             return _mapper.Map<DeliveryDTO>(delivery);
         }
 
         public IEnumerable<DeliveryDTO> GetDeliveries(int pageSize, int pageNumber)
         {
-            var deliveries = _dbContext.Deliveries.ToList();
-            LoadDeliveries(deliveries);
-            Envelope<Delivery> envelope = new Envelope<Delivery>(pageNumber, pageSize, deliveries);
+            var deliveries = _dbContext.Deliveries
+                              .Include(d => d.PickupAddress)
+                              .Include(d => d.DeliveryAddress)
+                              .Include(d => d.Driver)
+                              .Include(d => d.Vehicle)
+                              .Include(d => d.Packages)
+                              .ToList();
+            Envelope<Delivery> envelope = new(pageNumber, pageSize, deliveries);
             return _mapper.Map<IEnumerable<DeliveryDTO>>(envelope.Items);
         }
 
         public IEnumerable<DeliveryDTO> GetDeliveriesByStatus(int status, int pageSize, int pageNumber)
         {
-            var deliveries = _dbContext.Deliveries.Where(d => d.Status == status).ToList();
-            foreach (var delivery in deliveries)
-            {
-                LoadDelivery(delivery);
-                // fetcing all the packages
-                delivery.Packages = GetPackages(delivery.ID);
-            }
-            Envelope<Delivery> envelope = new Envelope<Delivery>(pageNumber, pageSize, deliveries);
+            var deliveries = _dbContext.Deliveries
+                              .Include(d => d.PickupAddress)
+                              .Include(d => d.DeliveryAddress)
+                              .Include(d => d.Driver)
+                              .Include(d => d.Vehicle)
+                              .Include(d => d.Packages)
+                              .Where(d => d.Status == status)
+                              .ToList();
+
+            Envelope<Delivery> envelope = new(pageNumber, pageSize, deliveries);
             return _mapper.Map<IEnumerable<DeliveryDTO>>(envelope.Items);
         }
 
