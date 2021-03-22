@@ -1,20 +1,26 @@
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
-import { useLocation, useParams } from 'react-router-dom'
+import { useHistory, useLocation, useParams } from 'react-router-dom'
 import { setViewingUser, getViewingUser } from '../../actions/userActions'
 import UpdateUserForm from '../UpdateUserForm'
 
 const User = ({ token, viewingUser, setViewingUser, getViewingUser }) => {
-  const location = useLocation()
-  const id = useParams()
+  const history = useHistory()
+  const { id } = useParams()
+
   useEffect(() => {
-    if (location) {
-      const user = location.state.params
+    if (history.location.state && history.location.state.params) {
+      const state = { ...history.location.state }
+      const user = state.params
       setViewingUser(user)
+      delete state.params
+      history.replace({ ...history.location, state })
     } else {
-      getViewingUser(token, id)
+      if (token) {
+        getViewingUser(token, id)
+      }
     }
-  }, [])
+  }, [id, token])
 
   return (
     <>
