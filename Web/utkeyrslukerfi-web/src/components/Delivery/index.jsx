@@ -1,12 +1,20 @@
-import React, { useState } from 'react'
-import { connect } from 'react-redux'
-import { getPackages } from '../../actions/packageActions'
+import React, { useState, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import { connect } from 'react-redux'
+import { getDelivery } from '../../actions/deliveryActions'
+import { getPackages } from '../../actions/packageActions'
 
-const Delivery = ({ getDelivery, delivery, token }) => {
+const Delivery = ({ getDelivery, delivery, getPackages, packages, token }) => {
+  const history = useHistory()
+
+  useEffect(() => {
+    if (token) {
+      getPackages(token, { id }.id)
+    }
+  }, [token])
+
+  console.log(packages)
   let pathId = window.location.pathname.split('/')[2];
-	const history = useHistory();
 
   if (Object.entries(delivery).length === 0) {
     getDelivery(token, pathId)
@@ -20,10 +28,6 @@ const Delivery = ({ getDelivery, delivery, token }) => {
 
   const [editable, setEditable] = useState(true);
 
-  const navigateToPackage = (obj) => {
-	  history.push(`/deliveries/${id}/${obj.id}`, { params: obj })
-  }	
-  
   const handleSubmit = (event) => {
     // TODO: this has to be modified to update the form, instead of displaying data
     event.preventDefault()
@@ -70,9 +74,10 @@ const Delivery = ({ getDelivery, delivery, token }) => {
 
 const mapStateToProps = reduxStoreState => {
   return {
+    packages: reduxStoreState.packages,
     delivery: reduxStoreState.delivery,
     token: reduxStoreState.token
   }
 }
 
-export default connect(mapStateToProps, { getDelivery })(Delivery)
+export default connect(mapStateToProps, { getPackages, getDelivery})(Delivery)

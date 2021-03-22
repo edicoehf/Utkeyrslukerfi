@@ -2,11 +2,11 @@ import { DELIVERY_URL } from '../constants'
 
 const packageService = () => {
   return {
-    getPackages: (token, id) => fetch(DELIVERY_URL`/${id}/packages`, {
+    getPackages: (token, id) => fetch(DELIVERY_URL + `/${id}/packages`, {
       headers: {
         Authorization: `Bearer ${token}`
       }
-    }).then(d => d.json())
+    }).then(d => d.json()).then(d => d)
   }
 }
 
