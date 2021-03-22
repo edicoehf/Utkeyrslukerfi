@@ -58,14 +58,14 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
         public IEnumerable<DeliveryDTO> GetDeliveriesByStatus(int status, int pageSize, int pageNumber)
         {
             var deliveries = _dbContext.Deliveries
-                              .Where(d => d.Status == status)
+                              .Include(d => d.PickupAddress)
                               .Include(d => d.DeliveryAddress)
                               .Include(d => d.Driver)
-                              .Include(d => d.PickupAddress)
-                              .Include(d => d.Packages)
                               .Include(d => d.Vehicle)
+                              .Include(d => d.Packages)
+                              .Where(d => d.Status == status)
                               .ToList();
-
+            
             Envelope<Delivery> envelope = new(pageNumber, pageSize, deliveries);
             return _mapper.Map<IEnumerable<DeliveryDTO>>(envelope.Items);
         }
