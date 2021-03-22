@@ -33,7 +33,6 @@ const App = ({ loggedInUser, email, token, getLoggedInUser, getLogin }) => {
   if (loggedInUser && loggedInUser.changePassword) {
     return <UpdatePasswordForm />
   }
-  console.log('get here')
   return (
     <div className='App'>
       <Navbar />
