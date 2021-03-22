@@ -22,10 +22,13 @@ const getLoggedInUserSuccess = (user) => ({
 
 export const updatePassword = (token, id, user) => async (dispatch) => {
   try {
-    await userService.updateUser(token, id, user)
+    const res = await userService.updateUser(token, id, user)
+
+    if (res?.status === 401) { return new UnauthorizedUserLogin('Not authorized.') }
+    if (res?.status === 404) { return new NotFound('User was not found.') }
     dispatch(updateLoggedInUserSuccess({ id, ...user }))
   } catch (err) {
-    console.log('Bad request, please try again later.')
+    return new FailedToConnectToServer('Could not connect to server.')
   }
 }
 
@@ -42,7 +45,6 @@ export const setViewingUser = (user) => ({
 
 export const getViewingUser = (token, id) => async (dispatch) => {
   try {
-    console.log(token)
     const user = await userService.getUser(token, id)
     dispatch(getViewingUserSuccess(user))
   } catch (err) {

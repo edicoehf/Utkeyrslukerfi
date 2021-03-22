@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
-import { useHistory, useLocation, useParams } from 'react-router-dom'
+import { useHistory, useParams } from 'react-router-dom'
 import { setViewingUser, getViewingUser } from '../../actions/userActions'
 import UpdateUserForm from '../UpdateUserForm'
 
@@ -10,6 +10,7 @@ const User = ({ token, viewingUser, setViewingUser, getViewingUser }) => {
 
   useEffect(() => {
     if (history.location.state && history.location.state.params) {
+      // To get user from table and skip the url call
       const state = { ...history.location.state }
       const user = state.params
       setViewingUser(user)
