@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { getDeliveries } from '../../actions/deliveriesActions'
 import { setDelivery } from '../../actions/deliveryActions'
+import '../../styles/deliveries.css'
 
 const Deliveries = ({ getDeliveries, deliveries, setDelivery , token }) => {
   const history = useHistory()
@@ -35,8 +36,8 @@ const Deliveries = ({ getDeliveries, deliveries, setDelivery , token }) => {
   }
 
   return (
-    <div className='deliveries pt-3'>
-      <table className='table'>
+    <div className='deliveries'>
+      <table className='table table-bordered'>
         <thead className='thead-dark'>
           <tr>
             <th>
@@ -63,10 +64,20 @@ const Deliveries = ({ getDeliveries, deliveries, setDelivery , token }) => {
           </tr>
         </thead>
         <tbody>
-          {renderRows()}
+          {
+            deliveries.length > 0 ? renderRows() : null
+          }
         </tbody>
       </table>
-      <hr />
+      {
+        deliveries.length <= 0
+          ? <div className='text-center'>
+            <div className='spinner-border' role='status'>
+              <span className='sr-only'>Loading...</span>
+            </div>
+          </div>
+          : null
+      }
     </div>
   )
 }
