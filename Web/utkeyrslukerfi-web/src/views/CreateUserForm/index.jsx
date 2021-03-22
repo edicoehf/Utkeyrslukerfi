@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import Form from 'react-bootstrap/Form'
 import Col from 'react-bootstrap/Col'
@@ -9,10 +9,40 @@ import { connect } from 'react-redux'
 
 const CreateUserForm = ({ token, createUser }) => {
   const { register, handleSubmit, errors } = useForm() // TODO: define the roles and use configuration to add them
+  const [errorMessage, setErrorMessage] = useState()
+  const [success, setSuccess] = useState()
 
-  const submitForm = (data) => {
-    console.log('The form was successfully submitted!')
-    createUser(token, { ...data, changePassword: true })
+  const clearMessages = () => {
+    const elErr = document.getElementById('err-msg')
+    elErr.classList.add('d-none')
+    const elSuccess = document.getElementById('success')
+    elSuccess.classList.add('d-none')
+  }
+
+  const submitForm = async (data) => {
+    clearMessages()
+
+    const err = await createUser(token, { ...data, changePassword: true })
+    if (err) {
+      if (err?.errors) {
+        let msg = ''
+        // eslint-disable-next-line no-unused-vars
+        for (const [key, value] of Object.entries(err.errors)) {
+          msg += `${value}\n`
+        }
+        const element = document.getElementById('err-msg')
+        element.classList.remove('d-none')
+        setErrorMessage(msg)
+      } else {
+        const element = document.getElementById('err-msg')
+        element.classList.remove('d-none')
+        setErrorMessage('Could not reach the login servers')
+      }
+    } else {
+      const element = document.getElementById('success')
+      element.classList.remove('d-none')
+      setSuccess('The user was successfully created!')
+    }
   }
 
   return (
@@ -120,6 +150,8 @@ const CreateUserForm = ({ token, createUser }) => {
           </Button>
         </Col>
       </Form.Group>
+      <div id='err-msg' className='error-message alert alert-danger d-none'>{errorMessage}</div>
+      <div id='success' className='error-message alert alert-success d-none'>{success}</div>
     </Form>
   )
 }

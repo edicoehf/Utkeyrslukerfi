@@ -45,6 +45,11 @@ namespace Utkeyrslukerfi.API.Middlewares
                 message = exception.Message;
                 status = HttpStatusCode.Unauthorized;
             }
+            else if (exceptionType == typeof(EmailAlreadyExistsException))
+            {
+                message = exception.Message;
+                status = HttpStatusCode.BadRequest;
+            }
             else
             {
                 status = HttpStatusCode.InternalServerError;

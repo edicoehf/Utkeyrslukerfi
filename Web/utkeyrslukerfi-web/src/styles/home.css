@@ -1,0 +1,20 @@
+.homepage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+}
+
+.container {
+  height: 90vh;
+  width: 90vw;
+}
+
+.right {
+  margin-left: 4em;
+}
+
+.left {
+  margin-right: 4em;
+}

@@ -24,7 +24,7 @@ const userService = () => {
       },
       method: 'POST',
       body: JSON.stringify(user)
-    }).then(r => r.json()),
+    }).then(r => { if (r.ok) { return r.json() } else { return r } }),
     updateUser: (token, id, user) => fetch(USER_URL + `/${id}`, {
       headers: {
         'Content-Type': 'application/json',

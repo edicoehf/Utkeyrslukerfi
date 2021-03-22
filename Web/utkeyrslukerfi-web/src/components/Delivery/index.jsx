@@ -1,8 +1,19 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import { useHistory } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { getDelivery } from '../../actions/deliveryActions'
+import { getPackages } from '../../actions/packageActions'
 
-const Delivery = ({ getDelivery, delivery, token }) => {
+const Delivery = ({ getDelivery, delivery, getPackages, packages, token }) => {
+  const history = useHistory()
+
+  useEffect(() => {
+    if (token) {
+      getPackages(token, { id }.id)
+    }
+  }, [token])
+
+  console.log(packages)
   let pathId = window.location.pathname.split('/')[2];
 
   if (Object.entries(delivery).length === 0) {
@@ -63,9 +74,10 @@ const Delivery = ({ getDelivery, delivery, token }) => {
 
 const mapStateToProps = reduxStoreState => {
   return {
+    packages: reduxStoreState.packages,
     delivery: reduxStoreState.delivery,
     token: reduxStoreState.token
   }
 }
 
-export default connect(mapStateToProps, { getDelivery })(Delivery)
+export default connect(mapStateToProps, { getPackages, getDelivery})(Delivery)

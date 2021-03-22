@@ -5,7 +5,7 @@ import { getDeliveries } from '../../actions/deliveriesActions'
 import { setDelivery } from '../../actions/deliveryActions'
 import '../../styles/deliveries.css'
 
-const Deliveries = ({ getDeliveries, deliveries, setDelivery , token }) => {
+const Deliveries = ({ getDeliveries, deliveries, setDelivery, token }) => {
   const history = useHistory()
 
   useEffect(() => {
@@ -34,7 +34,6 @@ const Deliveries = ({ getDeliveries, deliveries, setDelivery , token }) => {
       )
     })
   }
-
   return (
     <div className='deliveries'>
       <table className='table table-bordered'>
