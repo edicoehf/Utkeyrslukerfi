@@ -46,113 +46,115 @@ const CreateUserForm = ({ token, createUser }) => {
   }
 
   return (
-    <Form onSubmit={handleSubmit(submitForm)} className='form form-horizontal'>
-      <Form.Group as={Row} controlId='formCreateUserName'>
-        <Form.Label column sm={3}>
-          Nafn:
-        </Form.Label>
-        <Col sm={8}>
-          <Form.Control
-            name='name'
-            placeholder='Insert name...'
-            type='text'
-            ref={register({
-              required: 'This field is required.',
-              minLength: {
-                value: 2,
-                message: 'Please insert your name.'
-              },
-              pattern: {
-                value: /^[^()[\]{}*&^%$#@!0-9]+$/,
-                message: 'Please insert a valid name.'
-              }
-            })}
-          />
-        </Col>
-        <Col sm={4}>
-          {errors.name && <p>{errors.name.message}</p>}
-        </Col>
-      </Form.Group>
-      <Form.Group as={Row} controlId='formCreateUserEmail'>
-        <Form.Label column sm={3}>
-          Netfang:
-        </Form.Label>
-        <Col sm={8}>
-          <Form.Control
-            name='email'
-            placeholder='Insert email...'
-            type='text'
-            ref={register({
-              required: 'This field is required.',
-              minLength: {
-                value: 2,
-                message: 'Please insert your email address.'
-              },
-              pattern: {
-                value: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-                message: 'Please insert a valid email address.'
-              }
-            })}
-          />
-        </Col>
-        <Col sm={4}>
-          {errors.email && <p>{errors.email.message}</p>}
-        </Col>
-      </Form.Group>
-      <Form.Group as={Row} controlId='formCreateUserPassword'>
-        <Form.Label column sm={3}>
-          Tímabundið lykilorð:
-        </Form.Label>
-        <Col sm={8}>
-          <Form.Control
-            name='password'
-            placeholder='Insert password...'
-            type='password'
-            ref={register({
-              required: 'This field is required.',
-              minLength: {
-                value: 2,
-                message: 'Please insert your password.'
-              },
-              pattern: {
-                value: /^[^()[\]{}*&^%$#@!]+$/,
-                message: 'Please insert a valid password.'
-              }
-            })}
-          />
-        </Col>
-        <Col sm={4}>
-          {errors.password && <p>{errors.password.message}</p>}
-        </Col>
-      </Form.Group>
-      <Form.Group as={Row} controlId='formCreateUserRole'>
-        <Form.Label column sm={3}>
-          Starf:
-        </Form.Label>
-        <Col sm={8}>
-          <Form.Control
-            as='select'
-            custom
-            name='role'
-            ref={register}
-          >
-            <option value='0'>Admin</option>
-            <option value='1'>Office</option>
-            <option value='2'>Driver</option>
-          </Form.Control>
-        </Col>
-      </Form.Group>
+    <div className="user">
+      <Form onSubmit={handleSubmit(submitForm)} className='form form-horizontal'>
+        <Form.Group as={Row} controlId='formCreateUserName'>
+          <Form.Label column sm={3}>
+            Nafn:
+          </Form.Label>
+          <Col sm={8}>
+            <Form.Control
+              name='name'
+              placeholder='Insert name...'
+              type='text'
+              ref={register({
+                required: 'This field is required.',
+                minLength: {
+                  value: 2,
+                  message: 'Please insert your name.'
+                },
+                pattern: {
+                  value: /^[^()[\]{}*&^%$#@!0-9]+$/,
+                  message: 'Please insert a valid name.'
+                }
+              })}
+            />
+          </Col>
+          <Col sm={4}>
+            {errors.name && <p>{errors.name.message}</p>}
+          </Col>
+        </Form.Group>
+        <Form.Group as={Row} controlId='formCreateUserEmail'>
+          <Form.Label column sm={3}>
+            Netfang:
+          </Form.Label>
+          <Col sm={8}>
+            <Form.Control
+              name='email'
+              placeholder='Insert email...'
+              type='text'
+              ref={register({
+                required: 'This field is required.',
+                minLength: {
+                  value: 2,
+                  message: 'Please insert your email address.'
+                },
+                pattern: {
+                  value: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                  message: 'Please insert a valid email address.'
+                }
+              })}
+            />
+          </Col>
+          <Col sm={4}>
+            {errors.email && <p>{errors.email.message}</p>}
+          </Col>
+        </Form.Group>
+        <Form.Group as={Row} controlId='formCreateUserPassword'>
+          <Form.Label column sm={3}>
+            Tímabundið lykilorð:
+          </Form.Label>
+          <Col sm={8}>
+            <Form.Control
+              name='password'
+              placeholder='Insert password...'
+              type='password'
+              ref={register({
+                required: 'This field is required.',
+                minLength: {
+                  value: 2,
+                  message: 'Please insert your password.'
+                },
+                pattern: {
+                  value: /^[^()[\]{}*&^%$#@!]+$/,
+                  message: 'Please insert a valid password.'
+                }
+              })}
+            />
+          </Col>
+          <Col sm={4}>
+            {errors.password && <p>{errors.password.message}</p>}
+          </Col>
+        </Form.Group>
+        <Form.Group as={Row} controlId='formCreateUserRole'>
+          <Form.Label column sm={3}>
+            Starf:
+          </Form.Label>
+          <Col sm={8}>
+            <Form.Control
+              as='select'
+              custom
+              name='role'
+              ref={register}
+            >
+              <option value='0'>Admin</option>
+              <option value='1'>Office</option>
+              <option value='2'>Driver</option>
+            </Form.Control>
+          </Col>
+        </Form.Group>
 
-      <Form.Group as={Row}>
-        <Col className="submit-button">
-          <Button type='submit' variant='dark'>
-            Stofna
-          </Button>
-        </Col>
-      </Form.Group>
-      <div id='err-msg' className='error-message alert alert-danger d-none'>{errorMessage}</div>
-      <div id='success' className='error-message alert alert-success d-none'>{success}</div>
-    </Form>
+        <Form.Group as={Row}>
+          <Col className="submit-button">
+            <Button type='submit' variant='dark'>
+              Stofna
+            </Button>
+          </Col>
+        </Form.Group>
+        <div id='err-msg' className='error-message alert alert-danger d-none'>{errorMessage}</div>
+        <div id='success' className='error-message alert alert-success d-none'>{success}</div>
+      </Form>
+    </div>
   )
 }
 
