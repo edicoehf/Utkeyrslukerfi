@@ -1,9 +1,10 @@
 name: CD for Utkeyrslukerfi
-on:
-  push:
-    branches: [main]
-  pull_request:
-    branches: [main]
+on: [push]
+  # push:
+  #   branches: [main]
+  # pull_request:
+  #   branches: [main]
+
 env: 
   AZURE_WEBAPP_PACKAGE_PATH: './Backend/Utkeyrslukerfi.API/Utkeyrslukerfi.API/'
   DOTNET_VERSION: '5.0.103'
@@ -30,6 +31,7 @@ jobs:
         working-directory: ./Backend/Utkeyrslukerfi.API/Utkeyrslukerfi.API/
         run: | 
           dotnet restore 
+          dotnet user-secrets set "MYSQL:connectionString" ${{ secrets.CONNECTION_STRING }}
           dotnet build --configuration Release 
           dotnet publish -c Release -o ./utkeyrslukerfiApp
            
