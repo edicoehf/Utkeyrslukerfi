@@ -32,6 +32,7 @@ namespace Utkeyrslukerfi.API
         }
 
         public IConfiguration Configuration { get; }
+        
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -46,28 +47,22 @@ namespace Utkeyrslukerfi.API
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
                 options.IncludeXmlComments(xmlPath);
             });
+            // Tries to get the connectionString from the azure storage
             var myConnString = _configuration.GetConnectionString("MYSQL:connectionString");
-            if(myConnString != null){
-              services.AddDbContext<UtkeyrslukerfiDbContext>(options =>
-              {
-                options.UseMySQL(myConnString,
-                            options =>
-                            {
-                          options.MigrationsAssembly(Assembly.GetExecutingAssembly().FullName);
-                        }
-                          );
-              });
-            }else{
+            // if the connectionString is null, it means we're running locally
+            // so we get the connection string from secrets
+            if(myConnString == null){
+              myConnString = Configuration["MYSQL:connectionString"];
+            }
             services.AddDbContext<UtkeyrslukerfiDbContext>(options =>
             {
-                options.UseMySQL(Configuration["MYSQL:connectionString"],
+                options.UseMySQL(myConnString,
                       options =>
                       {
                           options.MigrationsAssembly(Assembly.GetExecutingAssembly().FullName);
                       }
                     );
             });
-            }
             services.AddAuthentication(config =>
             {
                 config.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
