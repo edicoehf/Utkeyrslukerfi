@@ -6,6 +6,7 @@ import Row from 'react-bootstrap/Row'
 import Button from 'react-bootstrap/Button'
 import { updateUser } from '../../actions/userActions'
 import { connect } from 'react-redux'
+import '../../styles/user.css'
 
 const UpdateUserForm = ({ user, token, updateUser }) => {
   const { register, handleSubmit, errors, setValue } = useForm() // TODO: define the roles and use configuration to add them
@@ -152,7 +153,7 @@ const UpdateUserForm = ({ user, token, updateUser }) => {
       </Form.Group>
 
       <Form.Group as={Row}>
-        <Col sm={{ span: 1, offset: 6 }}>
+        <Col className="submit-button">
           <Button type='submit' variant='dark'>
             Submit
           </Button>
