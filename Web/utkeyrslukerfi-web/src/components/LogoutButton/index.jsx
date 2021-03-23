@@ -11,8 +11,8 @@ const LogoutButton = ({ token, logout }) => {
   }
 
   return (
-    <button onClick={() => handleLogout()}>
-      <AiOutlineLogout />
+    <button className='navigation-link logout-button' onClick={() => handleLogout()}>
+      <AiOutlineLogout size='1.5em' color='white' />
     </button>
   )
 }
