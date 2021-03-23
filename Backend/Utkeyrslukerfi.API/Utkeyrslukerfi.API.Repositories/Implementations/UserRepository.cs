@@ -79,13 +79,26 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
             var tempPass = HashingHelper.HashPassword(user.Password);
             var tempUser = _dbContext.Users.FirstOrDefault(u => u.ID == id);
             if (tempUser == null) { throw new NotFoundException($"User with id: {id} is not found!"); }
-
+            
             // Update old user with the new user
             tempUser.Name = user.Name;
             tempUser.Password = tempPass;
             tempUser.Role = user.Role;
             tempUser.Email = user.Email;
             tempUser.ChangePassword = user.ChangePassword;
+
+            // save changes
+            _dbContext.SaveChanges();
+        }
+        public void UpdatePassword(PasswordInputModel password, int id)
+        {
+            var tempPass = HashingHelper.HashPassword(password.Password);
+            var tempUser = _dbContext.Users.FirstOrDefault(u => u.ID == id);
+            if (tempUser == null) { throw new NotFoundException($"User with id: {id} is not found!"); }
+            
+            // Update old user with the new user
+            tempUser.Password = tempPass;
+            tempUser.ChangePassword = password.ChangePassword;
 
             // save changes
             _dbContext.SaveChanges();

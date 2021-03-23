@@ -7,5 +7,6 @@ namespace Utkeyrslukerfi.API.Repositories.Interfaces
         JwtToken CreateNewToken();
         bool IsTokenBlacklisted(int tokenID);
         void VoidToken(int tokenID);
+        int GetUserID(int tokenID);
     }
 }
