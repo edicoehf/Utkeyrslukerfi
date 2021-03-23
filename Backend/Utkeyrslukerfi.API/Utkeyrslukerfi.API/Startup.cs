@@ -22,10 +22,13 @@ namespace Utkeyrslukerfi.API
     public class Startup
     {
         readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+        private readonly IConfiguration _configuration;
+        
 
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            _configuration = configuration;
         }
 
         public IConfiguration Configuration { get; }
@@ -43,6 +46,18 @@ namespace Utkeyrslukerfi.API
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
                 options.IncludeXmlComments(xmlPath);
             });
+            var myConnString = _configuration.GetConnectionString("MYSQL:connectionString");
+            if(myConnString != null){
+              services.AddDbContext<UtkeyrslukerfiDbContext>(options =>
+              {
+                options.UseMySQL(myConnString,
+                            options =>
+                            {
+                          options.MigrationsAssembly(Assembly.GetExecutingAssembly().FullName);
+                        }
+                          );
+              });
+            }else{
             services.AddDbContext<UtkeyrslukerfiDbContext>(options =>
             {
                 options.UseMySQL(Configuration["MYSQL:connectionString"],
@@ -52,6 +67,7 @@ namespace Utkeyrslukerfi.API
                       }
                     );
             });
+            }
             services.AddAuthentication(config =>
             {
                 config.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
