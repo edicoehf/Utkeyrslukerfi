@@ -10,6 +10,7 @@ import Container from './components/Container'
 import React, { useEffect } from 'react'
 import Login from './components/Login'
 import Delivery from './components/Delivery'
+import Package from './components/Package'
 import Navbar from './components/Navbar'
 import CreateUserForm from './views/CreateUserForm'
 import NotFound from './views/NotFound'
@@ -45,6 +46,7 @@ const App = ({ loggedInUser, email, token, getLoggedInUser, getLogin }) => {
           <Route exact path='/users/:id' component={User} />
           <Route exact path='/deliveries' component={Deliveries} />
           <Route exact path='/deliveries/:id' component={Delivery} />
+          <Route exact path='/deliveries/:delid/packages/:id' component={Package} />
           <Route exact path='*' component={NotFound} />
         </Switch>
       </Container>

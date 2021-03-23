@@ -13,7 +13,6 @@ const Delivery = ({ getDelivery, delivery, getPackages, packages, token }) => {
     }
   }, [token])
 
-  console.log(packages)
   let pathId = window.location.pathname.split('/')[2];
 
   if (Object.entries(delivery).length === 0) {
@@ -21,8 +20,7 @@ const Delivery = ({ getDelivery, delivery, getPackages, packages, token }) => {
   }
 
   const navigateToPackage = (obj) => {
-    //setDelivery(obj) TODO: SetPackage?
-    history.push(`/packages/${obj.id}`)
+    history.push(`/deliveries/` + { id }.id + `/packages/${obj.id}`, { params: obj })
   }
 
   const { id, recipient, seller, status } = delivery
@@ -74,7 +72,6 @@ const Delivery = ({ getDelivery, delivery, getPackages, packages, token }) => {
             return <p onClick={() => navigateToPackage(obj)}>ID/Barcode: {obj.id}</p>
           })
         }
-        {/* TODO: Add packages here */}
       </div>
       <button onClick={() => setEditable(editable => !editable)} className='btn btn-outline-info m-4'>Edit</button>
       <button onClick={(event) => handleSubmit(event)} className='btn btn-success m-4 ml-auto'>Vista</button>
