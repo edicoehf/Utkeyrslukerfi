@@ -44,7 +44,7 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
             token.Blacklisted = true;
             _dbContext.SaveChanges();
         }
-        
+
         public int GetUserID(int tokenID)
         {
             var token = _dbContext.JwtTokens.FirstOrDefault(t => t.ID == tokenID);
