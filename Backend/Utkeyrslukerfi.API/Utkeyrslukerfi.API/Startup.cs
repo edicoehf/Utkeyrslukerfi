@@ -45,7 +45,8 @@ namespace Utkeyrslukerfi.API
             });
             services.AddDbContext<UtkeyrslukerfiDbContext>(options =>
             {
-                options.UseMySQL(Configuration["MYSQL:connectionString"],
+                options.UseMySQL(Configuration[Environment.GetEnvironmentVariable("connectionString")],
+                // options.UseMySQL(Configuration["MYSQL:connectionString"],
                       options =>
                       {
                           options.MigrationsAssembly(Assembly.GetExecutingAssembly().FullName);

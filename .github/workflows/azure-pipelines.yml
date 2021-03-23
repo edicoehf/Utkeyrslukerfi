@@ -31,7 +31,6 @@ jobs:
         working-directory: ./Backend/Utkeyrslukerfi.API/Utkeyrslukerfi.API/
         run: | 
           dotnet restore 
-          dotnet user-secrets set "MYSQL:connectionString" ${{ secrets.CONNECTION_STRING }}
           dotnet build --configuration Release 
           dotnet publish -c Release -o ./utkeyrslukerfiApp
            
