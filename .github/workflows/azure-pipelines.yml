@@ -1,5 +1,10 @@
 name: CD for Utkeyrslukerfi
-on: [push] 
+on: [push]
+  # push:
+  #   branches: [main]
+  # pull_request:
+  #   branches: [main]
+
 env: 
   AZURE_WEBAPP_PACKAGE_PATH: './Backend/Utkeyrslukerfi.API/Utkeyrslukerfi.API/'
   DOTNET_VERSION: '5.0.103'
@@ -9,12 +14,6 @@ jobs:
     steps: 
       # Checkout the repo 
       - uses: actions/checkout@master 
-      # Login at Azure
-      - uses: azure/login@v1 
-        env:
-          CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS }}
-        with:
-          creds: ${{ env.CREDENTIALS }}
       # Setup .NET Core SDK 
       - name: Setup .NET Core 
         uses: actions/setup-dotnet@v1 
@@ -27,14 +26,15 @@ jobs:
         run: | 
           dotnet restore 
           dotnet build --configuration Release 
-          dotnet publish -c Release -o '$/utkeyrslukerfiApp'
+          dotnet publish -c Release -o ./utkeyrslukerfiApp
            
       # Deploy to Azure Web apps 
       - name: 'Run Azure webapp deploy action using azure credentials' 
         uses: azure/webapps-deploy@v2 
         with:  
           app-name: utkeyrslukerfi
-          package: ./Backend/Utkeyrslukerfi.API/Utkeyrslukerfi.API/
+          publish-profile: ${{ secrets.PUBLISH_PROFILE }}
+          package: ./Backend/Utkeyrslukerfi.API/Utkeyrslukerfi.API/utkeyrslukerfiApp
        
       - name: logout 
         run: | 
