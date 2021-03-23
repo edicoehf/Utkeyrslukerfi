@@ -1,5 +1,9 @@
 name: CD for Utkeyrslukerfi
-on: [push] 
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
 env: 
   AZURE_WEBAPP_PACKAGE_PATH: './Backend/Utkeyrslukerfi.API/Utkeyrslukerfi.API/'
   DOTNET_VERSION: '5.0.103'
