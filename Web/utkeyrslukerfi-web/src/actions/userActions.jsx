@@ -20,23 +20,6 @@ const getLoggedInUserSuccess = (user) => ({
   payload: user
 })
 
-export const updatePassword = (token, id, user) => async (dispatch) => {
-  try {
-    const res = await userService.updateUser(token, id, user)
-
-    if (res?.status === 401) { return new UnauthorizedUserLogin('Not authorized.') }
-    if (res?.status === 404) { return new NotFound('User was not found.') }
-    dispatch(updateLoggedInUserSuccess({ id, ...user }))
-  } catch (err) {
-    return new FailedToConnectToServer('Could not connect to server.')
-  }
-}
-
-const updateLoggedInUserSuccess = (user) => ({
-  type: UPDATE_LOGGED_IN_USER,
-  payload: user
-})
-
 // --------------- User being viewed ---------------
 export const setViewingUser = (user) => ({
   type: SET_VIEWING_USER,

@@ -1,5 +1,6 @@
-export const SET_EMAIL = 'SET_EMAIL'
-export const GET_EMAIL = 'GET_EMAIL'
+export const SET_LOGIN = 'SET_LOGIN'
+export const GET_LOGIN = 'GET_LOGIN'
+export const CHANGE_PASSWORD = 'CHANGE_PASSWORD'
 
 export const SET_USER = 'SET_USER'
 export const GET_USER = 'GET_USER'
@@ -18,8 +19,6 @@ export const GET_PACKAGES = 'GET_PACKAGES'
 export const UPDATE_DELIVERY = 'UPDATE_DELIVERY'
 export const SET_DELIVERY = 'SET_DELIVERY'
 
-export const SET_TOKEN = 'SET_TOKEN'
-export const GET_TOKEN = 'GET_TOKEN'
 // URLS
 export const USER_URL = 'https://localhost:5001/api/users'
 export const DELIVERY_URL = 'https://localhost:5001/api/deliveries'

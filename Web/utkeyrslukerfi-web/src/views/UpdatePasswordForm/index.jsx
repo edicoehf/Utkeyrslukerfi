@@ -4,36 +4,25 @@ import Form from 'react-bootstrap/Form'
 import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
 import Button from 'react-bootstrap/Button'
-import { updatePassword } from '../../actions/userActions'
+import { updatePassword } from '../../actions/loginActions'
 import { connect } from 'react-redux'
 
-const UpdatePasswordForm = ({ updatePassword, user, token }) => {
+const UpdatePasswordForm = ({ updatePassword, token }) => {
   const { register, handleSubmit, errors, watch } = useForm()
   const password = useRef({})
   const [errorMessage, setErrorMessage] = useState()
-  const [success, setSuccess] = useState()
 
   password.current = watch('password', '')
 
   const clearMessages = () => {
     const elErr = document.getElementById('err-msg')
     elErr.classList.add('d-none')
-    const elSuccess = document.getElementById('success')
-    elSuccess.classList.add('d-none')
   }
 
   const submitForm = async (data) => {
     clearMessages()
 
-    const err = await updatePassword(
-      token,
-      user.id,
-      {
-        name: user.name,
-        email: user.email,
-        password: data.password,
-        changePassword: false
-      })
+    const err = await updatePassword(token, data.password)
     if (err) {
       if (err?.errors) {
         let msg = ''
@@ -49,10 +38,6 @@ const UpdatePasswordForm = ({ updatePassword, user, token }) => {
         element.classList.remove('d-none')
         setErrorMessage('Could not reach the login servers')
       }
-    } else {
-      const element = document.getElementById('success')
-      element.classList.remove('d-none')
-      setSuccess('The user was successfully updated!')
     }
   }
 
@@ -112,15 +97,13 @@ const UpdatePasswordForm = ({ updatePassword, user, token }) => {
         </Col>
       </Form.Group>
       <div id='err-msg' className='error-message alert alert-danger d-none'>{errorMessage}</div>
-      <div id='success' className='error-message alert alert-success d-none'>{success}</div>
     </Form>
   )
 }
 
 const mapStateToProps = reduxStoreState => {
   return {
-    user: reduxStoreState.user.loggedInUser,
-    token: reduxStoreState.token
+    token: reduxStoreState.login.token
   }
 }
 

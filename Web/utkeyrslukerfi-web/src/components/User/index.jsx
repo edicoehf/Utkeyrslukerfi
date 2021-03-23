@@ -32,7 +32,7 @@ const User = ({ token, viewingUser, setViewingUser, getViewingUser }) => {
 
 const mapStateToProps = reduxStoreState => {
   return {
-    token: reduxStoreState.token,
+    token: reduxStoreState.login.token,
     viewingUser: reduxStoreState.user.viewingUser
   }
 }

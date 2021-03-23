@@ -12,8 +12,6 @@ const UpdateUserForm = ({ user, token, updateUser }) => {
   const [errorMessage, setErrorMessage] = useState()
   const [success, setSuccess] = useState()
 
-  console.log('FORM:', user)
-
   useEffect(() => {
     if (user) {
       setValue('name', user.name)
@@ -168,7 +166,7 @@ const UpdateUserForm = ({ user, token, updateUser }) => {
 
 const mapStateToProps = reduxStoreState => {
   return {
-    token: reduxStoreState.token
+    token: reduxStoreState.login.token
   }
 }
 
