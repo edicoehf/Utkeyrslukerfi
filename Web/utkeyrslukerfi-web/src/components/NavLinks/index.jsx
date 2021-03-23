@@ -7,7 +7,7 @@ const NavLinks = () => (
     <ul className='navbar-nav'>
       <li className='nav-item'>
         <NavLink exact to='/' className='nav-link'>
-          <AiFillHome size="3em" color="white" />
+          <AiFillHome size='3em' color='white' />
         </NavLink>
       </li>
     </ul>
