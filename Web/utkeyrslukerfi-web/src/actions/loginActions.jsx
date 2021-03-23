@@ -1,4 +1,4 @@
-import { SET_LOGIN, GET_LOGIN, CHANGE_PASSWORD } from '../constants'
+import { SET_LOGIN, GET_LOGIN, CHANGE_PASSWORD, CLEAR_LOGIN } from '../constants'
 import loginService from '../services/loginService'
 import InvalidUserLogin from '../errors/InvalidUserLogin'
 import FailedToConnectToServer from '../errors/FailedToConnectToServer'
@@ -53,4 +53,19 @@ export const updatePassword = (token, password) => async (dispatch) => {
 const updatePassordSuccess = (changePassword) => ({
   type: CHANGE_PASSWORD,
   payload: changePassword
+})
+
+export const logout = (token) => async (dispatch) => {
+  try {
+    await loginService.logout(token)
+    localStorage.removeItem('token')
+    dispatch(logoutSuccess())
+  } catch (err) {
+    console.log(err)
+  }
+}
+
+const logoutSuccess = () => ({
+  type: CLEAR_LOGIN,
+  payload: { changePassword: false, token: '' }
 })

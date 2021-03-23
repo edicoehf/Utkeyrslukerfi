@@ -1,6 +1,7 @@
 export const SET_LOGIN = 'SET_LOGIN'
 export const GET_LOGIN = 'GET_LOGIN'
 export const CHANGE_PASSWORD = 'CHANGE_PASSWORD'
+export const CLEAR_LOGIN = 'CLEAR_LOGIN'
 
 export const SET_USER = 'SET_USER'
 export const GET_USER = 'GET_USER'
@@ -26,3 +27,4 @@ export const SET_VIEWING_PACKAGE = 'SET_VIEWING_PACKAGE'
 export const USER_URL = 'https://localhost:5001/api/users'
 export const DELIVERY_URL = 'https://localhost:5001/api/deliveries'
 export const LOGIN_URL = 'https://localhost:5001/api/account/login'
+export const LOGOUT_URL = 'https://localhost:5001/api/account/logout'
