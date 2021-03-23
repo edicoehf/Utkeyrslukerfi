@@ -27,14 +27,14 @@ jobs:
         run: | 
           dotnet restore 
           dotnet build --configuration Release 
-          dotnet publish -c Release -o '$/utkeyrslukerfiApp'
+          dotnet publish -c Release -o ./utkeyrslukerfiApp
            
       # Deploy to Azure Web apps 
       - name: 'Run Azure webapp deploy action using azure credentials' 
         uses: azure/webapps-deploy@v2 
         with:  
           app-name: utkeyrslukerfi
-          package: ./Backend/Utkeyrslukerfi.API/
+          package: ./utkeyrslukerfiApp
        
       - name: logout 
         run: | 
