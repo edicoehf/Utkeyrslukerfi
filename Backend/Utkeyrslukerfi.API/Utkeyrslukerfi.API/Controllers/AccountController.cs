@@ -71,8 +71,8 @@ namespace Utkeyrslukerfi.API.Controllers
             return NoContent();
         }
 
-        [HttpPost]
-        [Route("update")]
+        [HttpPatch]
+        [Route("login")]
         public IActionResult Update([FromBody] PasswordInputModel password)
         {
             if (!ModelState.IsValid)
