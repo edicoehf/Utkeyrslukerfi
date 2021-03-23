@@ -20,6 +20,11 @@ const Delivery = ({ getDelivery, delivery, getPackages, packages, token }) => {
     getDelivery(token, pathId)
   }
 
+  const navigateToPackage = (obj) => {
+    //setDelivery(obj) TODO: SetPackage?
+    history.push(`/packages/${obj.id}`)
+  }
+
   const { id, recipient, seller, status } = delivery
   const driver = delivery.driver.name
   const deliveryAddress = `${delivery.deliveryAddress.streetName}  ${delivery.deliveryAddress.houseNumber}`
@@ -64,6 +69,11 @@ const Delivery = ({ getDelivery, delivery, getPackages, packages, token }) => {
       </div>
       <div className='col col-md-6 border mt-2 px-auto pt-1'>
         <p>Packages</p>
+        {
+          packages.map(function (obj) {
+            return <p onClick={() => navigateToPackage(obj)}>ID/Barcode: {obj.id}</p>
+          })
+        }
         {/* TODO: Add packages here */}
       </div>
       <button onClick={() => setEditable(editable => !editable)} className='btn btn-outline-info m-4'>Edit</button>
