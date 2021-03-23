@@ -155,7 +155,7 @@ const UpdateUserForm = ({ user, token, updateUser }) => {
       <Form.Group as={Row}>
         <Col className="submit-button">
           <Button type='submit' variant='dark'>
-            Submit
+            Uppfæra
           </Button>
         </Col>
       </Form.Group>
