@@ -10,7 +10,7 @@ env:
   DOTNET_VERSION: '5.0.103'
 jobs: 
   build: 
-    runs-on: windows-latest 
+    runs-on: windows-latest
     steps: 
       # Checkout the repo 
       - uses: actions/checkout@master 
