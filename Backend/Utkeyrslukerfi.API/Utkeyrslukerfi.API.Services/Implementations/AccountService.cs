@@ -28,7 +28,7 @@ namespace Utkeyrslukerfi.API.Services.Implementations
 
         public int GetUserID(int tokenID)
         {
-            _tokenRepository.GetUserID(tokenID);
+            return _tokenRepository.GetUserID(tokenID);
         }
     }
 }

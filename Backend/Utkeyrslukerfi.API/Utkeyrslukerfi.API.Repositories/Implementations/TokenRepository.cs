@@ -3,6 +3,7 @@ using System.Linq;
 using Utkeyrslukerfi.API.Repositories.Interfaces;
 using Utkeyrslukerfi.API.Models.Entities;
 using Utkeyrslukerfi.API.Repositories.Context;
+using Utkeyrslukerfi.API.Models.Exceptions;
 
 namespace Utkeyrslukerfi.API.Repositories.Implementations
 {
