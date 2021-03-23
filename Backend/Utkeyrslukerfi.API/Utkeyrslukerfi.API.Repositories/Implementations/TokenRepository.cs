@@ -15,11 +15,18 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
             _dbContext = dbContext;
         }
 
-        public JwtToken CreateNewToken()
+        public JwtToken CreateNewToken(User user)
         {
-            var token = new JwtToken();
+            var token = new JwtToken
+            {
+                UserID = user.ID,
+                User = user,
+                Blacklisted = false
+            };
+
             _dbContext.JwtTokens.Add(token);
             _dbContext.SaveChanges();
+
             return token;
         }
 
