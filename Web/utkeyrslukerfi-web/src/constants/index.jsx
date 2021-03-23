@@ -15,9 +15,12 @@ export const GET_USERS = 'GET_USERS'
 
 export const GET_DELIVERIES = 'GET_DELIVERIES'
 export const GET_DELIVERY = 'GET_DELIVERY'
-export const GET_PACKAGES = 'GET_PACKAGES'
 export const UPDATE_DELIVERY = 'UPDATE_DELIVERY'
 export const SET_DELIVERY = 'SET_DELIVERY'
+
+export const GET_PACKAGES = 'GET_PACKAGES'
+export const GET_VIEWING_PACKAGE = 'GET_VIEWING_PACKAGE'
+export const SET_VIEWING_PACKAGE = 'SET_VIEWING_PACKAGE'
 
 // URLS
 export const USER_URL = 'https://localhost:5001/api/users'
