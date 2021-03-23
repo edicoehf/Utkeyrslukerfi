@@ -85,7 +85,7 @@ const mapStateToProps = reduxStoreState => {
   return {
     deliveries: reduxStoreState.deliveries,
     delivery: reduxStoreState.delivery,
-    token: reduxStoreState.token
+    token: reduxStoreState.login.token
   }
 }
 

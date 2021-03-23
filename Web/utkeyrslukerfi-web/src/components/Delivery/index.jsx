@@ -16,16 +16,19 @@ const Delivery = ({ getDelivery, delivery, getPackages, packages, token }) => {
     }
   }, [token])
 
-
   if (Object.entries(deliveryObj).length === 0) {
     getDelivery(token, pathId)
   }
 
-  const { id, recipient, seller, status, driver } = deliveryObj
-  const driverName = driver.name
-  const deliveryAddress = `${deliveryObj.deliveryAddress.streetName}  ${deliveryObj.deliveryAddress.houseNumber}`
-  const pickupAddress = `${deliveryObj.pickupAddress.streetName}  ${deliveryObj.pickupAddress.houseNumber}`
-  const vehicleNr = deliveryObj.vehicle.licensePlate
+  const navigateToPackage = (obj) => {
+    history.push(`/deliveries/` + { id }.id + `/packages/${obj.id}`, { params: obj })
+  }
+
+  const { id, recipient, seller, status } = delivery
+  const driver = delivery.driver.name
+  const deliveryAddress = `${delivery.deliveryAddress.streetName}  ${delivery.deliveryAddress.houseNumber}`
+  const pickupAddress = `${delivery.pickupAddress.streetName}  ${delivery.pickupAddress.houseNumber}`
+  const vehicle = delivery.vehicle.licensePlate
 
   const [editable, setEditable] = useState(true);
 
@@ -75,7 +78,11 @@ const Delivery = ({ getDelivery, delivery, getPackages, packages, token }) => {
       </div>
       <div className='col col-md-6 border mt-2 px-auto pt-1'>
         <p>Packages</p>
-        {/* TODO: Add packages here */}
+        {
+          packages.map(function (obj) {
+            return <p key={obj.id} onClick={() => navigateToPackage(obj)}>ID/Barcode: {obj.id}</p>
+          })
+        }
       </div>
       <button onClick={() => setEditable(editable => !editable)} className='btn btn-outline-info m-4'>Edit</button>
       <button onClick={(event) => handleSubmit(event)} className='btn btn-success m-4 ml-auto'>Vista</button>
@@ -87,7 +94,7 @@ const mapStateToProps = reduxStoreState => {
   return {
     packages: reduxStoreState.packages,
     delivery: reduxStoreState.delivery,
-    token: reduxStoreState.token
+    token: reduxStoreState.login.token
   }
 }
 

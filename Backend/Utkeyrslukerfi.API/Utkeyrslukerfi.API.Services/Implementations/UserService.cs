@@ -40,5 +40,9 @@ namespace Utkeyrslukerfi.API.Services.Implementations
         {
             _userRepo.UpdateUser(user, id);
         }
+        public void UpdatePassword(PasswordInputModel password, int id)
+        {
+            _userRepo.UpdatePassword(password, id);
+        }
     }
 }

@@ -22,13 +22,17 @@ namespace Utkeyrslukerfi.API
     public class Startup
     {
         readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+        private readonly IConfiguration _configuration;
+
 
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            _configuration = configuration;
         }
 
         public IConfiguration Configuration { get; }
+
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -43,10 +47,17 @@ namespace Utkeyrslukerfi.API
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
                 options.IncludeXmlComments(xmlPath);
             });
+            // Tries to get the connectionString from the azure storage
+            var myConnString = _configuration.GetConnectionString("MYSQL:connectionString");
+            // if the connectionString is null, it means we're running locally
+            // so we get the connection string from secrets
+            if (myConnString == null)
+            {
+                myConnString = Configuration["MYSQL:connectionString"];
+            }
             services.AddDbContext<UtkeyrslukerfiDbContext>(options =>
             {
-                options.UseMySQL(Configuration[Environment.GetEnvironmentVariable("connectionString")],
-                // options.UseMySQL(Configuration["MYSQL:connectionString"],
+                options.UseMySQL(myConnString,
                       options =>
                       {
                           options.MigrationsAssembly(Assembly.GetExecutingAssembly().FullName);
@@ -116,9 +127,10 @@ namespace Utkeyrslukerfi.API
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Utkeyrslukerfi v1"));
             }
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Utkeyrslukerfi v1"));
 
             app.UseMiddleware(typeof(ErrorHandlingMiddleware));
 

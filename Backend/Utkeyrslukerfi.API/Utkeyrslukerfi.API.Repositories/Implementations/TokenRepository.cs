@@ -3,6 +3,7 @@ using System.Linq;
 using Utkeyrslukerfi.API.Repositories.Interfaces;
 using Utkeyrslukerfi.API.Models.Entities;
 using Utkeyrslukerfi.API.Repositories.Context;
+using Utkeyrslukerfi.API.Models.Exceptions;
 
 namespace Utkeyrslukerfi.API.Repositories.Implementations
 {
@@ -14,11 +15,18 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
             _dbContext = dbContext;
         }
 
-        public JwtToken CreateNewToken()
+        public JwtToken CreateNewToken(User user)
         {
-            var token = new JwtToken();
+            var token = new JwtToken
+            {
+                UserID = user.ID,
+                User = user,
+                Blacklisted = false
+            };
+
             _dbContext.JwtTokens.Add(token);
             _dbContext.SaveChanges();
+
             return token;
         }
 
@@ -35,6 +43,13 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
             if (token == null) { return; }
             token.Blacklisted = true;
             _dbContext.SaveChanges();
+        }
+
+        public int GetUserID(int tokenID)
+        {
+            var token = _dbContext.JwtTokens.FirstOrDefault(t => t.ID == tokenID);
+            if (token == null) { throw new NotFoundException($"Not found."); }
+            return token.UserID;
         }
     }
 }

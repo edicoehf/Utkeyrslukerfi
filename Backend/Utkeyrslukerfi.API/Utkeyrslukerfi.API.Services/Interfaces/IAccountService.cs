@@ -8,5 +8,6 @@ namespace Utkeyrslukerfi.API.Services.Interfaces
     {
         User Login(LoginInputModel loginInputModel);
         void Logout(int tokenID);
+        int GetUserID(int tokenID);
     }
 }

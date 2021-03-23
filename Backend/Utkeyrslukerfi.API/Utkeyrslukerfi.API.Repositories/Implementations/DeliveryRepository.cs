@@ -65,7 +65,7 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
                               .Include(d => d.Packages)
                               .Where(d => d.Status == status)
                               .ToList();
-            
+
             Envelope<Delivery> envelope = new(pageNumber, pageSize, deliveries);
             return _mapper.Map<IEnumerable<DeliveryDTO>>(envelope.Items);
         }

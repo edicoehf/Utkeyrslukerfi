@@ -1,4 +1,4 @@
-import { LOGIN_URL } from '../constants'
+import { LOGIN_URL, LOGOUT_URL } from '../constants'
 
 const loginService = () => {
   return {
@@ -12,7 +12,20 @@ const loginService = () => {
       },
       mode: 'cors',
       body: JSON.stringify(credentials)
-    }).then(d => d.json())
+    }).then(d => d.json()),
+    logout: (token) => fetch(LOGOUT_URL, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }).then(d => d),
+    updatePassword: (token, pass) => fetch(LOGIN_URL, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`
+      },
+      body: JSON.stringify(pass)
+    }).then(d => d)
   }
 }
 

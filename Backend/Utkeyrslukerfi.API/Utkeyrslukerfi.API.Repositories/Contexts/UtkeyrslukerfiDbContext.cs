@@ -30,10 +30,15 @@ namespace Utkeyrslukerfi.API.Repositories.Context
             modelBuilder.Entity<Delivery>()
                 .HasOne(d => d.Vehicle)
                 .WithMany(v => v.Deliveries);
+            // Mapping the one to many relationship between
+            // User and JwtToken
+            modelBuilder.Entity<JwtToken>()
+                .HasOne(t => t.User)
+                .WithMany(u => u.JwtTokens);
         }
 
-        public DbSet<JwtToken> JwtTokens { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<JwtToken> JwtTokens { get; set; }
         public DbSet<Address> Addresses { get; set; }
         public DbSet<Signoff> Signoffs { get; set; }
         public DbSet<Vehicle> Vehicles { get; set; }
