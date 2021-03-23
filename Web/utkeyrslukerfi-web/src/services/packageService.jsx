@@ -6,7 +6,12 @@ const packageService = () => {
       headers: {
         Authorization: `Bearer ${token}`
       }
-    }).then(d => d.json()).then(d => d)
+    }).then(d => d.json()).then(d => d),
+    getPackage: (token, id, deliveryID) => fetch(DELIVERY_URL + `/${deliveryID}/packages/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }).then(d => d.json()).then(d => d),
   }
 }
 

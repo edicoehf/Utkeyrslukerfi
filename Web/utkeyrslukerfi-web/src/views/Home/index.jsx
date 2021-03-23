@@ -4,7 +4,7 @@ import '../../styles/home.css'
 
 const Home = () => {
   return (
-    <div class='homepage'>
+    <div className='homepage'>
       <div>
         <NavLink className="home-btn" to='/users'><span>Notendur</span></NavLink>
         <NavLink className="home-btn" to='/deliveries'><span>Sendingar</span></NavLink>

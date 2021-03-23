@@ -12,7 +12,15 @@ const loginService = () => {
       },
       mode: 'cors',
       body: JSON.stringify(credentials)
-    }).then(d => d.json())
+    }).then(d => d.json()),
+    updatePassword: (token, pass) => fetch(LOGIN_URL, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`
+      },
+      body: JSON.stringify(pass)
+    }).then(d => d)
   }
 }
 

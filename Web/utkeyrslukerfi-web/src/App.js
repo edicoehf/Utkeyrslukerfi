@@ -10,27 +10,22 @@ import Container from './components/Container'
 import React, { useEffect } from 'react'
 import Login from './components/Login'
 import Delivery from './components/Delivery'
+import Package from './components/Package'
 import Navbar from './components/Navbar'
 import CreateUserForm from './views/CreateUserForm'
 import NotFound from './views/NotFound'
 import UpdatePasswordForm from './views/UpdatePasswordForm'
-import { getLoggedInUser } from './actions/userActions'
 import { getLogin } from './actions/loginActions'
 
-const App = ({ loggedInUser, email, token, getLoggedInUser, getLogin }) => {
+const App = ({ token, changePassword, getLogin }) => {
   useEffect(() => {
     getLogin()
   }, [])
 
-  useEffect(() => {
-    if (email && token) {
-      getLoggedInUser(token, email)
-    }
-  }, [email, token])
-  if (!email || email === '') {
+  if (!token || token === '') {
     return <Login />
   }
-  if (loggedInUser && loggedInUser.changePassword) {
+  if (changePassword) {
     return <UpdatePasswordForm />
   }
   return (
@@ -44,6 +39,7 @@ const App = ({ loggedInUser, email, token, getLoggedInUser, getLogin }) => {
           <Route exact path='/users/:id' component={User} />
           <Route exact path='/deliveries' component={Deliveries} />
           <Route exact path='/deliveries/:id' component={Delivery} />
+          <Route exact path='/deliveries/:delid/packages/:id' component={Package} />
           <Route exact path='*' component={NotFound} />
         </Switch>
       </Container>
@@ -53,10 +49,9 @@ const App = ({ loggedInUser, email, token, getLoggedInUser, getLogin }) => {
 
 const mapStateToProps = reduxStoreState => {
   return {
-    loggedInUser: reduxStoreState.user.loggedInUser,
-    email: reduxStoreState.login,
-    token: reduxStoreState.token
+    token: reduxStoreState.login.token,
+    changePassword: reduxStoreState.login.changePassword
   }
 }
 
-export default connect(mapStateToProps, { getLoggedInUser, getLogin })(App)
+export default connect(mapStateToProps, { getLogin })(App)
