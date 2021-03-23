@@ -88,7 +88,7 @@ const Users = ({ getUsers, users, token }) => {
 const mapStateToProps = reduxStoreState => {
   return {
     users: reduxStoreState.users,
-    token: reduxStoreState.token
+    token: reduxStoreState.login.token
   }
 }
 

@@ -3,6 +3,7 @@ import userService from '../services/userService'
 import EmailAlreadyExists from '../errors/EmailAlreadyExists'
 import UnauthorizedUserLogin from '../errors/UnauthorizedUserLogin'
 import FailedToConnectToServer from '../errors/FailedToConnectToServer'
+import NotFound from '../errors/NotFound'
 
 // --------------- User logged in ---------------
 export const getLoggedInUser = (token, email) => async (dispatch) => {
@@ -16,20 +17,6 @@ export const getLoggedInUser = (token, email) => async (dispatch) => {
 
 const getLoggedInUserSuccess = (user) => ({
   type: GET_LOGGED_IN_USER,
-  payload: user
-})
-
-export const updatePassword = (token, id, user) => async (dispatch) => {
-  try {
-    await userService.updateUser(token, id, user)
-    dispatch(updateLoggedInUserSuccess({ id, ...user }))
-  } catch (err) {
-    console.log('Bad request, please try again later.')
-  }
-}
-
-const updateLoggedInUserSuccess = (user) => ({
-  type: UPDATE_LOGGED_IN_USER,
   payload: user
 })
 
@@ -55,10 +42,13 @@ const getViewingUserSuccess = (user) => ({
 
 export const updateUser = (token, id, user) => async (dispatch) => {
   try {
-    await userService.updateUser(token, id, user)
+    const res = await userService.updateUser(token, id, user)
+
+    if (res?.status === 401) { return new UnauthorizedUserLogin('Not authorized.') }
+    if (res?.status === 404) { return new NotFound('User was not found.') }
     dispatch(updateViewingUserSuccess({ id, ...user }))
   } catch (err) {
-    console.log('Bad request, please try again later.')
+    return new FailedToConnectToServer('Could not connect to server.')
   }
 }
 

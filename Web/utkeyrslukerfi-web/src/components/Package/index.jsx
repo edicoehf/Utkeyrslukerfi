@@ -14,7 +14,6 @@ const Package = ({ token, viewingPackage, setViewingPackage, getViewingPackage }
       getViewingPackage(token, id.id, id.delid)
     }
   }, [])
-    
 
   return ( // TODO: Style and make editable
     <>
@@ -31,9 +30,9 @@ const Package = ({ token, viewingPackage, setViewingPackage, getViewingPackage }
 
 const mapStateToProps = reduxStoreState => {
   return {
-    token: reduxStoreState.token,
+    token: reduxStoreState.login.token,
     viewingPackage: reduxStoreState.pack
   }
 }
 
-export default connect(mapStateToProps, { setViewingPackage, getViewingPackage  })(Package)
+export default connect(mapStateToProps, { setViewingPackage, getViewingPackage })(Package)

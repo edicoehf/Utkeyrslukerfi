@@ -69,7 +69,7 @@ const Delivery = ({ getDelivery, delivery, getPackages, packages, token }) => {
         <p>Packages</p>
         {
           packages.map(function (obj) {
-            return <p onClick={() => navigateToPackage(obj)}>ID/Barcode: {obj.id}</p>
+            return <p key={obj.id} onClick={() => navigateToPackage(obj)}>ID/Barcode: {obj.id}</p>
           })
         }
       </div>
@@ -83,7 +83,7 @@ const mapStateToProps = reduxStoreState => {
   return {
     packages: reduxStoreState.packages,
     delivery: reduxStoreState.delivery,
-    token: reduxStoreState.token
+    token: reduxStoreState.login.token
   }
 }
 

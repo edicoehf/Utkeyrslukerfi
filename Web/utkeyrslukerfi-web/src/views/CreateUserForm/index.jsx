@@ -158,7 +158,7 @@ const CreateUserForm = ({ token, createUser }) => {
 
 const mapStateToProps = reduxStoreState => {
   return {
-    token: reduxStoreState.token
+    token: reduxStoreState.login.token
   }
 }
 

@@ -19,12 +19,14 @@ namespace Utkeyrslukerfi.API.Controllers
         private readonly ILogger<AccountController> _logger;
         private readonly IAccountService _accountService;
         private readonly ITokenService _tokenService;
+        private readonly IUserService _userService;
 
-        public AccountController(ILogger<AccountController> logger, IAccountService accountService, ITokenService tokenService)
+        public AccountController(ILogger<AccountController> logger, IAccountService accountService, ITokenService tokenService, IUserService userService)
         {
             _logger = logger;
             _accountService = accountService;
             _tokenService = tokenService;
+            _userService = userService;
         }
         /// <summary>
         /// Athenticates users by credentials
@@ -64,8 +66,22 @@ namespace Utkeyrslukerfi.API.Controllers
         [Route("logout")]
         public IActionResult Logout()
         {
-            int.TryParse(User.Claims.FirstOrDefault(c => c.Type == "tokenID").Value, out var tokenId);
-            _accountService.Logout(tokenId);
+            int.TryParse(User.Claims.FirstOrDefault(c => c.Type == "tokenID").Value, out var tokenID);
+            _accountService.Logout(tokenID);
+            return NoContent();
+        }
+
+        [HttpPatch]
+        [Route("login")]
+        public IActionResult Update([FromBody] PasswordInputModel password)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest("Password is not valid!");
+            }
+            int.TryParse(User.Claims.FirstOrDefault(c => c.Type == "tokenID").Value, out var tokenID);
+            var userID = _accountService.GetUserID(tokenID);
+            _userService.UpdatePassword(password, userID);
             return NoContent();
         }
     }

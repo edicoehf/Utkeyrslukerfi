@@ -90,15 +90,27 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
             // save changes
             _dbContext.SaveChanges();
         }
+        public void UpdatePassword(PasswordInputModel password, int id)
+        {
+            var tempPass = HashingHelper.HashPassword(password.Password);
+            var tempUser = _dbContext.Users.FirstOrDefault(u => u.ID == id);
+            if (tempUser == null) { throw new NotFoundException($"User with id: {id} is not found!"); }
+
+            // Update old user with the new user
+            tempUser.Password = tempPass;
+            tempUser.ChangePassword = password.ChangePassword;
+
+            // save changes
+            _dbContext.SaveChanges();
+        }
         public User Login(LoginInputModel loginInputModel)
         {
             var user = _dbContext.Users.FirstOrDefault(u =>
                 u.Email == loginInputModel.Email &&
                 u.Password == HashingHelper.HashPassword(loginInputModel.Password));
-            // TODO Throw custom exception here
             if (user == null) { throw new InvalidLoginException("Either Email or Password is incorrect!"); }
 
-            var token = _tokenRepository.CreateNewToken();
+            var token = _tokenRepository.CreateNewToken(user);
             user.TokenID = token.ID;
             _dbContext.SaveChanges();
             return user;

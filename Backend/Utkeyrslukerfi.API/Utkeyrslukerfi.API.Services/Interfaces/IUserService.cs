@@ -11,5 +11,6 @@ namespace Utkeyrslukerfi.API.Services.Interfaces
         IEnumerable<UserDTO> GetUsers(int role, int pageSize, int pageNumber);
         UserDTO CreateUser(UserInputModel user);
         void UpdateUser(UserInputModel user, int id);
+        void UpdatePassword(PasswordInputModel password, int id);
     }
 }
