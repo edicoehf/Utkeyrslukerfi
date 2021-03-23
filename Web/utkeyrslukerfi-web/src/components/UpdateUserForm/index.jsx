@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import Form from 'react-bootstrap/Form'
 import Col from 'react-bootstrap/Col'
@@ -8,7 +8,15 @@ import { updateUser } from '../../actions/userActions'
 import { connect } from 'react-redux'
 
 const UpdateUserForm = ({ user, token, updateUser }) => {
-  const { register, handleSubmit, errors } = useForm() // TODO: define the roles and use configuration to add them
+  const { register, handleSubmit, errors, setValue } = useForm() // TODO: define the roles and use configuration to add them
+
+  useEffect(() => {
+    if (user) {
+      setValue('name', user.name)
+      setValue('email', user.email)
+      setValue('role', user.role)
+    }
+  })
 
   const submitForm = (data) => {
     console.log('The form was successfully submitted!')
@@ -25,7 +33,6 @@ const UpdateUserForm = ({ user, token, updateUser }) => {
           <Form.Control
             name='name'
             placeholder='Insert name...'
-            defaultValue={user.name}
             type='text'
             ref={register({
               required: 'This field is required.',
@@ -52,7 +59,6 @@ const UpdateUserForm = ({ user, token, updateUser }) => {
           <Form.Control
             name='email'
             placeholder='Insert email...'
-            defaultValue={user.email}
             type='text'
             ref={register({
               required: 'This field is required.',
@@ -105,7 +111,6 @@ const UpdateUserForm = ({ user, token, updateUser }) => {
           <Form.Control
             as='select'
             custom
-            defaultValue={user.role}
             name='role'
             ref={register}
           >
