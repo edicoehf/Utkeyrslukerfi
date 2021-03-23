@@ -32,7 +32,7 @@ const Package = ({ token, viewingPackage, setViewingPackage, getViewingPackage }
 const mapStateToProps = reduxStoreState => {
   return {
     token: reduxStoreState.token,
-    viewingPackage: reduxStoreState.pack.viewingPackage
+    viewingPackage: reduxStoreState.pack
   }
 }
 

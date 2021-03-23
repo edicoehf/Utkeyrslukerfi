@@ -1,9 +1,9 @@
 import { GET_VIEWING_PACKAGE, SET_VIEWING_PACKAGE } from '../constants'
 
-const packageReducer = (state = { viewingPackage: {} }, action) => {
+const packageReducer = (state = [], action) => {
   switch (action.type) {
-    case GET_VIEWING_PACKAGE: return { ...state, viewingPackage: action.payload }
-    case SET_VIEWING_PACKAGE: return { ...state, viewingPackage: action.payload }
+    case GET_VIEWING_PACKAGE: return action.payload 
+    case SET_VIEWING_PACKAGE: return action.payload
     default: return state
   }
 }
