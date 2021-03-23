@@ -144,9 +144,9 @@ const CreateUserForm = ({ token, createUser }) => {
       </Form.Group>
 
       <Form.Group as={Row}>
-        <Col sm={{ span: 1, offset: 6 }}>
+        <Col className="submit-button">
           <Button type='submit' variant='dark'>
-            Submit
+            Stofna
           </Button>
         </Col>
       </Form.Group>
