@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from 'react'
-import { useHistory } from 'react-router-dom'
+import { useHistory, useParams } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { useParams } from 'react-router-dom'
 import { getDelivery } from '../../actions/deliveryActions'
 import { getPackages } from '../../actions/packageActions'
 
-
 const Delivery = ({ getDelivery, delivery, getPackages, packages, token }) => {
-  let pathId = useParams().id
-  const [deliveryObj, setDeliveryObj] = useState(delivery);
+  const pathId = useParams().id
+  const history = useHistory()
+  const [deliveryObj, setDeliveryObj] = useState(delivery)
 
   useEffect(() => {
     if (token) {
@@ -21,7 +20,7 @@ const Delivery = ({ getDelivery, delivery, getPackages, packages, token }) => {
   }
 
   const navigateToPackage = (obj) => {
-    history.push(`/deliveries/` + { id }.id + `/packages/${obj.id}`, { params: obj })
+    history.push('/deliveries/' + { id }.id + `/packages/${obj.id}`, { params: obj })
   }
 
   const { id, recipient, seller, status } = delivery
@@ -33,9 +32,9 @@ const Delivery = ({ getDelivery, delivery, getPackages, packages, token }) => {
   const [editable, setEditable] = useState(true);
 
   const handleChange = (e) => {
-    let key = e.target.name
-    let newVal = e.target.value
-    let tempObj = { ...delivery }
+    const key = e.target.name
+    const newVal = e.target.value
+    const tempObj = { ...delivery }
     Object.keys(tempObj).forEach(k => {
       if (k === key) { tempObj[k] = newVal }
     })
@@ -63,7 +62,7 @@ const Delivery = ({ getDelivery, delivery, getPackages, packages, token }) => {
             <label className='mt-3 mx-3'>Seller</label><input className='border-none my-3 ml-auto' disabled={editable} type='text' name='seller' onChange={handleChange} defaultValue={seller} />
           </div>
           <div className='row'>
-            <label className='mt-3 mx-3'>Driver</label><input className='border-none my-3 ml-auto' disabled={editable} type='text' name='driver' onChange={e => setDeliveryObj(state => ({ ...state, driver: { ...state.driver, name: e.target.value } }))} defaultValue={driverName} />
+            <label className='mt-3 mx-3'>Driver</label><input className='border-none my-3 ml-auto' disabled={editable} type='text' name='driver' onChange={e => setDeliveryObj(state => ({ ...state, driver: { ...state.driver, name: e.target.value } }))} defaultValue={driver} />
           </div>
           <div className='row'>
             <label className='mt-3 mx-3'>DeliveryAddress</label><input className='border-none my-3 ml-auto' disabled={editable} type='text' name='deliveryAddress' onChange={handleChange} defaultValue={deliveryAddress} />
@@ -72,7 +71,7 @@ const Delivery = ({ getDelivery, delivery, getPackages, packages, token }) => {
             <label className='mt-3 mx-3'>PickupAddress</label><input className='border-none my-3 ml-auto' disabled={editable} type='text' name='pickupAddress' onChange={handleChange} defaultValue={pickupAddress} />
           </div>
           <div className='row'>
-            <label className='mt-3 mx-3'>Vehicle</label><input className='border-none my-3 ml-auto' disabled={editable} type='text' name='licensePlate' onChange={e => setDeliveryObj(state => ({ ...state,  vehicle: { ...state.vehicle, licensePlate: e.target.value }}))} defaultValue={vehicleNr} />
+            <label className='mt-3 mx-3'>Vehicle</label><input className='border-none my-3 ml-auto' disabled={editable} type='text' name='licensePlate' onChange={e => setDeliveryObj(state => ({ ...state, vehicle: { ...state.vehicle, licensePlate: e.target.value } }))} defaultValue={vehicle} />
           </div>
         </form>
       </div>
@@ -98,4 +97,4 @@ const mapStateToProps = reduxStoreState => {
   }
 }
 
-export default connect(mapStateToProps, { getPackages, getDelivery})(Delivery)
+export default connect(mapStateToProps, { getPackages, getDelivery })(Delivery)
