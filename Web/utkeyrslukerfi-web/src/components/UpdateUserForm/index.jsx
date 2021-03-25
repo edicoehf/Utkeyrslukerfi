@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { useForm, FormProvider } from 'react-hook-form'
 import Form from 'react-bootstrap/Form'
-import Col from 'react-bootstrap/Col'
-import Row from 'react-bootstrap/Row'
-import Button from 'react-bootstrap/Button'
 import { updateUser } from '../../actions/userActions'
 import { connect } from 'react-redux'
-import FormGroup from '../../components/FormGroup'
+import FormGroupInput from '../FormGroupInput'
 import FormGroupDropdown from '../FormGroupDropdown'
+import FormGroupButton from '../FormGroupButton'
+import errorHandlingService from '../../services/errorHandlingService'
 
 const UpdateUserForm = ({ user, token, updateUser }) => {
   const methods = useForm() // TODO: define the roles and use configuration to add them
@@ -34,46 +33,27 @@ const UpdateUserForm = ({ user, token, updateUser }) => {
     clearMessages()
 
     const err = await updateUser(token, user.id, { ...data, changePassword: true })
-    if (err) {
-      if (err?.errors) {
-        let msg = ''
-        // eslint-disable-next-line no-unused-vars
-        for (const [key, value] of Object.entries(err.errors)) {
-          msg += `${value}\n`
-        }
-        const element = document.getElementById('err-msg')
-        element.classList.remove('d-none')
-        setErrorMessage(msg)
-      } else {
-        const element = document.getElementById('err-msg')
-        element.classList.remove('d-none')
-        setErrorMessage('Could not reach the login servers')
-      }
-    } else {
-      const element = document.getElementById('success')
-      element.classList.remove('d-none')
-      setSuccess('The user was successfully updated!')
-    }
+    errorHandlingService.setMessage(err, setErrorMessage, setSuccess, 'he user was successfully updated!')
   }
 
   return (
     <FormProvider {...methods}>
       <Form onSubmit={methods.handleSubmit(submitForm)} className='form form-horizontal'>
-        <FormGroup
+        <FormGroupInput
           groupType='name'
           label='Nafn'
           fieldType='text'
           pattern={/^[^()[\]{}*&^%$#@!0-9]+$/}
           minLen={2}
         />
-        <FormGroup
+        <FormGroupInput
           groupType='email'
           label='Netfang'
           fieldType='text'
           pattern={/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/}
           minLen={2}
         />
-        <FormGroup
+        <FormGroupInput
           groupType='password'
           label='Tímabundið lykilorð'
           fieldType='password'
@@ -93,13 +73,10 @@ const UpdateUserForm = ({ user, token, updateUser }) => {
           }
         />
 
-        <Form.Group as={Row}>
-          <Col sm={{ span: 1, offset: 6 }}>
-            <Button type='submit' variant='dark'>
-              Submit
-            </Button>
-          </Col>
-        </Form.Group>
+        <FormGroupButton
+          label='Vista'
+        />
+
         <div id='err-msg' className='error-message alert alert-danger d-none'>{errorMessage}</div>
         <div id='success' className='error-message alert alert-success d-none'>{success}</div>
       </Form>

@@ -5,7 +5,7 @@ import Row from 'react-bootstrap/Row'
 import { useFormContext } from 'react-hook-form'
 
 // Input for forms
-const FormGroup = ({ groupType, label, fieldType, pattern, minLen }) => {
+const FormGroupInput = ({ groupType, label, fieldType, pattern, minLen }) => {
   const { register, errors } = useFormContext()
 
   return (
@@ -38,4 +38,4 @@ const FormGroup = ({ groupType, label, fieldType, pattern, minLen }) => {
   )
 }
 
-export default FormGroup
+export default FormGroupInput
