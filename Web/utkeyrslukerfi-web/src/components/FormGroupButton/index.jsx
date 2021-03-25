@@ -3,6 +3,7 @@ import Form from 'react-bootstrap/Form'
 import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
 import Button from 'react-bootstrap/Button'
+import PropTypes from 'prop-types'
 
 // Submit button for forms
 const FormGroupButton = ({ label, typeOfForm }) => {
@@ -15,6 +16,13 @@ const FormGroupButton = ({ label, typeOfForm }) => {
       </Col>
     </Form.Group>
   )
+}
+
+FormGroupButton.protoTypes = {
+  // Specify label for field
+  label: PropTypes.string.isRequired,
+  // Specify the type of form, updateUser/createUser/...
+  typeOfForm: PropTypes.string.isRequired
 }
 
 export default FormGroupButton

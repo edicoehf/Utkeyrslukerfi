@@ -3,6 +3,7 @@ import Form from 'react-bootstrap/Form'
 import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
 import { useFormContext } from 'react-hook-form'
+import PropTypes from 'prop-types'
 
 // Input for forms
 const FormGroupInput = ({ groupType, label, fieldType, pattern, minLen, typeOfForm, validate }) => {
@@ -37,6 +38,23 @@ const FormGroupInput = ({ groupType, label, fieldType, pattern, minLen, typeOfFo
       </Col>
     </Form.Group>
   )
+}
+
+FormGroupInput.protoTypes = {
+  // Specify field name
+  groupType: PropTypes.string.isRequired,
+  // Specify label for field
+  label: PropTypes.string.isRequired,
+  // Specify if text, password or other
+  fieldType: PropTypes.string.isRequired,
+  // Specify regex validation pattern
+  pattern: PropTypes.object.isRequired,
+  // Specify minimum length of input value
+  minLen: PropTypes.number.isRequired,
+  // Specify the type of form, updateUser/createUser/...
+  typeOfForm: PropTypes.string.isRequired,
+  // Custom validation
+  validate: PropTypes.func
 }
 
 export default FormGroupInput
