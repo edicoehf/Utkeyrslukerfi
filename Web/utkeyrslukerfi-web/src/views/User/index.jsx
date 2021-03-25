@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { useHistory, useParams } from 'react-router-dom'
 import { setViewingUser, getViewingUser } from '../../actions/userActions'
 import UpdateUserForm from '../../components/UpdateUserForm'
+import '../../styles/user.css'
 
 // Get user and send to update form
 const User = ({ token, viewingUser, setViewingUser, getViewingUser }) => {
@@ -25,9 +26,9 @@ const User = ({ token, viewingUser, setViewingUser, getViewingUser }) => {
   }, [id, token])
 
   return (
-    <>
+    <div className='user'>
       <UpdateUserForm user={viewingUser} />
-    </>
+    </div>
   )
 }
 
