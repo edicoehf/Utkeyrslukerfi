@@ -5,9 +5,9 @@ import Row from 'react-bootstrap/Row'
 import Button from 'react-bootstrap/Button'
 
 // Submit button for forms
-const FormGroupButton = ({ label }) => {
+const FormGroupButton = ({ label, typeOfForm }) => {
   return (
-    <Form.Group as={Row}>
+    <Form.Group as={Row} controlId={`form${typeOfForm}Button`}>
       <Col sm={{ span: 1, offset: 6 }}>
         <Button type='submit' variant='dark'>
           {label}

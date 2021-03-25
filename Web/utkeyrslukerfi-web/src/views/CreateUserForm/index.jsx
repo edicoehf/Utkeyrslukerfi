@@ -1,158 +1,73 @@
 import React, { useState } from 'react'
-import { useForm } from 'react-hook-form'
+import { useForm, FormProvider } from 'react-hook-form'
 import Form from 'react-bootstrap/Form'
-import Col from 'react-bootstrap/Col'
-import Row from 'react-bootstrap/Row'
-import Button from 'react-bootstrap/Button'
 import { createUser } from '../../actions/userActions'
 import { connect } from 'react-redux'
+import FormGroupInput from '../../components/FormGroupInput'
+import FormGroupDropdown from '../../components/FormGroupDropdown'
+import FormGroupButton from '../../components/FormGroupButton'
+import errorHandlingService from '../../services/errorHandlingService'
 
 const CreateUserForm = ({ token, createUser }) => {
-  const { register, handleSubmit, errors } = useForm() // TODO: define the roles and use configuration to add them
+  const methods = useForm() // TODO: define the roles and use configuration to add them
   const [errorMessage, setErrorMessage] = useState()
   const [success, setSuccess] = useState()
 
-  const clearMessages = () => {
-    const elErr = document.getElementById('err-msg')
-    elErr.classList.add('d-none')
-    const elSuccess = document.getElementById('success')
-    elSuccess.classList.add('d-none')
-  }
-
   const submitForm = async (data) => {
-    clearMessages()
+    errorHandlingService.clearMessages()
 
     const err = await createUser(token, { ...data, changePassword: true })
-    if (err) {
-      if (err?.errors) {
-        let msg = ''
-        // eslint-disable-next-line no-unused-vars
-        for (const [key, value] of Object.entries(err.errors)) {
-          msg += `${value}\n`
-        }
-        const element = document.getElementById('err-msg')
-        element.classList.remove('d-none')
-        setErrorMessage(msg)
-      } else {
-        const element = document.getElementById('err-msg')
-        element.classList.remove('d-none')
-        setErrorMessage('Could not reach the login servers')
-      }
-    } else {
-      const element = document.getElementById('success')
-      element.classList.remove('d-none')
-      setSuccess('The user was successfully created!')
-    }
+    errorHandlingService.setMessage(err, setErrorMessage, setSuccess, 'Það tókst að búa til notandann!')
   }
 
   return (
-    <Form onSubmit={handleSubmit(submitForm)} className='form form-horizontal'>
-      <Form.Group as={Row} controlId='formCreateUserName'>
-        <Form.Label column sm={3}>
-          Nafn:
-        </Form.Label>
-        <Col sm={8}>
-          <Form.Control
-            name='name'
-            placeholder='Insert name...'
-            type='text'
-            ref={register({
-              required: 'This field is required.',
-              minLength: {
-                value: 2,
-                message: 'Please insert your name.'
-              },
-              pattern: {
-                value: /^[^()[\]{}*&^%$#@!0-9]+$/,
-                message: 'Please insert a valid name.'
-              }
-            })}
-          />
-        </Col>
-        <Col sm={4}>
-          {errors.name && <p>{errors.name.message}</p>}
-        </Col>
-      </Form.Group>
-      <Form.Group as={Row} controlId='formCreateUserEmail'>
-        <Form.Label column sm={3}>
-          Netfang:
-        </Form.Label>
-        <Col sm={8}>
-          <Form.Control
-            name='email'
-            placeholder='Insert email...'
-            type='text'
-            ref={register({
-              required: 'This field is required.',
-              minLength: {
-                value: 2,
-                message: 'Please insert your email address.'
-              },
-              pattern: {
-                value: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-                message: 'Please insert a valid email address.'
-              }
-            })}
-          />
-        </Col>
-        <Col sm={4}>
-          {errors.email && <p>{errors.email.message}</p>}
-        </Col>
-      </Form.Group>
-      <Form.Group as={Row} controlId='formCreateUserPassword'>
-        <Form.Label column sm={3}>
-          Tímabundið lykilorð:
-        </Form.Label>
-        <Col sm={8}>
-          <Form.Control
-            name='password'
-            placeholder='Insert password...'
-            type='password'
-            ref={register({
-              required: 'This field is required.',
-              minLength: {
-                value: 2,
-                message: 'Please insert your password.'
-              },
-              pattern: {
-                value: /^[^()[\]{}*&^%$#@!]+$/,
-                message: 'Please insert a valid password.'
-              }
-            })}
-          />
-        </Col>
-        <Col sm={4}>
-          {errors.password && <p>{errors.password.message}</p>}
-        </Col>
-      </Form.Group>
-      <Form.Group as={Row} controlId='formCreateUserRole'>
-        <Form.Label column sm={3}>
-          Starf:
-        </Form.Label>
-        <Col sm={8}>
-          <Form.Control
-            as='select'
-            custom
-            name='role'
-            ref={register}
-          >
-            <option value='0'>Admin</option>
-            <option value='1'>Office</option>
-            <option value='2'>Driver</option>
-          </Form.Control>
-        </Col>
-      </Form.Group>
+    <FormProvider {...methods}>
+      <Form onSubmit={methods.handleSubmit(submitForm)} className='form form-horizontal'>
+        <FormGroupInput
+          groupType='name'
+          label='Nafn'
+          fieldType='text'
+          pattern={/^[^()[\]{}*&^%$#@!0-9]+$/}
+          minLen={2}
+          typeOfForm='CreateUser'
+        />
+        <FormGroupInput
+          groupType='email'
+          label='Netfang'
+          fieldType='text'
+          pattern={/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/}
+          minLen={2}
+          typeOfForm='CreateUser'
+        />
+        <FormGroupInput
+          groupType='password'
+          label='Tímabundið lykilorð'
+          fieldType='password'
+          pattern={/^[^()[\]{}*&^%$#@!]+$/}
+          minLen={8}
+          typeOfForm='CreateUser'
+        />
+        <FormGroupDropdown
+          groupType='role'
+          label='Starf'
+          options={
+            <>
+              <option value='1'>Admin</option>
+              <option value='2'>Office</option>
+              <option value='3'>Driver</option>
+            </>
+          }
+          typeOfForm='CreateUser'
+        />
+        <FormGroupButton
+          label='Vista'
+          typeOfForm='CreateUser'
+        />
 
-      <Form.Group as={Row}>
-        <Col sm={{ span: 1, offset: 6 }}>
-          <Button type='submit' variant='dark'>
-            Submit
-          </Button>
-        </Col>
-      </Form.Group>
-      <div id='err-msg' className='error-message alert alert-danger d-none'>{errorMessage}</div>
-      <div id='success' className='error-message alert alert-success d-none'>{success}</div>
-    </Form>
+        <div id='err-msg' className='error-message alert alert-danger d-none'>{errorMessage}</div>
+        <div id='success' className='error-message alert alert-success d-none'>{success}</div>
+      </Form>
+    </FormProvider>
   )
 }
 

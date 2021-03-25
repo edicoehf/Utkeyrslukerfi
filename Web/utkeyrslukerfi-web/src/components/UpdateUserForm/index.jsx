@@ -22,18 +22,11 @@ const UpdateUserForm = ({ user, token, updateUser }) => {
     }
   }, [user])
 
-  const clearMessages = () => {
-    const elErr = document.getElementById('err-msg')
-    elErr.classList.add('d-none')
-    const elSuccess = document.getElementById('success')
-    elSuccess.classList.add('d-none')
-  }
-
   const submitForm = async (data) => {
-    clearMessages()
+    errorHandlingService.clearMessages()
 
     const err = await updateUser(token, user.id, { ...data, changePassword: true })
-    errorHandlingService.setMessage(err, setErrorMessage, setSuccess, 'he user was successfully updated!')
+    errorHandlingService.setMessage(err, setErrorMessage, setSuccess, 'Það tókst að uppfæra notandann!')
   }
 
   return (
@@ -45,6 +38,7 @@ const UpdateUserForm = ({ user, token, updateUser }) => {
           fieldType='text'
           pattern={/^[^()[\]{}*&^%$#@!0-9]+$/}
           minLen={2}
+          typeOfForm='UpdateUser'
         />
         <FormGroupInput
           groupType='email'
@@ -52,6 +46,7 @@ const UpdateUserForm = ({ user, token, updateUser }) => {
           fieldType='text'
           pattern={/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/}
           minLen={2}
+          typeOfForm='UpdateUser'
         />
         <FormGroupInput
           groupType='password'
@@ -59,8 +54,8 @@ const UpdateUserForm = ({ user, token, updateUser }) => {
           fieldType='password'
           pattern={/^[^()[\]{}*&^%$#@!]+$/}
           minLen={8}
+          typeOfForm='UpdateUser'
         />
-
         <FormGroupDropdown
           groupType='role'
           label='Starf'
@@ -71,10 +66,11 @@ const UpdateUserForm = ({ user, token, updateUser }) => {
               <option value='3'>Driver</option>
             </>
           }
+          typeOfForm='UpdateUser'
         />
-
         <FormGroupButton
           label='Vista'
+          typeOfForm='UpdateUser'
         />
 
         <div id='err-msg' className='error-message alert alert-danger d-none'>{errorMessage}</div>

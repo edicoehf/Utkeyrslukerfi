@@ -5,11 +5,11 @@ import Row from 'react-bootstrap/Row'
 import { useFormContext } from 'react-hook-form'
 
 // Input for forms
-const FormGroupInput = ({ groupType, label, fieldType, pattern, minLen }) => {
+const FormGroupInput = ({ groupType, label, fieldType, pattern, minLen, typeOfForm }) => {
   const { register, errors } = useFormContext()
 
   return (
-    <Form.Group as={Row} controlId={`formUpdateUser${groupType}`}>
+    <Form.Group as={Row} controlId={`form${typeOfForm}${groupType}`}>
       <Form.Label column sm={3}>
         {label}:
       </Form.Label>

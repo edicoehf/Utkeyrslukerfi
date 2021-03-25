@@ -5,11 +5,11 @@ import Row from 'react-bootstrap/Row'
 import { useFormContext } from 'react-hook-form'
 
 // Dropdown for forms
-const FormGroupDropdown = ({ groupType, label, options }) => {
+const FormGroupDropdown = ({ groupType, label, options, typeOfForm }) => {
   const { register } = useFormContext()
 
   return (
-    <Form.Group as={Row} controlId={`formUpdateUser${groupType}`}>
+    <Form.Group as={Row} controlId={`form${typeOfForm}${groupType}`}>
       <Form.Label column sm={3}>
         {label}:
       </Form.Label>
