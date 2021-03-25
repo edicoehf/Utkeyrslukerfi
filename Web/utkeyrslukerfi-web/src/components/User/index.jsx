@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import { useHistory, useParams } from 'react-router-dom'
-import { setViewingUser, getViewingUser } from '../../actions/userActions'
+import { setUser, getUser } from '../../actions/userActions'
 import UpdateUserForm from '../UpdateUserForm'
 
-const User = ({ token, viewingUser, setViewingUser, getViewingUser }) => {
+const User = ({ token, user, setUser, getUser }) => {
   const history = useHistory()
   const { id } = useParams()
 
@@ -13,19 +13,19 @@ const User = ({ token, viewingUser, setViewingUser, getViewingUser }) => {
       // To get user from table and skip the url call
       const state = { ...history.location.state }
       const user = state.params
-      setViewingUser(user)
+      setUser(user)
       delete state.params
       history.replace({ ...history.location, state })
     } else {
       if (token) {
-        getViewingUser(token, id)
+        getUser(token, id)
       }
     }
   }, [id, token])
 
   return (
     <>
-      <UpdateUserForm user={viewingUser} />
+      <UpdateUserForm user={User} />
     </>
   )
 }
@@ -33,8 +33,8 @@ const User = ({ token, viewingUser, setViewingUser, getViewingUser }) => {
 const mapStateToProps = reduxStoreState => {
   return {
     token: reduxStoreState.login.token,
-    viewingUser: reduxStoreState.user.viewingUser
+    user: reduxStoreState.user
   }
 }
 
-export default connect(mapStateToProps, { setViewingUser, getViewingUser })(User)
+export default connect(mapStateToProps, { setUser, getUser })(User)

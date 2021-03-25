@@ -66,7 +66,8 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
                 Name = user.Name,
                 Password = tempPass,
                 Role = user.Role,
-                Email = user.Email
+                Email = user.Email,
+                ChangePassword = user.ChangePassword
             };
 
             _dbContext.Users.Add(entity);

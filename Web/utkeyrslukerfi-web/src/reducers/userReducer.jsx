@@ -1,12 +1,10 @@
-import { GET_LOGGED_IN_USER, UPDATE_LOGGED_IN_USER, GET_VIEWING_USER, SET_VIEWING_USER, UPDATE_VIEWING_USER } from '../constants'
+import { GET_USER, SET_USER, UPDATE_USER } from '../constants'
 
-const userReducer = (state = { loggedInUser: {}, viewingUser: {} }, action) => {
+const userReducer = (state = {}, action) => {
   switch (action.type) {
-    case GET_LOGGED_IN_USER: return { ...state, loggedInUser: action.payload }
-    case UPDATE_LOGGED_IN_USER: return { ...state, loggedInUser: action.payload }
-    case GET_VIEWING_USER: return { ...state, viewingUser: action.payload }
-    case SET_VIEWING_USER: return { ...state, viewingUser: action.payload }
-    case UPDATE_VIEWING_USER: return { ...state, viewingUser: action.payload }
+    case GET_USER: return action.payload
+    case SET_USER: return action.payload
+    case UPDATE_USER: return action.payload
     default: return state
   }
 }

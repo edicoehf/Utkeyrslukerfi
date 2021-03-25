@@ -9,7 +9,7 @@ namespace Utkeyrslukerfi.API.Models.InputModels
         [Required(ErrorMessage = "Email is required")]
         [EmailAddress(ErrorMessage = "Has to be a valid Email")]
         public string Email { get; set; }
-        [Required(ErrorMessage = "Role is required")] // Role 1: admin, 2: office, 3: driver
+        [Required(ErrorMessage = "Role is required")] // Role 1: admin, 2: office, 3: driver, 4: disabled
         public int Role { get; set; }
         [Required(ErrorMessage = "ChangePassword is required")]
         public bool ChangePassword { get; set; }
