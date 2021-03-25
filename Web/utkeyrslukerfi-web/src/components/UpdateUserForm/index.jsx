@@ -23,7 +23,8 @@ const UpdateUserForm = ({ user, token, updateUser }) => {
   }, [user])
 
   const submitForm = async (data) => {
-    errorHandlingService.clearMessages()
+    errorHandlingService.clearMessagesErrors()
+    errorHandlingService.clearMessagesSuccess()
 
     const err = await updateUser(token, user.id, { ...data, changePassword: true })
     errorHandlingService.setMessage(err, setErrorMessage, setSuccess, 'Það tókst að uppfæra notandann!')

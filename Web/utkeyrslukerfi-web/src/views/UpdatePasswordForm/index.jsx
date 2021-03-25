@@ -17,7 +17,7 @@ const UpdatePasswordForm = ({ updatePassword, token }) => {
   password.current = methods.watch('password', '') // To make sure passwords are the same
 
   const submitForm = async (data) => {
-    errorHandlingService.clearMessagesNoSuccess()
+    errorHandlingService.clearMessagesErrors()
 
     const err = await updatePassword(token, data.password)
     errorHandlingService.setMessageNoSuccess(err, setErrorMessage)

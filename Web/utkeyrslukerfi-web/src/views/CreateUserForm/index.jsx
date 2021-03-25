@@ -15,7 +15,8 @@ const CreateUserForm = ({ token, createUser }) => {
   const [success, setSuccess] = useState()
 
   const submitForm = async (data) => {
-    errorHandlingService.clearMessages()
+    errorHandlingService.clearMessagesErrors()
+    errorHandlingService.clearMessagesSuccess()
 
     const err = await createUser(token, { ...data, changePassword: true })
     errorHandlingService.setMessage(err, setErrorMessage, setSuccess, 'Það tókst að búa til notandann!')
