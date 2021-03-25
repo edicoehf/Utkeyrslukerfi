@@ -5,7 +5,7 @@ import Row from 'react-bootstrap/Row'
 import { useFormContext } from 'react-hook-form'
 
 // Input for forms
-const FormGroupInput = ({ groupType, label, fieldType, pattern, minLen, typeOfForm }) => {
+const FormGroupInput = ({ groupType, label, fieldType, pattern, minLen, typeOfForm, validate }) => {
   const { register, errors } = useFormContext()
 
   return (
@@ -22,12 +22,13 @@ const FormGroupInput = ({ groupType, label, fieldType, pattern, minLen, typeOfFo
             required: 'Nauðsynlegt er að fylla út í þennan reit.',
             minLength: {
               value: minLen,
-              message: `Vinsamlegast sláðu inn: ${label}.`
+              message: `${label} þarf að vera að minnsta kosti ${minLen} að lengd.`
             },
             pattern: {
               value: pattern,
               message: `Vinsamlegast sláðu inn leyfilegt: ${label}.`
-            }
+            },
+            validate: validate
           })}
         />
       </Col>
