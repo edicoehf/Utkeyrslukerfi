@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import { useHistory, useParams } from 'react-router-dom'
 import { setViewingUser, getViewingUser } from '../../actions/userActions'
-import UpdateUserForm from '../UpdateUserForm'
+import UpdateUserForm from '../../components/UpdateUserForm'
 
 // Get user and send to update form
 const User = ({ token, viewingUser, setViewingUser, getViewingUser }) => {
