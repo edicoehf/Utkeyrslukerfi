@@ -1,29 +1,31 @@
-import { GET_USER, SET_USER, UPDATE_USER, CREATE_USER } from '../constants'
+import { GET_VIEWING_USER, SET_VIEWING_USER, UPDATE_USER, CREATE_USER } from '../constants'
 import userService from '../services/userService'
 import EmailAlreadyExists from '../errors/EmailAlreadyExists'
 import UnauthorizedUserLogin from '../errors/UnauthorizedUserLogin'
 import FailedToConnectToServer from '../errors/FailedToConnectToServer'
 import NotFound from '../errors/NotFound'
 
-export const setUser = (user) => ({
-  type: SET_USER,
+// --------------- User being viewed ---------------
+export const setViewingUser = (user) => ({
+  type: SET_VIEWING_USER,
   payload: user
 })
 
-export const getUser = (token, id) => async (dispatch) => {
+export const getViewingUser = (token, id) => async (dispatch) => {
   try {
     const user = await userService.getUser(token, id)
-    dispatch(getUserSuccess(user))
+    dispatch(getViewingUserSuccess(user))
   } catch (err) {
     console.log('Bad request, please try loading again.')
   }
 }
 
-const getUserSuccess = (user) => ({
-  type: GET_USER,
+const getViewingUserSuccess = (user) => ({
+  type: GET_VIEWING_USER,
   payload: user
 })
 
+// --------------- User being created/updated ---------------
 export const updateUser = (token, id, user) => async (dispatch) => {
   try {
     const res = await userService.updateUser(token, id, user)

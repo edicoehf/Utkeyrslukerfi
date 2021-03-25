@@ -13,6 +13,7 @@ const UpdateUserForm = ({ user, token, updateUser }) => {
   const [success, setSuccess] = useState()
 
   useEffect(() => {
+    // Keep the user state up to date
     if (user) {
       setValue('name', user.name)
       setValue('email', user.email)
