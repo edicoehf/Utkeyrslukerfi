@@ -15,7 +15,7 @@ const Delivery = ({ getDelivery, delivery, getPackages, packages, token }) => {
   if (Object.entries(deliveryObj).length === 0) {
     getDelivery(token, pathId)
   }
-  
+
   useEffect(() => {
     if (token) {
       getPackages(token, { id }.id)
@@ -99,9 +99,11 @@ const Delivery = ({ getDelivery, delivery, getPackages, packages, token }) => {
       <div className='col col-md-6 border mt-2 px-auto pt-1'>
         <p>Packages</p>
         {
-          packages.map(function (obj) {
-            return <p key={obj.id} onClick={() => navigateToPackage(obj)}>ID/Barcode: {obj.id}</p>
-          })
+          packages.length !== 0 ? <> {
+            packages.map(function (obj) {
+              return <p key={obj.id} onClick={() => navigateToPackage(obj)}>ID/Barcode: {obj.id}</p>
+            })
+          } </> : <> <p>No packages found</p></>
         }
       </div>
       <button onClick={() => setEditable(editable => !editable)} className='btn btn-outline-info m-4'>Edit</button>
