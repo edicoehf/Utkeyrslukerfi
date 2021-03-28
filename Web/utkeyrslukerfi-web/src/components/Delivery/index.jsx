@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { getDelivery } from '../../actions/deliveryActions'
 import { getPackages } from '../../actions/packageActions'
 import DeliveryAddressModal from '../DeliveryAddressModal'
+import PickupAddressModal from '../PickupAddressModal'
 
 
 const Delivery = ({ getDelivery, delivery, getPackages, packages, token }) => {
@@ -11,37 +12,33 @@ const Delivery = ({ getDelivery, delivery, getPackages, packages, token }) => {
   const history = useHistory()
   const [deliveryObj, setDeliveryObj] = useState(delivery)
 
+  if (Object.entries(deliveryObj).length === 0) {
+    getDelivery(token, pathId)
+  }
+  
   useEffect(() => {
     if (token) {
       getPackages(token, { id }.id)
     }
   }, [token])
 
-  if (Object.entries(deliveryObj).length === 0) {
-
-
-    console.log("delivery state is empty");
-    getDelivery(token, pathId)
-    console.log("Delivery: ", this)
+  useEffect(() => {
     setDeliveryObj(delivery)
-
-
-
-
-  }
+  }, [])
 
   const navigateToPackage = (obj) => {
     history.push('/deliveries/' + { id }.id + `/packages/${obj.id}`, { params: obj })
   }
 
-  const { id, recipient, seller, status } = delivery
-  const driver = delivery.driver.name
-  const deliveryAddress = `${delivery.deliveryAddress.streetName}  ${delivery.deliveryAddress.houseNumber}`
-  const pickupAddress = `${delivery.pickupAddress.streetName}  ${delivery.pickupAddress.houseNumber}`
-  const vehicle = delivery.vehicle.licensePlate
+  const { id, recipient, seller, status } = deliveryObj
+  const driver = deliveryObj.driver.name
+  const deliveryAddress = `${deliveryObj.deliveryAddress.streetName}  ${deliveryObj.deliveryAddress.houseNumber}`
+  const pickupAddress = `${deliveryObj.pickupAddress.streetName}  ${deliveryObj.pickupAddress.houseNumber}`
+  const vehicle = deliveryObj.vehicle.licensePlate
 
   const [editable, setEditable] = useState(true);
-  const [showModal, setShowModal] = useState(false);
+  const [showDeliveryModal, setShowDeliveryModal] = useState(false);
+  const [showPickupModal, setShowPickupModal] = useState(false);
 
   const handleChange = (e) => {
     const key = e.target.name
@@ -59,8 +56,11 @@ const Delivery = ({ getDelivery, delivery, getPackages, packages, token }) => {
     // TODO: make the patch request to udpate delivery
   }
 
-  const toggleModal = () => {
-    setShowModal(state => !state)
+  const toggleDeliveryModal = () => {
+    setShowDeliveryModal(state => !state)
+  }
+  const togglePickupModal = () => {
+    setShowPickupModal(state => !state)
   }
 
   const updateDeliveryAddress = (newVal) => {
@@ -86,10 +86,10 @@ const Delivery = ({ getDelivery, delivery, getPackages, packages, token }) => {
             <label className='mt-3 mx-3'>Driver</label><input className='border-none my-3 ml-auto' disabled={editable} type='text' name='driver' onChange={e => setDeliveryObj(state => ({ ...state, driver: { ...state.driver, name: e.target.value } }))} defaultValue={driver} />
           </div>
           <div className='row'>
-            <label className='mt-3 mx-3'>DeliveryAddress</label><input className='border-none my-3 ml-auto' disabled={editable} type='text' name='deliveryAddress' onClick={toggleModal} defaultValue={deliveryAddress} />
+            <label className='mt-3 mx-3'>DeliveryAddress</label><input className='border-none my-3 ml-auto' disabled={editable} type='text' name='deliveryAddress' onClick={toggleDeliveryModal} defaultValue={deliveryAddress} />
           </div>
           <div className='row'>
-            <label className='mt-3 mx-3'>PickupAddress</label><input className='border-none my-3 ml-auto' disabled={editable} type='text' name='pickupAddress' onChange={handleChange} defaultValue={pickupAddress} />
+            <label className='mt-3 mx-3'>PickupAddress</label><input className='border-none my-3 ml-auto' disabled={editable} type='text' name='pickupAddress' onClick={togglePickupModal} defaultValue={pickupAddress} />
           </div>
           <div className='row'>
             <label className='mt-3 mx-3'>Vehicle</label><input className='border-none my-3 ml-auto' disabled={editable} type='text' name='licensePlate' onChange={e => setDeliveryObj(state => ({ ...state, vehicle: { ...state.vehicle, licensePlate: e.target.value } }))} defaultValue={vehicle} />
@@ -106,12 +106,13 @@ const Delivery = ({ getDelivery, delivery, getPackages, packages, token }) => {
       </div>
       <button onClick={() => setEditable(editable => !editable)} className='btn btn-outline-info m-4'>Edit</button>
       <button onClick={(event) => handleSubmit(event)} className='btn btn-success m-4 ml-auto'>Vista</button>
-      <DeliveryAddressModal canShow={showModal} updateModalState={toggleModal} dataObj={deliveryObj.deliveryAddress} updateDeliveryAddress={(val) => updateDeliveryAddress(val)} />
+      <DeliveryAddressModal canShow={showDeliveryModal} updateModalState={toggleDeliveryModal} dataObj={deliveryObj.deliveryAddress} updateDeliveryAddress={(val) => updateDeliveryAddress(val)} />
+      <PickupAddressModal canShow={showPickupModal} updateModalState={togglePickupModal} dataObj={deliveryObj.pickupAddress} updateDeliveryAddress={(val) => updateDeliveryAddress(val)} />
     </div>
   )
 }
 
-const mapStateToProps =  reduxStoreState => {
+const mapStateToProps = reduxStoreState => {
   return {
     packages: reduxStoreState.packages,
     delivery: reduxStoreState.delivery,

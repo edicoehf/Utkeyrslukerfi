@@ -13,7 +13,7 @@ const customStyles = {
   }
 };
 
-const DeliveryAddressModal = ({ canShow, updateModalState, dataObj, updateDeliveryAddress }) => {
+const PickupAddressModal = ({ canShow, updateModalState, dataObj, updateDeliveryAddress }) => {
   const [dAddres, setDAddress] = useState(dataObj)
   Modal.setAppElement('#root')
   let subtitle;
@@ -29,7 +29,7 @@ const DeliveryAddressModal = ({ canShow, updateModalState, dataObj, updateDelive
         contentLabel="Delivery Address Modal"
         style={customStyles}
       >
-        <h2 ref={_subtitle => (subtitle = _subtitle)}>Update Delivery Address</h2>
+        <h2 ref={_subtitle => (subtitle = _subtitle)}>Update Pickup Address</h2>
         <button onClick={updateModalState} className="btn btn-outline-warning">Close</button>
         <form onSubmit={() => updateDeliveryAddress(dAddres)}>
           <div className="row">
@@ -46,4 +46,4 @@ const DeliveryAddressModal = ({ canShow, updateModalState, dataObj, updateDelive
   return null;
 }
 
-export default DeliveryAddressModal
+export default PickupAddressModal
