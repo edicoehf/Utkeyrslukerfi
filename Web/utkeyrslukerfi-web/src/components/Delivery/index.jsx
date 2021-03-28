@@ -64,7 +64,13 @@ const Delivery = ({ getDelivery, delivery, getPackages, packages, token }) => {
   }
 
   const updateDeliveryAddress = (newVal) => {
-    console.log("updated delivery: ", newVal)
+    setDeliveryObj(state => ({ ...state, deliveryAddress: newVal }))
+    console.log("updated delivery: ", deliveryObj)
+  }
+
+  const updatePickupAddress = (newVal) => {
+    setDeliveryObj(state => ({ ...state, pickupAddress: newVal }))
+    console.log("updated pickup: ", deliveryObj)
   }
 
   return (
@@ -108,8 +114,8 @@ const Delivery = ({ getDelivery, delivery, getPackages, packages, token }) => {
       </div>
       <button onClick={() => setEditable(editable => !editable)} className='btn btn-outline-info m-4'>Edit</button>
       <button onClick={(event) => handleSubmit(event)} className='btn btn-success m-4 ml-auto'>Vista</button>
-      <DeliveryAddressModal canShow={showDeliveryModal} updateModalState={toggleDeliveryModal} dataObj={deliveryObj.deliveryAddress} updateDeliveryAddress={(val) => updateDeliveryAddress(val)} />
-      <PickupAddressModal canShow={showPickupModal} updateModalState={togglePickupModal} dataObj={deliveryObj.pickupAddress} updateDeliveryAddress={(val) => updateDeliveryAddress(val)} />
+      <DeliveryAddressModal canShow={showDeliveryModal} updateModalState={toggleDeliveryModal} dataObj={deliveryObj.deliveryAddress} onUpdateDeliveryAddress={updateDeliveryAddress} />
+      <PickupAddressModal canShow={showPickupModal} updateModalState={togglePickupModal} dataObj={deliveryObj.pickupAddress} onUpdatePickupAddress={updatePickupAddress} />
     </div>
   )
 }
