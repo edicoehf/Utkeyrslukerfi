@@ -3,6 +3,8 @@ import { useHistory, useParams } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { getDelivery } from '../../actions/deliveryActions'
 import { getPackages } from '../../actions/packageActions'
+import DeliveryAddressModal from '../DeliveryAddressModal'
+
 
 const Delivery = ({ getDelivery, delivery, getPackages, packages, token }) => {
   const pathId = useParams().id
@@ -16,7 +18,16 @@ const Delivery = ({ getDelivery, delivery, getPackages, packages, token }) => {
   }, [token])
 
   if (Object.entries(deliveryObj).length === 0) {
+
+
+    console.log("delivery state is empty");
     getDelivery(token, pathId)
+    console.log("Delivery: ", this)
+    setDeliveryObj(delivery)
+
+
+
+
   }
 
   const navigateToPackage = (obj) => {
@@ -30,6 +41,7 @@ const Delivery = ({ getDelivery, delivery, getPackages, packages, token }) => {
   const vehicle = delivery.vehicle.licensePlate
 
   const [editable, setEditable] = useState(true);
+  const [showModal, setShowModal] = useState(false);
 
   const handleChange = (e) => {
     const key = e.target.name
@@ -46,6 +58,15 @@ const Delivery = ({ getDelivery, delivery, getPackages, packages, token }) => {
     console.log('deliveryObj: ', deliveryObj)
     // TODO: make the patch request to udpate delivery
   }
+
+  const toggleModal = () => {
+    setShowModal(state => !state)
+  }
+
+  const updateDeliveryAddress = (newVal) => {
+    console.log("updated delivery: ", newVal)
+  }
+
   return (
     // TODO: make selection list for available options such as driver, vehicle, status etc.
     <div className='row align-items-start border rounded shadow mt-3 pr-2'>
@@ -65,7 +86,7 @@ const Delivery = ({ getDelivery, delivery, getPackages, packages, token }) => {
             <label className='mt-3 mx-3'>Driver</label><input className='border-none my-3 ml-auto' disabled={editable} type='text' name='driver' onChange={e => setDeliveryObj(state => ({ ...state, driver: { ...state.driver, name: e.target.value } }))} defaultValue={driver} />
           </div>
           <div className='row'>
-            <label className='mt-3 mx-3'>DeliveryAddress</label><input className='border-none my-3 ml-auto' disabled={editable} type='text' name='deliveryAddress' onChange={handleChange} defaultValue={deliveryAddress} />
+            <label className='mt-3 mx-3'>DeliveryAddress</label><input className='border-none my-3 ml-auto' disabled={editable} type='text' name='deliveryAddress' onClick={toggleModal} defaultValue={deliveryAddress} />
           </div>
           <div className='row'>
             <label className='mt-3 mx-3'>PickupAddress</label><input className='border-none my-3 ml-auto' disabled={editable} type='text' name='pickupAddress' onChange={handleChange} defaultValue={pickupAddress} />
@@ -85,11 +106,12 @@ const Delivery = ({ getDelivery, delivery, getPackages, packages, token }) => {
       </div>
       <button onClick={() => setEditable(editable => !editable)} className='btn btn-outline-info m-4'>Edit</button>
       <button onClick={(event) => handleSubmit(event)} className='btn btn-success m-4 ml-auto'>Vista</button>
+      <DeliveryAddressModal canShow={showModal} updateModalState={toggleModal} dataObj={deliveryObj.deliveryAddress} updateDeliveryAddress={(val) => updateDeliveryAddress(val)} />
     </div>
   )
 }
 
-const mapStateToProps = reduxStoreState => {
+const mapStateToProps =  reduxStoreState => {
   return {
     packages: reduxStoreState.packages,
     delivery: reduxStoreState.delivery,
