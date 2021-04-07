@@ -2,16 +2,17 @@ import React, { useEffect, useState } from 'react'
 import { useForm, FormProvider } from 'react-hook-form'
 import Form from 'react-bootstrap/Form'
 import { updateUser } from '../../actions/userActions'
-import { connect } from 'react-redux'
+import { connect, useSelector } from 'react-redux'
 import FormGroupInput from '../FormGroupInput'
 import FormGroupDropdown from '../FormGroupDropdown'
 import FormGroupButton from '../FormGroupButton'
 import errorHandlingService from '../../services/errorHandlingService'
 
-const UpdateUserForm = ({ user, token, updateUser }) => {
+const UpdateUserForm = ({ user, updateUser }) => {
   const methods = useForm() // TODO: define the roles and use configuration to add them
   const [errorMessage, setErrorMessage] = useState()
   const [success, setSuccess] = useState()
+  const token = useSelector(({ login }) => login.token)
 
   useEffect(() => {
     // Keep the user state up to date
@@ -81,10 +82,4 @@ const UpdateUserForm = ({ user, token, updateUser }) => {
   )
 }
 
-const mapStateToProps = reduxStoreState => {
-  return {
-    token: reduxStoreState.login.token
-  }
-}
-
-export default connect(mapStateToProps, { updateUser })(UpdateUserForm)
+export default connect(null, { updateUser })(UpdateUserForm)

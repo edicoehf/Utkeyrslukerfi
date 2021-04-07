@@ -6,8 +6,8 @@ const Home = () => {
   return (
     <div className='homepage'>
       <div>
-        <NavLink className="home-btn" to='/users'><span>Notendur</span></NavLink>
-        <NavLink className="home-btn" to='/deliveries'><span>Sendingar</span></NavLink>
+        <NavLink className='home-btn' to='/users'><span>Notendur</span></NavLink>
+        <NavLink className='home-btn' to='/deliveries'><span>Sendingar</span></NavLink>
       </div>
     </div>
   )
