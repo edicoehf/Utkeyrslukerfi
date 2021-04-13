@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 
+// Error message - used to display error messages for multiple forms
 const ErrorMessage = () => {
   const [errorMessage, setErrorMessage] = useState()
-  const error = useSelector(({ error }) => error)
+  const error = useSelector(({ message }) => message.error)
 
   useEffect(() => {
     if (error?.errors) {

@@ -4,7 +4,7 @@ import InvalidUserLogin from '../errors/InvalidUserLogin'
 import FailedToConnectToServer from '../errors/FailedToConnectToServer'
 import UnauthorizedUserLogin from '../errors/UnauthorizedUserLogin'
 import NotFound from '../errors/NotFound'
-import { setError, resetError } from './errorActions'
+import { setError, resetError } from './messageActions'
 
 export const setLogin = (email, password) => async (dispatch) => {
   try {
@@ -46,8 +46,8 @@ export const updatePassword = (token, password) => async (dispatch) => {
   try {
     const res = await loginService.updatePassword(token, { password, changePassword: false })
 
-    if (res?.status === 401) { dispatch(setError(new UnauthorizedUserLogin('Not authorized.'))) }
-    if (res?.status === 404) { dispatch(setError(NotFound('User was not found.'))) }
+    if (res?.status === 401) { dispatch(setError(new UnauthorizedUserLogin('Notandi er ekki innskráður.'))) }
+    if (res?.status === 404) { dispatch(setError(NotFound('Notandi fannst ekki.'))) }
     if (res?.status === 204) {
       dispatch(updatePassordSuccess(false))
       dispatch(resetError()) // Clear errors

@@ -6,7 +6,7 @@ import user from './userReducer'
 import login from './loginReducer'
 import packages from './packagesReducer'
 import pack from './packageReducer'
-import error from './errorReducer'
+import message from './messageReducer'
 
 export default combineReducers({
   login,
@@ -16,5 +16,5 @@ export default combineReducers({
   deliveries,
   packages,
   pack,
-  error
+  message
 })
