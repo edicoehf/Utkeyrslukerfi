@@ -1,7 +1,7 @@
 import './styles/navbar.css'
 import './styles/main.css'
 import { Route, Switch } from 'react-router-dom'
-import { connect, useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import Home from './views/Home'
 import Users from './views/Users'
 import User from './views/User'
@@ -17,12 +17,13 @@ import CreateUserForm from './views/CreateUserForm'
 import NotFound from './views/NotFound'
 import { getLogin } from './actions/loginActions'
 
-const App = ({ getLogin }) => {
+const App = () => {
   const token = useSelector(({ login }) => login.token)
   const changePassword = useSelector(({ login }) => login.changePassword)
+  const dispatch = useDispatch()
 
   useEffect(() => {
-    getLogin()
+    dispatch(getLogin())
   }, [])
 
   if (!token || token === '') {
@@ -50,4 +51,4 @@ const App = ({ getLogin }) => {
   )
 }
 
-export default connect(null, { getLogin })(App)
+export default App

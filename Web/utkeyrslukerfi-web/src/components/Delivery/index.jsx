@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
-import { connect, useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { getDelivery } from '../../actions/deliveryActions'
 import { getPackages } from '../../actions/packageActions'
 
-const Delivery = ({ getDelivery, getPackages }) => {
+const Delivery = () => {
   const packages = useSelector(({ packages }) => packages)
   const delivery = useSelector(({ delivery }) => delivery)
   const token = useSelector(({ login }) => login.token)
+  const dispatch = useDispatch()
 
   const pathId = useParams().id
   const history = useHistory()
@@ -15,12 +16,12 @@ const Delivery = ({ getDelivery, getPackages }) => {
 
   useEffect(() => {
     if (token) {
-      getPackages(token, { id }.id)
+      dispatch(getPackages(token, { id }.id))
     }
   }, [token])
 
   if (Object.entries(deliveryObj).length === 0) {
-    getDelivery(token, pathId)
+    dispatch(getDelivery(token, pathId))
   }
 
   const navigateToPackage = (obj) => {
@@ -93,4 +94,4 @@ const Delivery = ({ getDelivery, getPackages }) => {
   )
 }
 
-export default connect(null, { getPackages, getDelivery })(Delivery)
+export default Delivery

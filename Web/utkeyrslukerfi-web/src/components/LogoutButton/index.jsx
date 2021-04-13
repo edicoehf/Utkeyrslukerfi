@@ -3,6 +3,7 @@ import { AiOutlineLogout } from 'react-icons/ai'
 import { useDispatch, useSelector } from 'react-redux'
 import { logout } from '../../actions/loginActions'
 
+// LogutButton - logout functionality triggered when pressed
 const LogoutButton = () => {
   const token = useSelector(({ login }) => login.token)
   const dispatch = useDispatch()

@@ -3,6 +3,7 @@ import '../../styles/login.css'
 import { setLogin } from '../../actions/loginActions'
 import { useDispatch } from 'react-redux'
 
+// Login - only diplayed when user is not logged in
 const Login = () => {
   const [email, setUserName] = useState()
   const [password, setPassword] = useState()

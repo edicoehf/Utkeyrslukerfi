@@ -8,6 +8,7 @@ import FormGroupButton from '../FormGroupButton'
 
 // Update password - when a user logs in for the first time
 // or the account was updated in any way the user must update their password
+// before continuing
 const UpdatePasswordForm = () => {
   const methods = useForm()
   const password = useRef({})
