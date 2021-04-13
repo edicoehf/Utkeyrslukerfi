@@ -18,7 +18,7 @@ const Deliveries = ({ getDeliveries, deliveries, setDelivery, token }) => {
     setDelivery(obj)
     history.push(`/deliveries/${obj.id}`)
   }
-
+console.log(deliveries)
   const renderRows = () => {
     return deliveries.map(function (obj, id) {
       return (
