@@ -4,19 +4,22 @@ import InvalidUserLogin from '../errors/InvalidUserLogin'
 import FailedToConnectToServer from '../errors/FailedToConnectToServer'
 import UnauthorizedUserLogin from '../errors/UnauthorizedUserLogin'
 import NotFound from '../errors/NotFound'
-import { setError } from './errorActions'
+import { setError, resetError } from './errorActions'
 
 export const setLogin = (email, password) => async (dispatch) => {
-  const body = await loginService.login({ email, password })
+  try {
+    const body = await loginService.login({ email, password })
 
-  if (body?.errors) { dispatch(setError(new InvalidUserLogin(body.errors))) }
-  if (body?.title === 'Unauthorized') { dispatch(setError(new UnauthorizedUserLogin({ Login: 'The email and password do not match' }))) }
-  if (body?.token) {
-    localStorage.setItem('token', JSON.stringify(body.token))
+    if (body?.errors) { dispatch(setError(new InvalidUserLogin(body.errors))) }
+    if (body?.title === 'Unauthorized') { dispatch(setError(new UnauthorizedUserLogin({ Login: 'Netfang og lykilorð stemma ekki.' }))) }
+    if (body?.token) {
+      localStorage.setItem('token', JSON.stringify(body.token))
 
-    dispatch(setLoginSuccess(body))
-  } else {
-    dispatch(setError(new FailedToConnectToServer({ Server: 'Could not reach the login servers' })))
+      dispatch(setLoginSuccess(body))
+      dispatch(resetError()) // Clear errors
+    }
+  } catch (err) {
+    dispatch(setError(new FailedToConnectToServer({ Server: 'Ekki náðist samband við netþjón.' })))
   }
 }
 
@@ -43,11 +46,14 @@ export const updatePassword = (token, password) => async (dispatch) => {
   try {
     const res = await loginService.updatePassword(token, { password, changePassword: false })
 
-    if (res?.status === 401) { return new UnauthorizedUserLogin('Not authorized.') }
-    if (res?.status === 404) { return new NotFound('User was not found.') }
-    dispatch(updatePassordSuccess(false))
+    if (res?.status === 401) { dispatch(setError(new UnauthorizedUserLogin('Not authorized.'))) }
+    if (res?.status === 404) { dispatch(setError(NotFound('User was not found.'))) }
+    if (res?.status === 204) {
+      dispatch(updatePassordSuccess(false))
+      dispatch(resetError()) // Clear errors
+    }
   } catch (err) {
-    return new FailedToConnectToServer('Could not connect to server.')
+    dispatch(setError(FailedToConnectToServer({ Server: 'Ekki náðist samband við netþjón.' })))
   }
 }
 
