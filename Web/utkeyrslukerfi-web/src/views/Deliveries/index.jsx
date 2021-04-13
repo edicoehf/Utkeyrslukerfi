@@ -1,12 +1,14 @@
 import React, { useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
-import { connect } from 'react-redux'
+import { connect, useSelector } from 'react-redux'
 import { getDeliveries } from '../../actions/deliveriesActions'
 import { setDelivery } from '../../actions/deliveryActions'
 import '../../styles/deliveries.css'
 
-const Deliveries = ({ getDeliveries, deliveries, setDelivery, token }) => {
+const Deliveries = ({ getDeliveries, setDelivery }) => {
   const history = useHistory()
+  const token = useSelector(({ login }) => login.token)
+  const deliveries = useSelector(({ deliveries }) => deliveries)
 
   useEffect(() => {
     if (token) {
@@ -81,12 +83,4 @@ console.log(deliveries)
   )
 }
 
-const mapStateToProps = reduxStoreState => {
-  return {
-    deliveries: reduxStoreState.deliveries,
-    delivery: reduxStoreState.delivery,
-    token: reduxStoreState.login.token
-  }
-}
-
-export default connect(mapStateToProps, { getDeliveries, setDelivery })(Deliveries)
+export default connect(null, { getDeliveries, setDelivery })(Deliveries)

@@ -1,10 +1,10 @@
 import './styles/navbar.css'
 import './styles/main.css'
 import { Route, Switch } from 'react-router-dom'
-import { connect } from 'react-redux'
+import { connect, useSelector } from 'react-redux'
 import Home from './views/Home'
 import Users from './views/Users'
-import User from './components/User'
+import User from './views/User'
 import Deliveries from './views/Deliveries'
 import Container from './components/Container'
 import React, { useEffect } from 'react'
@@ -17,7 +17,10 @@ import NotFound from './views/NotFound'
 import UpdatePasswordForm from './views/UpdatePasswordForm'
 import { getLogin } from './actions/loginActions'
 
-const App = ({ token, changePassword, getLogin }) => {
+const App = ({ getLogin }) => {
+  const token = useSelector(({ login }) => login.token)
+  const changePassword = useSelector(({ login }) => login.changePassword)
+
   useEffect(() => {
     getLogin()
   }, [])
@@ -47,11 +50,4 @@ const App = ({ token, changePassword, getLogin }) => {
   )
 }
 
-const mapStateToProps = reduxStoreState => {
-  return {
-    token: reduxStoreState.login.token,
-    changePassword: reduxStoreState.login.changePassword
-  }
-}
-
-export default connect(mapStateToProps, { getLogin })(App)
+export default connect(null, { getLogin })(App)

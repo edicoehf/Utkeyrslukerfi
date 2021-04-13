@@ -1,12 +1,16 @@
 import React, { useEffect } from 'react'
-import { connect } from 'react-redux'
+import { connect, useSelector } from 'react-redux'
 import { useHistory, useParams } from 'react-router-dom'
 import { setViewingUser, getViewingUser } from '../../actions/userActions'
-import UpdateUserForm from '../UpdateUserForm'
+import UpdateUserForm from '../../components/UpdateUserForm'
+import '../../styles/user.css'
 
-const User = ({ token, viewingUser, setViewingUser, getViewingUser }) => {
+// Get user and send to update form
+const User = ({ setViewingUser, getViewingUser }) => {
   const history = useHistory()
   const { id } = useParams()
+  const token = useSelector(({ login }) => login.token)
+  const viewingUser = useSelector(({ user }) => user)
 
   useEffect(() => {
     if (history.location.state && history.location.state.params) {
@@ -24,17 +28,10 @@ const User = ({ token, viewingUser, setViewingUser, getViewingUser }) => {
   }, [id, token])
 
   return (
-    <>
+    <div className='user'>
       <UpdateUserForm user={viewingUser} />
-    </>
+    </div>
   )
 }
 
-const mapStateToProps = reduxStoreState => {
-  return {
-    token: reduxStoreState.login.token,
-    viewingUser: reduxStoreState.user.viewingUser
-  }
-}
-
-export default connect(mapStateToProps, { setViewingUser, getViewingUser })(User)
+export default connect(null, { setViewingUser, getViewingUser })(User)

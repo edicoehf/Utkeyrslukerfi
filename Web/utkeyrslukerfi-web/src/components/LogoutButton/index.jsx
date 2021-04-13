@@ -1,9 +1,10 @@
 import React from 'react'
 import { AiOutlineLogout } from 'react-icons/ai'
-import { connect } from 'react-redux'
+import { connect, useSelector } from 'react-redux'
 import { logout } from '../../actions/loginActions'
 
-const LogoutButton = ({ token, logout }) => {
+const LogoutButton = () => {
+  const token = useSelector(({ login }) => login.token)
   const handleLogout = () => {
     if (token) {
       logout(token)
@@ -17,10 +18,4 @@ const LogoutButton = ({ token, logout }) => {
   )
 }
 
-const mapStateToProps = reduxStoreState => {
-  return {
-    token: reduxStoreState.login.token
-  }
-}
-
-export default connect(mapStateToProps, { logout })(LogoutButton)
+export default connect(null, { logout })(LogoutButton)

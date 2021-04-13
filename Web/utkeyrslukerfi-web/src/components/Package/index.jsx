@@ -1,11 +1,14 @@
 import React, { useEffect } from 'react'
-import { connect } from 'react-redux'
+import { connect, useSelector } from 'react-redux'
 import { useLocation, useParams } from 'react-router-dom'
 import { setViewingPackage, getViewingPackage } from '../../actions/packageActions'
 
-const Package = ({ token, viewingPackage, setViewingPackage, getViewingPackage }) => {
+const Package = ({ setViewingPackage, getViewingPackage }) => {
   const location = useLocation()
   const id = useParams()
+  const token = useSelector(({ login }) => login.token)
+  const viewingPackage = useSelector(({ pack }) => pack)
+
   useEffect(() => {
     if (location) {
       const pack = location.state.params
@@ -28,11 +31,4 @@ const Package = ({ token, viewingPackage, setViewingPackage, getViewingPackage }
   )
 }
 
-const mapStateToProps = reduxStoreState => {
-  return {
-    token: reduxStoreState.login.token,
-    viewingPackage: reduxStoreState.pack
-  }
-}
-
-export default connect(mapStateToProps, { setViewingPackage, getViewingPackage })(Package)
+export default connect(null, { setViewingPackage, getViewingPackage })(Package)
