@@ -1,13 +1,14 @@
 import React from 'react'
 import { AiOutlineLogout } from 'react-icons/ai'
-import { connect, useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { logout } from '../../actions/loginActions'
 
 const LogoutButton = () => {
   const token = useSelector(({ login }) => login.token)
+  const dispatch = useDispatch()
   const handleLogout = () => {
     if (token) {
-      logout(token)
+      dispatch(logout(token))
     }
   }
 
@@ -18,4 +19,4 @@ const LogoutButton = () => {
   )
 }
 
-export default connect(null, { logout })(LogoutButton)
+export default LogoutButton
