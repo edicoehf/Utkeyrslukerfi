@@ -1,13 +1,15 @@
 import React, { useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
-import { connect } from 'react-redux'
+import { connect, useSelector } from 'react-redux'
 import { getUsers } from '../../actions/usersActions'
 import { BsPencilSquare } from 'react-icons/bs'
 import { ImPlus } from 'react-icons/im'
 import '../../styles/users.css'
 
-const Users = ({ getUsers, users, token }) => {
+const Users = ({ getUsers }) => {
   const history = useHistory()
+  const token = useSelector(({ login }) => login.token)
+  const users = useSelector(({ users }) => users)
 
   useEffect(() => {
     if (token) {
@@ -75,9 +77,9 @@ const Users = ({ getUsers, users, token }) => {
       {
         users.length <= 0
           ? <div className='text-center'>
-            <div className='spinner-border' role='status'>
-              <span className='sr-only'>Loading...</span>
-            </div>
+              <div className='spinner-border' role='status'>
+                <span className='sr-only'>Loading...</span>
+              </div>
             </div>
           : null
       }
@@ -85,11 +87,4 @@ const Users = ({ getUsers, users, token }) => {
   )
 }
 
-const mapStateToProps = reduxStoreState => {
-  return {
-    users: reduxStoreState.users,
-    token: reduxStoreState.login.token
-  }
-}
-
-export default connect(mapStateToProps, { getUsers })(Users)
+export default connect(null, { getUsers })(Users)

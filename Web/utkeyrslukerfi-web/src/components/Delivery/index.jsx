@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
-import { connect } from 'react-redux'
+import { connect, useSelector } from 'react-redux'
 import { getDelivery } from '../../actions/deliveryActions'
 import { getPackages } from '../../actions/packageActions'
 
-const Delivery = ({ getDelivery, delivery, getPackages, packages, token }) => {
+const Delivery = ({ getDelivery, getPackages }) => {
+  const packages = useSelector(({ packages }) => packages)
+  const delivery = useSelector(({ delivery }) => delivery)
+  const token = useSelector(({ login }) => login.token)
+
   const pathId = useParams().id
   const history = useHistory()
   const [deliveryObj, setDeliveryObj] = useState(delivery)
@@ -29,7 +33,7 @@ const Delivery = ({ getDelivery, delivery, getPackages, packages, token }) => {
   const pickupAddress = `${delivery.pickupAddress.streetName}  ${delivery.pickupAddress.houseNumber}`
   const vehicle = delivery.vehicle.licensePlate
 
-  const [editable, setEditable] = useState(true);
+  const [editable, setEditable] = useState(true)
 
   const handleChange = (e) => {
     const key = e.target.name
@@ -89,12 +93,4 @@ const Delivery = ({ getDelivery, delivery, getPackages, packages, token }) => {
   )
 }
 
-const mapStateToProps = reduxStoreState => {
-  return {
-    packages: reduxStoreState.packages,
-    delivery: reduxStoreState.delivery,
-    token: reduxStoreState.login.token
-  }
-}
-
-export default connect(mapStateToProps, { getPackages, getDelivery })(Delivery)
+export default connect(null, { getPackages, getDelivery })(Delivery)

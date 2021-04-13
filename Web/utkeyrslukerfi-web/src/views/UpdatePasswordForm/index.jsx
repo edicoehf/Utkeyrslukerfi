@@ -2,17 +2,18 @@ import React, { useRef, useState } from 'react'
 import { useForm, FormProvider } from 'react-hook-form'
 import Form from 'react-bootstrap/Form'
 import { updatePassword } from '../../actions/loginActions'
-import { connect } from 'react-redux'
+import { connect, useSelector } from 'react-redux'
 import FormGroupInput from '../../components/FormGroupInput'
 import FormGroupButton from '../../components/FormGroupButton'
 import errorHandlingService from '../../services/errorHandlingService'
 
 // Update password - when a user logs in for the first time
 // or the account was updated in any way the user must update their password
-const UpdatePasswordForm = ({ updatePassword, token }) => {
+const UpdatePasswordForm = ({ updatePassword }) => {
   const methods = useForm()
   const password = useRef({})
   const [errorMessage, setErrorMessage] = useState()
+  const token = useSelector(({ login }) => login.token)
 
   password.current = methods.watch('password', '') // To make sure passwords are the same
 
@@ -53,10 +54,4 @@ const UpdatePasswordForm = ({ updatePassword, token }) => {
   )
 }
 
-const mapStateToProps = reduxStoreState => {
-  return {
-    token: reduxStoreState.login.token
-  }
-}
-
-export default connect(mapStateToProps, { updatePassword })(UpdatePasswordForm)
+export default connect(null, { updatePassword })(UpdatePasswordForm)
