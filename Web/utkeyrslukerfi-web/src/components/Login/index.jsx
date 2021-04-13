@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import '../../styles/login.css'
 import { setLogin } from '../../actions/loginActions'
 import { useDispatch } from 'react-redux'
-import ErrorMessage from '../ErrorMessage'
 
 const Login = () => {
   const [email, setUserName] = useState()
@@ -28,7 +27,6 @@ const Login = () => {
         <div className='btn-wrapper'>
           <button className='btn btn-secondary' type='submit'>Innskrá</button>
         </div>
-        <ErrorMessage />
       </form>
     </div>
   )

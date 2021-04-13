@@ -5,7 +5,6 @@ import { updatePassword } from '../../actions/loginActions'
 import { useDispatch, useSelector } from 'react-redux'
 import FormGroupInput from '../FormGroupInput'
 import FormGroupButton from '../FormGroupButton'
-import ErrorMessage from '../ErrorMessage'
 
 // Update password - when a user logs in for the first time
 // or the account was updated in any way the user must update their password
@@ -45,7 +44,6 @@ const UpdatePasswordForm = () => {
           label='Vista'
           typeOfForm='UpdatePassword'
         />
-        <ErrorMessage />
       </Form>
     </FormProvider>
   )
