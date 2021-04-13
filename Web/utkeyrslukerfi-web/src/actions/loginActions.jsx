@@ -4,18 +4,19 @@ import InvalidUserLogin from '../errors/InvalidUserLogin'
 import FailedToConnectToServer from '../errors/FailedToConnectToServer'
 import UnauthorizedUserLogin from '../errors/UnauthorizedUserLogin'
 import NotFound from '../errors/NotFound'
+import { setError } from './errorActions'
 
 export const setLogin = (email, password) => async (dispatch) => {
   const body = await loginService.login({ email, password })
 
-  if (body?.errors) { return new InvalidUserLogin(body.errors) }
-  if (body?.title === 'Unauthorized') { return new UnauthorizedUserLogin({ Login: 'The email and password do not match' }) }
+  if (body?.errors) { dispatch(setError(new InvalidUserLogin(body.errors))) }
+  if (body?.title === 'Unauthorized') { dispatch(setError(new UnauthorizedUserLogin({ Login: 'The email and password do not match' }))) }
   if (body?.token) {
     localStorage.setItem('token', JSON.stringify(body.token))
 
     dispatch(setLoginSuccess(body))
   } else {
-    return new FailedToConnectToServer({ Server: 'Could not reach the login servers' })
+    dispatch(setError(new FailedToConnectToServer({ Server: 'Could not reach the login servers' })))
   }
 }
 
