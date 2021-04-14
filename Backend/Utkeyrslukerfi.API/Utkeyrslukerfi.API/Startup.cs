@@ -16,6 +16,8 @@ using Utkeyrslukerfi.API.Repositories.Implementations;
 using Utkeyrslukerfi.API.Repositories.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Utkeyrslukerfi.API.Middlewares;
+using Hangfire;
+using Hangfire.MemoryStorage;
 
 namespace Utkeyrslukerfi.API
 {
@@ -37,8 +39,14 @@ namespace Utkeyrslukerfi.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            System.Console.WriteLine();
-            services.AddControllers();
+        // adding Hangfire
+          services.AddHangfire(options =>
+            {
+              options.UseMemoryStorage();
+            });
+            
+
+          services.AddControllers();
             services.AddSwaggerGen(options =>
             {
                 options.SwaggerDoc("v1", new OpenApiInfo { Title = "Utkeyrslukerfi", Version = "v1" });
@@ -47,6 +55,9 @@ namespace Utkeyrslukerfi.API
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
                 options.IncludeXmlComments(xmlPath);
             });
+
+            
+
             // Tries to get the connectionString from the azure storage
             var myConnString = _configuration.GetConnectionString("MYSQL:connectionString");
             // if the connectionString is null, it means we're running locally
@@ -131,6 +142,9 @@ namespace Utkeyrslukerfi.API
 
             app.UseSwagger();
             app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Utkeyrslukerfi v1"));
+            
+            app.UseHangfireDashboard();
+            app.UseHangfireServer();
 
             app.UseMiddleware(typeof(ErrorHandlingMiddleware));
 
@@ -151,6 +165,9 @@ namespace Utkeyrslukerfi.API
             {
                 endpoints.MapControllers();
             });
+
+            // starting cron jobs with hangfire
+            RecurringJob.AddOrUpdate(() => Console.WriteLine("Fetch Data From 3rd Party Daily"), Cron.Daily);
         }
     }
 }
