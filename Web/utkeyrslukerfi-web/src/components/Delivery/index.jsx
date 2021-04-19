@@ -16,7 +16,7 @@ const Delivery = () => {
 
   useEffect(() => {
     if (token) {
-      dispatch(getPackages(token, { id }.id))
+      dispatch(getPackages(token, pathId))
     }
   }, [token])
 
@@ -25,7 +25,7 @@ const Delivery = () => {
   }
 
   const navigateToPackage = (obj) => {
-    history.push('/deliveries/' + { id }.id + `/packages/${obj.id}`, { params: obj })
+    history.push('/deliveries/' + pathId + `/packages/${obj.id}`, { params: obj })
   }
 
   const { id, recipient, seller, status } = delivery
