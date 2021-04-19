@@ -10,25 +10,26 @@ const Delivery = () => {
   const token = useSelector(({ login }) => login.token)
   const dispatch = useDispatch()
 
-  const pathId = useParams().id
+  const { id } = useParams()
   const history = useHistory()
   const [deliveryObj, setDeliveryObj] = useState(delivery)
 
   useEffect(() => {
     if (token) {
-      dispatch(getPackages(token, pathId))
+      dispatch(getPackages(token, id))
     }
   }, [token])
 
   if (Object.entries(deliveryObj).length === 0) {
-    dispatch(getDelivery(token, pathId))
+    dispatch(getDelivery(token, id))
   }
 
   const navigateToPackage = (obj) => {
-    history.push('/deliveries/' + pathId + `/packages/${obj.id}`, { params: obj })
+    history.push(`/deliveries/${id}/packages/${obj.id}`, { params: obj })
   }
 
-  const { id, recipient, seller, status } = delivery
+  // TODO: breyta frá deconstruction yfir í delivery?.recipient t.d.
+  const {recipient, seller, status } = delivery
   const driver = delivery.driver.name
   const deliveryAddress = `${delivery.deliveryAddress.streetName}  ${delivery.deliveryAddress.houseNumber}`
   const pickupAddress = `${delivery.pickupAddress.streetName}  ${delivery.pickupAddress.houseNumber}`
