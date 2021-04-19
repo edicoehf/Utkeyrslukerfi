@@ -10,6 +10,7 @@ import { composeWithDevTools } from 'redux-devtools-extension'
 import reducers from './reducers'
 import thunk from 'redux-thunk'
 import 'bootstrap/dist/css/bootstrap.min.css'
+import 'toastr/build/toastr.min.css'
 
 ReactDOM.render(
   <React.StrictMode>
