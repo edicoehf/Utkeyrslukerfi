@@ -1,14 +1,14 @@
-import 'react-native-gesture-handler';
-import React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import ScanScreen from './src/views/ScanScreen';
-import ListScreen from './src/views/ListScreen';
-import SearchScreen from './src/views/SearchScreen';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
-import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
+import 'react-native-gesture-handler'
+import React from 'react'
+import { NavigationContainer } from '@react-navigation/native'
+import ScanScreen from './src/views/ScanScreen'
+import ListScreen from './src/views/ListScreen'
+import SearchScreen from './src/views/SearchScreen'
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
+import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons'
+import MaterialIcon from 'react-native-vector-icons/MaterialIcons'
 
-const Tab = createBottomTabNavigator();
+const Tab = createBottomTabNavigator()
 
 const App = () => {
   return (
@@ -43,7 +43,7 @@ const App = () => {
         />
       </Tab.Navigator>  
     </NavigationContainer>
-  );
-};
+  )
+}
 
-export default App;
+export default App

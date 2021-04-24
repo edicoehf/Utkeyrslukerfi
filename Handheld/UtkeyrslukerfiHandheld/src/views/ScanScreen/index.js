@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import { View, Text, TextInput, ScrollView, Button, TouchableHighlight } from 'react-native';
-import DropDownPicker from 'react-native-dropdown-picker';
-import { Table, Row } from 'react-native-table-component';
-import Feather from 'react-native-vector-icons/Feather';
+import React, { useState } from 'react'
+import { View, Text, TextInput, ScrollView, Button, TouchableHighlight } from 'react-native'
+import DropDownPicker from 'react-native-dropdown-picker'
+import { Table, Row } from 'react-native-table-component'
+import Feather from 'react-native-vector-icons/Feather'
 
 // This screen is used to scan multiple products and change their status 
 const ScanScreen = () => {
@@ -29,12 +29,12 @@ const ScanScreen = () => {
                     <Feather name='x' style={{width:26-32}} color='#333' size={24} />
                 </TouchableHighlight>
             ]
-        ]);
+        ])
     }
 
     // Remove item from table, barcodes need to be unique
     const removeBarcode = (currentBarcode) => {
-        setTableData(tableData.filter(b => b[0] !== currentBarcode));
+        setTableData(tableData.filter(b => b[0] !== currentBarcode))
     }
 
     return (
@@ -93,4 +93,4 @@ const ScanScreen = () => {
     )
 }
 
-export default ScanScreen;
+export default ScanScreen
