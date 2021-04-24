@@ -1,19 +1,34 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, ScrollView, Button } from 'react-native';
+import { View, Text, TextInput, ScrollView, Button, TouchableHighlight } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { Table, TableWrapper, Row } from 'react-native-table-component';
+import Feather from 'react-native-vector-icons/Feather';
 
 const ScanScreen = () => {
     const availableStatusCodes = {1: 'Í ferli', 2: 'Á leiðinni', 3: 'Móttekið'} // TODO: make status codes configurable
 
+    // TODO: db stuff: get prev status, check if barcode is valid
+    // TODO: css...
+
     const [ status, setStatus ] = useState(availableStatusCodes[2])
     const [ barcode, setBarcode ] = useState('')
     const [ tableData, setTableData ] = useState([[]])
-    const tableHeaders = ['Sendingarnúmer', 'Fyrri staða', 'Ný staða']
-    const tableWidth = [100, 60, 60]
+    const tableHeaders = ['Sendingarnúmer', 'Fyrri staða', 'Ný staða', '']
+    const tableWidth = [100, 60, 60, 40]
 
     const addBarcode = () => {
-        setTableData([...tableData, [barcode, 'hmm', availableStatusCodes[status]]])
+        setTableData([
+            ...tableData,
+            [barcode,
+            'hmm',
+            status,
+            <TouchableHighlight onPress={() => {removeBarcode(barcode)}}><Feather name='x' style={{width:26-32}} color='#333' size={24} /></TouchableHighlight>]
+        ]);
+    }
+
+    // Barcodes need to be unique
+    const removeBarcode = (currentBarcode) => {
+        setTableData(tableData.filter(b => b[0] !== currentBarcode));
     }
 
     return (
