@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, ScrollView, Button, TouchableHighlight } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
-import { Table, TableWrapper, Row } from 'react-native-table-component';
+import { Table, Row } from 'react-native-table-component';
 import Feather from 'react-native-vector-icons/Feather';
 
 const ScanScreen = () => {
@@ -16,17 +16,22 @@ const ScanScreen = () => {
     const tableHeaders = ['Sendingarnúmer', 'Fyrri staða', 'Ný staða', '']
     const tableWidth = [100, 60, 60, 40]
 
+    // Add item to table
     const addBarcode = () => {
         setTableData([
             ...tableData,
-            [barcode,
-            'hmm',
-            status,
-            <TouchableHighlight onPress={() => {removeBarcode(barcode)}}><Feather name='x' style={{width:26-32}} color='#333' size={24} /></TouchableHighlight>]
+            [
+                barcode,
+                'hmm',
+                status,
+                <TouchableHighlight onPress={() => {removeBarcode(barcode)}}>
+                    <Feather name='x' style={{width:26-32}} color='#333' size={24} />
+                </TouchableHighlight>
+            ]
         ]);
     }
 
-    // Barcodes need to be unique
+    // Remove item from table, barcodes need to be unique
     const removeBarcode = (currentBarcode) => {
         setTableData(tableData.filter(b => b[0] !== currentBarcode));
     }
