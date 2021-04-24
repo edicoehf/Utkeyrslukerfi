@@ -4,6 +4,7 @@ import DropDownPicker from 'react-native-dropdown-picker';
 import { Table, Row } from 'react-native-table-component';
 import Feather from 'react-native-vector-icons/Feather';
 
+// This screen is used to scan multiple products and change their status 
 const ScanScreen = () => {
     const availableStatusCodes = {1: 'Í ferli', 2: 'Á leiðinni', 3: 'Móttekið'} // TODO: make status codes configurable
 
