@@ -7,8 +7,29 @@ import SearchScreen from './src/views/SearchScreen'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons'
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons'
+import { createStackNavigator } from '@react-navigation/stack'
 
 const Tab = createBottomTabNavigator()
+const SearchStack = createStackNavigator()
+
+const SearchStackScreen = () => {
+  return (
+    <SearchStack.Navigator
+      screenOptions={{
+        headerShown: true,
+        title: 'Search',
+        headerStyle: {
+            backgroundColor: '#fafafa',
+        },
+        headerTitleStyle: {
+            fontWeight: 'bold',
+        }
+      }}
+    >
+      <SearchStack.Screen name='Search' component={SearchScreen} />
+    </SearchStack.Navigator>
+  )
+}
 
 const App = () => {
   return (
@@ -34,7 +55,7 @@ const App = () => {
         />
         <Tab.Screen 
           name='Search' 
-          component={SearchScreen} 
+          component={SearchStackScreen} 
           options={{
             showIcon: true,
             tabBarLabel: 'Search',
