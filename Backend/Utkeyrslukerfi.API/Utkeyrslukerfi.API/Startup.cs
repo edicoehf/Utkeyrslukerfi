@@ -110,7 +110,7 @@ namespace Utkeyrslukerfi.API
             services.AddTransient<IVehicleService, VehicleService>();
             services.AddTransient<IJwtTokenService, JwtTokenService>();
             services.AddTransient<IAccountService, AccountService>();
-
+            services.AddTransient<IFetchDataService, FetchDataService>();
             // Since token service constructor takes in strings
             var jwtConfig = Configuration.GetSection("JwtConfig");
             services.AddTransient<ITokenService>((c) =>
@@ -165,9 +165,14 @@ namespace Utkeyrslukerfi.API
             {
                 endpoints.MapControllers();
             });
-
             // starting cron jobs with hangfire
-            RecurringJob.AddOrUpdate(() => Console.WriteLine("Fetch Data From 3rd Party Daily"), Cron.Daily);
+            var externalAPIConfig = Configuration.GetSection("ExternalAPIConfig");
+
+            RecurringJob.AddOrUpdate<IFetchDataService>(x => x.GetDeliveries(
+                                                                  externalAPIConfig.GetSection("ApiUrl").Value,
+                                                                  externalAPIConfig.GetSection("flattenData").Value,
+                                                                  externalAPIConfig.GetSection("encapsulatedDataName").Value
+                                                        ), Cron.Daily);
         }
     }
 }
