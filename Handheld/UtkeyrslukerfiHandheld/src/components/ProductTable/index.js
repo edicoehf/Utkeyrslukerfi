@@ -6,18 +6,18 @@ import { Table, Row } from 'react-native-table-component'
 const ProductTable = ({ tableHeaders, tableData, tableWidth }) => {
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Table borderStyle={{borderWidth: 1, borderColor: '#C1C0B9'}}>
-        <Row data={tableHeaders} widthArr={tableWidth}/>
+      <Table borderStyle={{ borderWidth: 1, borderColor: '#C1C0B9' }}>
+        <Row data={tableHeaders} widthArr={tableWidth} />
       </Table>
       <ScrollView>
-        <Table borderStyle={{borderWidth: 1, borderColor: '#C1C0B9'}}>
+        <Table borderStyle={{ borderWidth: 1, borderColor: '#C1C0B9' }}>
           {
           tableData.map((rowData, index) => (
             <Row
               key={index}
               data={rowData}
               widthArr={tableWidth}
-              style={[index%2 && {backgroundColor: '#F7F6E7'}]}
+              style={[index % 2 && { backgroundColor: '#F7F6E7' }]}
             />
           ))
           }

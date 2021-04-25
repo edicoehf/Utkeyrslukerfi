@@ -6,16 +6,15 @@ import BarcodeForm from '../../components/BarcodeForm'
 import ProductTable from '../../components/ProductTable'
 import StatusCodeDropdown from '../../components/StatusCodeDropdown'
 
-// This screen is used to scan multiple products and change their status 
+// This screen is used to scan multiple products and change their status
 const ScanScreen = () => {
   // TODO: db stuff: get prev status, check if barcode is valid
   // TODO: css...
   const availableStatusCodes = useSelector(({ statusCode }) => statusCode)
-  
 
-  const [ status, setStatus ] = useState(availableStatusCodes[2])
-  const [ barcode, setBarcode ] = useState('')
-  const [ tableData, setTableData ] = useState([[]])
+  const [status, setStatus] = useState(availableStatusCodes[2])
+  const [barcode, setBarcode] = useState('')
+  const [tableData, setTableData] = useState([[]])
   const tableHeaders = ['Sendingarnúmer', 'Fyrri staða', 'Ný staða', '']
   const tableWidth = [100, 60, 60, 40]
 
@@ -27,8 +26,8 @@ const ScanScreen = () => {
         barcode,
         'hmm',
         status,
-        <TouchableHighlight onPress={() => {removeBarcode(barcode)}}>
-            <Feather name='x' style={{width:26-32}} color='#333' size={24} />
+        <TouchableHighlight onPress={() => { removeBarcode(barcode) }}>
+          <Feather name='x' style={{ width: 26 - 32 }} color='#333' size={24} />
         </TouchableHighlight>
       ]
     ])

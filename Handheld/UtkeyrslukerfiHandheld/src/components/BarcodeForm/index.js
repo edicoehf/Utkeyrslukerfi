@@ -1,15 +1,15 @@
 import React from 'react'
-import {TextInput, Button } from 'react-native'
+import { TextInput, Button } from 'react-native'
 
 // Form to search for, delivery or add delivery to a table
 const BarcodeForm = ({ barcode, setBarcode, enterBarcode }) => {
   return (
     <>
-      <TextInput 
+      <TextInput
         onChangeText={setBarcode}
         value={barcode}
         placeholder='Strikamerki...'
-        style={{backgroundColor: '#fafafa'}}
+        style={{ backgroundColor: '#fafafa' }}
       />
       <Button
         onPress={enterBarcode}
@@ -17,7 +17,7 @@ const BarcodeForm = ({ barcode, setBarcode, enterBarcode }) => {
         color='grey'
         accessibilityLabel='Press button to add barcode number'
       />
-      </>
+    </>
   )
 }
 

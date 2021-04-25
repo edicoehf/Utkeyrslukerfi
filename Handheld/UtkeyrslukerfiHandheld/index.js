@@ -12,9 +12,9 @@ import thunk from 'redux-thunk'
 import { Provider } from 'react-redux'
 
 const ReduxApp = () => (
-    <Provider store={ createStore(reducers, applyMiddleware(thunk)) }>
-        <App />
-    </Provider>
+  <Provider store={createStore(reducers, applyMiddleware(thunk))}>
+    <App />
+  </Provider>
 )
 
 AppRegistry.registerComponent(appName, () => ReduxApp)

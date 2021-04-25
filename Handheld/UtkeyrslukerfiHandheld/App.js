@@ -20,10 +20,10 @@ const SearchStackScreen = () => {
         headerShown: true,
         title: 'Search',
         headerStyle: {
-            backgroundColor: '#fafafa',
+          backgroundColor: '#fafafa'
         },
         headerTitleStyle: {
-            fontWeight: 'bold',
+          fontWeight: 'bold'
         }
       }}
     >
@@ -36,34 +36,34 @@ const App = () => {
   return (
     <NavigationContainer>
       <Tab.Navigator initialRouteName='Scan'>
-        <Tab.Screen 
-          name='List' 
-          component={ListScreen} 
+        <Tab.Screen
+          name='List'
+          component={ListScreen}
           options={{
             showIcon: true,
             tabBarLabel: 'List',
-            tabBarIcon: () => <MaterialCommunityIcon name='format-list-bulleted' style={{width:26-32}} color='#333' size={24} />
+            tabBarIcon: () => <MaterialCommunityIcon name='format-list-bulleted' style={{ width: 26 - 32 }} color='#333' size={24} />
           }}
         />
-        <Tab.Screen 
+        <Tab.Screen
           name='Scan'
           component={ScanScreen}
           options={{
             showIcon: true,
             tabBarLabel: 'Scan',
-            tabBarIcon: () => <MaterialCommunityIcon name='barcode-scan' style={{width:26-32}} color='#333' size={24} />
+            tabBarIcon: () => <MaterialCommunityIcon name='barcode-scan' style={{ width: 26 - 32 }} color='#333' size={24} />
           }}
         />
-        <Tab.Screen 
-          name='Search' 
-          component={SearchStackScreen} 
+        <Tab.Screen
+          name='Search'
+          component={SearchStackScreen}
           options={{
             showIcon: true,
             tabBarLabel: 'Search',
-            tabBarIcon: () => <MaterialIcon name='search' style={{width:26-32}} color='#333' size={24} />
+            tabBarIcon: () => <MaterialIcon name='search' style={{ width: 26 - 32 }} color='#333' size={24} />
           }}
         />
-      </Tab.Navigator>  
+      </Tab.Navigator>
     </NavigationContainer>
   )
 }
