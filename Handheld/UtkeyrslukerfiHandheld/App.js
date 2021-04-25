@@ -8,6 +8,8 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons'
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons'
 import { createStackNavigator } from '@react-navigation/stack'
+import DetailsScreen from './src/views/DetailsScreen'
+import DeliverScreen from './src/views/DeliverScreen'
 
 const Tab = createBottomTabNavigator()
 const SearchStack = createStackNavigator()
@@ -28,6 +30,8 @@ const SearchStackScreen = () => {
       }}
     >
       <SearchStack.Screen name='Search' component={SearchScreen} />
+      <SearchStack.Screen name='Details' component={DetailsScreen} />
+      <SearchStack.Screen name='Deliver' component={DeliverScreen} />
     </SearchStack.Navigator>
   )
 }
