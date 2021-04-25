@@ -1,7 +1,9 @@
 import React from 'react'
 import DropDownPicker from 'react-native-dropdown-picker'
+import { useSelector } from 'react-redux'
 
-const StatusCodeDropdown = ({ availableStatusCodes, status, setStatus }) => {
+const StatusCodeDropdown = ({ status, setStatus }) => {
+  const availableStatusCodes = useSelector(({ statusCode }) => statusCode)
 
   return (
     <DropDownPicker 

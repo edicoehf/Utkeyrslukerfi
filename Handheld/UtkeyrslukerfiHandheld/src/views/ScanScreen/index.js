@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { View, Text, TouchableHighlight } from 'react-native'
 import Feather from 'react-native-vector-icons/Feather'
+import { useSelector } from 'react-redux'
 import BarcodeForm from '../../components/BarcodeForm'
 import ProductTable from '../../components/ProductTable'
 import StatusCodeDropdown from '../../components/StatusCodeDropdown'
@@ -9,7 +10,8 @@ import StatusCodeDropdown from '../../components/StatusCodeDropdown'
 const ScanScreen = () => {
   // TODO: db stuff: get prev status, check if barcode is valid
   // TODO: css...
-  const availableStatusCodes = {1: 'Í ferli', 2: 'Á leiðinni', 3: 'Móttekið'} // TODO: make status codes configurable
+  const availableStatusCodes = useSelector(({ statusCode }) => statusCode)
+  
 
   const [ status, setStatus ] = useState(availableStatusCodes[2])
   const [ barcode, setBarcode ] = useState('')
@@ -40,7 +42,7 @@ const ScanScreen = () => {
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
       <Text>Staða</Text>
-      <StatusCodeDropdown availableStatusCodes={availableStatusCodes} status={status} setStatus={setStatus} />
+      <StatusCodeDropdown status={status} setStatus={setStatus} />
       <Text>Strikamerki sendingar</Text>
       <BarcodeForm barcode={barcode} setBarcode={setBarcode} enterBarcode={addBarcode} />
       <Text>Skannaðir pakkar</Text>
