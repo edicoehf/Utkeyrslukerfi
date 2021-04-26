@@ -19,6 +19,14 @@ const AppContainer = () => {
           name='List'
           component={ListScreen}
           options={{
+            title: 'Listi',
+            headerStyle: {
+              backgroundColor: '#4A79BA'
+            },
+            headerTintColor: '#fff',
+            headerTintStyle: {
+              fontWeight: 'bold'
+            },
             showIcon: true,
             tabBarLabel: 'List',
             tabBarIcon: () => <MaterialCommunityIcon name='format-list-bulleted' style={{ width: 26 - 32 }} color='#333' size={24} />
@@ -43,7 +51,7 @@ const AppContainer = () => {
           }}
         />
       </Tab.Navigator>
-  </NavigationContainer>
+    </NavigationContainer>
   )
 }
 

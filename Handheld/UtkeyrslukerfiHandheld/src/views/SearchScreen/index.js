@@ -10,44 +10,44 @@ const SearchScreen = ({ navigation }) => {
   const searchForDelivery = async () => {
     // Dummy data:
     const delivery = {
-      'id': '123447025891',
-      'recipient': 'Jóna',
-      'seller': 'HR',
-      'driverComment': null,
-      'customerComment': null,
-      'status': 1,
-      'driver': {
-          'id': 1,
-          'name': 'Mikael Máni Jónsson',
-          'email': 'Mikaeelmani99@gmail.com',
-          'role': 1,
-          'changePassword': false
+      id: '123447025891',
+      recipient: 'Jóna',
+      seller: 'HR',
+      driverComment: null,
+      customerComment: null,
+      status: 1,
+      driver: {
+        id: 1,
+        name: 'Mikael Máni Jónsson',
+        email: 'Mikaeelmani99@gmail.com',
+        role: 1,
+        changePassword: false
       },
-      'pickupAddress': {
-          'id': 39,
-          'streetName': 'Menntavegur',
-          'houseNumber': '1',
-          'zipCode': '102',
-          'city': 'Reykjavík',
-          'country': 'Ísland'
+      pickupAddress: {
+        id: 39,
+        streetName: 'Menntavegur',
+        houseNumber: '1',
+        zipCode: '102',
+        city: 'Reykjavík',
+        country: 'Ísland'
       },
-      'deliveryAddress': {
-          'id': 40,
-          'streetName': 'Borgarholtsbraut',
-          'houseNumber': '52',
-          'zipCode': '200',
-          'city': 'Kópavogur',
-          'country': 'Ísland'
+      deliveryAddress: {
+        id: 40,
+        streetName: 'Borgarholtsbraut',
+        houseNumber: '52',
+        zipCode: '200',
+        city: 'Kópavogur',
+        country: 'Ísland'
       },
-      'vehicle': {
-          'id': 1,
-          'licensePlate': 'OUI30',
-          'length': 3.45,
-          'height': 1.89,
-          'width': 1.05
+      vehicle: {
+        id: 1,
+        licensePlate: 'OUI30',
+        length: 3.45,
+        height: 1.89,
+        width: 1.05
       },
-      'packages': []
-  }
+      packages: []
+    }
     navigation.navigate('Details', { delivery: delivery })
   }
 

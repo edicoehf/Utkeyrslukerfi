@@ -5,12 +5,12 @@ import { useSelector } from 'react-redux'
 const DetailsScreen = ({ route }) => {
   const availableStatusCodes = useSelector(({ statusCode }) => statusCode)
   const { delivery } = route.params
-  const [ customerComment, setCustomerComment ] = useState('')
-  const [ driverComment, setDriverComment ] = useState('')
+  const [customerComment, setCustomerComment] = useState('')
+  const [driverComment, setDriverComment] = useState('')
 
   useEffect(() => {
-    if (delivery.driverComment){ setDriverComment(delivery.driverComment)  }
-    if (delivery.customerComment){ setCustomerComment(delivery.customerComment) }
+    if (delivery.driverComment) { setDriverComment(delivery.driverComment) }
+    if (delivery.customerComment) { setCustomerComment(delivery.customerComment) }
   }, [])
 
   return (
@@ -37,20 +37,20 @@ const DetailsScreen = ({ route }) => {
 
       <Text>Athugasemd viðskiptavinar</Text>
       <TextInput
-        multiline={true}
+        multiline
         editable={false}
         numberOfLines={4}
         defaultValue={customerComment}
-        onChangeText={(text) => setCustomerComment({text})}
+        onChangeText={(text) => setCustomerComment({ text })}
       />
 
       <Text>Athugasemd bílstjóra</Text>
       <TextInput
-        multiline={true}
+        multiline
         placeholder='Setjið inn athugasemd ef einhver...'
         numberOfLines={4}
         defaultValue={driverComment}
-        onChangeText={(text) => setDriverComment({text})}
+        onChangeText={(text) => setDriverComment({ text })}
       />
 
     </View>
