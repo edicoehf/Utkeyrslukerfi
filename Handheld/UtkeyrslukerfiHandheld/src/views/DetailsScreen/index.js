@@ -1,10 +1,17 @@
-import React from 'react'
-import { View, Text } from 'react-native'
+import React, { useEffect, useState } from 'react'
+import { View, Text, TextInput } from 'react-native'
 import { useSelector } from 'react-redux'
 
 const DetailsScreen = ({ route }) => {
   const availableStatusCodes = useSelector(({ statusCode }) => statusCode)
   const { delivery } = route.params
+  const [ customerComment, setCustomerComment ] = useState('')
+  const [ driverComment, setDriverComment ] = useState('')
+
+  useEffect(() => {
+    if (delivery.driverComment){ setDriverComment(delivery.driverComment)  }
+    if (delivery.customerComment){ setCustomerComment(delivery.customerComment) }
+  }, [])
 
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
@@ -29,10 +36,22 @@ const DetailsScreen = ({ route }) => {
       <Text>{availableStatusCodes[delivery.status]}</Text>
 
       <Text>Athugasemd viðskiptavinar</Text>
-      <Text>{delivery.customerComment? delivery.customerComment : 'None'}</Text>
+      <TextInput
+        multiline={true}
+        editable={false}
+        numberOfLines={4}
+        defaultValue={customerComment}
+        onChangeText={(text) => setCustomerComment({text})}
+      />
 
       <Text>Athugasemd bílstjóra</Text>
-      <Text>{delivery.driverComment? delivery.driverComment : 'None'}</Text>
+      <TextInput
+        multiline={true}
+        placeholder='Setjið inn athugasemd ef einhver...'
+        numberOfLines={4}
+        defaultValue={driverComment}
+        onChangeText={(text) => setDriverComment({text})}
+      />
 
     </View>
   )

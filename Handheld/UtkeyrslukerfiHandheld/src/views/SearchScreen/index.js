@@ -3,7 +3,8 @@ import { View, Text } from 'react-native'
 import BarcodeForm from '../../components/BarcodeForm'
 
 const SearchScreen = ({ navigation }) => {
-  const [barcode, setBarcode] = useState('')
+  const [barcodeDetails, setBarcodeDetails] = useState('')
+  const [barcodeDeliver, setBarcodeDeliver] = useState('')
 
   // Got to details page if delivery exists
   const searchForDelivery = async () => {
@@ -59,10 +60,10 @@ const SearchScreen = ({ navigation }) => {
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
       <Text>Skanna fyrir nánri upplýsingar</Text>
       <Text>Strikamerki sendingar</Text>
-      <BarcodeForm barcode={barcode} setBarcode={setBarcode} enterBarcode={searchForDelivery} />
+      <BarcodeForm barcode={barcodeDetails} setBarcode={setBarcodeDetails} enterBarcode={searchForDelivery} />
       <Text>Skanna til að afhenda</Text>
       <Text>Strikamerki sendingar</Text>
-      <BarcodeForm barcode={barcode} setBarcode={setBarcode} enterBarcode={deliverDelivery} />
+      <BarcodeForm barcode={barcodeDeliver} setBarcode={setBarcodeDeliver} enterBarcode={deliverDelivery} />
     </View>
   )
 }
