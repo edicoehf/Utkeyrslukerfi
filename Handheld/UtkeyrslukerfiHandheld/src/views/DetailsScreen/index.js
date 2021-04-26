@@ -1,9 +1,13 @@
 import React, { useEffect, useState } from 'react'
-import { View, Text } from 'react-native'
+import { View, Text, Button } from 'react-native'
 import { useSelector } from 'react-redux'
 import CommentBox from '../../components/CommentBox'
 
-const DetailsScreen = ({ route }) => {
+// Driver can view details about delivery, comment on it or start delivery
+const DetailsScreen = ({ route, navigation }) => {
+  // TODO: 
+    // - css
+    // - update drivers comment in db
   const availableStatusCodes = useSelector(({ statusCode }) => statusCode)
   const { delivery } = route.params
   const [customerComment, setCustomerComment] = useState('')
@@ -14,21 +18,27 @@ const DetailsScreen = ({ route }) => {
     if (delivery.customerComment) { setCustomerComment(delivery.customerComment) }
   }, [])
 
+  // Save drivers comment to db
+  const saveComment = () => {
+    // update db with new comment from driver
+  }
+
+  // Navigate to deliver screen
+  const deliver = () => {
+    navigation.navigate('Deliver', { delivery: delivery })
+  }
+
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
       <Text>Móttakandi:</Text>
       <Text>Nafn</Text>
       <Text>{delivery.recipient}</Text>
-      <Text>Sími</Text>
-      <Text>...</Text>
       <Text>Götuheiti:</Text>
       <Text>{delivery.deliveryAddress.streetName} {delivery.deliveryAddress.houseNumber}</Text>
       <Text>Borg:</Text>
       <Text>{delivery.deliveryAddress.zipCode} {delivery.deliveryAddress.city}</Text>
 
       <Text>Sending:</Text>
-      <Text>Búið til</Text>
-      <Text>...:</Text>
       <Text>Sendingarnúmer</Text>
       <Text>{delivery.id}</Text>
       <Text>Fjöldi pakka í sendingu</Text>
@@ -38,6 +48,9 @@ const DetailsScreen = ({ route }) => {
 
       <CommentBox label='Athugasemd viðskiptavinar' editable={false} comment={customerComment} setComment={setCustomerComment} />
       <CommentBox label='Athugasemd bílstjóra' editable={true} comment={driverComment} setComment={setDriverComment} />
+
+      <Button title='Vista' onPress={saveComment} />
+      <Button title='Afhenda' onPress={deliver} />
 
     </View>
   )

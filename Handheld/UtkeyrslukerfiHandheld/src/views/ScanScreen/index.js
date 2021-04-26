@@ -8,8 +8,9 @@ import StatusCodeDropdown from '../../components/StatusCodeDropdown'
 
 // This screen is used to scan multiple products and change their status
 const ScanScreen = () => {
-  // TODO: db stuff: get prev status, check if barcode is valid
-  // TODO: css...
+  // TODO: 
+    // - db stuff: get prev status, check if barcode is valid
+    // - css
   const availableStatusCodes = useSelector(({ statusCode }) => statusCode)
 
   const [status, setStatus] = useState(availableStatusCodes[2])

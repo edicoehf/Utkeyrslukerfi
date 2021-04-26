@@ -1,16 +1,30 @@
-import React, { useState } from 'react'
-import { View, Text } from 'react-native'
+import React, { useEffect, useState } from 'react'
+import { View } from 'react-native'
 import BarcodeForm from '../../components/BarcodeForm'
 import CommentBox from '../../components/CommentBox'
 import ProductTable from '../../components/ProductTable'
 
-const DeliverScreen = () => {
+// Driver can scan in packages in current delivery, comment on the delivery and continue with the delivery
+const DeliverScreen = ({ route }) => {
+  // TODO: 
+    // - css
+    // - add packages to table after clicking enter
+    // - check in database if package is valid
+    // - add checkbox
+    // - add consecutive screens that depends on checkbox 
+    // - add button to get to next screen
+  const { delivery } = route.params
   const [ barcode, setBarcode ] = useState()
   const [customerComment, setCustomerComment] = useState('')
   const [driverComment, setDriverComment] = useState('')
   const [tableData, setTableData] = useState([[]])
   const tableWidth = [100, 60, 40]
   const tableHeaders = ['Sendingarnúmer', 'Pakki í sendingu', '']
+
+  useEffect(() => {
+    if (delivery.driverComment) { setDriverComment(delivery.driverComment) }
+    if (delivery.customerComment) { setCustomerComment(delivery.customerComment) }
+  }, [])
 
   const addBarcode = () => {
     // All packages in current delivery about to ber delivered should be scanned
