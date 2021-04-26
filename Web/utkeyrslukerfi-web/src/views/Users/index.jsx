@@ -5,6 +5,7 @@ import { getUsers } from '../../actions/usersActions'
 import { BsPencilSquare } from 'react-icons/bs'
 import { ImPlus } from 'react-icons/im'
 import '../../styles/users.css'
+import { BsFunnel } from 'react-icons/bs'
 
 // Users - display all users in a table
 const Users = () => {
@@ -58,6 +59,7 @@ const Users = () => {
               Starf
             </th>
             <th>
+              <BsFunnel size='2em' color='white' />
               {/* Leave this empty, it's for the edit pen icon */}
             </th>
           </tr>
