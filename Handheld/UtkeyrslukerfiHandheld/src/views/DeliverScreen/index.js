@@ -26,9 +26,18 @@ const DeliverScreen = ({ route }) => {
     if (delivery.customerComment) { setCustomerComment(delivery.customerComment) }
   }, [])
 
+  // All packages in current delivery about to be delivered should be scanned
   const addBarcode = () => {
-    // All packages in current delivery about to ber delivered should be scanned
-    // Use setTableData to add packages
+    setTableData([
+      ...tableData,
+      [
+        barcode,
+        '1/4',
+        <TouchableHighlight key={barcode} onPress={() => { removeBarcode(barcode) }}>
+          <Feather name='x' style={{ width: 26 - 32 }} color='#333' size={24} />
+        </TouchableHighlight>
+      ]
+    ])
   }
 
   return (
