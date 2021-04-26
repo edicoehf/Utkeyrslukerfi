@@ -1,4 +1,6 @@
 import React, { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { setDelivery } from '../../actions/deliveryActions'
 import Modal from 'react-modal'
 
 
@@ -13,8 +15,10 @@ const customStyles = {
   }
 };
 
-const DeliveryAddressModal = ({ canShow, updateModalState, dataObj, onUpdateDeliveryAddress }) => {
-  const [dAddres, setDAddress] = useState(dataObj)
+const DeliveryAddressModal = ({ canShow, updateModalState }) => {
+  const delivery = useSelector(({ delivery }) => delivery)
+  const dispatch = useDispatch()
+  const [dAddres, setDAddress] = useState(delivery.deliveryAddress)
   Modal.setAppElement('#root')
   let subtitle;
   function afterOpenModal() {
@@ -22,7 +26,10 @@ const DeliveryAddressModal = ({ canShow, updateModalState, dataObj, onUpdateDeli
   }
 
   const updateData = () => {
-    onUpdateDeliveryAddress(dAddres)
+    dispatch(setDelivery({
+      ...delivery,
+      deliveryAddress: dAddres
+    }))
     updateModalState()
   }
 

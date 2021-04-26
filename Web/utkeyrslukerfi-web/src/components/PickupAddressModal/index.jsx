@@ -1,4 +1,6 @@
 import React, { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { setDelivery } from '../../actions/deliveryActions'
 import Modal from 'react-modal'
 
 
@@ -13,8 +15,11 @@ const customStyles = {
   }
 };
 
-const PickupAddressModal = ({ canShow, updateModalState, dataObj, onUpdatePickupAddress }) => {
-  const [pickupAddress, setPickupAddress] = useState(dataObj)
+const PickupAddressModal = ({ canShow, updateModalState }) => {
+  const delivery = useSelector(({ delivery }) => delivery)
+  const dispatch = useDispatch()
+  
+  const [pickupAddress, setPickupAddress] = useState(delivery.pickupAddress)
   Modal.setAppElement('#root')
   let subtitle;
   function afterOpenModal() {
@@ -22,7 +27,10 @@ const PickupAddressModal = ({ canShow, updateModalState, dataObj, onUpdatePickup
   }
 
   const updateData = () => {
-    onUpdatePickupAddress(pickupAddress)
+    dispatch(setDelivery({
+      ...delivery,
+      pickupAddress: pickupAddress
+    }))
     updateModalState()
   }
 
