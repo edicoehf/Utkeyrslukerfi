@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import { View, Text, TextInput } from 'react-native'
+import { View, Text } from 'react-native'
 import { useSelector } from 'react-redux'
+import CommentBox from '../../components/CommentBox'
 
 const DetailsScreen = ({ route }) => {
   const availableStatusCodes = useSelector(({ statusCode }) => statusCode)
@@ -35,23 +36,8 @@ const DetailsScreen = ({ route }) => {
       <Text>Staða sendingar</Text>
       <Text>{availableStatusCodes[delivery.status]}</Text>
 
-      <Text>Athugasemd viðskiptavinar</Text>
-      <TextInput
-        multiline
-        editable={false}
-        numberOfLines={4}
-        defaultValue={customerComment}
-        onChangeText={(text) => setCustomerComment({ text })}
-      />
-
-      <Text>Athugasemd bílstjóra</Text>
-      <TextInput
-        multiline
-        placeholder='Setjið inn athugasemd ef einhver...'
-        numberOfLines={4}
-        defaultValue={driverComment}
-        onChangeText={(text) => setDriverComment({ text })}
-      />
+      <CommentBox label='Athugasemd viðskiptavinar' editable={false} comment={customerComment} setComment={setCustomerComment} />
+      <CommentBox label='Athugasemd bílstjóra' editable={true} comment={driverComment} setComment={setDriverComment} />
 
     </View>
   )
