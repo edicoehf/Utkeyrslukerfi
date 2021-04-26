@@ -1,17 +1,21 @@
 import React, { useEffect } from 'react'
-import { connect } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useLocation, useParams } from 'react-router-dom'
 import { setViewingPackage, getViewingPackage } from '../../actions/packageActions'
 
-const Package = ({ token, viewingPackage, setViewingPackage, getViewingPackage }) => {
+const Package = () => {
   const location = useLocation()
   const id = useParams()
+  const token = useSelector(({ login }) => login.token)
+  const viewingPackage = useSelector(({ pack }) => pack)
+  const dispatch = useDispatch()
+
   useEffect(() => {
     if (location) {
       const pack = location.state.params
-      setViewingPackage(pack)
+      dispatch(setViewingPackage(pack))
     } else {
-      getViewingPackage(token, id.id, id.delid)
+      dispatch(getViewingPackage(token, id.id, id.delid))
     }
   }, [])
 
@@ -28,11 +32,4 @@ const Package = ({ token, viewingPackage, setViewingPackage, getViewingPackage }
   )
 }
 
-const mapStateToProps = reduxStoreState => {
-  return {
-    token: reduxStoreState.login.token,
-    viewingPackage: reduxStoreState.pack
-  }
-}
-
-export default connect(mapStateToProps, { setViewingPackage, getViewingPackage })(Package)
+export default Package

@@ -1,17 +1,17 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { useForm, FormProvider } from 'react-hook-form'
 import Form from 'react-bootstrap/Form'
 import { updateUser } from '../../actions/userActions'
-import { connect } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import FormGroupInput from '../FormGroupInput'
 import FormGroupDropdown from '../FormGroupDropdown'
 import FormGroupButton from '../FormGroupButton'
-import errorHandlingService from '../../services/errorHandlingService'
 
-const UpdateUserForm = ({ user, token, updateUser }) => {
-  const methods = useForm() // TODO: define the roles and use configuration to add them
-  const [errorMessage, setErrorMessage] = useState()
-  const [success, setSuccess] = useState()
+// Update User - users can be updated by admins
+const UpdateUserForm = ({ user }) => {
+  const methods = useForm() // TODO: define the roles and use configuration to add them and only admins should be able to update other users
+  const token = useSelector(({ login }) => login.token)
+  const dispatch = useDispatch()
 
   useEffect(() => {
     // Keep the user state up to date
@@ -22,12 +22,8 @@ const UpdateUserForm = ({ user, token, updateUser }) => {
     }
   }, [user])
 
-  const submitForm = async (data) => {
-    errorHandlingService.clearMessagesErrors()
-    errorHandlingService.clearMessagesSuccess()
-
-    const err = await updateUser(token, user.id, { ...data, changePassword: true })
-    errorHandlingService.setMessage(err, setErrorMessage, setSuccess, 'Það tókst að uppfæra notandann!')
+  const submitForm = (data) => {
+    dispatch(updateUser(token, user.id, { ...data, changePassword: true }))
   }
 
   return (
@@ -73,18 +69,9 @@ const UpdateUserForm = ({ user, token, updateUser }) => {
           label='Vista'
           typeOfForm='UpdateUser'
         />
-
-        <div id='err-msg' className='error-message alert alert-danger d-none'>{errorMessage}</div>
-        <div id='success' className='error-message alert alert-success d-none'>{success}</div>
       </Form>
     </FormProvider>
   )
 }
 
-const mapStateToProps = reduxStoreState => {
-  return {
-    token: reduxStoreState.login.token
-  }
-}
-
-export default connect(mapStateToProps, { updateUser })(UpdateUserForm)
+export default UpdateUserForm

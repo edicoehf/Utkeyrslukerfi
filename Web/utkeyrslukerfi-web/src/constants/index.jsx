@@ -18,6 +18,9 @@ export const GET_PACKAGES = 'GET_PACKAGES'
 export const GET_VIEWING_PACKAGE = 'GET_VIEWING_PACKAGE'
 export const SET_VIEWING_PACKAGE = 'SET_VIEWING_PACKAGE'
 
+export const SET_ERROR = 'SET_ERROR'
+export const RESET_ERROR = 'RESET_ERROR'
+
 // URLS
 export const USER_URL = 'https://localhost:5001/api/users'
 export const DELIVERY_URL = 'https://localhost:5001/api/deliveries'

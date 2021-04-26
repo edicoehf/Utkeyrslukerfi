@@ -1,26 +1,24 @@
-import React, { useRef, useState } from 'react'
+import React, { useRef } from 'react'
 import { useForm, FormProvider } from 'react-hook-form'
 import Form from 'react-bootstrap/Form'
 import { updatePassword } from '../../actions/loginActions'
-import { connect } from 'react-redux'
-import FormGroupInput from '../../components/FormGroupInput'
-import FormGroupButton from '../../components/FormGroupButton'
-import errorHandlingService from '../../services/errorHandlingService'
+import { useDispatch, useSelector } from 'react-redux'
+import FormGroupInput from '../FormGroupInput'
+import FormGroupButton from '../FormGroupButton'
 
 // Update password - when a user logs in for the first time
 // or the account was updated in any way the user must update their password
-const UpdatePasswordForm = ({ updatePassword, token }) => {
+// before continuing
+const UpdatePasswordForm = () => {
   const methods = useForm()
   const password = useRef({})
-  const [errorMessage, setErrorMessage] = useState()
+  const token = useSelector(({ login }) => login.token)
+  const dispatch = useDispatch()
 
   password.current = methods.watch('password', '') // To make sure passwords are the same
 
   const submitForm = async (data) => {
-    errorHandlingService.clearMessagesErrors()
-
-    const err = await updatePassword(token, data.password)
-    errorHandlingService.setMessageNoSuccess(err, setErrorMessage)
+    dispatch(updatePassword(token, data.password))
   }
 
   return (
@@ -47,16 +45,9 @@ const UpdatePasswordForm = ({ updatePassword, token }) => {
           label='Vista'
           typeOfForm='UpdatePassword'
         />
-        <div id='err-msg' className='error-message alert alert-danger d-none'>{errorMessage}</div>
       </Form>
     </FormProvider>
   )
 }
 
-const mapStateToProps = reduxStoreState => {
-  return {
-    token: reduxStoreState.login.token
-  }
-}
-
-export default connect(mapStateToProps, { updatePassword })(UpdatePasswordForm)
+export default UpdatePasswordForm

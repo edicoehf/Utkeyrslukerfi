@@ -1,21 +1,24 @@
 import React, { useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
-import { connect } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { getDeliveries } from '../../actions/deliveriesActions'
 import { setDelivery } from '../../actions/deliveryActions'
 import '../../styles/deliveries.css'
 
-const Deliveries = ({ getDeliveries, deliveries, setDelivery, token }) => {
+const Deliveries = () => {
   const history = useHistory()
+  const token = useSelector(({ login }) => login.token)
+  const deliveries = useSelector(({ deliveries }) => deliveries)
+  const dispatch = useDispatch()
 
   useEffect(() => {
     if (token) {
-      getDeliveries(token)
+      dispatch(getDeliveries(token))
     }
   }, [token])
 
   const navigateToDelivery = (obj) => {
-    setDelivery(obj)
+    dispatch(setDelivery(obj))
     history.push(`/deliveries/${obj.id}`)
   }
 
@@ -81,12 +84,4 @@ const Deliveries = ({ getDeliveries, deliveries, setDelivery, token }) => {
   )
 }
 
-const mapStateToProps = reduxStoreState => {
-  return {
-    deliveries: reduxStoreState.deliveries,
-    delivery: reduxStoreState.delivery,
-    token: reduxStoreState.login.token
-  }
-}
-
-export default connect(mapStateToProps, { getDeliveries, setDelivery })(Deliveries)
+export default Deliveries

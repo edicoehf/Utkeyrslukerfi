@@ -1,25 +1,20 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { useForm, FormProvider } from 'react-hook-form'
 import Form from 'react-bootstrap/Form'
 import { createUser } from '../../actions/userActions'
-import { connect } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import FormGroupInput from '../../components/FormGroupInput'
 import FormGroupDropdown from '../../components/FormGroupDropdown'
 import FormGroupButton from '../../components/FormGroupButton'
-import errorHandlingService from '../../services/errorHandlingService'
 import '../../styles/user.css'
 
-const CreateUserForm = ({ token, createUser }) => {
+const CreateUserForm = () => {
   const methods = useForm() // TODO: define the roles and use configuration to add them
-  const [errorMessage, setErrorMessage] = useState()
-  const [success, setSuccess] = useState()
+  const token = useSelector(({ login }) => login.token)
+  const dispatch = useDispatch()
 
   const submitForm = async (data) => {
-    errorHandlingService.clearMessagesErrors()
-    errorHandlingService.clearMessagesSuccess()
-
-    const err = await createUser(token, { ...data, changePassword: true })
-    errorHandlingService.setMessage(err, setErrorMessage, setSuccess, 'Það tókst að búa til notandann!')
+    dispatch(createUser(token, { ...data, changePassword: true }))
   }
 
   return (
@@ -66,19 +61,10 @@ const CreateUserForm = ({ token, createUser }) => {
             label='Vista'
             typeOfForm='CreateUser'
           />
-
-          <div id='err-msg' className='error-message alert alert-danger d-none'>{errorMessage}</div>
-          <div id='success' className='error-message alert alert-success d-none'>{success}</div>
         </Form>
       </FormProvider>
     </div>
   )
 }
 
-const mapStateToProps = reduxStoreState => {
-  return {
-    token: reduxStoreState.login.token
-  }
-}
-
-export default connect(mapStateToProps, { createUser })(CreateUserForm)
+export default CreateUserForm

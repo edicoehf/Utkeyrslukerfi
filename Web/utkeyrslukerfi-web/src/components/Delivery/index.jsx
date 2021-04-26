@@ -1,13 +1,18 @@
 import React, { useState, useEffect } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
-import { connect } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { getDelivery } from '../../actions/deliveryActions'
 import { getPackages } from '../../actions/packageActions'
 import DeliveryAddressModal from '../DeliveryAddressModal'
 import PickupAddressModal from '../PickupAddressModal'
 
 
-const Delivery = ({ getDelivery, delivery, getPackages, packages, token }) => {
+const Delivery = () => {
+  const packages = useSelector(({ packages }) => packages)
+  const delivery = useSelector(({ delivery }) => delivery)
+  const token = useSelector(({ login }) => login.token)
+  const dispatch = useDispatch()
+
   const pathId = useParams().id
   const history = useHistory()
   const [deliveryObj, setDeliveryObj] = useState(delivery)
@@ -18,13 +23,19 @@ const Delivery = ({ getDelivery, delivery, getPackages, packages, token }) => {
 
   useEffect(() => {
     if (token) {
-      getPackages(token, { id }.id)
+      dispatch(getPackages(token, { id }.id))
     }
   }, [token])
+
 
   useEffect(() => {
     setDeliveryObj(delivery)
   }, [])
+
+  // if (Object.entries(deliveryObj).length === 0) {
+  //   dispatch(getDelivery(token, pathId))
+  // }
+
 
   const navigateToPackage = (obj) => {
     history.push('/deliveries/' + { id }.id + `/packages/${obj.id}`, { params: obj })
@@ -120,12 +131,4 @@ const Delivery = ({ getDelivery, delivery, getPackages, packages, token }) => {
   )
 }
 
-const mapStateToProps = reduxStoreState => {
-  return {
-    packages: reduxStoreState.packages,
-    delivery: reduxStoreState.delivery,
-    token: reduxStoreState.login.token
-  }
-}
-
-export default connect(mapStateToProps, { getPackages, getDelivery })(Delivery)
+export default Delivery

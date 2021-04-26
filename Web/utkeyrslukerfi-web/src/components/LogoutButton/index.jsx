@@ -1,12 +1,15 @@
 import React from 'react'
 import { AiOutlineLogout } from 'react-icons/ai'
-import { connect } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { logout } from '../../actions/loginActions'
 
-const LogoutButton = ({ token, logout }) => {
+// LogutButton - logout functionality triggered when pressed
+const LogoutButton = () => {
+  const token = useSelector(({ login }) => login.token)
+  const dispatch = useDispatch()
   const handleLogout = () => {
     if (token) {
-      logout(token)
+      dispatch(logout(token))
     }
   }
 
@@ -17,10 +20,4 @@ const LogoutButton = ({ token, logout }) => {
   )
 }
 
-const mapStateToProps = reduxStoreState => {
-  return {
-    token: reduxStoreState.login.token
-  }
-}
-
-export default connect(mapStateToProps, { logout })(LogoutButton)
+export default LogoutButton
