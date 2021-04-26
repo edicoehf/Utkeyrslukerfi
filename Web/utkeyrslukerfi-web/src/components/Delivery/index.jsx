@@ -28,13 +28,6 @@ const Delivery = () => {
     history.push(`/deliveries/${id}/packages/${obj.id}`, { params: obj })
   }
 
-  // TODO: breyta frá deconstruction yfir í delivery?.recipient t.d.
-  const {recipient, seller, status } = delivery
-  const driver = delivery.driver.name
-  const deliveryAddress = `${delivery.deliveryAddress.streetName}  ${delivery.deliveryAddress.houseNumber}`
-  const pickupAddress = `${delivery.pickupAddress.streetName}  ${delivery.pickupAddress.houseNumber}`
-  const vehicle = delivery.vehicle.licensePlate
-
   const [editable, setEditable] = useState(true)
 
   const handleChange = (e) => {
@@ -59,25 +52,25 @@ const Delivery = () => {
         <p>Id: {id}</p>
         <form>
           <div className='row'>
-            <label className='mt-3 mx-3'>Recipient</label><input className='border-none my-3 ml-auto' disabled={editable} type='text' name='recipient' onChange={handleChange} defaultValue={recipient} />
+            <label className='mt-3 mx-3'>Recipient</label><input className='border-none my-3 ml-auto' disabled={editable} type='text' name='recipient' onChange={handleChange} defaultValue={delivery?.recipient} />
           </div>
           <div className='row'>
-            <label className='mt-3 mx-3'>Status</label><input className='border-none my-3 ml-auto' disabled={editable} type='text' name='status' onChange={handleChange} defaultValue={status} />
+            <label className='mt-3 mx-3'>Status</label><input className='border-none my-3 ml-auto' disabled={editable} type='text' name='status' onChange={handleChange} defaultValue={delivery?.status} />
           </div>
           <div className='row'>
-            <label className='mt-3 mx-3'>Seller</label><input className='border-none my-3 ml-auto' disabled={editable} type='text' name='seller' onChange={handleChange} defaultValue={seller} />
+            <label className='mt-3 mx-3'>Seller</label><input className='border-none my-3 ml-auto' disabled={editable} type='text' name='seller' onChange={handleChange} defaultValue={delivery?.seller} />
           </div>
           <div className='row'>
-            <label className='mt-3 mx-3'>Driver</label><input className='border-none my-3 ml-auto' disabled={editable} type='text' name='driver' onChange={e => setDeliveryObj(state => ({ ...state, driver: { ...state.driver, name: e.target.value } }))} defaultValue={driver} />
+            <label className='mt-3 mx-3'>Driver</label><input className='border-none my-3 ml-auto' disabled={editable} type='text' name='driver' onChange={e => setDeliveryObj(state => ({ ...state, driver: { ...state.driver, name: e.target.value } }))} defaultValue={delivery?.driver.name} />
           </div>
           <div className='row'>
-            <label className='mt-3 mx-3'>DeliveryAddress</label><input className='border-none my-3 ml-auto' disabled={editable} type='text' name='deliveryAddress' onChange={handleChange} defaultValue={deliveryAddress} />
+            <label className='mt-3 mx-3'>DeliveryAddress</label><input className='border-none my-3 ml-auto' disabled={editable} type='text' name='deliveryAddress' onChange={handleChange} defaultValue={`${delivery?.deliveryAddress.streetName}  ${delivery?.deliveryAddress.houseNumber}`} />
           </div>
           <div className='row'>
-            <label className='mt-3 mx-3'>PickupAddress</label><input className='border-none my-3 ml-auto' disabled={editable} type='text' name='pickupAddress' onChange={handleChange} defaultValue={pickupAddress} />
+            <label className='mt-3 mx-3'>PickupAddress</label><input className='border-none my-3 ml-auto' disabled={editable} type='text' name='pickupAddress' onChange={handleChange} defaultValue={`${delivery?.pickupAddress.streetName}  ${delivery?.pickupAddress.houseNumber}`} />
           </div>
           <div className='row'>
-            <label className='mt-3 mx-3'>Vehicle</label><input className='border-none my-3 ml-auto' disabled={editable} type='text' name='licensePlate' onChange={e => setDeliveryObj(state => ({ ...state, vehicle: { ...state.vehicle, licensePlate: e.target.value } }))} defaultValue={vehicle} />
+            <label className='mt-3 mx-3'>Vehicle</label><input className='border-none my-3 ml-auto' disabled={editable} type='text' name='licensePlate' onChange={e => setDeliveryObj(state => ({ ...state, vehicle: { ...state.vehicle, licensePlate: e.target.value } }))} defaultValue={delivery?.vehicle.licensePlate} />
           </div>
         </form>
       </div>
