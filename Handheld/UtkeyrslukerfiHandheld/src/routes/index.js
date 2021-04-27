@@ -9,24 +9,23 @@ import MaterialIcon from 'react-native-vector-icons/MaterialIcons'
 import ScanScreen from '../views/ScanScreen'
 import ListScreen from '../views/ListScreen'
 
+import { blue } from '../constants'
+
 const Tab = createBottomTabNavigator()
 
 const AppContainer = () => {
   return (
     <NavigationContainer>
-      <Tab.Navigator initialRouteName='Scan'>
+      <Tab.Navigator
+        initialRouteName='Scan'
+        tabBarOptions={{
+          tabStyle: { backgroundColor: blue }
+        }}
+      >
         <Tab.Screen
           name='List'
           component={ListScreen}
           options={{
-            title: 'Listi',
-            headerStyle: {
-              backgroundColor: '#4A79BA'
-            },
-            headerTintColor: '#fff',
-            headerTintStyle: {
-              fontWeight: 'bold'
-            },
             showIcon: true,
             tabBarLabel: 'List',
             tabBarIcon: () => <MaterialCommunityIcon name='format-list-bulleted' style={{ width: 26 - 32 }} color='#333' size={24} />

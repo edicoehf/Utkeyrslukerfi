@@ -39,7 +39,8 @@ namespace Utkeyrslukerfi.API.Services.Implementations
                 {
                     new Claim("email", user.Email),
                     new Claim("name", user.Name),
-                    new Claim("tokenID", user.TokenID.ToString())
+                    new Claim("tokenID", user.TokenID.ToString()),
+                    new Claim("roles", user.Role.ToString())
                 }),
                 Audience = _audience,
                 Issuer = _issuer,
