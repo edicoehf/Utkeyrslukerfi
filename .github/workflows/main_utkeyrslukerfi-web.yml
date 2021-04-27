@@ -25,6 +25,8 @@ jobs:
 
     - name: npm install, build, and test
       working-directory: ./Web/utkeyrslukerfi-web/
+      env:
+       CI: false
       run: |
         git config core.ignorecase false
         npm install
