@@ -163,7 +163,6 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
             tempDelivery.Driver = driver;
             tempDelivery.Packages = tempDelivery.Packages;
             tempDelivery.Signoff = tempDelivery.Signoff;
-            System.Console.WriteLine("updating delivery called");
             // Save changes
             _dbContext.SaveChanges();
         }
