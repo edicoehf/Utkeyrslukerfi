@@ -13,17 +13,17 @@ const Delivery = () => {
   const token = useSelector(({ login }) => login.token)
   const dispatch = useDispatch()
 
-  const pathId = useParams().id
+  const { id } = useParams()
   const history = useHistory()
 
 
   if (Object.entries(delivery).length === 0) {
-    dispatch(getDelivery(token, pathId))
+    dispatch(getDelivery(token, id))
   }
 
   useEffect(() => {
     if (token) {
-      dispatch(getPackages(token, { id }.id))
+      dispatch(getPackages(token, id))
     }
   }, [token])
 
@@ -38,10 +38,10 @@ const Delivery = () => {
 
 
   const navigateToPackage = (obj) => {
-    history.push('/deliveries/' + { id }.id + `/packages/${obj.id}`, { params: obj })
+    history.push(`/deliveries/${id}/packages/${obj.id}`, { params: obj })
   }
 
-  const { id, recipient, seller, status } = delivery
+  const { recipient, seller, status } = delivery
   const deliveryAddress = `${delivery.deliveryAddress.streetName}  ${delivery.deliveryAddress.houseNumber}`
   const pickupAddress = `${delivery.pickupAddress.streetName}  ${delivery.pickupAddress.houseNumber}`
   const vehicle = delivery.vehicle.licensePlate
@@ -81,13 +81,13 @@ const Delivery = () => {
         <p>Id: {id}</p>
         <form>
           <div className='row'>
-            <label className='mt-3 mx-3'>Recipient</label><input className='border-none my-3 ml-auto' disabled={editable} type='text' name='recipient' onChange={handleChange} defaultValue={recipient} />
+            <label className='mt-3 mx-3'>Recipient</label><input className='border-none my-3 ml-auto' disabled={editable} type='text' name='recipient' onChange={handleChange} defaultValue={delivery?.recipient} />
           </div>
           <div className='row'>
-            <label className='mt-3 mx-3'>Status</label><input className='border-none my-3 ml-auto' disabled={editable} type='text' name='status' onChange={handleChange} defaultValue={status} />
+            <label className='mt-3 mx-3'>Status</label><input className='border-none my-3 ml-auto' disabled={editable} type='text' name='status' onChange={handleChange} defaultValue={delivery?.status} />
           </div>
           <div className='row'>
-            <label className='mt-3 mx-3'>Seller</label><input className='border-none my-3 ml-auto' disabled={editable} type='text' name='seller' onChange={handleChange} defaultValue={seller} />
+            <label className='mt-3 mx-3'>Seller</label><input className='border-none my-3 ml-auto' disabled={editable} type='text' name='seller' onChange={handleChange} defaultValue={delivery?.seller} />
           </div>
           <div className='row'>
             <label className='mt-3 mx-3'>Driver</label><input className='border-none my-3 ml-auto' disabled={editable} type='text' name='driver' onChange={e => dispatch(setDelivery({ ...delivery, driver: { ...delivery.driver, name: e.target.value } }))} defaultValue={driver} />
