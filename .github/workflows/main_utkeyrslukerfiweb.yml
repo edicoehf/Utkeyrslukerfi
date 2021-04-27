@@ -22,6 +22,7 @@ jobs:
         node-version: '10.x'
 
     - name: npm install, build, and test
+      working-directory: ./Web/utkeyrslukerfi-web/
       run: |
         npm install
         npm run build --if-present
@@ -53,4 +54,4 @@ jobs:
         app-name: 'utkeyrslukerfiweb'
         slot-name: 'production'
         publish-profile: ${{ secrets.AzureAppService_PublishProfile_07e58a10acda4d70ae3c69b96741f7f3 }}
-        package: .
+        package: ./Web/utkeyrslukerfi-web/
