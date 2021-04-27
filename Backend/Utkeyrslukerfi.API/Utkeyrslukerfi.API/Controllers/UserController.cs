@@ -7,7 +7,7 @@ using Utkeyrslukerfi.API.Services.Interfaces;
 
 namespace Utkeyrslukerfi.API.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "1")]
     [ApiController]
     [Route("api/users")]
     public class UserController : ControllerBase
@@ -88,7 +88,6 @@ namespace Utkeyrslukerfi.API.Controllers
             {
                 return BadRequest("User is not valid!");
             }
-            // TODO: check if it has proper authorization
             _userService.UpdateUser(user, id);
             return NoContent();
         }

@@ -108,7 +108,8 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
         {
             var user = _dbContext.Users.FirstOrDefault(u =>
                 u.Email == loginInputModel.Email &&
-                u.Password == HashingHelper.HashPassword(loginInputModel.Password));
+                u.Password == HashingHelper.HashPassword(loginInputModel.Password) &&
+                u.Role != 4);
             if (user == null) { throw new InvalidLoginException("Either Email or Password is incorrect!"); }
 
             var token = _tokenRepository.CreateNewToken(user);
