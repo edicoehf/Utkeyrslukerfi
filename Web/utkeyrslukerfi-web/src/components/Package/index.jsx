@@ -5,7 +5,7 @@ import { setViewingPackage, getViewingPackage } from '../../actions/packageActio
 
 const Package = () => {
   const location = useLocation()
-  const id = useParams()
+  const { id, delid } = useParams()
   const token = useSelector(({ login }) => login.token)
   const viewingPackage = useSelector(({ pack }) => pack)
   const dispatch = useDispatch()
@@ -15,7 +15,7 @@ const Package = () => {
       const pack = location.state.params
       dispatch(setViewingPackage(pack))
     } else {
-      dispatch(getViewingPackage(token, id.id, id.delid))
+      dispatch(getViewingPackage(token, id, delid))
     }
   }, [])
 
