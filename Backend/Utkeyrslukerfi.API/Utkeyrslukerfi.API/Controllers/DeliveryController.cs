@@ -103,12 +103,12 @@ namespace Utkeyrslukerfi.API.Controllers
             {
                 return BadRequest("Model is not valid!");
             }
-            // some check if it is authorized
-            // TODO: Authorization service.
             _deliveryService.UpdateDelivery(delivery, id);
             return NoContent();
         }
         // create delivery
+        [Authorize(Roles = "1")]
+        [Authorize(Roles = "2")]
         [HttpPost]
         [Route("", Name = "CreateDelivery")]
         public IActionResult CreateDelivery([FromBody] DeliveryInputModel delivery)
