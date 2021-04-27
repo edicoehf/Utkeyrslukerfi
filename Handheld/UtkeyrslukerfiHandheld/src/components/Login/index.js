@@ -1,5 +1,5 @@
 import React from 'react'
-import { Container, Content, Text, Form, Item, Label, Input, Button } from 'react-native'
+import { Button } from 'react-native'
 import { setLogin } from '../../actions/loginActions'
 import { useDispatch } from 'react-redux'
 
