@@ -125,7 +125,8 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
         public User DriverLogin(DriverLoginInputModel driverLoginInputModel)
         {
             var user = _dbContext.Users.FirstOrDefault(u =>
-                u.Name == driverLoginInputModel.Name);
+                u.Name == driverLoginInputModel.Name &&
+                u.Role == 3);
             if (user == null) { throw new InvalidLoginException("Name is incorrect!"); }
 
             var token = _tokenRepository.CreateNewToken(user);
