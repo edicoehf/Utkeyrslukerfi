@@ -35,5 +35,5 @@ jobs:
         app-name: utkeyrslukerfiweb
         slot-name: Production
         publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_CA0410ED64C34060B20C44D3D032869F }}
-        package: .
+        package: ./Web/utkeyrslukerfi-web/
 
