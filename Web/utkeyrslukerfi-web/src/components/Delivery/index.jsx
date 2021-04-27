@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { getDelivery, setDelivery } from '../../actions/deliveryActions'
+import { getDelivery, setDelivery, updateDelivery } from '../../actions/deliveryActions'
 import { getPackages } from '../../actions/packageActions'
 import DeliveryAddressModal from '../DeliveryAddressModal'
 import PickupAddressModal from '../PickupAddressModal'
@@ -13,12 +13,12 @@ const Delivery = () => {
   const token = useSelector(({ login }) => login.token)
   const dispatch = useDispatch()
 
-  const { pathId } = useParams()
+  const pathId = useParams().id
   const history = useHistory()
-  
+
 
   if (Object.entries(delivery).length === 0) {
-    getDelivery(token, pathId)
+    dispatch(getDelivery(token, pathId))
   }
 
   useEffect(() => {
@@ -42,10 +42,10 @@ const Delivery = () => {
   }
 
   const { id, recipient, seller, status } = delivery
-  const driver = delivery.driver.name
   const deliveryAddress = `${delivery.deliveryAddress.streetName}  ${delivery.deliveryAddress.houseNumber}`
   const pickupAddress = `${delivery.pickupAddress.streetName}  ${delivery.pickupAddress.houseNumber}`
   const vehicle = delivery.vehicle.licensePlate
+  const driver = delivery.driver.name
 
   const [editable, setEditable] = useState(true);
   const [showDeliveryModal, setShowDeliveryModal] = useState(false);
@@ -63,8 +63,8 @@ const Delivery = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault()
+    dispatch(updateDelivery(token, id, delivery))
     console.log('delivery: ', delivery)
-    // TODO: make the patch request to udpate delivery
   }
 
   const toggleDeliveryModal = () => {
@@ -90,7 +90,7 @@ const Delivery = () => {
             <label className='mt-3 mx-3'>Seller</label><input className='border-none my-3 ml-auto' disabled={editable} type='text' name='seller' onChange={handleChange} defaultValue={seller} />
           </div>
           <div className='row'>
-            <label className='mt-3 mx-3'>Driver</label><input className='border-none my-3 ml-auto' disabled={editable} type='text' name='driver' onChange={e => dispatch(setDelivery(state => ({ ...state, driver: { ...state.driver, name: e.target.value } })))} defaultValue={driver} />
+            <label className='mt-3 mx-3'>Driver</label><input className='border-none my-3 ml-auto' disabled={editable} type='text' name='driver' onChange={e => dispatch(setDelivery({ ...delivery, driver: { ...delivery.driver, name: e.target.value } }))} defaultValue={driver} />
           </div>
           <div className='row'>
             <label className='mt-3 mx-3'>DeliveryAddress</label><input className='border-none my-3 ml-auto' disabled={editable} type='text' name='deliveryAddress' onClick={toggleDeliveryModal} defaultValue={deliveryAddress} />
@@ -99,7 +99,7 @@ const Delivery = () => {
             <label className='mt-3 mx-3'>PickupAddress</label><input className='border-none my-3 ml-auto' disabled={editable} type='text' name='pickupAddress' onClick={togglePickupModal} defaultValue={pickupAddress} />
           </div>
           <div className='row'>
-            <label className='mt-3 mx-3'>Vehicle</label><input className='border-none my-3 ml-auto' disabled={editable} type='text' name='licensePlate' onChange={e => dispatch(setDelivery(state => ({ ...state, vehicle: { ...state.vehicle, licensePlate: e.target.value } })))} defaultValue={vehicle} />
+            <label className='mt-3 mx-3'>Vehicle</label><input className='border-none my-3 ml-auto' disabled={editable} type='text' name='licensePlate' onChange={e => dispatch(setDelivery({ ...delivery, vehicle: { ...delivery.vehicle, licensePlate: e.target.value } }))} defaultValue={vehicle} />
           </div>
         </form>
       </div>
