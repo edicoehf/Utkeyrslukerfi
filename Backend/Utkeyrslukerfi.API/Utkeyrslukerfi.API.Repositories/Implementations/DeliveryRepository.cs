@@ -133,13 +133,11 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
             // Get vehicle
             // TODO: Add check if vehicle is 0
             var vehicle = _dbContext.Vehicles.FirstOrDefault(v => v.ID == delivery.VehicleID);
-            System.Console.WriteLine("Before vehicle, which was not found or other error!");
-            System.Console.WriteLine(delivery.VehicleID);
             if (vehicle == null) { throw new NotFoundException("Vehicle not found!"); }
 
             // Get driver 
             var driver = _dbContext.Users.FirstOrDefault(u => u.ID == delivery.DriverID);
-            if (driver == null) { throw new NotFoundException("User not found."); }
+            if (driver == null) { throw new NotFoundException("Driver is not found."); }
 
             // Get pickupAddress
             var pickupAddress = _dbContext.Addresses.FirstOrDefault(a => a.ID == tempDelivery.PickupAddressID);

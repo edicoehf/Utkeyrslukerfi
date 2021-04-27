@@ -50,7 +50,6 @@ const Delivery = () => {
     history.push(`/deliveries/${id}/packages/${obj.id}`, { params: obj })
   }
 
-  const { recipient, seller, status } = delivery
   const deliveryAddress = `${delivery.deliveryAddress.streetName}  ${delivery.deliveryAddress.houseNumber}`
   const pickupAddress = `${delivery.pickupAddress.streetName}  ${delivery.pickupAddress.houseNumber}`
   const vehicle = delivery.vehicle.licensePlate
@@ -72,8 +71,12 @@ const Delivery = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault()
-    dispatch(updateDelivery(token, id, delivery))
-    console.log('delivery: ', delivery)
+    const newDelivery = {
+      ...delivery,
+      VehicleID: delivery.vehicle.id,
+      DriverId: delivery.driver.id
+    }
+    dispatch(updateDelivery(token, id, newDelivery))
   }
 
   const toggleDeliveryModal = () => {
