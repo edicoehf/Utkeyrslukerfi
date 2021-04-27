@@ -48,6 +48,11 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
             Envelope<User> envelope = new Envelope<User>(pageNumber, pageSize, users);
             return _mapper.Map<IEnumerable<UserDTO>>(envelope.Items);
         }
+        public IEnumerable<DriverDTO> GetDrivers()
+        {
+            var users = _dbContext.Users.Where(u => u.Role == 3);
+            return _mapper.Map<IEnumerable<DriverDTO>>(users);
+        }
         public IEnumerable<UserDTO> GetUsersByRole(int role, int pageSize, int pageNumber)
         {
             var users = _dbContext.Users.Where(u => u.Role == role);
