@@ -1,37 +1,32 @@
 import React, { useState, useEffect } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
-import { connect, useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { getDelivery } from '../../actions/deliveryActions'
 import { getPackages } from '../../actions/packageActions'
 
-const Delivery = ({ getDelivery, getPackages }) => {
+const Delivery = () => {
   const packages = useSelector(({ packages }) => packages)
   const delivery = useSelector(({ delivery }) => delivery)
   const token = useSelector(({ login }) => login.token)
+  const dispatch = useDispatch()
 
-  const pathId = useParams().id
+  const { id } = useParams()
   const history = useHistory()
   const [deliveryObj, setDeliveryObj] = useState(delivery)
 
   useEffect(() => {
     if (token) {
-      getPackages(token, { id }.id)
+      dispatch(getPackages(token, id))
     }
   }, [token])
 
   if (Object.entries(deliveryObj).length === 0) {
-    getDelivery(token, pathId)
+    dispatch(getDelivery(token, id))
   }
 
   const navigateToPackage = (obj) => {
-    history.push('/deliveries/' + { id }.id + `/packages/${obj.id}`, { params: obj })
+    history.push(`/deliveries/${id}/packages/${obj.id}`, { params: obj })
   }
-
-  const { id, recipient, seller, status } = delivery
-  const driver = delivery.driver.name
-  const deliveryAddress = `${delivery.deliveryAddress.streetName}  ${delivery.deliveryAddress.houseNumber}`
-  const pickupAddress = `${delivery.pickupAddress.streetName}  ${delivery.pickupAddress.houseNumber}`
-  const vehicle = delivery.vehicle.licensePlate
 
   const [editable, setEditable] = useState(true)
 
@@ -57,25 +52,25 @@ const Delivery = ({ getDelivery, getPackages }) => {
         <p>Id: {id}</p>
         <form>
           <div className='row'>
-            <label className='mt-3 mx-3'>Recipient</label><input className='border-none my-3 ml-auto' disabled={editable} type='text' name='recipient' onChange={handleChange} defaultValue={recipient} />
+            <label className='mt-3 mx-3'>Recipient</label><input className='border-none my-3 ml-auto' disabled={editable} type='text' name='recipient' onChange={handleChange} defaultValue={delivery?.recipient} />
           </div>
           <div className='row'>
-            <label className='mt-3 mx-3'>Status</label><input className='border-none my-3 ml-auto' disabled={editable} type='text' name='status' onChange={handleChange} defaultValue={status} />
+            <label className='mt-3 mx-3'>Status</label><input className='border-none my-3 ml-auto' disabled={editable} type='text' name='status' onChange={handleChange} defaultValue={delivery?.status} />
           </div>
           <div className='row'>
-            <label className='mt-3 mx-3'>Seller</label><input className='border-none my-3 ml-auto' disabled={editable} type='text' name='seller' onChange={handleChange} defaultValue={seller} />
+            <label className='mt-3 mx-3'>Seller</label><input className='border-none my-3 ml-auto' disabled={editable} type='text' name='seller' onChange={handleChange} defaultValue={delivery?.seller} />
           </div>
           <div className='row'>
-            <label className='mt-3 mx-3'>Driver</label><input className='border-none my-3 ml-auto' disabled={editable} type='text' name='driver' onChange={e => setDeliveryObj(state => ({ ...state, driver: { ...state.driver, name: e.target.value } }))} defaultValue={driver} />
+            <label className='mt-3 mx-3'>Driver</label><input className='border-none my-3 ml-auto' disabled={editable} type='text' name='driver' onChange={e => setDeliveryObj(state => ({ ...state, driver: { ...state.driver, name: e.target.value } }))} defaultValue={delivery?.driver.name} />
           </div>
           <div className='row'>
-            <label className='mt-3 mx-3'>DeliveryAddress</label><input className='border-none my-3 ml-auto' disabled={editable} type='text' name='deliveryAddress' onChange={handleChange} defaultValue={deliveryAddress} />
+            <label className='mt-3 mx-3'>DeliveryAddress</label><input className='border-none my-3 ml-auto' disabled={editable} type='text' name='deliveryAddress' onChange={handleChange} defaultValue={`${delivery?.deliveryAddress.streetName}  ${delivery?.deliveryAddress.houseNumber}`} />
           </div>
           <div className='row'>
-            <label className='mt-3 mx-3'>PickupAddress</label><input className='border-none my-3 ml-auto' disabled={editable} type='text' name='pickupAddress' onChange={handleChange} defaultValue={pickupAddress} />
+            <label className='mt-3 mx-3'>PickupAddress</label><input className='border-none my-3 ml-auto' disabled={editable} type='text' name='pickupAddress' onChange={handleChange} defaultValue={`${delivery?.pickupAddress.streetName}  ${delivery?.pickupAddress.houseNumber}`} />
           </div>
           <div className='row'>
-            <label className='mt-3 mx-3'>Vehicle</label><input className='border-none my-3 ml-auto' disabled={editable} type='text' name='licensePlate' onChange={e => setDeliveryObj(state => ({ ...state, vehicle: { ...state.vehicle, licensePlate: e.target.value } }))} defaultValue={vehicle} />
+            <label className='mt-3 mx-3'>Vehicle</label><input className='border-none my-3 ml-auto' disabled={editable} type='text' name='licensePlate' onChange={e => setDeliveryObj(state => ({ ...state, vehicle: { ...state.vehicle, licensePlate: e.target.value } }))} defaultValue={delivery?.vehicle.licensePlate} />
           </div>
         </form>
       </div>
@@ -93,4 +88,4 @@ const Delivery = ({ getDelivery, getPackages }) => {
   )
 }
 
-export default connect(null, { getPackages, getDelivery })(Delivery)
+export default Delivery

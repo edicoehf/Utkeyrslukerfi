@@ -1,9 +1,6 @@
 import { GET_VIEWING_USER, SET_VIEWING_USER, UPDATE_USER, CREATE_USER } from '../constants'
 import userService from '../services/userService'
-import EmailAlreadyExists from '../errors/EmailAlreadyExists'
-import UnauthorizedUserLogin from '../errors/UnauthorizedUserLogin'
-import FailedToConnectToServer from '../errors/FailedToConnectToServer'
-import NotFound from '../errors/NotFound'
+import toastr from 'toastr'
 
 // --------------- User being viewed ---------------
 export const setViewingUser = (user) => ({
@@ -30,11 +27,14 @@ export const updateUser = (token, id, user) => async (dispatch) => {
   try {
     const res = await userService.updateUser(token, id, user)
 
-    if (res?.status === 401) { return new UnauthorizedUserLogin('Not authorized.') }
-    if (res?.status === 404) { return new NotFound('User was not found.') }
-    dispatch(updateUserSuccess({ id, ...user }))
+    if (res?.status === 401) { toastr.error('Notandi er ekki innskráður.') }
+    if (res?.status === 404) { toastr.error('Notandi fannst ekki.') }
+    if (res?.status === 204) {
+      toastr.success('Notandi hefur verið uppfærður!')
+      dispatch(updateUserSuccess({ id, ...user }))
+    }
   } catch (err) {
-    return new FailedToConnectToServer('Could not connect to server.')
+    toastr.error('Ekki náðist samband við netþjón.')
   }
 }
 
@@ -46,12 +46,16 @@ const updateUserSuccess = (user) => ({
 export const createUser = (token, user) => async (dispatch) => {
   try {
     const body = await userService.createUser(token, user)
+    console.log(body?.status)
 
-    if (body?.status === 400) { return new EmailAlreadyExists('Email already exists.') }
-    if (body?.status === 401) { return new UnauthorizedUserLogin('Not authorized.') }
-    dispatch(createUserSuccess({ id: body.id, ...user }))
+    if (body?.status === 400) { toastr.error('Netfang er nú þegar í notkun.') }
+    if (body?.status === 401) { toastr.error('Notandi er ekki innskráður.') }
+    if (body?.id) {
+      toastr.success('Nýjum notanda hefur verið bætt við!')
+      dispatch(createUserSuccess({ id: body.id, ...user }))
+    }
   } catch (err) {
-    return new FailedToConnectToServer('Could not connect to server.')
+    toastr.error('Ekki náðist samband við netþjón.')
   }
 }
 

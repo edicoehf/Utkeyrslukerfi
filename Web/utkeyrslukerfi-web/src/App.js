@@ -1,28 +1,29 @@
 import './styles/navbar.css'
 import './styles/main.css'
 import { Route, Switch } from 'react-router-dom'
-import { connect, useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import Home from './views/Home'
 import Users from './views/Users'
 import User from './views/User'
 import Deliveries from './views/Deliveries'
 import Container from './components/Container'
 import React, { useEffect } from 'react'
+import UpdatePasswordForm from './components/UpdatePasswordForm'
 import Login from './components/Login'
 import Delivery from './components/Delivery'
 import Package from './components/Package'
 import Navbar from './components/Navbar'
 import CreateUserForm from './views/CreateUserForm'
 import NotFound from './views/NotFound'
-import UpdatePasswordForm from './views/UpdatePasswordForm'
 import { getLogin } from './actions/loginActions'
 
-const App = ({ getLogin }) => {
+const App = () => {
   const token = useSelector(({ login }) => login.token)
   const changePassword = useSelector(({ login }) => login.changePassword)
+  const dispatch = useDispatch()
 
   useEffect(() => {
-    getLogin()
+    dispatch(getLogin())
   }, [])
 
   if (!token || token === '') {
@@ -50,4 +51,4 @@ const App = ({ getLogin }) => {
   )
 }
 
-export default connect(null, { getLogin })(App)
+export default App

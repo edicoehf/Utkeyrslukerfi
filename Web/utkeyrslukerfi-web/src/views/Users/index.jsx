@@ -1,19 +1,22 @@
 import React, { useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
-import { connect, useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { getUsers } from '../../actions/usersActions'
 import { BsPencilSquare } from 'react-icons/bs'
 import { ImPlus } from 'react-icons/im'
 import '../../styles/users.css'
+import { BsFunnel } from 'react-icons/bs'
 
-const Users = ({ getUsers }) => {
+// Users - display all users in a table
+const Users = () => {
   const history = useHistory()
   const token = useSelector(({ login }) => login.token)
   const users = useSelector(({ users }) => users)
+  const dispatch = useDispatch()
 
   useEffect(() => {
     if (token) {
-      getUsers(token)
+      dispatch(getUsers(token))
     }
   }, [token])
 
@@ -56,6 +59,7 @@ const Users = ({ getUsers }) => {
               Starf
             </th>
             <th>
+              <BsFunnel size='2em' color='white' />
               {/* Leave this empty, it's for the edit pen icon */}
             </th>
           </tr>
@@ -87,4 +91,4 @@ const Users = ({ getUsers }) => {
   )
 }
 
-export default connect(null, { getUsers })(Users)
+export default Users
