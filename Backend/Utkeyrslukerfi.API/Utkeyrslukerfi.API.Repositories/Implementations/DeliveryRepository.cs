@@ -131,7 +131,10 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
             if (tempDelivery == null) { throw new NotFoundException("Delivery not found."); }
 
             // Get vehicle
+            // TODO: Add check if vehicle is 0
             var vehicle = _dbContext.Vehicles.FirstOrDefault(v => v.ID == delivery.VehicleID);
+            System.Console.WriteLine("Before vehicle, which was not found or other error!");
+            System.Console.WriteLine(delivery.VehicleID);
             if (vehicle == null) { throw new NotFoundException("Vehicle not found!"); }
 
             // Get driver 
@@ -162,6 +165,7 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
             tempDelivery.Driver = driver;
             tempDelivery.Packages = tempDelivery.Packages;
             tempDelivery.Signoff = tempDelivery.Signoff;
+            System.Console.WriteLine("updating delivery called");
             // Save changes
             _dbContext.SaveChanges();
         }
