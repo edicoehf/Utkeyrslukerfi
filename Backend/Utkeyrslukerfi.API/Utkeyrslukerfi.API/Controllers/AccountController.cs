@@ -62,6 +62,22 @@ namespace Utkeyrslukerfi.API.Controllers
 
         }
 
+        [AllowAnonymous]
+        [HttpPost]
+        [Route("driverlogin")]
+        public IActionResult DriverLogin([FromBody] DriverLoginInputModel login)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest("User creadentials are invalid!");
+            }
+            var user = _accountService.DriverLogin(login);
+            var token = _tokenService.GenerateJwtToken(user);
+
+            return Ok(new LoginDto() { Token = token, ChangePassword = user.ChangePassword });
+
+        }
+
         [HttpGet]
         [Route("logout")]
         public IActionResult Logout()

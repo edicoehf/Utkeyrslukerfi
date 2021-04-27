@@ -68,6 +68,15 @@ namespace Utkeyrslukerfi.API.Controllers
             return Ok(users);
         }
 
+        [AllowAnonymous]
+        [HttpGet]
+        [Route("drivers")]
+        public IActionResult GetDrivers()
+        {
+            var users = _userService.GetDrivers();
+            return Ok(users);
+        }
+
         [HttpPost]
         [Route("", Name = "CreateUser")]
         public IActionResult CreateUser([FromBody] UserInputModel user)
