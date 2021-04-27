@@ -7,6 +7,7 @@ namespace Utkeyrslukerfi.API.Services.Interfaces
     public interface IAccountService
     {
         User Login(LoginInputModel loginInputModel);
+        User DriverLogin(DriverLoginInputModel driverLoginInputModel);
         void Logout(int tokenID);
         int GetUserID(int tokenID);
     }

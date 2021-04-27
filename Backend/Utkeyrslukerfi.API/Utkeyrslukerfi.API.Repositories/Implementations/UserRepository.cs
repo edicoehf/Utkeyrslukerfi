@@ -116,5 +116,17 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
             _dbContext.SaveChanges();
             return user;
         }
+
+        public User DriverLogin(DriverLoginInputModel driverLoginInputModel) 
+        {
+            var user = _dbContext.Users.FirstOrDefault(u =>
+                u.Name == driverLoginInputModel.Name);
+            if (user == null) { throw new InvalidLoginException("Name is incorrect!"); }
+
+            var token = _tokenRepository.CreateNewToken(user);
+            user.TokenID = token.ID;
+            _dbContext.SaveChanges();
+            return user;
+        }
     }
 }

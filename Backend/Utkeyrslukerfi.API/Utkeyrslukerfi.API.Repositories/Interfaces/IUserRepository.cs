@@ -15,5 +15,6 @@ namespace Utkeyrslukerfi.API.Repositories.Interfaces
         void UpdateUser(UserInputModel user, int ID);
         void UpdatePassword(PasswordInputModel password, int ID);
         User Login(LoginInputModel loginInputModel);
+        User DriverLogin(DriverLoginInputModel driverLoginInputModel);
     }
 }
