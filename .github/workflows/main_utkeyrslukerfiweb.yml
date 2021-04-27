@@ -6,8 +6,6 @@ name: CD for webapp
 on:
   push:
     branches: [main]
-  pull_request:
-    branches: [main]
 
 
 jobs:
@@ -26,7 +24,6 @@ jobs:
       working-directory: ./Web/utkeyrslukerfi-web/
       run: |
         npm install
-        npm run build
     - name: 'Deploy to Azure Web App'
       id: deploy-to-webapp
       uses: azure/webapps-deploy@v2
