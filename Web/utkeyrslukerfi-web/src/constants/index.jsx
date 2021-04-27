@@ -20,6 +20,7 @@ export const SET_VIEWING_PACKAGE = 'SET_VIEWING_PACKAGE'
 
 export const SET_ERROR = 'SET_ERROR'
 export const RESET_ERROR = 'RESET_ERROR'
+export const GET_DRIVERS = 'GET_DRIVERS'
 
 // URLS
 export const USER_URL = 'https://localhost:5001/api/users'

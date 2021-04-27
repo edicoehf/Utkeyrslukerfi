@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { getDeliveries } from '../../actions/deliveriesActions'
 import { setDelivery } from '../../actions/deliveryActions'
+import { getDrivers } from '../../actions/usersActions'
 import '../../styles/deliveries.css'
 
 const Deliveries = () => {
@@ -14,7 +15,7 @@ const Deliveries = () => {
   useEffect(() => {
     if (token) {
       dispatch(getDeliveries(token))
-      // dispatch(get)
+      dispatch(getDrivers(token))
     }
   }, [token])
 
