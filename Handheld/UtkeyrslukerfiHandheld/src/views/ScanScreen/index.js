@@ -8,9 +8,9 @@ import StatusCodeDropdown from '../../components/StatusCodeDropdown'
 
 // This screen is used to scan multiple products and change their status
 const ScanScreen = () => {
-  // TODO: 
-    // - db stuff: get prev status, check if barcode is valid
-    // - css
+  // TODO:
+  // - db stuff: get prev status, check if barcode is valid
+  // - css
   const availableStatusCodes = useSelector(({ statusCode }) => statusCode)
 
   const [status, setStatus] = useState(2)
@@ -18,19 +18,19 @@ const ScanScreen = () => {
   const [tableData, setTableData] = useState([])
   const tableHeaders = ['Sendingarnúmer', 'Fyrri staða', 'Ný staða', '']
   const tableWidth = [100, 60, 60, 40]
-  
-  // A ref is neccessary since the remove buttons contain callbacks that reference the state at the time of creation otherwise 
+
+  // A ref is neccessary since the remove buttons contain callbacks that reference the state at the time of creation otherwise
   const tableDataRef = useRef()
 
   useEffect(() => {
-    tableDataRef.current = [ ...tableData ]
-  }), [tableData]
-  
+    tableDataRef.current = [...tableData]
+  }, [tableData])
+
   // Remove item from table, barcodes need to be unique
   const removeBarcode = (currentBarcode) => {
     setTableData(tableDataRef.current.filter(b => b[0] !== currentBarcode))
   }
-  
+
   // Add item to table
   const addBarcode = () => {
     setTableData([
@@ -39,7 +39,7 @@ const ScanScreen = () => {
         barcode,
         'hmm',
         availableStatusCodes[status],
-        <RemoveButton barcode={barcode} removeBarcode={removeBarcode} />
+        <RemoveButton key={barcode} barcode={barcode} removeBarcode={removeBarcode} />
       ]
     ])
     setBarcode('')

@@ -5,9 +5,9 @@ import CommentBox from '../../components/CommentBox'
 
 // Driver can view details about delivery, comment on it or start delivery
 const DetailsScreen = ({ route, navigation }) => {
-  // TODO: 
-    // - css
-    // - update drivers comment in db
+  // TODO:
+  // - css
+  // - update drivers comment in db
   const availableStatusCodes = useSelector(({ statusCode }) => statusCode)
   const { delivery } = route.params
   const [customerComment, setCustomerComment] = useState('')
@@ -47,7 +47,7 @@ const DetailsScreen = ({ route, navigation }) => {
       <Text>{availableStatusCodes[delivery.status]}</Text>
 
       <CommentBox label='Athugasemd viðskiptavinar' editable={false} comment={customerComment} setComment={setCustomerComment} />
-      <CommentBox label='Athugasemd bílstjóra' editable={true} comment={driverComment} setComment={setDriverComment} />
+      <CommentBox label='Athugasemd bílstjóra' editable comment={driverComment} setComment={setDriverComment} />
 
       <Button title='Vista' onPress={saveComment} />
       <Button title='Afhenda' onPress={deliver} />

@@ -5,7 +5,7 @@ import BarcodeForm from '../../components/BarcodeForm'
 // Driver can scan a delivery barcode and get details about it or deliver a delivery
 const SearchScreen = ({ navigation }) => {
   // TODO:
-    // - remove dummy data and get actual data if barcode is valid 
+  // - remove dummy data and get actual data if barcode is valid
   const [barcodeDetails, setBarcodeDetails] = useState('')
   const [barcodeDeliver, setBarcodeDeliver] = useState('')
 

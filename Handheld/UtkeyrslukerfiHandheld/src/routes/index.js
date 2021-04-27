@@ -16,7 +16,7 @@ const Tab = createBottomTabNavigator()
 const AppContainer = () => {
   return (
     <NavigationContainer>
-      <Tab.Navigator 
+      <Tab.Navigator
         initialRouteName='Scan'
         tabBarOptions={{
           tabStyle: { backgroundColor: blue }
