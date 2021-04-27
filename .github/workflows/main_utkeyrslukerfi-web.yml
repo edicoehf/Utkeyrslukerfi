@@ -1,7 +1,7 @@
 # Docs for the Azure Web Apps Deploy action: https://go.microsoft.com/fwlink/?linkid=2134798
 # More GitHub Actions for Azure: https://go.microsoft.com/fwlink/?linkid=2135048
 
-name: Azure App Service - utkeyrslukerfiweb(Production), Build and deploy NodeJS app
+name: Azure App Service - utkeyrslukerfi-web(Production), Build and deploy NodeJS app
 
 on:
   push:
@@ -10,7 +10,7 @@ on:
 
 jobs:
   build-and-deploy:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
 
     steps:
     # checkout the repo
@@ -24,16 +24,19 @@ jobs:
         node-version: '14.x'
 
     - name: npm install, build, and test
+      working-directory: ./Web/utkeyrslukerfi-web/
+      env:
+       CI: false
       run: |
+        git config core.ignorecase false
         npm install
-        npm run build --if-present
-        npm run test --if-present
-
+        npm run build
+        
     - name: Run Azure webapp deploy action using publish profile credentials
       uses: azure/webapps-deploy@v2
       with:
-        app-name: utkeyrslukerfiweb
+        app-name: utkeyrslukerfi-web
         slot-name: Production
-        publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_CA0410ED64C34060B20C44D3D032869F }}
-        package: .
+        publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_8AF0E08939DC4B888B36E94328DB613A }}
+        package: ./Web/utkeyrslukerfi-web
 
