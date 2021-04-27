@@ -9,6 +9,7 @@ namespace Utkeyrslukerfi.API.Services.Interfaces
         UserDTO GetUser(int ID);
         UserDTO GetUserByEmail(string email);
         IEnumerable<UserDTO> GetUsers(int role, int pageSize, int pageNumber);
+        IEnumerable<DriverDTO> GetDrivers();
         UserDTO CreateUser(UserInputModel user);
         void UpdateUser(UserInputModel user, int id);
         void UpdatePassword(PasswordInputModel password, int id);

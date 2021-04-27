@@ -5,6 +5,8 @@ import SearchScreen from '../views/SearchScreen'
 import DetailsScreen from '../views/DetailsScreen'
 import DeliverScreen from '../views/DeliverScreen'
 
+import { blue } from '../constants'
+
 const SearchStack = createStackNavigator()
 
 const SearchStackScreen = () => {
@@ -13,9 +15,9 @@ const SearchStackScreen = () => {
       initialRouteName='Search'
       screenOptions={{
         headerShown: true,
-        title: 'Search',
+        title: 'Leit',
         headerStyle: {
-          backgroundColor: '#fafafa'
+          backgroundColor: blue
         },
         headerTitleStyle: {
           fontWeight: 'bold'

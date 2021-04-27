@@ -48,6 +48,11 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
             Envelope<User> envelope = new Envelope<User>(pageNumber, pageSize, users);
             return _mapper.Map<IEnumerable<UserDTO>>(envelope.Items);
         }
+        public IEnumerable<DriverDTO> GetDrivers()
+        {
+            var users = _dbContext.Users.Where(u => u.Role == 3);
+            return _mapper.Map<IEnumerable<DriverDTO>>(users);
+        }
         public IEnumerable<UserDTO> GetUsersByRole(int role, int pageSize, int pageNumber)
         {
             var users = _dbContext.Users.Where(u => u.Role == role);
@@ -108,8 +113,21 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
         {
             var user = _dbContext.Users.FirstOrDefault(u =>
                 u.Email == loginInputModel.Email &&
-                u.Password == HashingHelper.HashPassword(loginInputModel.Password));
+                u.Password == HashingHelper.HashPassword(loginInputModel.Password) &&
+                u.Role != 4);
             if (user == null) { throw new InvalidLoginException("Either Email or Password is incorrect!"); }
+
+            var token = _tokenRepository.CreateNewToken(user);
+            user.TokenID = token.ID;
+            _dbContext.SaveChanges();
+            return user;
+        }
+        public User DriverLogin(DriverLoginInputModel driverLoginInputModel)
+        {
+            var user = _dbContext.Users.FirstOrDefault(u =>
+                u.Name == driverLoginInputModel.Name &&
+                u.Role == 3);
+            if (user == null) { throw new InvalidLoginException("Name is incorrect!"); }
 
             var token = _tokenRepository.CreateNewToken(user);
             user.TokenID = token.ID;
