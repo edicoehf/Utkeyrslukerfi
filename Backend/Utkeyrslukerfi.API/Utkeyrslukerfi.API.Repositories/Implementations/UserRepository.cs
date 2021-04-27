@@ -122,7 +122,6 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
             _dbContext.SaveChanges();
             return user;
         }
-
         public User DriverLogin(DriverLoginInputModel driverLoginInputModel) 
         {
             var user = _dbContext.Users.FirstOrDefault(u =>

@@ -10,11 +10,8 @@
     "lint": "eslint ."
   },
   "dependencies": {
-<<<<<<< HEAD
     "@react-native-async-storage/async-storage": "^1.15.4",
-=======
     "@react-native-community/checkbox": "^0.5.7",
->>>>>>> d78de0384c2cc63a61d4b0d6e13a72887e6edc01
     "@react-native-community/masked-view": "^0.1.10",
     "@react-navigation/bottom-tabs": "^5.11.10",
     "@react-navigation/native": "^5.9.4",
