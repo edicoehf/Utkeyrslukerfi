@@ -134,6 +134,7 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
             // Get deliveryAddress
             var deliveryAddress = _dbContext.Addresses.FirstOrDefault(a => a.ID == tempDelivery.DeliveryAddressID);
             if (deliveryAddress == null) { throw new NotFoundException("Delivery Address not found."); }
+            
 
             // Delivery
             tempDelivery.Recipient = delivery.Recipient;

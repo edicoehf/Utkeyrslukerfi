@@ -24,14 +24,15 @@ const setDelivery = (delivery) => ({
 const updateDelivery = (token, id, delivery) => async (dispatch) => {
   try {
     const res = await deliveryService.updateDelivery(token, id, delivery)
-    if (res?.status === 401) { toastr.error('401 error') }
-    if (res?.status === 404) { toastr.error('404 error') }
+    if (res?.status === 401) { toastr.error('You are unauthorized to perform this operation!') }
+    if (res?.status === 404) { toastr.error('Operation did not found!') }
+    if (res?.status === 400) { toastr.error('Bad Request.') }
     if (res?.status === 204) {
-      toastr.success('204 success')
+      toastr.success('Delivery updated successfully!')
       dispatch(updateDeliverySuccess({ id, ...delivery }))
     }
   } catch (err) {
-    toastr.error('other error')
+    toastr.error('Connection error!')
   }
 }
 

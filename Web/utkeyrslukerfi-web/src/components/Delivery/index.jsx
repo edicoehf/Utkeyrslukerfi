@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { getDelivery, setDelivery, updateDelivery } from '../../actions/deliveryActions'
+import { updateUser } from '../../actions/userActions'
 import { getPackages } from '../../actions/packageActions'
-import DeliveryAddressModal from '../DeliveryAddressModal'
+import AddressModal from '../AddressModal'
 import { useForm } from 'react-hook-form'
-import PickupAddressModal from '../PickupAddressModal'
 
 
 const Delivery = () => {
@@ -33,10 +33,6 @@ const Delivery = () => {
   useEffect(() => {
     dispatch(setDelivery(delivery))
   }, [])
-
-  // if (Object.entries(delivery).length === 0) {
-  //   dispatch(getDelivery(token, pathId))
-  // }
 
   useEffect(() => {
     if (delivery) {
@@ -74,14 +70,16 @@ const Delivery = () => {
     const newDelivery = {
       ...delivery,
       VehicleID: delivery.vehicle.id,
-      DriverId: delivery.driver.id
+      DriverID: delivery.driver.id,
     }
+    console.log("delivery: ", newDelivery)
     dispatch(updateDelivery(token, id, newDelivery))
   }
 
   const toggleDeliveryModal = () => {
     setShowDeliveryModal(state => !state)
   }
+
   const togglePickupModal = () => {
     setShowPickupModal(state => !state)
   }
@@ -127,8 +125,8 @@ const Delivery = () => {
       </div>
       <button onClick={() => setEditable(editable => !editable)} className='btn btn-outline-info m-4'>Edit</button>
       <button onClick={(event) => handleSubmit(event)} className='btn btn-success m-4 ml-auto'>Vista</button>
-      <DeliveryAddressModal canShow={showDeliveryModal} updateModalState={toggleDeliveryModal} />
-      <PickupAddressModal canShow={showPickupModal} updateModalState={togglePickupModal} />
+      <AddressModal canShow={showDeliveryModal} updateModalState={toggleDeliveryModal} isDelivery={true} />
+      <AddressModal canShow={showPickupModal} updateModalState={togglePickupModal} isDelivery={false} />
     </div>
   )
 }

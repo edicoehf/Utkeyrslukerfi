@@ -14,6 +14,7 @@ const Deliveries = () => {
   useEffect(() => {
     if (token) {
       dispatch(getDeliveries(token))
+      // dispatch(get)
     }
   }, [token])
 

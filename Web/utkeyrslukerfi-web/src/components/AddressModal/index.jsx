@@ -15,11 +15,10 @@ const customStyles = {
   }
 };
 
-const PickupAddressModal = ({ canShow, updateModalState }) => {
+const AddressModal = ({ canShow, updateModalState, isDelivery }) => {
   const delivery = useSelector(({ delivery }) => delivery)
   const dispatch = useDispatch()
-  
-  const [pickupAddress, setPickupAddress] = useState(delivery.pickupAddress)
+  const [dAddres, setDAddress] = useState(isDelivery ? delivery.deliveryAddress : delivery.pickupAddress)
   Modal.setAppElement('#root')
   let subtitle;
   function afterOpenModal() {
@@ -27,10 +26,17 @@ const PickupAddressModal = ({ canShow, updateModalState }) => {
   }
 
   const updateData = () => {
-    dispatch(setDelivery({
-      ...delivery,
-      pickupAddress: pickupAddress
-    }))
+    if (isDelivery) {
+      dispatch(setDelivery({
+        ...delivery,
+        deliveryAddress: dAddres
+      }))
+    } else {
+      dispatch(setDelivery({
+        ...delivery,
+        pickupAddress: dAddres
+      }))
+    }
     updateModalState()
   }
 
@@ -40,17 +46,17 @@ const PickupAddressModal = ({ canShow, updateModalState }) => {
         isOpen={canShow}
         onAfterOpen={afterOpenModal}
         onRequestClose={updateModalState}
-        contentLabel="Pickup Address Modal"
+        contentLabel={isDelivery ? 'Update Delivery Address' : 'Update Pickup Address'}
         style={customStyles}
       >
-        <h2 ref={_subtitle => (subtitle = _subtitle)}>Update Pickup Address</h2>
+        <h2 ref={_subtitle => (subtitle = _subtitle)}>{isDelivery ? 'Update Delivery Address' : 'Update Pickup Address'}</h2>
         <button onClick={updateModalState} className="btn btn-outline-warning">Close</button>
         <form>
           <div className="row">
-            <label className="mx-3 my-3">Street Name</label><input className='border-none my-3 ml-auto' type='text' name='streetName' onChange={e => setPickupAddress(state => ({ ...state, streetName: e.target.value }))} defaultValue={pickupAddress.streetName} />
+            <label className="mx-3 my-3">Street Name</label><input className='border-none my-3 ml-auto' type='text' name='streetName' onChange={e => setDAddress(state => ({ ...state, streetName: e.target.value }))} defaultValue={dAddres.streetName} />
           </div>
           <div className="row">
-            <label className="mx-3 my-3">House Number</label><input className='border-none my-3 ml-auto' type='text' name='houseNumber' onChange={e => setPickupAddress(state => ({ ...state, houseNumber: e.target.value }))} defaultValue={pickupAddress.houseNumber} />
+            <label className="mx-3 my-3">House Number</label><input className='border-none my-3 ml-auto' type='text' name='houseNumber' onChange={e => setDAddress(state => ({ ...state, houseNumber: e.target.value }))} defaultValue={dAddres.houseNumber} />
           </div>
         </form>
         <button className="btn btn-primary" onClick={updateData}>Update</button>
@@ -60,4 +66,4 @@ const PickupAddressModal = ({ canShow, updateModalState }) => {
   return null;
 }
 
-export default PickupAddressModal
+export default AddressModal
