@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { getDelivery, setDelivery, updateDelivery } from '../../actions/deliveryActions'
 import { getPackages } from '../../actions/packageActions'
 import DeliveryAddressModal from '../DeliveryAddressModal'
+import { useForm } from 'react-hook-form'
 import PickupAddressModal from '../PickupAddressModal'
 
 
@@ -12,6 +13,7 @@ const Delivery = () => {
   const delivery = useSelector(({ delivery }) => delivery)
   const token = useSelector(({ login }) => login.token)
   const dispatch = useDispatch()
+  const methods = useForm()
 
   const { id } = useParams()
   const history = useHistory()
@@ -35,6 +37,13 @@ const Delivery = () => {
   // if (Object.entries(delivery).length === 0) {
   //   dispatch(getDelivery(token, pathId))
   // }
+
+  useEffect(() => {
+    if (delivery) {
+      methods.setValue('deliveryAddress', delivery.deliveryAddress.streetName)
+      methods.setValue('pickupAddress', delivery.pickupAddress.streetName)
+    }
+  }, [delivery])
 
 
   const navigateToPackage = (obj) => {
@@ -93,10 +102,10 @@ const Delivery = () => {
             <label className='mt-3 mx-3'>Driver</label><input className='border-none my-3 ml-auto' disabled={editable} type='text' name='driver' onChange={e => dispatch(setDelivery({ ...delivery, driver: { ...delivery.driver, name: e.target.value } }))} defaultValue={driver} />
           </div>
           <div className='row'>
-            <label className='mt-3 mx-3'>DeliveryAddress</label><input className='border-none my-3 ml-auto' disabled={editable} type='text' name='deliveryAddress' onClick={toggleDeliveryModal} defaultValue={deliveryAddress} />
+            <label className='mt-3 mx-3'>DeliveryAddress</label><input className='border-none my-3 ml-auto' disabled={editable} type='text' name='deliveryAddress' onClick={toggleDeliveryModal} value={deliveryAddress} />
           </div>
           <div className='row'>
-            <label className='mt-3 mx-3'>PickupAddress</label><input className='border-none my-3 ml-auto' disabled={editable} type='text' name='pickupAddress' onClick={togglePickupModal} defaultValue={pickupAddress} />
+            <label className='mt-3 mx-3'>PickupAddress</label><input className='border-none my-3 ml-auto' disabled={editable} type='text' name='pickupAddress' onClick={togglePickupModal} value={pickupAddress} />
           </div>
           <div className='row'>
             <label className='mt-3 mx-3'>Vehicle</label><input className='border-none my-3 ml-auto' disabled={editable} type='text' name='licensePlate' onChange={e => dispatch(setDelivery({ ...delivery, vehicle: { ...delivery.vehicle, licensePlate: e.target.value } }))} defaultValue={vehicle} />
