@@ -53,6 +53,7 @@ const CreateUserForm = () => {
                 <option value='1'>Admin</option>
                 <option value='2'>Office</option>
                 <option value='3'>Driver</option>
+                <option value='4'>Disabled</option>
               </>
             }
             typeOfForm='CreateUser'
