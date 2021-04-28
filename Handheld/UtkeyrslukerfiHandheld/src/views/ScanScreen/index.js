@@ -57,7 +57,7 @@ const ScanScreen = () => {
   const updateDeliveries = async () => {
     try {
       let deliveriesData = { 'deliveries': tableData.map(d => { return {'id': d[0], 'status': d[4]} }) }
-      let res = await deliveryService.updateDeliveries(token, deliveriesData)
+      await deliveryService.updateDeliveries(token, deliveriesData)
       setTableData([])
     } catch (error) {
       console.log(error)
