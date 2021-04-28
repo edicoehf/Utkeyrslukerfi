@@ -7,6 +7,11 @@ const userService = () => {
         Authorization: `Bearer ${token}`
       }
     }).then(d => d.json()).then(d => d),
+    getDrivers: (token) => fetch(USER_URL + '/drivers', {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }).then(d => d.json()).then(d => d),
     getUser: (token, id) => fetch(USER_URL + `/${id}`, {
       headers: {
         Authorization: `Bearer ${token}`

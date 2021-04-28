@@ -17,23 +17,24 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
         private readonly UtkeyrslukerfiDbContext _dbContext;
         private readonly IMapper _mapper;
         private readonly IAddressRepository _addressRepository;
+        private readonly IEnumerable<Delivery> _deliveryObj;
 
         public DeliveryRepository(IMapper mapper, UtkeyrslukerfiDbContext dbContext, IAddressRepository addressRepository)
         {
             _dbContext = dbContext;
             _mapper = mapper;
             _addressRepository = addressRepository;
-        }
-
-        public DeliveryDTO GetDelivery(string ID)
-        {
-            var delivery = _dbContext.Deliveries
+            _deliveryObj = _dbContext.Deliveries
                             .Include(d => d.PickupAddress)
                             .Include(d => d.DeliveryAddress)
                             .Include(d => d.Driver)
                             .Include(d => d.Vehicle)
-                            .Include(d => d.Packages)
-                            .FirstOrDefault(d => d.ID == ID);
+                            .Include(d => d.Packages);
+        }
+
+        public DeliveryDTO GetDelivery(string ID)
+        {
+            var delivery = _deliveryObj.FirstOrDefault(d => d.ID == ID);
             if (delivery == null)
             {
                 throw new NotFoundException($"Did not find delivery with id {ID}");
@@ -44,27 +45,14 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
 
         public IEnumerable<DeliveryDTO> GetDeliveries(int pageSize, int pageNumber)
         {
-            var deliveries = _dbContext.Deliveries
-                              .Include(d => d.PickupAddress)
-                              .Include(d => d.DeliveryAddress)
-                              .Include(d => d.Driver)
-                              .Include(d => d.Vehicle)
-                              .Include(d => d.Packages)
-                              .ToList();
+            var deliveries = _deliveryObj.ToList();
             Envelope<Delivery> envelope = new(pageNumber, pageSize, deliveries);
             return _mapper.Map<IEnumerable<DeliveryDTO>>(envelope.Items);
         }
 
         public IEnumerable<DeliveryDTO> GetDeliveriesByStatus(int status, int pageSize, int pageNumber)
         {
-            var deliveries = _dbContext.Deliveries
-                              .Include(d => d.PickupAddress)
-                              .Include(d => d.DeliveryAddress)
-                              .Include(d => d.Driver)
-                              .Include(d => d.Vehicle)
-                              .Include(d => d.Packages)
-                              .Where(d => d.Status == status)
-                              .ToList();
+            var deliveries = _deliveryObj.ToList();
 
             Envelope<Delivery> envelope = new(pageNumber, pageSize, deliveries);
             return _mapper.Map<IEnumerable<DeliveryDTO>>(envelope.Items);
@@ -79,22 +67,32 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
             // Get vehicle
             var vehicle = _dbContext.Vehicles.FirstOrDefault(v => v.ID == delivery.VehicleID);
             if (vehicle == null) { throw new NotFoundException("Vehicle not registered."); }
+            System.Console.WriteLine("Street name: ", delivery.PickupAddressStreetName);
 
             // Create PickupAddress
-            var pickupAddress = _addressRepository.CreateAddress(
-                delivery.PickupAddressStreetName,
-                delivery.PickupAddressHouseNumber,
-                delivery.PickupAddressZipCode,
-                delivery.PickupAddressCity,
-                delivery.PickupAddressCountry);
+            var pickupAddress = new Address
+            {
+                StreetName = delivery.PickupAddressStreetName,
+                HouseNumber = delivery.PickupAddressHouseNumber,
+                ZipCode = delivery.PickupAddressZipCode,
+                Country = delivery.PickupAddressCountry,
+                City = delivery.PickupAddressCity,
+            };
+
+            _dbContext.Addresses.Add(pickupAddress);
+
 
             // Create DeliveryAddress
-            var deliveryAddress = _addressRepository.CreateAddress(
-                delivery.DeliveryAddressStreetName,
-                delivery.DeliveryAddressHouseNumber,
-                delivery.DeliveryAddressZipCode,
-                delivery.DeliveryAddressCity,
-                delivery.DeliveryAddressCountry);
+            var deliveryAddress = new Address
+            {
+                StreetName = delivery.DeliveryAddressStreetName,
+                HouseNumber = delivery.DeliveryAddressHouseNumber,
+                ZipCode = delivery.DeliveryAddressZipCode,
+                City = delivery.DeliveryAddressCity,
+                Country = delivery.DeliveryAddressCountry
+            };
+
+            _dbContext.Addresses.Add(pickupAddress);
 
             // Create Delivery
             var entity = new Delivery
@@ -129,19 +127,18 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
             // Get delivery
             var tempDelivery = _dbContext.Deliveries.FirstOrDefault(d => d.ID == id);
             if (tempDelivery == null) { throw new NotFoundException("Delivery not found."); }
-
             // Get vehicle
+            // TODO: Add check if vehicle is 0
             var vehicle = _dbContext.Vehicles.FirstOrDefault(v => v.ID == delivery.VehicleID);
             if (vehicle == null) { throw new NotFoundException("Vehicle not found!"); }
-
             // Get driver 
             var driver = _dbContext.Users.FirstOrDefault(u => u.ID == delivery.DriverID);
-            if (driver == null) { throw new NotFoundException("User not found."); }
+            if (driver == null) { throw new NotFoundException("Driver is not found."); }
 
             // Get pickupAddress
             var pickupAddress = _dbContext.Addresses.FirstOrDefault(a => a.ID == tempDelivery.PickupAddressID);
             if (pickupAddress == null) { throw new NotFoundException("Pickup Address not found."); }
-
+            System.Console.Write("delivery: " + tempDelivery.DeliveryAddressID);
             // Get deliveryAddress
             var deliveryAddress = _dbContext.Addresses.FirstOrDefault(a => a.ID == tempDelivery.DeliveryAddressID);
             if (deliveryAddress == null) { throw new NotFoundException("Delivery Address not found."); }
@@ -153,9 +150,9 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
             tempDelivery.Seller = delivery.Seller;
             tempDelivery.Status = delivery.Status;
             // Address
-            tempDelivery.PickupAddressID = pickupAddress.ID;
+            tempDelivery.PickupAddressID = delivery.PickupAddressID;
             tempDelivery.PickupAddress = pickupAddress;
-            tempDelivery.DeliveryAddressID = deliveryAddress.ID;
+            tempDelivery.DeliveryAddressID = delivery.DeliveryAddressID;
             tempDelivery.DeliveryAddress = deliveryAddress;
             // Vehicle
             tempDelivery.Vehicle = vehicle;

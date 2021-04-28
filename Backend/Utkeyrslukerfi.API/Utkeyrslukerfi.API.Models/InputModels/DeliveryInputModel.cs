@@ -13,12 +13,14 @@ namespace Utkeyrslukerfi.API.Models.InputModels
         public string CustomerComment { get; set; }
         public int Status { get; set; }
         // pickup address
+        public int PickupAddressID { get; set; }
         public string PickupAddressStreetName { get; set; }
         public string PickupAddressHouseNumber { get; set; }
         public string PickupAddressZipCode { get; set; }
         public string PickupAddressCity { get; set; }
         public string PickupAddressCountry { get; set; }
         // deliveries address
+        public int DeliveryAddressID { get; set; }
         public string DeliveryAddressStreetName { get; set; }
         public string DeliveryAddressHouseNumber { get; set; }
         public string DeliveryAddressZipCode { get; set; }

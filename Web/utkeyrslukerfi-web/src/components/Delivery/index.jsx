@@ -1,19 +1,30 @@
 import React, { useState, useEffect } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { getDelivery } from '../../actions/deliveryActions'
+import { getDelivery, setDelivery, updateDelivery } from '../../actions/deliveryActions'
+import { createAddress } from '../../actions/addressActions'
 import { getPackages } from '../../actions/packageActions'
+import AddressModal from '../AddressModal'
+import { useForm } from 'react-hook-form'
+
 import configData from '../../constants/config.json'
 
 const Delivery = () => {
   const packages = useSelector(({ packages }) => packages)
   const delivery = useSelector(({ delivery }) => delivery)
+  const address = useSelector(({ address }) => address)
+  const users = useSelector(({ users }) => users)
   const token = useSelector(({ login }) => login.token)
   const dispatch = useDispatch()
+  const methods = useForm()
 
   const { id } = useParams()
   const history = useHistory()
-  const [deliveryObj, setDeliveryObj] = useState(delivery)
+
+
+  if (Object.entries(delivery).length === 0) {
+    dispatch(getDelivery(token, id))
+  }
 
   useEffect(() => {
     if (token) {
@@ -21,15 +32,34 @@ const Delivery = () => {
     }
   }, [token])
 
-  if (Object.entries(deliveryObj).length === 0) {
-    dispatch(getDelivery(token, id))
-  }
+
+  useEffect(() => {
+    dispatch(setDelivery(delivery))
+  }, [])
+
+  useEffect(() => {
+    if (delivery) {
+      methods.setValue('deliveryAddress', delivery.deliveryAddress.streetName)
+      methods.setValue('pickupAddress', delivery.pickupAddress.streetName)
+    }
+  }, [delivery])
+
 
   const navigateToPackage = (obj) => {
     history.push(`/deliveries/${id}/packages/${obj.id}`, { params: obj })
   }
 
+  const deliveryAddress = `${delivery.deliveryAddress.streetName}  ${delivery.deliveryAddress.houseNumber}`
+  const pickupAddress = `${delivery.pickupAddress.streetName}  ${delivery.pickupAddress.houseNumber}`
+  const vehicle = delivery.vehicle.licensePlate
+  const driver = delivery.driver.name
+
   const [editable, setEditable] = useState(true)
+  const [showDeliveryModal, setShowDeliveryModal] = useState(false)
+  const [showPickupModal, setShowPickupModal] = useState(false)
+
+  const [deliveryAddChanged, setDeliveryAddChanged] = useState(false)
+  const [pickupAddChanged, setPickupAddChanged] = useState(false)
 
   const handleChange = (e) => {
     const key = e.target.name
@@ -38,14 +68,60 @@ const Delivery = () => {
     Object.keys(tempObj).forEach(k => {
       if (k === key) { tempObj[k] = newVal }
     })
-    setDeliveryObj(tempObj)
+    dispatch(setDelivery(tempObj))
   }
 
   const handleSubmit = (event) => {
     event.preventDefault()
-    console.log('deliveryObj: ', deliveryObj)
-    // TODO: make the patch request to udpate delivery
+    const newDelivery = {
+      ...delivery,
+      VehicleID: delivery.vehicle.id,
+      DriverID: delivery.DriverID
+    }
+    if (deliveryAddChanged) {
+      dispatch(createAddress(token, newDelivery.deliveryAddress))
+      if (address[1]) {
+        newDelivery.DeliveryAddressID = address[1]
+      }
+    }
+    if (pickupAddChanged) {
+      dispatch(createAddress(token, newDelivery.pickupAddress))
+      if (address[1]) {
+        newDelivery.PickupAddressID = address[1]
+      }
+    }
+    dispatch(updateDelivery(token, id, newDelivery))
+    console.log("deliveryAddress: ", newDelivery)
   }
+
+  const toggleDeliveryModal = () => {
+    setShowDeliveryModal(state => !state)
+  }
+
+  const togglePickupModal = () => {
+    setShowPickupModal(state => !state)
+  }
+
+  const populateOptions = (options) => {
+    return options.map((option, index) => (
+      <option key={index} value={option.id} selected={driver === option.name ? true : false} >{option.name}</option>
+    ))
+  }
+
+  const onDriverChange = (e) => {
+    delivery.DriverID = e.target.value
+    dispatch(setDelivery(delivery))
+  }
+
+  const updateAddressesState = (didCh, val) => {
+    if (val === 'delivery') {
+      setDeliveryAddChanged(true)
+    }
+    if (val === 'pickup') {
+      setPickupAddChanged(true)
+    }
+  }
+
   return (
     // TODO: make selection list for available options such as driver, vehicle, status etc.
     <div className='row align-items-start border rounded shadow mt-3 pr-2'>
@@ -62,29 +138,37 @@ const Delivery = () => {
             <label className='mt-3 mx-3'>Seller</label><input className='border-none my-3 ml-auto' disabled={editable} type='text' name='seller' onChange={handleChange} defaultValue={delivery?.seller} />
           </div>
           <div className='row'>
-            <label className='mt-3 mx-3'>Driver</label><input className='border-none my-3 ml-auto' disabled={editable} type='text' name='driver' onChange={e => setDeliveryObj(state => ({ ...state, driver: { ...state.driver, name: e.target.value } }))} defaultValue={delivery?.driver.name} />
+            {/* <label className='mt-3 mx-3'>Driver</label><input className='border-none my-3 ml-auto' disabled={editable} type='text' name='driver' onChange={e => dispatch(setDelivery({ ...delivery, driver: { ...delivery.driver, name: e.target.value } }))} defaultValue={driver} /> */}
+            <label className='mt-3 mx-3'>Driver</label>
+            <select onChange={onDriverChange} className='border-none my-3 ml-auto'>
+              {populateOptions(users)}
+            </select>
           </div>
           <div className='row'>
-            <label className='mt-3 mx-3'>DeliveryAddress</label><input className='border-none my-3 ml-auto' disabled={editable} type='text' name='deliveryAddress' onChange={handleChange} defaultValue={`${delivery?.deliveryAddress.streetName}  ${delivery?.deliveryAddress.houseNumber}`} />
+            <label className='mt-3 mx-3'>DeliveryAddress</label><input className='border-none my-3 ml-auto' disabled={editable} type='text' name='deliveryAddress' onClick={toggleDeliveryModal} value={deliveryAddress} />
           </div>
           <div className='row'>
-            <label className='mt-3 mx-3'>PickupAddress</label><input className='border-none my-3 ml-auto' disabled={editable} type='text' name='pickupAddress' onChange={handleChange} defaultValue={`${delivery?.pickupAddress.streetName}  ${delivery?.pickupAddress.houseNumber}`} />
+            <label className='mt-3 mx-3'>PickupAddress</label><input className='border-none my-3 ml-auto' disabled={editable} type='text' name='pickupAddress' onClick={togglePickupModal} value={pickupAddress} />
           </div>
           <div className='row'>
-            <label className='mt-3 mx-3'>Vehicle</label><input className='border-none my-3 ml-auto' disabled={editable} type='text' name='licensePlate' onChange={e => setDeliveryObj(state => ({ ...state, vehicle: { ...state.vehicle, licensePlate: e.target.value } }))} defaultValue={delivery?.vehicle.licensePlate} />
+            <label className='mt-3 mx-3'>Vehicle</label><input className='border-none my-3 ml-auto' disabled={editable} type='text' name='licensePlate' onChange={e => dispatch(setDelivery({ ...delivery, vehicle: { ...delivery.vehicle, licensePlate: e.target.value } }))} defaultValue={vehicle} />
           </div>
         </form>
       </div>
       <div className='col col-md-6 border mt-2 px-auto pt-1'>
         <p>Packages</p>
         {
-          packages.map(function (obj) {
-            return <p key={obj.id} onClick={() => navigateToPackage(obj)}>ID/Barcode: {obj.id}</p>
-          })
+          packages.length !== 0 ? <> {
+            packages.map(function (obj) {
+              return <p key={obj.id} onClick={() => navigateToPackage(obj)}>ID/Barcode: {obj.id}</p>
+            })
+          } </> : <> <p>No packages found</p></>
         }
       </div>
       <button onClick={() => setEditable(editable => !editable)} className='btn btn-outline-info m-4'>Edit</button>
       <button onClick={(event) => handleSubmit(event)} className='btn btn-success m-4 ml-auto'>Vista</button>
+      <AddressModal canShow={showDeliveryModal} updateModalState={toggleDeliveryModal} didChange={updateAddressesState} isDelivery={true} />
+      <AddressModal canShow={showPickupModal} updateModalState={togglePickupModal} didChange={updateAddressesState} isDelivery={false} />
     </div>
   )
 }
