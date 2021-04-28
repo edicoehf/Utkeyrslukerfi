@@ -22,7 +22,8 @@ export const SET_ERROR = 'SET_ERROR'
 export const RESET_ERROR = 'RESET_ERROR'
 export const GET_DRIVERS = 'GET_DRIVERS'
 
-export const CREATE_ADDRESS = 'CREATE_ADDRESS'
+export const CREATE_DELIVERY_ADDRESS = 'CREATE_DELIVERY_ADDRESS'
+export const CREATE_PICKUP_ADDRESS = 'CREATE_PICKUP_ADDRESS'
 
 // URLS
 export const USER_URL = 'https://localhost:5001/api/users'

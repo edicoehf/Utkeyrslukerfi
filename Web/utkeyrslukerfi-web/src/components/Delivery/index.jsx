@@ -2,12 +2,13 @@ import React, { useState, useEffect } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { getDelivery, setDelivery, updateDelivery } from '../../actions/deliveryActions'
-import { createAddress } from '../../actions/addressActions'
+import { createDeliveryAddress, createPickupAddress } from '../../actions/addressActions'
 import { getPackages } from '../../actions/packageActions'
 import AddressModal from '../AddressModal'
 import { useForm } from 'react-hook-form'
 
 import configData from '../../constants/config.json'
+import deliveryService from '../../services/deliveryService'
 
 const Delivery = () => {
   const packages = useSelector(({ packages }) => packages)
@@ -76,22 +77,23 @@ const Delivery = () => {
     const newDelivery = {
       ...delivery,
       VehicleID: delivery.vehicle.id,
-      DriverID: delivery.DriverID
+      DriverID: delivery.DriverID ? delivery.DriverID : delivery.driver.id
     }
     if (deliveryAddChanged) {
-      dispatch(createAddress(token, newDelivery.deliveryAddress))
-      if (address[1]) {
-        newDelivery.DeliveryAddressID = address[1]
+      dispatch(createDeliveryAddress(token, newDelivery.deliveryAddress))
+      console.log(address)
+      if (address.deliveryAddress.streetName) {
+        newDelivery.DeliveryAddressID = address.id
       }
     }
     if (pickupAddChanged) {
-      dispatch(createAddress(token, newDelivery.pickupAddress))
-      if (address[1]) {
-        newDelivery.PickupAddressID = address[1]
+      dispatch(createPickupAddress(token, newDelivery.pickupAddress))
+      if (address.pickupAddress.streetName) {
+        newDelivery.PickupAddressID = address.id
       }
     }
     dispatch(updateDelivery(token, id, newDelivery))
-    console.log("deliveryAddress: ", newDelivery)
+    console.log("delivery: ", newDelivery)
   }
 
   const toggleDeliveryModal = () => {

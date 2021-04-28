@@ -67,7 +67,6 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
             // Get vehicle
             var vehicle = _dbContext.Vehicles.FirstOrDefault(v => v.ID == delivery.VehicleID);
             if (vehicle == null) { throw new NotFoundException("Vehicle not registered."); }
-            System.Console.WriteLine("Street name: ", delivery.PickupAddressStreetName);
 
             // Create PickupAddress
             var pickupAddress = new Address
@@ -127,18 +126,20 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
             // Get delivery
             var tempDelivery = _dbContext.Deliveries.FirstOrDefault(d => d.ID == id);
             if (tempDelivery == null) { throw new NotFoundException("Delivery not found."); }
+            
             // Get vehicle
             // TODO: Add check if vehicle is 0
             var vehicle = _dbContext.Vehicles.FirstOrDefault(v => v.ID == delivery.VehicleID);
             if (vehicle == null) { throw new NotFoundException("Vehicle not found!"); }
+            
             // Get driver 
             var driver = _dbContext.Users.FirstOrDefault(u => u.ID == delivery.DriverID);
             if (driver == null) { throw new NotFoundException("Driver is not found."); }
-
+            
             // Get pickupAddress
             var pickupAddress = _dbContext.Addresses.FirstOrDefault(a => a.ID == tempDelivery.PickupAddressID);
             if (pickupAddress == null) { throw new NotFoundException("Pickup Address not found."); }
-            System.Console.Write("delivery: " + tempDelivery.DeliveryAddressID);
+            
             // Get deliveryAddress
             var deliveryAddress = _dbContext.Addresses.FirstOrDefault(a => a.ID == tempDelivery.DeliveryAddressID);
             if (deliveryAddress == null) { throw new NotFoundException("Delivery Address not found."); }
@@ -150,7 +151,9 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
             tempDelivery.Seller = delivery.Seller;
             tempDelivery.Status = delivery.Status;
             // Address
-            tempDelivery.PickupAddressID = delivery.PickupAddressID;
+            System.Console.WriteLine("pickup: "+ delivery.PickupAddressID);
+            System.Console.WriteLine("delivery: "+ delivery.DeliveryAddressID);
+            // tempDelivery.PickupAddressID = delivery.PickupAddressID;
             tempDelivery.PickupAddress = pickupAddress;
             tempDelivery.DeliveryAddressID = delivery.DeliveryAddressID;
             tempDelivery.DeliveryAddress = deliveryAddress;
