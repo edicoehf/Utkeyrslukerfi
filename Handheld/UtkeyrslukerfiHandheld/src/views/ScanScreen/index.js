@@ -36,7 +36,7 @@ const ScanScreen = () => {
   const addBarcode = async () => {
     try {
       // Check if barcode is valid
-      let delivery = await deliveryService.getDelivery(token, barcode)
+      const delivery = await deliveryService.getDelivery(token, barcode)
       setTableData([
         [
           barcode,
@@ -56,7 +56,7 @@ const ScanScreen = () => {
   // Update status for all deliveries currently in table
   const updateDeliveries = async () => {
     try {
-      let deliveriesData = { 'deliveries': tableData.map(d => { return {'id': d[0], 'status': d[4]} }) }
+      const deliveriesData = { deliveries: tableData.map(d => { return { id: d[0], status: d[4] } }) }
       await deliveryService.updateDeliveries(token, deliveriesData)
       setTableData([])
     } catch (error) {

@@ -14,7 +14,7 @@ const SearchScreen = ({ navigation }) => {
 
   // Got to details/deliver page if delivery exists
   const searchForDelivery = async () => {
-    let delivery = await getDelivery(barcodeDetails)
+    const delivery = await getDelivery(barcodeDetails)
     setBarcodeDetails('')
     if (delivery) {
       navigation.navigate('Details', { delivery: delivery })
@@ -23,7 +23,7 @@ const SearchScreen = ({ navigation }) => {
 
   // Go to deliver page if delivery exists
   const deliverDelivery = async () => {
-    let delivery = await getDelivery(barcodeDeliver)
+    const delivery = await getDelivery(barcodeDeliver)
     setBarcodeDeliver('')
     if (delivery) {
       navigation.navigate('Deliver', { delivery: delivery })
@@ -33,17 +33,17 @@ const SearchScreen = ({ navigation }) => {
   const getDelivery = async (barcode) => {
     if (!barcode) {
       ToastAndroid.show('Strikamerki er ekki til staðar', ToastAndroid.LONG)
-      return 
+      return
     }
     try {
-      let del = await deliveryService.getDelivery(token, barcode)
+      const del = await deliveryService.getDelivery(token, barcode)
       if (del?.errors) {
         ToastAndroid.show(del.errors.Message[0], ToastAndroid.LONG)
         return
       }
       return del
     } catch (error) {
-      ToastAndroid.show(error, ToastAndroid.LONG);
+      ToastAndroid.show(error, ToastAndroid.LONG)
     }
   }
 

@@ -23,11 +23,11 @@ const DetailsScreen = ({ route, navigation }) => {
   const saveComment = async () => {
     try {
       delivery.driverComment = driverComment // Update delivery
-      let res = await deliveryService.updateDelivery(token, delivery)
-      if (res?.status == 400) { ToastAndroid.show('Óheimil beiðni.', ToastAndroid.LONG) }
-      if (res?.status == 401) { ToastAndroid.show('Notandi er ekki innskráður.', ToastAndroid.LONG) }
-      if (res?.status == 404) { ToastAndroid.show('Sending fannst ekki.', ToastAndroid.LONG) }
-      if (res?.status == 204) { ToastAndroid.show('Gögn vistuð', ToastAndroid.LONG) }
+      const res = await deliveryService.updateDelivery(token, delivery)
+      if (res?.status === 400) { ToastAndroid.show('Óheimil beiðni.', ToastAndroid.LONG) }
+      if (res?.status === 401) { ToastAndroid.show('Notandi er ekki innskráður.', ToastAndroid.LONG) }
+      if (res?.status === 404) { ToastAndroid.show('Sending fannst ekki.', ToastAndroid.LONG) }
+      if (res?.status === 204) { ToastAndroid.show('Gögn vistuð', ToastAndroid.LONG) }
     } catch (error) {
       ToastAndroid.show('Ekki náðist samband við netþjón', ToastAndroid.LONG)
     }
