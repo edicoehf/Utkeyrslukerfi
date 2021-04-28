@@ -18,6 +18,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Utkeyrslukerfi.API.Middlewares;
 using Hangfire;
 using Hangfire.MemoryStorage;
+using System.Collections.Specialized;
 
 namespace Utkeyrslukerfi.API
 {
@@ -100,6 +101,9 @@ namespace Utkeyrslukerfi.API
             IMapper mapper = mapperConfig.CreateMapper();
             services.AddSingleton(mapper);
 
+            // adding configuration so it can be accesed from other classes
+            services.AddSingleton<IConfiguration>(Configuration);
+
             // Adding Transients
             // maps the Interface to the Implementation
             // and adds the Service to every controller
@@ -129,6 +133,7 @@ namespace Utkeyrslukerfi.API
             services.AddTransient<ITokenRepository, TokenRepository>();
             services.AddTransient<IPackageRepository, PackageRepository>();
             services.AddTransient<IVehicleRepository, VehicleRepository>();
+            services.AddTransient<IFetchDataRepository, FetchDataRepository>();
 
         }
 
@@ -166,13 +171,7 @@ namespace Utkeyrslukerfi.API
                 endpoints.MapControllers();
             });
             // starting cron jobs with hangfire
-            var externalAPIConfig = Configuration.GetSection("ExternalAPIConfig");
-
-            RecurringJob.AddOrUpdate<IFetchDataService>(x => x.GetDeliveries(
-                                                                  externalAPIConfig.GetSection("ApiUrl").Value,
-                                                                  externalAPIConfig.GetSection("flattenData").Value,
-                                                                  externalAPIConfig.GetSection("encapsulatedDataName").Value
-                                                        ), Cron.Daily);
+            RecurringJob.AddOrUpdate<IFetchDataService>(x => x.GetDeliveries(), Cron.Daily);
         }
     }
 }
