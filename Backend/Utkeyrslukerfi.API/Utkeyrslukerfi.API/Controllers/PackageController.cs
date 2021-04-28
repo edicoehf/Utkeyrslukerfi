@@ -57,6 +57,8 @@ namespace Utkeyrslukerfi.API.Controllers
             return Ok(packages);
         }
 
+        [Authorize(Roles = "1")]
+        [Authorize(Roles = "2")]
         [HttpPost]
         [Route("", Name = "CreatePackage")]
         public IActionResult CreatePackage(string DeliveryID, [FromBody] PackageInputModel package)
