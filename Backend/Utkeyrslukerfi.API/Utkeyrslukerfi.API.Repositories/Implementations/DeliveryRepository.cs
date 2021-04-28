@@ -118,9 +118,6 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
             _dbContext.Deliveries.Add(entity);
             _dbContext.SaveChanges();
 
-            // TODO: Add delivery id to vehicles list of deliveries
-            // TODO: Add packages
-
             return _mapper.Map<DeliveryDTO>(entity);
         }
 
@@ -164,6 +161,13 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
             tempDelivery.Signoff = tempDelivery.Signoff;
             // Save changes
             _dbContext.SaveChanges();
+        }
+
+        public void UpdateDeliveries(DeliveriesInputModel deliveries)
+        {
+            for (int i=0; i < deliveries.Deliveries.Length; i++){
+                UpdateDelivery(deliveries.Deliveries[i], deliveries.Deliveries[i].ID);
+            }
         }
     }
 }

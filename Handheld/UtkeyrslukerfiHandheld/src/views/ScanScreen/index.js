@@ -1,12 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { View, Text } from 'react-native'
+import { View, Text, Button } from 'react-native'
 import { useSelector } from 'react-redux'
 import BarcodeForm from '../../components/BarcodeForm'
 import ProductTable from '../../components/ProductTable'
 import RemoveButton from '../../components/RemoveButton'
 import StatusCodeDropdown from '../../components/StatusCodeDropdown'
 import deliveryService from '../../services/deliveryService'
-import loginService from '../../services/loginService'
+
 // This screen is used to scan multiple products and change their status
 const ScanScreen = () => {
   // TODO:
@@ -35,13 +35,13 @@ const ScanScreen = () => {
   // Add item to table
   const addBarcode = async () => {
     try {
-      console.log(barcode, token)
-      let x = await loginService.logout(token)
-      console.log(x)
+      // TODO: error check, error messages, check if in table already
+      // If delivery is valid
+      let delivery = await deliveryService.getDelivery(token, barcode)
       setTableData([
         [
           barcode,
-          availableStatusCodes[x.status],
+          availableStatusCodes[delivery.status],
           availableStatusCodes[status],
           <RemoveButton key={barcode} barcode={barcode} removeBarcode={removeBarcode} />
         ],
@@ -53,6 +53,11 @@ const ScanScreen = () => {
     }
   }
 
+  // Update all deliveries in table
+  const updateDeliveries = () => {
+    
+  }
+
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
       <Text>Staða</Text>
@@ -61,6 +66,7 @@ const ScanScreen = () => {
       <BarcodeForm barcode={barcode} setBarcode={setBarcode} enterBarcode={addBarcode} />
       <Text>Skannaðir pakkar</Text>
       <ProductTable tableHeaders={tableHeaders} tableData={tableData} tableWidth={tableWidth} />
+      <Button onClick={updateDeliveries} title='Uppfæra' />
     </View>
   )
 }
