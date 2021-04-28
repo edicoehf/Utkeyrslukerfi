@@ -1,12 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Utkeyrslukerfi.API.Models.Dtos;
+using Utkeyrslukerfi.API.Models.Entities;
+using Microsoft.Extensions.Configuration;
 
 namespace Utkeyrslukerfi.API.Services.Interfaces
 {
   public interface IFetchDataService
   {
-    Task<IEnumerable<DeliveryDTO>> GetDeliveries(string URL, bool flatten, string encapsulatedDataName);
+    Task<IEnumerable<Delivery>> GetDeliveries();
   }
 }
