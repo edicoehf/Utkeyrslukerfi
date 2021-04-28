@@ -7,6 +7,6 @@ namespace Utkeyrslukerfi.API.Repositories.Interfaces
     public interface IAddressRepository
     {
         AddressDTO GetAddress(int ID);
-        Address CreateAddress(AddressInputModel address);
+        int CreateAddress(AddressInputModel address);
     }
 }

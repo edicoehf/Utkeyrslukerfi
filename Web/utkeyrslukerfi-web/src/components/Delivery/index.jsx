@@ -12,6 +12,7 @@ import configData from '../../constants/config.json'
 const Delivery = () => {
   const packages = useSelector(({ packages }) => packages)
   const delivery = useSelector(({ delivery }) => delivery)
+  const address = useSelector(({ address }) => address)
   const users = useSelector(({ users }) => users)
   const token = useSelector(({ login }) => login.token)
   const dispatch = useDispatch()
@@ -53,9 +54,12 @@ const Delivery = () => {
   const vehicle = delivery.vehicle.licensePlate
   const driver = delivery.driver.name
 
-  const [editable, setEditable] = useState(true);
-  const [showDeliveryModal, setShowDeliveryModal] = useState(false);
-  const [showPickupModal, setShowPickupModal] = useState(false);
+  const [editable, setEditable] = useState(true)
+  const [showDeliveryModal, setShowDeliveryModal] = useState(false)
+  const [showPickupModal, setShowPickupModal] = useState(false)
+
+  const [deliveryAddChanged, setDeliveryAddChanged] = useState(false)
+  const [pickupAddChanged, setPickupAddChanged] = useState(false)
 
   const handleChange = (e) => {
     const key = e.target.name
@@ -74,10 +78,22 @@ const Delivery = () => {
       VehicleID: delivery.vehicle.id,
       DriverID: delivery.DriverID
     }
+    if (deliveryAddChanged) {
+      console.log("delivery address has changed and is going to be updated")
+      dispatch(createAddress(token, newDelivery.deliveryAddress))
+      if (address[1]) {
+        newDelivery.DeliveryAddressID = address[1]
+      }
+    }
+    if (pickupAddChanged) {
+      console.log("delivery address has changed and is going to be updated")
+      dispatch(createAddress(token, newDelivery.pickupAddress))
+      if (address[1]) {
+        newDelivery.PickupAddressID = address[1]
+      }
+    }
     dispatch(updateDelivery(token, id, newDelivery))
     console.log("deliveryAddress: ", newDelivery)
-    dispatch(createAddress(token, newDelivery.deliveryAddress))
-    // dispatch(createAddress(token, newDelivery.pickupAddress))
   }
 
   const toggleDeliveryModal = () => {
@@ -98,6 +114,16 @@ const Delivery = () => {
     delivery.DriverID = e.target.value
     dispatch(setDelivery(delivery))
   }
+
+  const updateAddressesState = (didCh, val) => {
+    if (val === 'delivery') {
+      setDeliveryAddChanged(true)
+    }
+    if (val === 'pickup') {
+      setPickupAddChanged(true)
+    }
+  }
+
   return (
     // TODO: make selection list for available options such as driver, vehicle, status etc.
     <div className='row align-items-start border rounded shadow mt-3 pr-2'>
@@ -143,8 +169,8 @@ const Delivery = () => {
       </div>
       <button onClick={() => setEditable(editable => !editable)} className='btn btn-outline-info m-4'>Edit</button>
       <button onClick={(event) => handleSubmit(event)} className='btn btn-success m-4 ml-auto'>Vista</button>
-      <AddressModal canShow={showDeliveryModal} updateModalState={toggleDeliveryModal} isDelivery={true} />
-      <AddressModal canShow={showPickupModal} updateModalState={togglePickupModal} isDelivery={false} />
+      <AddressModal canShow={showDeliveryModal} updateModalState={toggleDeliveryModal} didChange={updateAddressesState} isDelivery={true} />
+      <AddressModal canShow={showPickupModal} updateModalState={togglePickupModal} didChange={updateAddressesState} isDelivery={false} />
     </div>
   )
 }

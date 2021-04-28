@@ -49,6 +49,13 @@ namespace Utkeyrslukerfi.API.Controllers
             var address = _addressService.GetAddress(id);
             return Ok(address);
         }
+        /// <summary>
+        /// Creates a new address
+        /// </summary>
+        /// <returns>A newly created Address</returns>
+        /// <response code="200">Returns the newly created Address</response>
+        /// <response code="401">The Auth token was invalid </response>
+        /// <response code="404">Bad request!</response> 
         [HttpPost]
         [Route("", Name = "CreateAddress")]
         public IActionResult CreateAddress([FromBody] AddressInputModel address)
@@ -58,7 +65,7 @@ namespace Utkeyrslukerfi.API.Controllers
                 throw new Exception("Error in CreateAddress controller");
             }
             var new_address = _addressService.CreateAddress(address);
-            return CreatedAtRoute("CreateAddress", new_address.ID, new_address);
+            return CreatedAtRoute("CreateAddress", new_address);
         }
     }
 }

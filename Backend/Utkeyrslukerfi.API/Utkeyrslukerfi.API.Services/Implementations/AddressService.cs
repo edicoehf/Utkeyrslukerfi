@@ -21,7 +21,7 @@ namespace Utkeyrslukerfi.API.Services.Implementations
             return _addressRepo.GetAddress(ID);
         }
 
-        public Address CreateAddress(AddressInputModel address)
+        public int CreateAddress(AddressInputModel address)
         {
             return _addressRepo.CreateAddress(address);
         }

@@ -15,7 +15,7 @@ const customStyles = {
   }
 };
 
-const AddressModal = ({ canShow, updateModalState, isDelivery }) => {
+const AddressModal = ({ canShow, updateModalState, didChange, isDelivery }) => {
   const delivery = useSelector(({ delivery }) => delivery)
   const dispatch = useDispatch()
   const [dAddres, setDAddress] = useState(isDelivery ? delivery.deliveryAddress : delivery.pickupAddress)
@@ -31,11 +31,13 @@ const AddressModal = ({ canShow, updateModalState, isDelivery }) => {
         ...delivery,
         deliveryAddress: dAddres
       }))
+      didChange(true, 'delivery')
     } else {
       dispatch(setDelivery({
         ...delivery,
         pickupAddress: dAddres
       }))
+      didChange(true, 'pickup')
     }
     updateModalState()
   }

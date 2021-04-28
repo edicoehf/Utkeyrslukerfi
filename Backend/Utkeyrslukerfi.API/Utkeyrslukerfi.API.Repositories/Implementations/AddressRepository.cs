@@ -26,7 +26,7 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
             return _mapper.Map<AddressDTO>(entity);
         }
 
-        public Address CreateAddress(AddressInputModel address)
+        public int CreateAddress(AddressInputModel address)
         {
             var entity = new Address
             {
@@ -38,7 +38,7 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
             };
             _dbContext.Addresses.Add(entity);
             _dbContext.SaveChanges();
-            return entity;
+            return entity.ID;
         }
     }
 }

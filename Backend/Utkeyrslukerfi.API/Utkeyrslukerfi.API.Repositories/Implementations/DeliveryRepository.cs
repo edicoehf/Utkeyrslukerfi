@@ -131,7 +131,6 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
             // TODO: Add check if vehicle is 0
             var vehicle = _dbContext.Vehicles.FirstOrDefault(v => v.ID == delivery.VehicleID);
             if (vehicle == null) { throw new NotFoundException("Vehicle not found!"); }
-
             // Get driver 
             var driver = _dbContext.Users.FirstOrDefault(u => u.ID == delivery.DriverID);
             if (driver == null) { throw new NotFoundException("Driver is not found."); }
@@ -144,7 +143,6 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
             var deliveryAddress = _dbContext.Addresses.FirstOrDefault(a => a.ID == tempDelivery.DeliveryAddressID);
             if (deliveryAddress == null) { throw new NotFoundException("Delivery Address not found."); }
 
-
             // Delivery
             tempDelivery.Recipient = delivery.Recipient;
             tempDelivery.DriverComment = delivery.DriverComment;
@@ -154,7 +152,7 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
             // Address
             tempDelivery.PickupAddressID = pickupAddress.ID;
             tempDelivery.PickupAddress = pickupAddress;
-            tempDelivery.DeliveryAddressID = deliveryAddress.ID;
+            tempDelivery.DeliveryAddressID = delivery.DeliveryAddressID;
             tempDelivery.DeliveryAddress = deliveryAddress;
             // Vehicle
             tempDelivery.Vehicle = vehicle;

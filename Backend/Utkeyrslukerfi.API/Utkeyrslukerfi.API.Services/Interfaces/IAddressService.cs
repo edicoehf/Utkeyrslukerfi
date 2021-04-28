@@ -7,6 +7,6 @@ namespace Utkeyrslukerfi.API.Services.Interfaces
     public interface IAddressService
     {
         AddressDTO GetAddress(int ID);
-        Address CreateAddress(AddressInputModel address);
+        int CreateAddress(AddressInputModel address);
     }
 }
