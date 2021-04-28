@@ -1,8 +1,8 @@
-import { LOGIN_URL, LOGOUT_URL } from '../constants'
+import { DRIVER_LOGIN_URL, LOGOUT_URL } from '../constants'
 
 const loginService = () => {
   return {
-    login: (credentials) => fetch(LOGIN_URL, {
+    login: (name) => fetch(DRIVER_LOGIN_URL, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -11,7 +11,7 @@ const loginService = () => {
         'Cross-Origin-Embedder-Policy': 'require-corp'
       },
       mode: 'cors',
-      body: JSON.stringify(credentials)
+      body: JSON.stringify(name)
     }).then(d => d.json()),
     logout: (token) => fetch(LOGOUT_URL, {
       headers: {
