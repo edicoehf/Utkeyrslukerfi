@@ -7,12 +7,12 @@ import RemoveButton from '../../components/RemoveButton'
 import CheckBox from '@react-native-community/checkbox'
 
 // Driver can scan in packages in current delivery, comment on the delivery and continue with the delivery
-const DeliverScreen = () => {
+const DeliverScreen = ({ route, navigation }) => {
   // TODO:
   // - css
-  // - check in database if package is valid, need to take in delivery (either from route or props)
   // - add consecutive screens that depends on checkbox
-  const [delivery, setDelivery] = useState({})
+  const { delivery } = route.params
+  const [count, setCount] = useState(1)
   const [barcode, setBarcode] = useState()
   const [customerComment, setCustomerComment] = useState('')
   const [driverComment, setDriverComment] = useState('')
@@ -40,20 +40,23 @@ const DeliverScreen = () => {
 
   // All packages in current delivery about to be delivered should be scanned
   const addBarcode = () => {
-    setTableData([
-      ...tableData,
-      [
-        barcode,
-        'hmm 1/4',
-        <RemoveButton key={barcode} barcode={barcode} removeBarcode={removeBarcode} />
-      ]
-    ])
+    if (delivery.packages.some(p => p.id === barcode)) {
+      setTableData([
+        ...tableData,
+        [
+          barcode,
+          `${count}/${delivery.packages.length}`,
+          <RemoveButton key={barcode} barcode={barcode} removeBarcode={removeBarcode} />
+        ]
+      ])
+      setCount(count+1)
+    }
     setBarcode('')
   }
 
   // Navigate to sign page OR camera page if checkbox is checked
   const continueWithDelivery = () => {
-
+    navigation.navigate('DeliveryReceived')
   }
 
   return (
