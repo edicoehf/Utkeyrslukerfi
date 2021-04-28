@@ -5,14 +5,15 @@ import BarcodeForm from '../../components/BarcodeForm'
 import ProductTable from '../../components/ProductTable'
 import RemoveButton from '../../components/RemoveButton'
 import StatusCodeDropdown from '../../components/StatusCodeDropdown'
-
+import deliveryService from '../../services/deliveryService'
+import loginService from '../../services/loginService'
 // This screen is used to scan multiple products and change their status
 const ScanScreen = () => {
   // TODO:
   // - db stuff: get prev status, check if barcode is valid
   // - css
   const availableStatusCodes = useSelector(({ statusCode }) => statusCode)
-
+  const token = useSelector(({ login }) => login.token)
   const [status, setStatus] = useState(2)
   const [barcode, setBarcode] = useState('')
   const [tableData, setTableData] = useState([])
@@ -32,17 +33,24 @@ const ScanScreen = () => {
   }
 
   // Add item to table
-  const addBarcode = () => {
-    setTableData([
-      ...tableData,
-      [
-        barcode,
-        'hmm',
-        availableStatusCodes[status],
-        <RemoveButton key={barcode} barcode={barcode} removeBarcode={removeBarcode} />
-      ]
-    ])
-    setBarcode('')
+  const addBarcode = async () => {
+    try {
+      console.log(barcode, token)
+      let x = await loginService.logout(token)
+      console.log(x)
+      setTableData([
+        [
+          barcode,
+          availableStatusCodes[x.status],
+          availableStatusCodes[status],
+          <RemoveButton key={barcode} barcode={barcode} removeBarcode={removeBarcode} />
+        ],
+        ...tableData
+      ])
+      setBarcode('')
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   return (
