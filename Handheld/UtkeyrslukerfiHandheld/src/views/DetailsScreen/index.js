@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { View, Text, Button } from 'react-native'
+import { View, Text, Button, ToastAndroid } from 'react-native'
 import { useSelector } from 'react-redux'
 import CommentBox from '../../components/CommentBox'
 import deliveryService from '../../services/deliveryService'
@@ -23,9 +23,13 @@ const DetailsScreen = ({ route, navigation }) => {
   const saveComment = async () => {
     try {
       delivery.driverComment = driverComment // Update delivery
-      await deliveryService.updateDelivery(token, delivery)
+      let res = await deliveryService.updateDelivery(token, delivery)
+      if (res?.status == 400) { ToastAndroid.show('Óheimil beiðni.', ToastAndroid.LONG) }
+      if (res?.status == 401) { ToastAndroid.show('Notandi er ekki innskráður.', ToastAndroid.LONG) }
+      if (res?.status == 404) { ToastAndroid.show('Sending fannst ekki.', ToastAndroid.LONG) }
+      if (res?.status == 204) { ToastAndroid.show('Gögn vistuð', ToastAndroid.LONG) }
     } catch (error) {
-      console.log(error)
+      ToastAndroid.show('Ekki náðist samband við netþjón', ToastAndroid.LONG)
     }
   }
 
