@@ -12,7 +12,6 @@ namespace Utkeyrslukerfi.API.Controllers
     [Route("api/address")]
     public class AddressController : ControllerBase
     {
-
         private readonly ILogger<AddressController> _logger;
         private readonly IAddressService _addressService;
 
@@ -50,7 +49,6 @@ namespace Utkeyrslukerfi.API.Controllers
             var address = _addressService.GetAddress(id);
             return Ok(address);
         }
-        
         [HttpPost]
         [Route("", Name = "CreateAddress")]
         public IActionResult CreateAddress([FromBody] AddressInputModel address)
