@@ -138,7 +138,7 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
             // Get pickupAddress
             var pickupAddress = _dbContext.Addresses.FirstOrDefault(a => a.ID == tempDelivery.PickupAddressID);
             if (pickupAddress == null) { throw new NotFoundException("Pickup Address not found."); }
-
+            System.Console.Write("delivery: " + tempDelivery.DeliveryAddressID);
             // Get deliveryAddress
             var deliveryAddress = _dbContext.Addresses.FirstOrDefault(a => a.ID == tempDelivery.DeliveryAddressID);
             if (deliveryAddress == null) { throw new NotFoundException("Delivery Address not found."); }
