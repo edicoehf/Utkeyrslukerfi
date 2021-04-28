@@ -13,7 +13,6 @@ const App = () => {
     dispatch(getLogin())
   }, [])
 
-
   if (!token || token === '') {
     return <Login />
   }
