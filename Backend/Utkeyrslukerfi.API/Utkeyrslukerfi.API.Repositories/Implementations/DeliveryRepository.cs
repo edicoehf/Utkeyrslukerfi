@@ -125,37 +125,46 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
             var tempDelivery = _dbContext.Deliveries.FirstOrDefault(d => d.ID == id);
             if (tempDelivery == null) { throw new NotFoundException("Delivery not found."); }
             // Get vehicle
-            // TODO: Add check if vehicle is 0
-            var vehicle = _dbContext.Vehicles.FirstOrDefault(v => v.ID == delivery.VehicleID);
-            if (vehicle == null) { throw new NotFoundException("Vehicle not found!"); }
+            if (delivery.VehicleID != 0) {
+                var vehicle = _dbContext.Vehicles.FirstOrDefault(v => v.ID == delivery.VehicleID);
+                if (vehicle == null) { throw new NotFoundException("Vehicle not found!"); }
+                tempDelivery.Vehicle = vehicle;
+            }
             // Get driver 
-            var driver = _dbContext.Users.FirstOrDefault(u => u.ID == delivery.DriverID);
-            if (driver == null) { throw new NotFoundException("Driver is not found."); }
-
+            if (delivery.DriverID != 0) {
+                var driver = _dbContext.Users.FirstOrDefault(u => u.ID == delivery.DriverID);
+                if (driver == null) { throw new NotFoundException("Driver is not found."); }
+                tempDelivery.Driver = driver;
+            }
             // Get pickupAddress
-            var pickupAddress = _dbContext.Addresses.FirstOrDefault(a => a.ID == tempDelivery.PickupAddressID);
-            if (pickupAddress == null) { throw new NotFoundException("Pickup Address not found."); }
+            if (delivery.PickupAddressID != 0) {
+                var pickupAddress = _dbContext.Addresses.FirstOrDefault(a => a.ID == tempDelivery.PickupAddressID);
+                if (pickupAddress == null) { throw new NotFoundException("Pickup Address not found."); }
+                tempDelivery.PickupAddressID = delivery.PickupAddressID;
+                tempDelivery.PickupAddress = pickupAddress;
+            }
             System.Console.Write("delivery: " + tempDelivery.DeliveryAddressID);
             // Get deliveryAddress
-            var deliveryAddress = _dbContext.Addresses.FirstOrDefault(a => a.ID == tempDelivery.DeliveryAddressID);
-            if (deliveryAddress == null) { throw new NotFoundException("Delivery Address not found."); }
+            if (delivery.DeliveryAddressID != 0) {
+                var deliveryAddress = _dbContext.Addresses.FirstOrDefault(a => a.ID == tempDelivery.DeliveryAddressID);
+                if (deliveryAddress == null) { throw new NotFoundException("Delivery Address not found."); }
+                tempDelivery.DeliveryAddressID = delivery.DeliveryAddressID;
+                tempDelivery.DeliveryAddress = deliveryAddress;
+            }
 
             // Delivery
-            tempDelivery.Recipient = delivery.Recipient;
-            tempDelivery.DriverComment = delivery.DriverComment;
-            tempDelivery.CustomerComment = delivery.CustomerComment;
-            tempDelivery.Seller = delivery.Seller;
-            tempDelivery.Status = delivery.Status;
+            tempDelivery.Recipient = delivery.Recipient != null ? delivery.Recipient : tempDelivery.Recipient;
+            tempDelivery.DriverComment = delivery.DriverComment != null ? delivery.DriverComment : tempDelivery.DriverComment ;
+            tempDelivery.CustomerComment = delivery.CustomerComment != null ? delivery.CustomerComment : tempDelivery.CustomerComment;
+            tempDelivery.Seller = delivery.Seller != null ? delivery.Seller : tempDelivery.Seller;
+            tempDelivery.Status = delivery.Status != 0 ? delivery.Status : tempDelivery.Status;
             // Address
-            tempDelivery.PickupAddressID = delivery.PickupAddressID;
-            tempDelivery.PickupAddress = pickupAddress;
-            tempDelivery.DeliveryAddressID = delivery.DeliveryAddressID;
-            tempDelivery.DeliveryAddress = deliveryAddress;
-            // Vehicle
-            tempDelivery.Vehicle = vehicle;
-            tempDelivery.Driver = driver;
+           
+           
+            // Packages
             tempDelivery.Packages = tempDelivery.Packages;
             tempDelivery.Signoff = tempDelivery.Signoff;
+           
             // Save changes
             _dbContext.SaveChanges();
         }
