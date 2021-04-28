@@ -4,7 +4,7 @@ import { getDeliveries } from '../../actions/deliveryActions'
 import { useDispatch, useSelector } from 'react-redux'
 
 const ListScreen = () => {
-  //TODO: Get all deliveries
+  // TODO: Get all deliveries
   const deliveries = useSelector(({ deliveries }) => deliveries)
   const dispatch = useDispatch()
   const token = useSelector(({ login }) => login.token)
@@ -12,9 +12,9 @@ const ListScreen = () => {
   useEffect(() => {
     dispatch(getDeliveries(token))
   }, [])
-  //TODO: Display all deliveries in a list/table
-  //TODO: Allow user to sort by ID, Date, Status (?)
-  //TODO: Open map with locations of deliveries marked (C Krafa)
+  // TODO: Display all deliveries in a list/table
+  // TODO: Allow user to sort by ID, Date, Status (?)
+  // TODO: Open map with locations of deliveries marked (C Krafa)
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
       <Button title='Opna kort' />
