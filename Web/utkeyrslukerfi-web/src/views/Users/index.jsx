@@ -81,9 +81,9 @@ const Users = () => {
       {
         users.length <= 0
           ? <div className='text-center'>
-              <div className='spinner-border' role='status'>
-                <span className='sr-only'>Loading...</span>
-              </div>
+            <div className='spinner-border' role='status'>
+              <span className='sr-only'>Loading...</span>
+            </div>
             </div>
           : null
       }

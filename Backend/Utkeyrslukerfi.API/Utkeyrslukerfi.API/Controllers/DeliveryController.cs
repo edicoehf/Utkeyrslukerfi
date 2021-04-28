@@ -106,6 +106,18 @@ namespace Utkeyrslukerfi.API.Controllers
             _deliveryService.UpdateDelivery(delivery, id);
             return NoContent();
         }
+        // update multiple deliveries
+        [HttpPatch]
+        [Route("", Name = "UpdateDeliveries")]
+        public IActionResult UpdateDeliveries([FromBody] DeliveriesInputModel deliveries)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest("Model is not valid!");
+            }
+            _deliveryService.UpdateDeliveries(deliveries);
+            return NoContent();
+        }
         // create delivery
         [Authorize(Roles = "1")]
         [Authorize(Roles = "2")]
