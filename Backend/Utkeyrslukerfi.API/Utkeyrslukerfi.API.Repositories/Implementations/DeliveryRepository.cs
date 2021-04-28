@@ -150,7 +150,7 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
             tempDelivery.Seller = delivery.Seller;
             tempDelivery.Status = delivery.Status;
             // Address
-            tempDelivery.PickupAddressID = pickupAddress.ID;
+            tempDelivery.PickupAddressID = delivery.PickupAddressID;
             tempDelivery.PickupAddress = pickupAddress;
             tempDelivery.DeliveryAddressID = delivery.DeliveryAddressID;
             tempDelivery.DeliveryAddress = deliveryAddress;

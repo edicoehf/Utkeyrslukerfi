@@ -79,14 +79,12 @@ const Delivery = () => {
       DriverID: delivery.DriverID
     }
     if (deliveryAddChanged) {
-      console.log("delivery address has changed and is going to be updated")
       dispatch(createAddress(token, newDelivery.deliveryAddress))
       if (address[1]) {
         newDelivery.DeliveryAddressID = address[1]
       }
     }
     if (pickupAddChanged) {
-      console.log("delivery address has changed and is going to be updated")
       dispatch(createAddress(token, newDelivery.pickupAddress))
       if (address[1]) {
         newDelivery.PickupAddressID = address[1]
