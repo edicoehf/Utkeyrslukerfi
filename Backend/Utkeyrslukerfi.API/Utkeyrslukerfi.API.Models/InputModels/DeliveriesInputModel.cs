@@ -6,6 +6,6 @@ namespace Utkeyrslukerfi.API.Models.InputModels
     public class DeliveriesInputModel
     {
         public DeliveryInputModel[] Deliveries { get; set; }
-        
+
     }
 }
