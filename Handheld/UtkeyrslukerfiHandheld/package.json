@@ -10,11 +10,6 @@
     "lint": "eslint ."
   },
   "dependencies": {
-<<<<<<< Updated upstream
-    "react": "17.0.1",
-    "react-native": "0.64.0",
-    "react-native-zebra-scanner": "^1.0.0"
-=======
     "@react-native-async-storage/async-storage": "^1.15.4",
     "@react-native-community/checkbox": "^0.5.7",
     "@react-native-community/masked-view": "^0.1.10",
@@ -36,7 +31,6 @@
     "redux": "^4.1.0",
     "redux-persist": "^6.0.0",
     "redux-thunk": "^2.3.0"
->>>>>>> Stashed changes
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
