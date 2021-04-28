@@ -14,7 +14,12 @@ const deliveryService = () => {
       },
       method: 'PATCH',
       body: JSON.stringify(delivery)
-    }).then(d => d.json())
+    }).then(d => d.json()),
+    getDeliveries: (token) => fetch(DELIVERY_URL, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }).then(d => d.json()).then(d => d)
   }
 }
 

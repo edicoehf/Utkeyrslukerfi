@@ -16,7 +16,7 @@ export const setLogin = (name) => async (dispatch) => {
 
 export const getLogin = () => async (dispatch) => {
   try {
-    const token = await AsyncStorage.getItem('token')
+    const token = JSON.parse(await AsyncStorage.getItem('token'))
     dispatch(getLoginSuccess(token))
   } catch (err) {
     console.log('Bad request, please try loading again.')

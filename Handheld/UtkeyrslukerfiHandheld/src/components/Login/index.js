@@ -6,11 +6,7 @@ import DropDownPicker from 'react-native-dropdown-picker'
 import { getDrivers } from '../../actions/driversActions'
 
 const Login = () => {
-  // TODO: Get list of all users to select from
-  // TODO: Dropdown menu of all users
-  // TODO: When you login add selected user to current use
-  // TODO: Footer/Header, but with no buttons (blue lines)
-  // TODO: css
+  // TODO: Style
   const [selected, setSelected] = useState('') // Currently selected user
   const drivers = useSelector(({ drivers }) => drivers)
   const dispatch = useDispatch()
