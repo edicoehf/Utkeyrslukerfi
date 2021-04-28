@@ -1,13 +1,11 @@
 ---
 # This is a basic workflow to help you get started with Actions
-name: CI for Utkeyrslukerfi backend
+name: CI Backend Dotnet
 
 # Controls when the action will run. 
 on:
-  # Triggers the workflow on push or pull request 
+  # Triggers the workflow on pull request 
   # events but only for the main branch
-  push:
-    branches: [main]
   pull_request:
     branches: [main]
 
