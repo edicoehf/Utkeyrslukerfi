@@ -1,6 +1,6 @@
-const statusCode = { 1: 'Í ferli', 2: 'Á leiðinni', 3: 'Móttekið' } // TODO: make status codes configurable
+import configData from '../constants/config.json'
 
-const statusCodeReducer = (state = statusCode, action) => {
+const statusCodeReducer = (state = configData.STATUS, action) => {
   switch (action.type) {
     default: return state
   }
