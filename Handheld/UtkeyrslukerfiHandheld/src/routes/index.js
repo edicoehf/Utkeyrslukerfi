@@ -18,7 +18,7 @@ const Tab = createBottomTabNavigator()
 const AppContainer = () => {
   return (
     <NavigationContainer>
-      <Header></Header>
+      <Header />
       <Tab.Navigator
         initialRouteName='Scan'
         tabBarOptions={{

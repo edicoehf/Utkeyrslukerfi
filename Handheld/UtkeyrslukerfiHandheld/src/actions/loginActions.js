@@ -36,7 +36,7 @@ const setLoginSuccess = (body) => ({
 export const logout = (token) => async (dispatch) => {
   try {
     await loginService.logout(token)
-    await AsyncStorage.removeItem('token');
+    await AsyncStorage.removeItem('token')
     dispatch(logoutSuccess())
   } catch (err) {
     console.log(err)
