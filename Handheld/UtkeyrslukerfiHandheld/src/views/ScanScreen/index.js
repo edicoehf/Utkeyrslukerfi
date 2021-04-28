@@ -10,7 +10,7 @@ import deliveryService from '../../services/deliveryService'
 // This screen is used to scan multiple products and change their status
 const ScanScreen = () => {
   // TODO:
-  // - db stuff: get prev status, check if barcode is valid
+  // - error checking, error messages (error check, error messages, check if in table already?)
   // - css
   const availableStatusCodes = useSelector(({ statusCode }) => statusCode)
   const token = useSelector(({ login }) => login.token)
@@ -35,9 +35,8 @@ const ScanScreen = () => {
   // Add item to table
   const addBarcode = async () => {
     try {
-      // TODO: error check, error messages, check if in table already
-      // If delivery is valid
-      const delivery = await deliveryService.getDelivery(token, barcode)
+      // Check if barcode is valid
+      let delivery = await deliveryService.getDelivery(token, barcode)
       setTableData([
         [
           barcode,
@@ -54,14 +53,12 @@ const ScanScreen = () => {
     }
   }
 
-  // Update all deliveries in table
+  // Update status for all deliveries currently in table
   const updateDeliveries = async () => {
     try {
-      console.log('Here')
       let deliveriesData = { 'deliveries': tableData.map(d => { return {'id': d[0], 'status': d[4]} }) }
-      console.log(deliveriesData)
       let res = await deliveryService.updateDeliveries(token, deliveriesData)
-      console.log(res)
+      setTableData([])
     } catch (error) {
       console.log(error)
     }

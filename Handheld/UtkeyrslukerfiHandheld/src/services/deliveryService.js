@@ -4,6 +4,7 @@ const deliveryService = () => {
   return {
     getDelivery: (token, id) => fetch(`${DELIVERY_URL}/${id}`, {
       headers: {
+        Accept: 'application/json',
         Authorization: `Bearer ${token}`
       }
     }).then(d => d.json()).then(d => d),
