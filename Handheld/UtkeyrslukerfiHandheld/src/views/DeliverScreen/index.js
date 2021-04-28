@@ -49,7 +49,7 @@ const DeliverScreen = ({ route, navigation }) => {
           <RemoveButton key={barcode} barcode={barcode} removeBarcode={removeBarcode} />
         ]
       ])
-      setCount(count+1)
+      setCount(count + 1)
     }
     setBarcode('')
   }
