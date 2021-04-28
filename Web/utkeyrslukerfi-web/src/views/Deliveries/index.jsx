@@ -3,11 +3,8 @@ import { useHistory } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { getDeliveries } from '../../actions/deliveriesActions'
 import { setDelivery } from '../../actions/deliveryActions'
-<<<<<<< HEAD
 import { getDrivers } from '../../actions/usersActions'
-=======
 import configData from '../../constants/config.json'
->>>>>>> d679e90326ecfa6c0f2e122645e90a23b02253ca
 import '../../styles/deliveries.css'
 
 const Deliveries = () => {
