@@ -28,7 +28,6 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
 
         public Address CreateAddress(AddressInputModel address)
         {
-            System.Console.WriteLine("Create address called");
             var entity = new Address
             {
                 StreetName = address.StreetName,
