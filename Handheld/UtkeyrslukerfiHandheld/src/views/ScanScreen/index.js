@@ -43,7 +43,8 @@ const ScanScreen = () => {
           barcode,
           availableStatusCodes[delivery.status],
           availableStatusCodes[status],
-          <RemoveButton key={barcode} barcode={barcode} removeBarcode={removeBarcode} />
+          <RemoveButton key={barcode} barcode={barcode} removeBarcode={removeBarcode} />,
+          status
         ],
         ...tableData
       ])
@@ -54,8 +55,16 @@ const ScanScreen = () => {
   }
 
   // Update all deliveries in table
-  const updateDeliveries = () => {
-
+  const updateDeliveries = async () => {
+    try {
+      console.log('Here')
+      let deliveriesData = { 'deliveries': tableData.map(d => { return {'id': d[0], 'status': d[4]} }) }
+      console.log(deliveriesData)
+      let res = await deliveryService.updateDeliveries(token, deliveriesData)
+      console.log(res)
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   return (
@@ -66,7 +75,7 @@ const ScanScreen = () => {
       <BarcodeForm barcode={barcode} setBarcode={setBarcode} enterBarcode={addBarcode} />
       <Text>Skannaðir pakkar</Text>
       <ProductTable tableHeaders={tableHeaders} tableData={tableData} tableWidth={tableWidth} />
-      <Button onClick={updateDeliveries} title='Uppfæra' />
+      <Button onPress={updateDeliveries} title='Uppfæra' />
     </View>
   )
 }

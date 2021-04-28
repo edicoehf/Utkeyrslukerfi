@@ -19,7 +19,15 @@ const deliveryService = () => {
       headers: {
         Authorization: `Bearer ${token}`
       }
-    }).then(d => d.json()).then(d => d)
+    }).then(d => d.json()).then(d => d),
+    updateDeliveries: (token, deliveries) => fetch(DELIVERY_URL, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`
+      },
+      method: 'PATCH',
+      body: JSON.stringify(deliveries)
+    }).then(d => d)
   }
 }
 
