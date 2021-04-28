@@ -12,7 +12,7 @@ const ListScreen = () => {
   useEffect(() => {
     dispatch(getDeliveries(token))
   }, [])
-  console.log(deliveries)
+  // console.log(deliveries)
   // TODO: Display all deliveries in a list/table
   // TODO: Allow user to sort by ID, Date, Status (?)
   // TODO: Open map with locations of deliveries marked (C Krafa)
