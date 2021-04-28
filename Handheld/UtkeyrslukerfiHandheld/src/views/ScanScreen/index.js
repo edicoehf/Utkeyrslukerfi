@@ -37,7 +37,7 @@ const ScanScreen = () => {
     try {
       // TODO: error check, error messages, check if in table already
       // If delivery is valid
-      let delivery = await deliveryService.getDelivery(token, barcode)
+      const delivery = await deliveryService.getDelivery(token, barcode)
       setTableData([
         [
           barcode,
@@ -55,7 +55,7 @@ const ScanScreen = () => {
 
   // Update all deliveries in table
   const updateDeliveries = () => {
-    
+
   }
 
   return (
