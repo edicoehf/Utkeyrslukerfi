@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import AppContainer from './src/routes'
 import Login from './src/components/Login'
 import { getLogin } from './src/actions/loginActions'
-
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const App = () => {
   const token = useSelector(({ login }) => login.token)
@@ -13,7 +13,12 @@ const App = () => {
   useEffect(() => {
     dispatch(getLogin())
   }, [])
-  
+
+  // const clear = async (e) => {
+  //   await AsyncStorage.clear()
+  // }
+
+  // clear();
   if (!token || token === '') {
     return <Login />
   }
