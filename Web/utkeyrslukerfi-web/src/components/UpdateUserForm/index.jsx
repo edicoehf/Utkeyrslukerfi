@@ -6,10 +6,11 @@ import { useDispatch, useSelector } from 'react-redux'
 import FormGroupInput from '../FormGroupInput'
 import FormGroupDropdown from '../FormGroupDropdown'
 import FormGroupButton from '../FormGroupButton'
+import configData from '../../constants/config.json'
 
 // Update User - users can be updated by admins
 const UpdateUserForm = ({ user }) => {
-  const methods = useForm() // TODO: define the roles and use configuration to add them and only admins should be able to update other users
+  const methods = useForm()
   const token = useSelector(({ login }) => login.token)
   const dispatch = useDispatch()
 
@@ -58,10 +59,11 @@ const UpdateUserForm = ({ user }) => {
           label='Starf'
           options={
             <>
-              <option value='1'>Admin</option>
-              <option value='2'>Office</option>
-              <option value='3'>Driver</option>
-              <option value='4'>Disabled</option>
+              {Object.keys(configData.ROLES).map(function (k) {
+                return (
+                  <option key={k} value={k}>{configData.ROLES[k]}</option>
+                )
+              })}
             </>
           }
           typeOfForm='UpdateUser'

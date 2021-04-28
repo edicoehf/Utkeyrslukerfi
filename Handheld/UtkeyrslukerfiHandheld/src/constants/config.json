@@ -1,0 +1,14 @@
+{
+  "STATUS": {
+    "1": "Í ferli",
+    "2": "Á leiðinni",
+    "3": "Móttekin",
+    "4": "Týnd"
+  },
+  "ROLES": {
+    "1": "Stjórnandi",
+    "2": "Skrifstofumaður",
+    "3": "Bílstjóri",
+    "4": "Óvirkur"
+  }
+}

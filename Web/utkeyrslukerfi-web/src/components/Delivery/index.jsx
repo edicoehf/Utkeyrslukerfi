@@ -3,6 +3,7 @@ import { useHistory, useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { getDelivery } from '../../actions/deliveryActions'
 import { getPackages } from '../../actions/packageActions'
+import configData from '../../constants/config.json'
 
 const Delivery = () => {
   const packages = useSelector(({ packages }) => packages)
@@ -55,7 +56,7 @@ const Delivery = () => {
             <label className='mt-3 mx-3'>Recipient</label><input className='border-none my-3 ml-auto' disabled={editable} type='text' name='recipient' onChange={handleChange} defaultValue={delivery?.recipient} />
           </div>
           <div className='row'>
-            <label className='mt-3 mx-3'>Status</label><input className='border-none my-3 ml-auto' disabled={editable} type='text' name='status' onChange={handleChange} defaultValue={delivery?.status} />
+            <label className='mt-3 mx-3'>Status</label><input className='border-none my-3 ml-auto' disabled={editable} type='text' name='status' onChange={handleChange} defaultValue={configData.STATUS[delivery?.status]} />
           </div>
           <div className='row'>
             <label className='mt-3 mx-3'>Seller</label><input className='border-none my-3 ml-auto' disabled={editable} type='text' name='seller' onChange={handleChange} defaultValue={delivery?.seller} />

@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { getDeliveries } from '../../actions/deliveriesActions'
 import { setDelivery } from '../../actions/deliveryActions'
+import configData from '../../constants/config.json'
 import '../../styles/deliveries.css'
 
 const Deliveries = () => {
@@ -27,7 +28,7 @@ const Deliveries = () => {
       return (
         <tr key={id} onClick={() => navigateToDelivery(obj)}>
           <td>{obj.id}</td>
-          <td>{obj.status}</td>
+          <td>{configData.STATUS[obj.status]}</td>
           <td>{obj.recipient}</td>
           <td>{obj.seller}</td>
           <td>{obj.driver.name}</td>
