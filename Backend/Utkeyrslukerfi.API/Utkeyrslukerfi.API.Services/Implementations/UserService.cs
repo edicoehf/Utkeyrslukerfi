@@ -30,6 +30,10 @@ namespace Utkeyrslukerfi.API.Services.Implementations
                 return _userRepo.GetUsers(pageSize, pageNumber);
             }
             return _userRepo.GetUsersByRole(role, pageSize, pageNumber);
+        }
+        public IEnumerable<DriverDTO> GetDrivers()
+        {
+            return _userRepo.GetDrivers();
 
         }
         public UserDTO CreateUser(UserInputModel user)

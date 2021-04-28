@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 /**
  * Sample React Native App
  * https://github.com/facebook/react-native
@@ -28,6 +29,32 @@ import {
 
 const Section = ({children, title}): Node => {
   const isDarkMode = useColorScheme() === 'dark';
+=======
+import 'react-native-gesture-handler'
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import AppContainer from './src/routes'
+import Login from './src/components/Login'
+import { getLogin } from './src/actions/loginActions'
+// import AsyncStorage from '@react-native-async-storage/async-storage'
+
+const App = () => {
+  const token = useSelector(({ login }) => login.token)
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(getLogin())
+  }, [])
+
+  // const clear = async (e) => {
+  //   await AsyncStorage.clear()
+  // }
+
+  // clear();
+  if (!token || token === '') {
+    return <Login />
+  }
+>>>>>>> Stashed changes
   return (
     <View style={styles.sectionContainer}>
       <Text

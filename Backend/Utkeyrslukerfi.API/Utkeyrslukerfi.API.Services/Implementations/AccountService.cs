@@ -20,6 +20,10 @@ namespace Utkeyrslukerfi.API.Services.Implementations
         {
             return _userRepository.Login(loginInputModel);
         }
+        public User DriverLogin(DriverLoginInputModel driverLoginInputModel)
+        {
+            return _userRepository.DriverLogin(driverLoginInputModel);
+        }
 
         public void Logout(int tokenID)
         {
