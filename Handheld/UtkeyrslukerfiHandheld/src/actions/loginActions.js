@@ -1,4 +1,4 @@
-import { SET_LOGIN, GET_LOGIN } from '../constants'
+import { SET_LOGIN, GET_LOGIN, CLEAR_LOGIN } from '../constants'
 import loginService from '../services/loginService'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
@@ -31,4 +31,19 @@ const getLoginSuccess = (token) => ({
 const setLoginSuccess = (body) => ({
   type: SET_LOGIN,
   payload: body
+})
+
+export const logout = (token) => async (dispatch) => {
+  try {
+    await loginService.logout(token)
+    await AsyncStorage.removeItem('token')
+    dispatch(logoutSuccess())
+  } catch (err) {
+    console.log(err)
+  }
+}
+
+const logoutSuccess = () => ({
+  type: CLEAR_LOGIN,
+  payload: { changePassword: false, token: '' }
 })

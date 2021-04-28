@@ -11,11 +11,14 @@ import ListScreen from '../views/ListScreen'
 
 import { blue } from '../constants'
 
+import Header from '../components/Header'
+
 const Tab = createBottomTabNavigator()
 
 const AppContainer = () => {
   return (
     <NavigationContainer>
+      <Header />
       <Tab.Navigator
         initialRouteName='Scan'
         tabBarOptions={{
