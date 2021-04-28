@@ -1,5 +1,7 @@
+using System;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Utkeyrslukerfi.API.Models.InputModels;
 using Microsoft.AspNetCore.Authorization;
 using Utkeyrslukerfi.API.Services.Interfaces;
 
@@ -47,6 +49,18 @@ namespace Utkeyrslukerfi.API.Controllers
         {
             var address = _addressService.GetAddress(id);
             return Ok(address);
+        }
+        
+        [HttpPost]
+        [Route("", Name = "CreateAddress")]
+        public IActionResult CreateAddress([FromBody] AddressInputModel address)
+        {
+            if (!ModelState.IsValid)
+            {
+                throw new Exception("Error in CreateAddress controller");
+            }
+            var new_address = _addressService.CreateAddress(address);
+            return CreatedAtRoute("CreateAddress", new_address.ID, new_address);
         }
     }
 }

@@ -2,6 +2,7 @@ using System.Linq;
 using AutoMapper;
 using Utkeyrslukerfi.API.Models.Dtos;
 using Utkeyrslukerfi.API.Models.Entities;
+using Utkeyrslukerfi.API.Models.InputModels;
 using Utkeyrslukerfi.API.Repositories.Context;
 using Utkeyrslukerfi.API.Repositories.Interfaces;
 
@@ -25,15 +26,16 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
             return _mapper.Map<AddressDTO>(entity);
         }
 
-        public Address CreateAddress(string streetName, string houseNumber, string zipCode, string city, string country)
+        public Address CreateAddress(AddressInputModel address)
         {
+            System.Console.WriteLine("Create address called");
             var entity = new Address
             {
-                StreetName = streetName,
-                HouseNumber = houseNumber,
-                ZipCode = zipCode,
-                Country = country,
-                City = city
+                StreetName = address.StreetName,
+                HouseNumber = address.HouseNumber,
+                ZipCode = address.ZipCode,
+                Country = address.Country,
+                City = address.City
             };
             _dbContext.Addresses.Add(entity);
             _dbContext.SaveChanges();

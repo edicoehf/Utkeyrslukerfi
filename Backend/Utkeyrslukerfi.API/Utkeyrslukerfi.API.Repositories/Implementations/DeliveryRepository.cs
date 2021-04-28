@@ -67,22 +67,32 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
             // Get vehicle
             var vehicle = _dbContext.Vehicles.FirstOrDefault(v => v.ID == delivery.VehicleID);
             if (vehicle == null) { throw new NotFoundException("Vehicle not registered."); }
+            System.Console.WriteLine("Street name: ", delivery.PickupAddressStreetName);
 
             // Create PickupAddress
-            var pickupAddress = _addressRepository.CreateAddress(
-                delivery.PickupAddressStreetName,
-                delivery.PickupAddressHouseNumber,
-                delivery.PickupAddressZipCode,
-                delivery.PickupAddressCity,
-                delivery.PickupAddressCountry);
+            var pickupAddress = new Address
+            {
+                StreetName = delivery.PickupAddressStreetName,
+                HouseNumber = delivery.PickupAddressHouseNumber,
+                ZipCode = delivery.PickupAddressZipCode,
+                Country = delivery.PickupAddressCountry,
+                City = delivery.PickupAddressCity,
+            };
+
+            _dbContext.Addresses.Add(pickupAddress);
+
 
             // Create DeliveryAddress
-            var deliveryAddress = _addressRepository.CreateAddress(
-                delivery.DeliveryAddressStreetName,
-                delivery.DeliveryAddressHouseNumber,
-                delivery.DeliveryAddressZipCode,
-                delivery.DeliveryAddressCity,
-                delivery.DeliveryAddressCountry);
+            var deliveryAddress = new Address
+            {
+                StreetName = delivery.DeliveryAddressStreetName,
+                HouseNumber = delivery.DeliveryAddressHouseNumber,
+                ZipCode = delivery.DeliveryAddressZipCode,
+                City = delivery.DeliveryAddressCity,
+                Country = delivery.DeliveryAddressCountry
+            };
+
+            _dbContext.Addresses.Add(pickupAddress);
 
             // Create Delivery
             var entity = new Delivery
@@ -117,7 +127,6 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
             // Get delivery
             var tempDelivery = _dbContext.Deliveries.FirstOrDefault(d => d.ID == id);
             if (tempDelivery == null) { throw new NotFoundException("Delivery not found."); }
-
             // Get vehicle
             // TODO: Add check if vehicle is 0
             var vehicle = _dbContext.Vehicles.FirstOrDefault(v => v.ID == delivery.VehicleID);
@@ -134,7 +143,7 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
             // Get deliveryAddress
             var deliveryAddress = _dbContext.Addresses.FirstOrDefault(a => a.ID == tempDelivery.DeliveryAddressID);
             if (deliveryAddress == null) { throw new NotFoundException("Delivery Address not found."); }
-            
+
 
             // Delivery
             tempDelivery.Recipient = delivery.Recipient;

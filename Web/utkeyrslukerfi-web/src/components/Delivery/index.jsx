@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { getDelivery, setDelivery, updateDelivery } from '../../actions/deliveryActions'
+import { createAddress } from '../../actions/addressActions'
 import { getPackages } from '../../actions/packageActions'
 import AddressModal from '../AddressModal'
 import { useForm } from 'react-hook-form'
@@ -70,10 +71,12 @@ const Delivery = () => {
     const newDelivery = {
       ...delivery,
       VehicleID: delivery.vehicle.id,
-      DriverID: delivery.driver.id,
+      DriverID: delivery.DriverID
     }
-    console.log("delivery: ", newDelivery)
     dispatch(updateDelivery(token, id, newDelivery))
+    console.log("deliveryAddress: ", newDelivery)
+    dispatch(createAddress(token, newDelivery.deliveryAddress))
+    // dispatch(createAddress(token, newDelivery.pickupAddress))
   }
 
   const toggleDeliveryModal = () => {
@@ -84,6 +87,16 @@ const Delivery = () => {
     setShowPickupModal(state => !state)
   }
 
+  const populateOptions = (options) => {
+    return options.map((option, index) => (
+      <option key={index} value={option.id} selected={driver === option.name ? true : false} >{option.name}</option>
+    ))
+  }
+
+  const onDriverChange = (e) => {
+    delivery.DriverID = e.target.value
+    dispatch(setDelivery(delivery))
+  }
   return (
     // TODO: make selection list for available options such as driver, vehicle, status etc.
     <div className='row align-items-start border rounded shadow mt-3 pr-2'>
@@ -102,10 +115,8 @@ const Delivery = () => {
           <div className='row'>
             {/* <label className='mt-3 mx-3'>Driver</label><input className='border-none my-3 ml-auto' disabled={editable} type='text' name='driver' onChange={e => dispatch(setDelivery({ ...delivery, driver: { ...delivery.driver, name: e.target.value } }))} defaultValue={driver} /> */}
             <label className='mt-3 mx-3'>Driver</label>
-            <select className='border-none my-3 ml-auto'>
-              {users.map(u => {
-                <option value="some">SOME</option>
-              })}
+            <select onChange={onDriverChange} className='border-none my-3 ml-auto'>
+              {populateOptions(users)}
             </select>
           </div>
           <div className='row'>

@@ -58,6 +58,12 @@ const AddressModal = ({ canShow, updateModalState, isDelivery }) => {
           <div className="row">
             <label className="mx-3 my-3">House Number</label><input className='border-none my-3 ml-auto' type='text' name='houseNumber' onChange={e => setDAddress(state => ({ ...state, houseNumber: e.target.value }))} defaultValue={dAddres.houseNumber} />
           </div>
+          <div className="row">
+            <label className="mx-3 my-3">City</label><input className='border-none my-3 ml-auto' type='text' name='city' onChange={e => setDAddress(state => ({ ...state, city: e.target.value }))} defaultValue={dAddres.city} />
+          </div>
+          <div className="row">
+            <label className="mx-3 my-3">ZIP Code</label><input className='border-none my-3 ml-auto' type='text' name='zipCode' onChange={e => setDAddress(state => ({ ...state, zipCode: e.target.value }))} defaultValue={dAddres.zipCode} />
+          </div>
         </form>
         <button className="btn btn-primary" onClick={updateData}>Update</button>
       </Modal>
