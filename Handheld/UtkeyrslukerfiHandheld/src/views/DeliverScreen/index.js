@@ -13,6 +13,7 @@ const DeliverScreen = ({ route, navigation }) => {
   // TODO:
   // - css
   // - add consecutive screens that depend on checkbox
+  // - Make sure back buttons decrement steps
   const { delivery } = route.params
   const [count, setCount] = useState(1)
   const [barcode, setBarcode] = useState()
