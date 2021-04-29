@@ -14,7 +14,8 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
         private readonly UtkeyrslukerfiDbContext _dbContext;
         private readonly IConfiguration _config;
 
-        public FetchDataRepository(UtkeyrslukerfiDbContext dbContext, IConfiguration configuration){
+        public FetchDataRepository(UtkeyrslukerfiDbContext dbContext, IConfiguration configuration)
+        {
             _config = configuration.GetSection("ExternalDeliveryMapping");
             _dbContext = dbContext;
         }
@@ -26,16 +27,17 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
         /// <param name="conf">attributete[index]</param>
         /// <param name="data">api response in json format</param>
         /// <returns>A string of the data needed from api response</returns>
-        private String HandleBrackets(String conf, JToken data){
-                int lBracketIdx = conf.IndexOf('[');
-                int rBracketIdx = conf.IndexOf(']'); 
-                string dataToken = conf.Substring(0, lBracketIdx);
-                // parsing the index, by substringing from the index of '['
-                // and goes forward x amount of chars, where x is the difference between
-                // index of '[' to ']' 
-                int index = Int32.Parse(conf.Substring(lBracketIdx+1, (rBracketIdx-lBracketIdx-1)));
-                var tokenData = data.SelectToken($".{dataToken}").ToString();
-                return tokenData.Split(' ')[index];
+        private String HandleBrackets(String conf, JToken data)
+        {
+            int lBracketIdx = conf.IndexOf('[');
+            int rBracketIdx = conf.IndexOf(']');
+            string dataToken = conf.Substring(0, lBracketIdx);
+            // parsing the index, by substringing from the index of '['
+            // and goes forward x amount of chars, where x is the difference between
+            // index of '[' to ']' 
+            int index = Int32.Parse(conf.Substring(lBracketIdx + 1, (rBracketIdx - lBracketIdx - 1)));
+            var tokenData = data.SelectToken($".{dataToken}").ToString();
+            return tokenData.Split(' ')[index];
         }
         /// <summary>
         /// takes in the delivery that was created in the AddDelivery method
@@ -46,12 +48,15 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
         /// <param name="delivery">Delivery Entity</param>
         /// <param name="data">api response in json format</param>
         /// <returns>Delivery with Recipient added to it</returns>
-        private Delivery AddRecipient(Delivery delivery, JToken data){
+        private Delivery AddRecipient(Delivery delivery, JToken data)
+        {
             var conf = _config.GetSection("Recipient").Value.ToString();
-            if(conf == ""){
+            if (conf == "")
+            {
                 return delivery;
             }
-            if(conf.Contains('[')){
+            if (conf.Contains('['))
+            {
                 delivery.Recipient = HandleBrackets(conf, data);
                 return delivery;
             }
@@ -67,12 +72,15 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
         /// <param name="delivery">Delivery Entity</param>
         /// <param name="data">api response in json format</param>
         /// <returns>Delivery with ID added to it</returns>
-        private Delivery AddID(Delivery delivery, JToken data){
+        private Delivery AddID(Delivery delivery, JToken data)
+        {
             var conf = _config.GetSection("ID").Value.ToString();
-            if(conf == ""){
+            if (conf == "")
+            {
                 return delivery;
             }
-            if(conf.Contains('[')){
+            if (conf.Contains('['))
+            {
                 delivery.ID = HandleBrackets(conf, data);
                 return delivery;
             }
@@ -88,12 +96,15 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
         /// <param name="delivery">Delivery Entity</param>
         /// <param name="data">api response in json format</param>
         /// <returns>Delivery with Seller added to it</returns>
-        private Delivery AddSeller(Delivery delivery, JToken data){
+        private Delivery AddSeller(Delivery delivery, JToken data)
+        {
             var conf = _config.GetSection("Seller").Value.ToString();
-            if(conf == ""){
+            if (conf == "")
+            {
                 return delivery;
             }
-            if(conf.Contains('[')){
+            if (conf.Contains('['))
+            {
                 delivery.Seller = HandleBrackets(conf, data);
                 return delivery;
             }
@@ -109,12 +120,15 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
         /// <param name="delivery">Delivery Entity</param>
         /// <param name="data">api response in json format</param>
         /// <returns>Delivery with Driver Comment added to it</returns>
-        private Delivery AddDriverComment(Delivery delivery, JToken data){
+        private Delivery AddDriverComment(Delivery delivery, JToken data)
+        {
             var conf = _config.GetSection("DriverComment").Value.ToString();
-            if(conf == ""){
+            if (conf == "")
+            {
                 return delivery;
             }
-            if(conf.Contains('[')){
+            if (conf.Contains('['))
+            {
                 delivery.DriverComment = HandleBrackets(conf, data);
                 return delivery;
             }
@@ -130,12 +144,15 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
         /// <param name="delivery">Delivery Entity</param>
         /// <param name="data">api response in json format</param>
         /// <returns>Delivery with Customer Comment added to it</returns>
-        private Delivery AddCustomerComment(Delivery delivery, JToken data){
+        private Delivery AddCustomerComment(Delivery delivery, JToken data)
+        {
             var conf = _config.GetSection("CustomerComment").Value.ToString();
-            if(conf == ""){
+            if (conf == "")
+            {
                 return delivery;
             }
-            if(conf.Contains('[')){
+            if (conf.Contains('['))
+            {
                 delivery.CustomerComment = HandleBrackets(conf, data);
                 return delivery;
             }
@@ -151,9 +168,11 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
         /// <param name="delivery">Delivery Entity</param>
         /// <param name="data">api response in json format</param>
         /// <returns>Delivery with Status added to it</returns>
-        private Delivery AddStatus(Delivery delivery, JToken data){
+        private Delivery AddStatus(Delivery delivery, JToken data)
+        {
             var conf = _config.GetSection("Status").Value.ToString();
-            if(conf == ""){
+            if (conf == "")
+            {
                 return delivery;
             }
             delivery.Status = Int32.Parse(_config.GetSection("Status").Value.ToString());
@@ -167,16 +186,19 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
         /// <param name="AddressType">The address type [PickupAddress, DeliveryAddress]</param>
         /// <param name="subsection">The subsection [City, Countr, HouseNumber, StreetName, ZipCode] </param>
         /// <returns>The relevant data from the api resonse in string format</returns>
-        private String GetAddressSubsection(JToken data, String AddressType, String subsection){ 
+        private String GetAddressSubsection(JToken data, String AddressType, String subsection)
+        {
             var conf = _config.GetSection(AddressType).GetSection(subsection).Value;
-            if(conf == "" || conf == null){
+            if (conf == "" || conf == null)
+            {
                 return null;
             }
-            if(conf.Contains('[')){
+            if (conf.Contains('['))
+            {
                 return HandleBrackets(conf, data);
             }
             return data.SelectToken($".{conf}").ToString();
-            }
+        }
         /// <summary>
         /// Checks if the api repsonse has some sort of Pickup address we can get, by checking
         /// the config file. if it does not it return sthe Delivery entity object as it was.
@@ -185,8 +207,9 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
         /// <param name="delivery">Delivery Entity</param>
         /// <param name="data">api response in json format</param>
         /// <returns>Delivery with PickupAddress added to it</returns>
-        private Delivery AddPickupAddress(Delivery delivery, JToken data){
-            if(_config.GetSection("DeliveryAddress").Value == ""){ return delivery; }
+        private Delivery AddPickupAddress(Delivery delivery, JToken data)
+        {
+            if (_config.GetSection("DeliveryAddress").Value == "") { return delivery; }
             var pickupAddress = new Address();
             pickupAddress.City = GetAddressSubsection(data, "PickupAddress", "City");
             pickupAddress.Country = GetAddressSubsection(data, "PickupAddress", "Country");
@@ -205,8 +228,9 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
         /// <param name="delivery">Delivery Entity</param>
         /// <param name="data">api response in json format</param>
         /// <returns>Delivery with DeliveryAddress added to it</returns>
-        private Delivery AddDeliveryAddress(Delivery delivery, JToken data){
-            if(_config.GetSection("DeliveryAddress").Value == ""){ return delivery; }
+        private Delivery AddDeliveryAddress(Delivery delivery, JToken data)
+        {
+            if (_config.GetSection("DeliveryAddress").Value == "") { return delivery; }
             var deliveryAddress = new Address();
             deliveryAddress.City = GetAddressSubsection(data, "DeliveryAddress", "City");
             deliveryAddress.Country = GetAddressSubsection(data, "DeliveryAddress", "Country");
@@ -227,8 +251,10 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
         /// <param name="data">api response in json format</param>
         /// <returns>Delivery with Vehicle added to it</returns>
         // TODO implement this
-        private Delivery AddVehicle(Delivery delivery, JToken data){
-            if(_config.GetSection("Vehicle").ToString() == "") {
+        private Delivery AddVehicle(Delivery delivery, JToken data)
+        {
+            if (_config.GetSection("Vehicle").ToString() == "")
+            {
                 return delivery;
             }
             return delivery;
@@ -241,24 +267,29 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
         /// <param name="delivery">Delivery Entity</param>
         /// <param name="data">api response in json format</param>
         /// <returns>Delivery with Driver added to it</returns>
-        private Delivery AddDriver(Delivery delivery, JToken data){
+        private Delivery AddDriver(Delivery delivery, JToken data)
+        {
             var conf = _config.GetSection("Driver").Value;
-            if(conf == "") {
+            if (conf == "")
+            {
                 return delivery;
             }
             var attribute = data.SelectToken($".{conf}").ToString();
-            if(conf.Contains('[')){
+            if (conf.Contains('['))
+            {
                 attribute = HandleBrackets(conf, data);
             }
             // Looks for the driver by name or email in the database
             var driver = _dbContext.Users.FirstOrDefault(u => u.Email == attribute);
-            if(driver == null){
+            if (driver == null)
+            {
                 driver = _dbContext.Users.FirstOrDefault(u => u.Name == attribute);
             }
             // if it's still null here that means that the driver doesn not exist in our system.
             // for now I'm just returning the delivery, since this is automated.
             // so for now the delivery will just not have a driver if they type in the wrong information
-            if(driver == null){
+            if (driver == null)
+            {
                 return delivery;
             }
             delivery.Driver = driver;
@@ -271,9 +302,10 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
         /// </summary>
         /// <param name="delivery">Delivery Entity</param>
         /// <param name="data">api response in json format</param>
-        private void AddPackages(Delivery delivery, JToken data){
+        private void AddPackages(Delivery delivery, JToken data)
+        {
             var conf = _config.GetSection("Packages");
-            if(conf.GetSection("Name").Value  == null) { return; }
+            if (conf.GetSection("Name").Value == null) { return; }
             // get the array 
             var arr = data.SelectToken($".{conf.GetSection("Name").Value}");
             // looping through packages, from the external api and create those packages
@@ -286,18 +318,19 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
                     Weight = 0.0,
                     Length = 0.0,
                     Height = 0.0,
-                    Width = 0.0, 
+                    Width = 0.0,
                     Delivery = delivery
                 };
                 _dbContext.Packages.Add(entity);
-            }    
+            }
         }
         /// <summary>
         /// Takes in api respose on the Json format, and extracts data 
         /// from it to create a new delivery in our database.
         /// </summary>
         /// <param name="delivery">api response on json format</param>
-        public void AddDelivery(JToken delivery){
+        public void AddDelivery(JToken delivery)
+        {
             var entity = new Delivery();
             entity = AddID(entity, delivery);
             entity = AddCustomerComment(entity, delivery);

@@ -6,8 +6,8 @@ using Microsoft.Extensions.Configuration;
 
 namespace Utkeyrslukerfi.API.Services.Interfaces
 {
-  public interface IFetchDataService
-  {
-    Task<IEnumerable<Delivery>> GetDeliveries();
-  }
+    public interface IFetchDataService
+    {
+        Task<IEnumerable<Delivery>> GetDeliveries();
+    }
 }
