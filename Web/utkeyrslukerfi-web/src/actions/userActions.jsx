@@ -29,7 +29,7 @@ export const updateUser = (token, id, user) => async (dispatch) => {
 
     if (res?.status === 401) { toastr.error('Notandi er ekki innskráður.') }
     if (res?.status === 404) { toastr.error('Notandi fannst ekki.') }
-    if (res?.status === 400) { toastr.error('Óheimil beiðni.') }
+    if (res?.status === 400) { toastr.error('Slæm beiðni.') }
     if (res?.status === 204) {
       toastr.success('Notandi hefur verið uppfærður!')
       dispatch(updateUserSuccess({ id, ...user }))
