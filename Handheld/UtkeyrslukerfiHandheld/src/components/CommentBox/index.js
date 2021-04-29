@@ -11,7 +11,7 @@ const CommentBox = ({ label, editable, comment, setComment }) => {
         editable={editable}
         numberOfLines={4}
         defaultValue={comment}
-        onChangeText={(text) => setComment({ text })}
+        onChangeText={(text) => setComment(text)}
       />
     </>
   )

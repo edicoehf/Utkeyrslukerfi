@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from 'react'
-import { View, Text, Button } from 'react-native'
+import { View, Text, Button, ToastAndroid } from 'react-native'
 import { useSelector } from 'react-redux'
 import CommentBox from '../../components/CommentBox'
+import deliveryService from '../../services/deliveryService'
 
 // Driver can view details about delivery, comment on it or start delivery
 const DetailsScreen = ({ route, navigation }) => {
   // TODO:
   // - css
-  // - update drivers comment in db
   const availableStatusCodes = useSelector(({ statusCode }) => statusCode)
   const { delivery } = route.params
   const [customerComment, setCustomerComment] = useState('')
   const [driverComment, setDriverComment] = useState('')
+  const token = useSelector(({ login }) => login.token)
 
   useEffect(() => {
     if (delivery.driverComment) { setDriverComment(delivery.driverComment) }
@@ -19,8 +20,17 @@ const DetailsScreen = ({ route, navigation }) => {
   }, [])
 
   // Save drivers comment to db
-  const saveComment = () => {
-    // update db with new comment from driver
+  const saveComment = async () => {
+    try {
+      delivery.driverComment = driverComment // Update delivery
+      const res = await deliveryService.updateDelivery(token, delivery)
+      if (res?.status === 400) { ToastAndroid.show('Óheimil beiðni.', ToastAndroid.LONG) }
+      if (res?.status === 401) { ToastAndroid.show('Notandi er ekki innskráður.', ToastAndroid.LONG) }
+      if (res?.status === 404) { ToastAndroid.show('Sending fannst ekki.', ToastAndroid.LONG) }
+      if (res?.status === 204) { ToastAndroid.show('Gögn vistuð', ToastAndroid.LONG) }
+    } catch (error) {
+      ToastAndroid.show('Ekki náðist samband við netþjón', ToastAndroid.LONG)
+    }
   }
 
   // Navigate to deliver screen
