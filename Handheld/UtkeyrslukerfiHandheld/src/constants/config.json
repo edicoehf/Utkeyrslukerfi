@@ -11,7 +11,7 @@
     "3": "Bílstjóri",
     "4": "Óvirkur"
   },
-  "DELIVER_PROCESS": [
+  "SIGNING_PROCESS": [
     "SignForDelivery",
     "DeliveryReceived"
   ]

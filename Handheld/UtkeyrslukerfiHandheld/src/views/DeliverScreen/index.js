@@ -5,6 +5,8 @@ import CommentBox from '../../components/CommentBox'
 import ProductTable from '../../components/ProductTable'
 import RemoveButton from '../../components/RemoveButton'
 import CheckBox from '@react-native-community/checkbox'
+import { useDispatch, useSelector } from 'react-redux'
+import { setStep } from '../../actions/signingProcessActions'
 
 // Driver can scan in packages in current delivery, comment on the delivery and continue with the delivery
 const DeliverScreen = ({ route, navigation }) => {
@@ -20,6 +22,8 @@ const DeliverScreen = ({ route, navigation }) => {
   const tableWidth = [100, 60, 40]
   const tableHeaders = ['Sendingarnúmer', 'Pakki í sendingu', '']
   const [receiverNotHome, setReveiverNotHome] = useState(false)
+  const signingProcess = useSelector(({ signingProcess }) => signingProcess)
+  const dispatch = useDispatch()
 
   // A ref is neccessary since the remove buttons contain callbacks that reference the state at the time of creation otherwise
   const tableDataRef = useRef()
@@ -54,9 +58,11 @@ const DeliverScreen = ({ route, navigation }) => {
     setBarcode('')
   }
 
-  // Navigate to sign page OR camera page if checkbox is checked
+  // Navigate to sign page, camera page or delivery received page depending on delivery process
   const continueWithDelivery = () => {
-    navigation.navigate('SignForDelivery')
+    const route = signingProcess.process[signingProcess.step]
+    dispatch(setStep(signingProcess.step + 1))
+    navigation.navigate(route)
   }
 
   return (
