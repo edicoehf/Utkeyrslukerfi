@@ -7,6 +7,7 @@ import deliveryService from '../../services/deliveryService'
 // Driver can scan a delivery barcode and get details about it or deliver a delivery
 const SearchScreen = ({ navigation }) => {
   // TODO:
+  // - Override backbutton to decrement step counter
   // - css
   const [barcodeDetails, setBarcodeDetails] = useState('')
   const [barcodeDeliver, setBarcodeDeliver] = useState('')
