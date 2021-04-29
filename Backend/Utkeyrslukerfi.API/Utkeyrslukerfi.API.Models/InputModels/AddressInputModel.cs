@@ -6,7 +6,7 @@ namespace Utkeyrslukerfi.API.Models.InputModels
     {
         [Required(ErrorMessage = "Street name is required")]
         public string StreetName { get; set; }
-        [Required(ErrorMessage = "Home number is required")]
+        [Required(ErrorMessage = "House number is required")]
         public string HouseNumber { get; set; }
         [Required(ErrorMessage = "ZIP Code is required")]
         public string ZipCode { get; set; }
