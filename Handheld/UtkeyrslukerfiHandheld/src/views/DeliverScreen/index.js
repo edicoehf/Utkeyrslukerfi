@@ -10,7 +10,7 @@ import CheckBox from '@react-native-community/checkbox'
 const DeliverScreen = ({ route, navigation }) => {
   // TODO:
   // - css
-  // - add consecutive screens that depends on checkbox
+  // - add consecutive screens that depend on checkbox
   const { delivery } = route.params
   const [count, setCount] = useState(1)
   const [barcode, setBarcode] = useState()
@@ -56,7 +56,7 @@ const DeliverScreen = ({ route, navigation }) => {
 
   // Navigate to sign page OR camera page if checkbox is checked
   const continueWithDelivery = () => {
-    navigation.navigate('DeliveryReceived')
+    navigation.navigate('SignForDelivery')
   }
 
   return (

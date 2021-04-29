@@ -10,5 +10,9 @@
     "2": "Skrifstofumaður",
     "3": "Bílstjóri",
     "4": "Óvirkur"
-  }
+  },
+  "DELIVER_PROCESS": [
+    "SignForDelivery",
+    "DeliveryReceived"
+  ]
 }
