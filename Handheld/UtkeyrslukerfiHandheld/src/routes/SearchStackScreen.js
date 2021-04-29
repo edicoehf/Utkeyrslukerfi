@@ -4,6 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack'
 import SearchScreen from '../views/SearchScreen'
 import DetailsScreen from '../views/DetailsScreen'
 import DeliverScreen from '../views/DeliverScreen'
+import DeliveryReceivedScreen from '../views/DeliveryReceivedScreen'
 
 import { blue } from '../constants'
 
@@ -27,6 +28,7 @@ const SearchStackScreen = () => {
       <SearchStack.Screen name='Search' component={SearchScreen} />
       <SearchStack.Screen name='Details' component={DetailsScreen} />
       <SearchStack.Screen name='Deliver' component={DeliverScreen} />
+      <SearchStack.Screen name='DeliveryReceived' component={DeliveryReceivedScreen} />
     </SearchStack.Navigator>
   )
 }

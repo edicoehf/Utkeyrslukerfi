@@ -10,7 +10,7 @@ import deliveryService from '../../services/deliveryService'
 // This screen is used to scan multiple products and change their status
 const ScanScreen = () => {
   // TODO:
-  // - db stuff: get prev status, check if barcode is valid
+  // - error checking, error messages (error check, error messages, check if in table already?)
   // - css
   const availableStatusCodes = useSelector(({ statusCode }) => statusCode)
   const token = useSelector(({ login }) => login.token)
@@ -35,15 +35,15 @@ const ScanScreen = () => {
   // Add item to table
   const addBarcode = async () => {
     try {
-      // TODO: error check, error messages, check if in table already
-      // If delivery is valid
+      // Check if barcode is valid
       const delivery = await deliveryService.getDelivery(token, barcode)
       setTableData([
         [
           barcode,
           availableStatusCodes[delivery.status],
           availableStatusCodes[status],
-          <RemoveButton key={barcode} barcode={barcode} removeBarcode={removeBarcode} />
+          <RemoveButton key={barcode} barcode={barcode} removeBarcode={removeBarcode} />,
+          status
         ],
         ...tableData
       ])
@@ -53,9 +53,15 @@ const ScanScreen = () => {
     }
   }
 
-  // Update all deliveries in table
-  const updateDeliveries = () => {
-
+  // Update status for all deliveries currently in table
+  const updateDeliveries = async () => {
+    try {
+      const deliveriesData = { deliveries: tableData.map(d => { return { id: d[0], status: d[4] } }) }
+      await deliveryService.updateDeliveries(token, deliveriesData)
+      setTableData([])
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   return (
@@ -66,7 +72,7 @@ const ScanScreen = () => {
       <BarcodeForm barcode={barcode} setBarcode={setBarcode} enterBarcode={addBarcode} />
       <Text>Skannaðir pakkar</Text>
       <ProductTable tableHeaders={tableHeaders} tableData={tableData} tableWidth={tableWidth} />
-      <Button onClick={updateDeliveries} title='Uppfæra' />
+      <Button onPress={updateDeliveries} title='Uppfæra' />
     </View>
   )
 }
