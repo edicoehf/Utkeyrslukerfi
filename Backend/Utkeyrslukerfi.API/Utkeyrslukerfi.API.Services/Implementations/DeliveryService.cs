@@ -35,5 +35,9 @@ namespace Utkeyrslukerfi.API.Services.Implementations
         {
             _deliveryRepo.UpdateDelivery(delivery, id);
         }
+        public void UpdateDeliveries(DeliveriesInputModel deliveries)
+        {
+            _deliveryRepo.UpdateDeliveries(deliveries);
+        }
     }
 }

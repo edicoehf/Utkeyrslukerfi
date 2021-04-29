@@ -1,10 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { View, Text } from 'react-native'
+import { View, Text, Button } from 'react-native'
 import { useSelector } from 'react-redux'
 import BarcodeForm from '../../components/BarcodeForm'
 import ProductTable from '../../components/ProductTable'
 import RemoveButton from '../../components/RemoveButton'
 import StatusCodeDropdown from '../../components/StatusCodeDropdown'
+import deliveryService from '../../services/deliveryService'
 
 // This screen is used to scan multiple products and change their status
 const ScanScreen = () => {
@@ -12,7 +13,7 @@ const ScanScreen = () => {
   // - db stuff: get prev status, check if barcode is valid
   // - css
   const availableStatusCodes = useSelector(({ statusCode }) => statusCode)
-
+  const token = useSelector(({ login }) => login.token)
   const [status, setStatus] = useState(2)
   const [barcode, setBarcode] = useState('')
   const [tableData, setTableData] = useState([])
@@ -32,17 +33,29 @@ const ScanScreen = () => {
   }
 
   // Add item to table
-  const addBarcode = () => {
-    setTableData([
-      ...tableData,
-      [
-        barcode,
-        'hmm',
-        availableStatusCodes[status],
-        <RemoveButton key={barcode} barcode={barcode} removeBarcode={removeBarcode} />
-      ]
-    ])
-    setBarcode('')
+  const addBarcode = async () => {
+    try {
+      // TODO: error check, error messages, check if in table already
+      // If delivery is valid
+      const delivery = await deliveryService.getDelivery(token, barcode)
+      setTableData([
+        [
+          barcode,
+          availableStatusCodes[delivery.status],
+          availableStatusCodes[status],
+          <RemoveButton key={barcode} barcode={barcode} removeBarcode={removeBarcode} />
+        ],
+        ...tableData
+      ])
+      setBarcode('')
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  // Update all deliveries in table
+  const updateDeliveries = () => {
+
   }
 
   return (
@@ -53,6 +66,7 @@ const ScanScreen = () => {
       <BarcodeForm barcode={barcode} setBarcode={setBarcode} enterBarcode={addBarcode} />
       <Text>Skannaðir pakkar</Text>
       <ProductTable tableHeaders={tableHeaders} tableData={tableData} tableWidth={tableWidth} />
+      <Button onClick={updateDeliveries} title='Uppfæra' />
     </View>
   )
 }

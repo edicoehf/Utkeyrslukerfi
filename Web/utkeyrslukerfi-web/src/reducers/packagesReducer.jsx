@@ -1,4 +1,4 @@
-import { GET_PACKAGES, } from '../constants'
+import { GET_PACKAGES } from '../constants'
 
 const packagesReducer = (state = [], action) => {
   switch (action.type) {
