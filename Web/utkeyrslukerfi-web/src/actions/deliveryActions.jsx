@@ -32,7 +32,7 @@ const updateDelivery = (token, id, delivery) => async (dispatch) => {
       dispatch(updateDeliverySuccess({ id, ...delivery }))
     }
   } catch (err) {
-    toastr.error('Connection error!')
+    toastr.error('Update Delivery Connection error!')
   }
 }
 

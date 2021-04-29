@@ -91,7 +91,7 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
                 Country = delivery.DeliveryAddressCountry
             };
 
-            _dbContext.Addresses.Add(pickupAddress);
+            _dbContext.Addresses.Add(deliveryAddress);
 
             // Create Delivery
             var entity = new Delivery
@@ -123,7 +123,7 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
             // Get delivery
             var tempDelivery = _dbContext.Deliveries.FirstOrDefault(d => d.ID == id);
             if (tempDelivery == null) { throw new NotFoundException("Delivery not found."); }
-            
+
             // Get vehicle
             if (delivery.VehicleID != 0)
             {
@@ -139,21 +139,36 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
                 tempDelivery.Driver = driver;
             }
             // Get pickupAddress
-            if (delivery.PickupAddressID != 0)
+            if (delivery.PickupAddressID == -1)
             {
-                var pickupAddress = _dbContext.Addresses.FirstOrDefault(a => a.ID == tempDelivery.PickupAddressID);
-                if (pickupAddress == null) { throw new NotFoundException("Pickup Address not found."); }
-                tempDelivery.PickupAddressID = delivery.PickupAddressID;
-                tempDelivery.PickupAddress = pickupAddress;
+                // create new pickup address
+                var pickupAddress = new AddressInputModel
+                {
+                    StreetName = delivery.PickupAddressStreetName,
+                    HouseNumber = delivery.PickupAddressHouseNumber,
+                    ZipCode = delivery.PickupAddressZipCode,
+                    Country = delivery.PickupAddressCountry,
+                    City = delivery.PickupAddressCity,
+                };
+
+                int pId = _addressRepository.CreateAddress(pickupAddress);
+                tempDelivery.PickupAddressID = pId;
             }
-            System.Console.Write("delivery: " + tempDelivery.DeliveryAddressID);
+
             // Get deliveryAddress
-            if (delivery.DeliveryAddressID != 0)
+            if (delivery.DeliveryAddressID == -1)
             {
-                var deliveryAddress = _dbContext.Addresses.FirstOrDefault(a => a.ID == tempDelivery.DeliveryAddressID);
-                if (deliveryAddress == null) { throw new NotFoundException("Delivery Address not found."); }
-                tempDelivery.DeliveryAddressID = delivery.DeliveryAddressID;
-                tempDelivery.DeliveryAddress = deliveryAddress;
+                // create new delivery address
+                var deliveryAddress = new AddressInputModel
+                {
+                    StreetName = delivery.DeliveryAddressStreetName,
+                    HouseNumber = delivery.DeliveryAddressHouseNumber,
+                    ZipCode = delivery.DeliveryAddressZipCode,
+                    City = delivery.DeliveryAddressCity,
+                    Country = delivery.DeliveryAddressCountry
+                };
+                int dId = _addressRepository.CreateAddress(deliveryAddress);
+                tempDelivery.DeliveryAddressID = dId;
             }
 
             // Delivery

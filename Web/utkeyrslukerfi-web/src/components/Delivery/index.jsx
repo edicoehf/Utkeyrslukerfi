@@ -2,13 +2,11 @@ import React, { useState, useEffect } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { getDelivery, setDelivery, updateDelivery } from '../../actions/deliveryActions'
-import { createDeliveryAddress, createPickupAddress } from '../../actions/addressActions'
 import { getPackages } from '../../actions/packageActions'
 import AddressModal from '../AddressModal'
 import { useForm } from 'react-hook-form'
 
 import configData from '../../constants/config.json'
-import deliveryService from '../../services/deliveryService'
 
 const Delivery = () => {
   const packages = useSelector(({ packages }) => packages)
@@ -52,8 +50,8 @@ const Delivery = () => {
 
   const deliveryAddress = `${delivery.deliveryAddress.streetName}  ${delivery.deliveryAddress.houseNumber}`
   const pickupAddress = `${delivery.pickupAddress.streetName}  ${delivery.pickupAddress.houseNumber}`
-  const vehicle = delivery.vehicle.licensePlate
-  const driver = delivery.driver.name
+  const vehicle = delivery.vehicle == null ? 'N/A' : delivery.vehicle.licensePlate
+  const driver = delivery.driver == null ? 'N/A' : delivery.driver.name
 
   const [editable, setEditable] = useState(true)
   const [showDeliveryModal, setShowDeliveryModal] = useState(false)
@@ -77,23 +75,24 @@ const Delivery = () => {
     const newDelivery = {
       ...delivery,
       VehicleID: delivery.vehicle.id,
-      DriverID: delivery.DriverID ? delivery.DriverID : delivery.driver.id
+      DriverID: delivery.DriverID ? delivery.DriverID : delivery.driver.id,
+      // pickup address
+      PickupAddressID: pickupAddChanged ? -1 : delivery.pickupAddress.id,
+      PickupAddressHouseNumber: delivery.pickupAddress.houseNumber,
+      PickupAddressZipCode: delivery.pickupAddress.zipCode,
+      PickupAddressCity: delivery.pickupAddress.city,
+      PickupAddressCountry: delivery.pickupAddress.country,
+      PickupAddressStreetName: delivery.pickupAddress.streetName,
+      // delivery address
+      DeliveryAddressID: deliveryAddChanged ? -1 : delivery.deliveryAddress.id,
+      DeliveryAddressHouseNumber: delivery.deliveryAddress.houseNumber,
+      DeliveryAddressZipCode: delivery.deliveryAddress.zipCode,
+      DeliveryAddressCity: delivery.deliveryAddress.city,
+      DeliveryAddressCountry: delivery.deliveryAddress.country,
+      DeliveryAddressStreetName: delivery.deliveryAddress.streetName,
     }
-    if (deliveryAddChanged) {
-      dispatch(createDeliveryAddress(token, newDelivery.deliveryAddress))
-      console.log(address)
-      if (address.deliveryAddress.streetName) {
-        newDelivery.DeliveryAddressID = address.id
-      }
-    }
-    if (pickupAddChanged) {
-      dispatch(createPickupAddress(token, newDelivery.pickupAddress))
-      if (address.pickupAddress.streetName) {
-        newDelivery.PickupAddressID = address.id
-      }
-    }
+
     dispatch(updateDelivery(token, id, newDelivery))
-    console.log("delivery: ", newDelivery)
   }
 
   const toggleDeliveryModal = () => {
