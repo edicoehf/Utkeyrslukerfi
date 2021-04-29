@@ -22,7 +22,6 @@ namespace Utkeyrslukerfi.API.Models.Entities
 
         // Navigation Properties
         public Vehicle Vehicle { get; set; }
-
         public User Driver { get; set; }
         public List<Package> Packages { get; set; }
         public Signoff Signoff { get; set; }

@@ -24,14 +24,23 @@ namespace Utkeyrslukerfi.API.Services.Implementations
       _config = config;
       _fetchDataRepo = fetchDataRepo;
     }
-
+    /// <summary>
+    /// Fetches the data from the external API, and returns the data on a Json Object format.
+    /// </summary>
+    /// <param name="URL">External API url</param>
+    /// <param name="flatten">Should the data be flatten or not</param>
+    /// <param name="encapsulatedDataName">if the data is encapsulated, you need to pass in the encapsulation name here</param>
+    /// <returns>list of json objects</returns>
     private async Task<IEnumerable<JObject>> GetDeliveriesAsync(string URL, bool flatten, string encapsulatedDataName)
     {
       HttpResponseMessage response = await client.GetAsync(URL);
       response.EnsureSuccessStatusCode();
       return await HttpResponseMessageExtensions.DeserializeJsonToList<JObject>(response, flatten, encapsulatedDataName);
     }
-
+    /// <summary>
+    /// Async task that adds deliveries to the database
+    /// </summary>
+    /// <returns>always returns null, can't be void since hangfire calls it</returns>
     public Task<IEnumerable<Delivery>> GetDeliveries() {
       // getting the values from the appsettings.json
       string URL = _config.GetSection("ExternalAPIConfig").GetSection("ApiUrl").Value;
@@ -41,14 +50,9 @@ namespace Utkeyrslukerfi.API.Services.Implementations
       var response = GetDeliveriesAsync(URL, flatten, encapsulatedDataName);
       response.Wait();
 
-      var mapping = _config.GetSection("ExternalDeliveryMapping");
-      var packageMapping = mapping.GetSection("Packages");
       foreach(var item in response.Result){
-        _fetchDataRepo.AddPackages(item.SelectToken($".{packageMapping.GetSection("Name").Value}"));
-        System.Console.WriteLine("----------------------------------");
+        _fetchDataRepo.AddDelivery(item);
       }
-
-
       return null;
     }
   }
