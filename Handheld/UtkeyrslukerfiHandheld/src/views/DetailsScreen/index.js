@@ -3,6 +3,7 @@ import { View, Text, Button, ToastAndroid } from 'react-native'
 import { useSelector } from 'react-redux'
 import CommentBox from '../../components/CommentBox'
 import deliveryService from '../../services/deliveryService'
+// import { Button } from 'react-bootstrap/'
 
 // Driver can view details about delivery, comment on it or start delivery
 const DetailsScreen = ({ route, navigation }) => {
@@ -59,8 +60,8 @@ const DetailsScreen = ({ route, navigation }) => {
       <CommentBox label='Athugasemd viðskiptavinar' editable={false} comment={customerComment} setComment={setCustomerComment} />
       <CommentBox label='Athugasemd bílstjóra' editable comment={driverComment} setComment={setDriverComment} />
 
-      <Button title='Vista' onPress={saveComment} />
-      <Button title='Afhenda' onPress={deliver} />
+      <Button title='Vista' onClick={saveComment} />
+      <Button title='Afhenda' onClick={deliver} />
 
     </View>
   )
