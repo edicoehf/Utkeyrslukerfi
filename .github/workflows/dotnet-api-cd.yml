@@ -1,8 +1,6 @@
-name: CD for Utkeyrslukerfi
+name: CD Backend Dotnet
 on:
   push:
-    branches: [main]
-  pull_request:
     branches: [main]
 
 env: 

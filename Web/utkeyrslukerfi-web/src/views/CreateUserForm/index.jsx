@@ -6,10 +6,11 @@ import { useDispatch, useSelector } from 'react-redux'
 import FormGroupInput from '../../components/FormGroupInput'
 import FormGroupDropdown from '../../components/FormGroupDropdown'
 import FormGroupButton from '../../components/FormGroupButton'
+import configData from '../../constants/config.json'
 import '../../styles/user.css'
 
 const CreateUserForm = () => {
-  const methods = useForm() // TODO: define the roles and use configuration to add them
+  const methods = useForm()
   const token = useSelector(({ login }) => login.token)
   const dispatch = useDispatch()
 
@@ -50,10 +51,11 @@ const CreateUserForm = () => {
             label='Starf'
             options={
               <>
-                <option value='1'>Admin</option>
-                <option value='2'>Office</option>
-                <option value='3'>Driver</option>
-                <option value='4'>Disabled</option>
+                {Object.keys(configData.ROLES).map(function (k) {
+                  return (
+                    <option key={k} value={k}>{configData.ROLES[k]}</option>
+                  )
+                })}
               </>
             }
             typeOfForm='CreateUser'

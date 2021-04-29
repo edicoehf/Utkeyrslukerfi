@@ -1,62 +1,50 @@
 import React, { useState } from 'react'
-import { View, Text } from 'react-native'
+import { View, Text, ToastAndroid } from 'react-native'
+import { useSelector } from 'react-redux'
 import BarcodeForm from '../../components/BarcodeForm'
+import deliveryService from '../../services/deliveryService'
 
 // Driver can scan a delivery barcode and get details about it or deliver a delivery
 const SearchScreen = ({ navigation }) => {
   // TODO:
-  // - remove dummy data and get actual data if barcode is valid
+  // - css
   const [barcodeDetails, setBarcodeDetails] = useState('')
   const [barcodeDeliver, setBarcodeDeliver] = useState('')
+  const token = useSelector(({ login }) => login.token)
 
-  // Got to details page if delivery exists
+  // Got to details/deliver page if delivery exists
   const searchForDelivery = async () => {
-    // Dummy data:
-    const delivery = {
-      id: '123447025891',
-      recipient: 'Jóna',
-      seller: 'HR',
-      driverComment: null,
-      customerComment: null,
-      status: 1,
-      driver: {
-        id: 1,
-        name: 'Mikael Máni Jónsson',
-        email: 'Mikaeelmani99@gmail.com',
-        role: 1,
-        changePassword: false
-      },
-      pickupAddress: {
-        id: 39,
-        streetName: 'Menntavegur',
-        houseNumber: '1',
-        zipCode: '102',
-        city: 'Reykjavík',
-        country: 'Ísland'
-      },
-      deliveryAddress: {
-        id: 40,
-        streetName: 'Borgarholtsbraut',
-        houseNumber: '52',
-        zipCode: '200',
-        city: 'Kópavogur',
-        country: 'Ísland'
-      },
-      vehicle: {
-        id: 1,
-        licensePlate: 'OUI30',
-        length: 3.45,
-        height: 1.89,
-        width: 1.05
-      },
-      packages: []
+    const delivery = await getDelivery(barcodeDetails)
+    setBarcodeDetails('')
+    if (delivery) {
+      navigation.navigate('Details', { delivery: delivery })
     }
-    navigation.navigate('Details', { delivery: delivery })
   }
 
   // Go to deliver page if delivery exists
-  const deliverDelivery = () => {
-    navigation.navigate('Deliver')
+  const deliverDelivery = async () => {
+    const delivery = await getDelivery(barcodeDeliver)
+    setBarcodeDeliver('')
+    if (delivery) {
+      navigation.navigate('Deliver', { delivery: delivery })
+    }
+  }
+
+  const getDelivery = async (barcode) => {
+    if (!barcode) {
+      ToastAndroid.show('Strikamerki er ekki til staðar', ToastAndroid.LONG)
+      return
+    }
+    try {
+      const del = await deliveryService.getDelivery(token, barcode)
+      if (del?.errors) {
+        ToastAndroid.show(del.errors.Message[0], ToastAndroid.LONG)
+        return
+      }
+      return del
+    } catch (error) {
+      ToastAndroid.show(error, ToastAndroid.LONG)
+    }
   }
 
   return (

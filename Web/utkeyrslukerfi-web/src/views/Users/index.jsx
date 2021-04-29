@@ -2,10 +2,10 @@ import React, { useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { getUsers } from '../../actions/usersActions'
-import { BsPencilSquare } from 'react-icons/bs'
+import { BsPencilSquare, BsFunnel } from 'react-icons/bs'
 import { ImPlus } from 'react-icons/im'
+import configData from '../../constants/config.json'
 import '../../styles/users.css'
-import { BsFunnel } from 'react-icons/bs'
 
 // Users - display all users in a table
 const Users = () => {
@@ -35,7 +35,7 @@ const Users = () => {
           <td>{user.id}</td>
           <td>{user.name}</td>
           <td>{user.email}</td>
-          <td>{user.role}</td>
+          <td>{configData.ROLES[user.role]}</td>
           <td onClick={() => navigateToUser(user)}><BsPencilSquare size='1.5em' /></td>
         </tr>
       )
@@ -59,16 +59,16 @@ const Users = () => {
               Starf
             </th>
             <th>
+              {/* Edit pen icon */}
               <BsFunnel size='2em' color='white' />
-              {/* Leave this empty, it's for the edit pen icon */}
             </th>
           </tr>
         </thead>
         <tbody>
+          {/* Loading the Add user plus */}
           {
             users.length > 0 ? renderRows() : null
           }
-          {/* Loading the Add user plus */}
           <tr>
             <td onClick={() => navigateToCreateUser()}><ImPlus size='2em' /></td>
             <td />
@@ -81,9 +81,9 @@ const Users = () => {
       {
         users.length <= 0
           ? <div className='text-center'>
-              <div className='spinner-border' role='status'>
-                <span className='sr-only'>Loading...</span>
-              </div>
+            <div className='spinner-border' role='status'>
+              <span className='sr-only'>Loading...</span>
+            </div>
             </div>
           : null
       }

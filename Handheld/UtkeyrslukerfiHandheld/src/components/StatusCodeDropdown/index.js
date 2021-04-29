@@ -7,11 +7,13 @@ const StatusCodeDropdown = ({ status, setStatus }) => {
 
   return (
     <DropDownPicker
-      items={[
-        { label: availableStatusCodes[1], value: 1 },
-        { label: availableStatusCodes[2], value: 2 },
-        { label: availableStatusCodes[3], value: 3 }
-      ]}
+      items={
+        Object.keys(availableStatusCodes).map(function (k) {
+          return (
+            { label: availableStatusCodes[k], value: k }
+          )
+        })
+      }
       defaultValue={status}
       containerStyle={{ height: 40 }}
       style={{ backgroundColor: '#fafafa' }}

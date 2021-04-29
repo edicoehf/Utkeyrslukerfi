@@ -1,14 +1,11 @@
-import { SET_LOGIN, GET_LOGIN } from '../constants'
+import { SET_LOGIN, GET_LOGIN, CLEAR_LOGIN } from '../constants'
 import loginService from '../services/loginService'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
-export const setLogin = (email, password) => async (dispatch) => {
+export const setLogin = (name) => async (dispatch) => {
   try {
-    const body = await loginService.login({ email, password })
+    const body = await loginService.login({ name })
     if (body?.token) {
-      // TODO: Work out localstorage alternative
-      // localStorage.setItem('token', JSON.stringify(body.token))
-      // console.log(body.token)
       await AsyncStorage.setItem('token', JSON.stringify(body.token))
       dispatch(setLoginSuccess(body))
     }
@@ -19,9 +16,7 @@ export const setLogin = (email, password) => async (dispatch) => {
 
 export const getLogin = () => async (dispatch) => {
   try {
-    // TODO: Work out localstorage alternative
-    // const token = await JSON.parse(localStorage.getItem('token'))
-    const token = await AsyncStorage.getItem('token')
+    const token = JSON.parse(await AsyncStorage.getItem('token'))
     dispatch(getLoginSuccess(token))
   } catch (err) {
     console.log('Bad request, please try loading again.')
@@ -36,4 +31,19 @@ const getLoginSuccess = (token) => ({
 const setLoginSuccess = (body) => ({
   type: SET_LOGIN,
   payload: body
+})
+
+export const logout = (token) => async (dispatch) => {
+  try {
+    await loginService.logout(token)
+    await AsyncStorage.removeItem('token')
+    dispatch(logoutSuccess())
+  } catch (err) {
+    console.log(err)
+  }
+}
+
+const logoutSuccess = () => ({
+  type: CLEAR_LOGIN,
+  payload: { changePassword: false, token: '' }
 })

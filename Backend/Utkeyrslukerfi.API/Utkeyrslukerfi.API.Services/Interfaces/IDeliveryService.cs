@@ -10,5 +10,6 @@ namespace Utkeyrslukerfi.API.Services.Interfaces
         IEnumerable<DeliveryDTO> GetDeliveries(int status, int pageSize, int pageNumber);
         DeliveryDTO CreateDelivery(DeliveryInputModel delivery);
         void UpdateDelivery(DeliveryInputModel delivery, string id);
+        void UpdateDeliveries(DeliveriesInputModel deliveries);
     }
 }
