@@ -1,4 +1,3 @@
-import AsyncStorage from '@react-native-async-storage/async-storage'
 import React, { useEffect, useRef, useState } from 'react'
 import { View, Text, Button } from 'react-native'
 import { useSelector } from 'react-redux'
@@ -29,7 +28,7 @@ const ScanScreen = () => {
 
   // Remove item from table, barcodes need to be unique
   const removeBarcode = (currentBarcode) => {
-    setTableData(tableDataRef.current.filter(b => b[0] !== currentBarcode))
+    setTableData(tableDataRef.current.filter(b => b.barcode !== currentBarcode))
   }
 
   // Add item to table
@@ -40,9 +39,10 @@ const ScanScreen = () => {
       setTableData([
         {
           barcode: barcode,
-          fromStatus: delivery.status,
-          toStatus: status,
-          button: <RemoveButton key={barcode} barcode={barcode} removeBarcode={removeBarcode} />
+          fromStatus: availableStatusCodes[delivery.status],
+          toStatus: availableStatusCodes[status],
+          button: <RemoveButton key={barcode} barcode={barcode} removeBarcode={removeBarcode} />,
+          status: status
         },
         ...tableData
       ])
@@ -55,7 +55,7 @@ const ScanScreen = () => {
   // Update status for all deliveries currently in table
   const updateDeliveries = async () => {
     try {
-      const deliveriesData = { deliveries: tableData.map(d => { return { id: d.barcode, status: d.toStatus } }) }
+      const deliveriesData = { deliveries: tableData.map(d => { return { id: d.barcode, status: d.status } }) }
       await deliveryService.updateDeliveries(token, deliveriesData)
       setTableData([])
     } catch (error) {

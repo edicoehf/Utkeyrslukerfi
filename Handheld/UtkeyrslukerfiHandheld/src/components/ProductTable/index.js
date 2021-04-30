@@ -23,12 +23,13 @@ const ProductTable = ({ tableHeaders, tableData }) => {
         <FlatList
           data={tableData}
           style={{width:'90%'}}
+          keyExtractor={(_, index) => index+''}
           ListHeaderComponent={tableHeaderComponent}
           stickyHeaderIndices={[0]}
           renderItem={({item, index}) => {
             return (
               <View style={{...styles.tableRow, backgroundColor: index % 2 == 1 ? "#F0FBFC" : "white"}}>
-                {Object.keys(item).map((k) => <Text key={k} style={styles.columnRowTxt}>{item[k]}</Text>)}
+                {Object.keys(item).map((k) => k !== 'status' && <Text key={k} style={styles.columnRowTxt}>{item[k]}</Text>)}
               </View>
             )
           }}
@@ -50,7 +51,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-evenly",
     alignItems: "center",
-    backgroundColor: "#37C2D0",
+    backgroundColor: "#4A79BA",
     borderTopEndRadius: 10,
     borderTopStartRadius: 10,
     height: 50
@@ -61,7 +62,7 @@ const styles = StyleSheet.create({
     alignItems:"center",
   },
   columnHeader: {
-    width: "20%",
+    width: "25%",
     justifyContent: "center",
     alignItems:"center"
   },
@@ -70,7 +71,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   columnRowTxt: {
-    width:"20%",
+    width:"25%",
     textAlign:"center",
   }
 });
