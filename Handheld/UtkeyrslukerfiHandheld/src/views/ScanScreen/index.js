@@ -1,3 +1,4 @@
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import React, { useEffect, useRef, useState } from 'react'
 import { View, Text, Button } from 'react-native'
 import { useSelector } from 'react-redux'
@@ -18,7 +19,6 @@ const ScanScreen = () => {
   const [barcode, setBarcode] = useState('')
   const [tableData, setTableData] = useState([])
   const tableHeaders = ['Sendingarnúmer', 'Fyrri staða', 'Ný staða', '']
-  const tableWidth = [100, 60, 60, 40]
 
   // A ref is neccessary since the remove buttons contain callbacks that reference the state at the time of creation otherwise
   const tableDataRef = useRef()
@@ -38,13 +38,12 @@ const ScanScreen = () => {
       // Check if barcode is valid
       const delivery = await deliveryService.getDelivery(token, barcode)
       setTableData([
-        [
-          barcode,
-          availableStatusCodes[delivery.status],
-          availableStatusCodes[status],
-          <RemoveButton key={barcode} barcode={barcode} removeBarcode={removeBarcode} />,
-          status
-        ],
+        {
+          barcode: barcode,
+          fromStatus: delivery.status,
+          toStatus: status,
+          button: <RemoveButton key={barcode} barcode={barcode} removeBarcode={removeBarcode} />
+        },
         ...tableData
       ])
       setBarcode('')
@@ -56,7 +55,7 @@ const ScanScreen = () => {
   // Update status for all deliveries currently in table
   const updateDeliveries = async () => {
     try {
-      const deliveriesData = { deliveries: tableData.map(d => { return { id: d[0], status: d[4] } }) }
+      const deliveriesData = { deliveries: tableData.map(d => { return { id: d.barcode, status: d.toStatus } }) }
       await deliveryService.updateDeliveries(token, deliveriesData)
       setTableData([])
     } catch (error) {
@@ -71,7 +70,7 @@ const ScanScreen = () => {
       <Text>Strikamerki sendingar</Text>
       <BarcodeForm barcode={barcode} setBarcode={setBarcode} enterBarcode={addBarcode} />
       <Text>Skannaðir pakkar</Text>
-      <ProductTable tableHeaders={tableHeaders} tableData={tableData} tableWidth={tableWidth} />
+      <ProductTable tableHeaders={tableHeaders} tableData={tableData} />
       <Button onPress={updateDeliveries} title='Uppfæra' />
     </View>
   )

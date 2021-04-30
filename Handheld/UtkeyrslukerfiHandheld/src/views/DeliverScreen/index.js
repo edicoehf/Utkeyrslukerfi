@@ -19,8 +19,7 @@ const DeliverScreen = ({ route, navigation }) => {
   const [barcode, setBarcode] = useState()
   const [customerComment, setCustomerComment] = useState('')
   const [driverComment, setDriverComment] = useState('')
-  const [tableData, setTableData] = useState([[]])
-  const tableWidth = [100, 60, 40]
+  const [tableData, setTableData] = useState([])
   const tableHeaders = ['Sendingarnúmer', 'Pakki í sendingu', '']
   const [receiverNotHome, setReveiverNotHome] = useState(false)
   const signingProcess = useSelector(({ signingProcess }) => signingProcess)
@@ -48,11 +47,11 @@ const DeliverScreen = ({ route, navigation }) => {
     if (delivery.packages.some(p => p.id === barcode)) {
       setTableData([
         ...tableData,
-        [
-          barcode,
-          `${count}/${delivery.packages.length}`,
-          <RemoveButton key={barcode} barcode={barcode} removeBarcode={removeBarcode} />
-        ]
+        {
+          barcode: barcode,
+          package: `${count}/${delivery.packages.length}`,
+          button: <RemoveButton key={barcode} barcode={barcode} removeBarcode={removeBarcode} />
+        }
       ])
       setCount(count + 1)
     }
@@ -69,7 +68,7 @@ const DeliverScreen = ({ route, navigation }) => {
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
       <BarcodeForm barcode={barcode} setBarcode={setBarcode} enterBarcode={addBarcode} />
-      <ProductTable tableHeaders={tableHeaders} tableData={tableData} tableWidth={tableWidth} />
+      <ProductTable tableHeaders={tableHeaders} tableData={tableData} />
       <CommentBox label='Athugasemd viðskiptavinar' editable={false} comment={customerComment} setComment={setCustomerComment} />
       <CommentBox label='Athugasemd bílstjóra' editable comment={driverComment} setComment={setDriverComment} />
       <CheckBox value={receiverNotHome} onValueChange={setReveiverNotHome} />
