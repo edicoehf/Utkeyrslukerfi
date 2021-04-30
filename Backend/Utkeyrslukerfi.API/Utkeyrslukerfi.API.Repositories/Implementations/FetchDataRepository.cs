@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Utkeyrslukerfi.API.Repositories.Helpers;
 
 namespace Utkeyrslukerfi.API.Repositories.Implementations
 {

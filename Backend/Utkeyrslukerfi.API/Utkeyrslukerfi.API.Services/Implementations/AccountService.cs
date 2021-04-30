@@ -3,6 +3,7 @@ using Utkeyrslukerfi.API.Services.Interfaces;
 using Utkeyrslukerfi.API.Models.InputModels;
 using Utkeyrslukerfi.API.Models.Dtos;
 using Utkeyrslukerfi.API.Models.Entities;
+using System;
 
 namespace Utkeyrslukerfi.API.Services.Implementations
 {
@@ -30,7 +31,7 @@ namespace Utkeyrslukerfi.API.Services.Implementations
             _tokenRepository.VoidToken(tokenID);
         }
 
-        public int GetUserID(int tokenID)
+        public Guid GetUserID(int tokenID)
         {
             return _tokenRepository.GetUserID(tokenID);
         }
