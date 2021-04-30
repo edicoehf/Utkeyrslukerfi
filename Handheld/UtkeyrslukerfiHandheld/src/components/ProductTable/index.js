@@ -7,11 +7,9 @@ const ProductTable = ({ tableHeaders, tableData }) => {
     <View style={styles.tableHeader}>
       {
         tableHeaders.map((column, index) => {
-          {
-            return (
-              <Text key={index} style={styles.columnHeaderTxt}>{column}</Text>
-            )
-          }
+          return (
+            <Text key={index} style={styles.columnHeaderTxt}>{column}</Text>
+          )
         })
       }
     </View>
@@ -27,7 +25,7 @@ const ProductTable = ({ tableHeaders, tableData }) => {
         stickyHeaderIndices={[0]}
         renderItem={({ item, index }) => {
           return (
-            <View style={{ ...styles.tableRow, backgroundColor: index % 2 == 1 ? '#F0FBFC' : 'white' }}>
+            <View style={{ ...styles.tableRow, backgroundColor: index % 2 === 1 ? '#F0FBFC' : 'white' }}>
               {Object.keys(item).map((k) => k !== 'status' && <Text key={k} style={styles.columnRowTxt}>{item[k]}</Text>)}
             </View>
           )
