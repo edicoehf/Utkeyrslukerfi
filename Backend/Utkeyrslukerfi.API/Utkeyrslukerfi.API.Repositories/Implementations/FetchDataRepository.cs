@@ -326,6 +326,25 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
             }
         }
         /// <summary>
+        /// takes in the delivery that was created in the AddDelivery method
+        /// adds the DeliveryDate to it and returns the delivery.
+        /// It has to check if the api response gives us the DeliveryDate,
+        /// if it does, we add it to the delivery, if not we return the delivery unchanged
+        /// </summary>
+        /// <param name="delivery">Delivery Entity</param>
+        /// <param name="data">api response in json format</param>
+        /// <returns>Delivery with DeliveryDate added to it</returns>
+        private Delivery AddDeliveryDate(Delivery delivery, JToken data)
+        {
+          var conf = _config.GetSection("DeliveryDate").Value.ToString();
+          if (conf == "")
+          {
+            return delivery;
+          }
+          delivery.DeliveryDate = DateTime.Parse(data.SelectToken($".{conf}").ToString());
+          return delivery;
+        }
+        /// <summary>
         /// Takes in api respose on the Json format, and extracts data 
         /// from it to create a new delivery in our database.
         /// </summary>
@@ -343,6 +362,7 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
             entity = AddSeller(entity, delivery);
             entity = AddStatus(entity, delivery);
             entity = AddVehicle(entity, delivery);
+            entity = AddDeliveryDate(entity, delivery);
             _dbContext.Deliveries.Add(entity);
             AddPackages(entity, delivery);
             _dbContext.SaveChangesAsync();
