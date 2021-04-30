@@ -1,30 +1,75 @@
 import React from 'react'
-import { View, ScrollView } from 'react-native'
-import { Table, Row } from 'react-native-table-component'
+import { View, Text, FlatList, StyleSheet } from 'react-native'
 
 // Table for products containing barcode, status and more
-const ProductTable = ({ tableHeaders, tableData, tableWidth }) => {
+const ProductTable = ({ tableHeaders, tableData }) => {
+  const tableHeaderComponent = () => (
+    <View style={styles.tableHeader}>
+      {
+        tableHeaders.map((column, index) => {
+          return (
+            <Text key={index} style={styles.columnHeaderTxt}>{column}</Text>
+          )
+        })
+      }
+    </View>
+  )
+
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Table borderStyle={{ borderWidth: 1, borderColor: '#C1C0B9' }}>
-        <Row data={tableHeaders} widthArr={tableWidth} />
-      </Table>
-      <ScrollView>
-        <Table borderStyle={{ borderWidth: 1, borderColor: '#C1C0B9' }}>
-          {
-          tableData.map((rowData, index) => (
-            <Row
-              key={index}
-              data={rowData}
-              widthArr={tableWidth}
-              style={[index % 2 && { backgroundColor: '#F7F6E7' }]}
-            />
-          ))
-          }
-        </Table>
-      </ScrollView>
+      <FlatList
+        data={tableData}
+        style={{ width: '90%' }}
+        keyExtractor={(_, index) => index + ''}
+        ListHeaderComponent={tableHeaderComponent}
+        stickyHeaderIndices={[0]}
+        renderItem={({ item, index }) => {
+          return (
+            <View style={{ ...styles.tableRow, backgroundColor: index % 2 === 1 ? '#F0FBFC' : 'white' }}>
+              {Object.keys(item).map((k) => k !== 'status' && <Text key={k} style={styles.columnRowTxt}>{item[k]}</Text>)}
+            </View>
+          )
+        }}
+      />
     </View>
   )
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingTop: 80
+  },
+  tableHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    alignItems: 'center',
+    backgroundColor: '#4A79BA',
+    borderTopEndRadius: 10,
+    borderTopStartRadius: 10,
+    height: 50
+  },
+  tableRow: {
+    flexDirection: 'row',
+    height: 40,
+    alignItems: 'center'
+  },
+  columnHeader: {
+    width: '25%',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  columnHeaderTxt: {
+    color: 'white',
+    fontWeight: 'bold'
+  },
+  columnRowTxt: {
+    width: '25%',
+    textAlign: 'center'
+  }
+})
 
 export default ProductTable

@@ -13,7 +13,7 @@ import Login from './components/Login'
 import Delivery from './components/Delivery'
 import Package from './components/Package'
 import Navbar from './components/Navbar'
-import CreateUserForm from './views/CreateUserForm'
+import CreateUser from './views/CreateUser'
 import NotFound from './views/NotFound'
 import { getLogin } from './actions/loginActions'
 
@@ -39,7 +39,7 @@ const App = () => {
         <Switch>
           <Route exact path='/' component={Home} />
           <Route exact path='/users' component={Users} />
-          <Route exact path='/users/create' component={CreateUserForm} />
+          <Route exact path='/users/create' component={CreateUser} />
           <Route exact path='/users/:id' component={User} />
           <Route exact path='/deliveries' component={Deliveries} />
           <Route exact path='/deliveries/:id' component={Delivery} />
