@@ -38,7 +38,7 @@ namespace Utkeyrslukerfi.API.Repositories.Context
             modelBuilder.Entity<JwtToken>()
                 .HasOne(t => t.User)
                 .WithMany(u => u.JwtTokens);
-            
+
             // TODO make this work
             // seeding admin user
             // var tempPass = HashingHelper.HashPassword("");
