@@ -3,10 +3,12 @@ import statusCode from './statusCodeReducer'
 import login from './loginReducer'
 import drivers from './driversReducer'
 import deliveries from './deliveryReducer'
+import signingProcess from './signingProcessReducer'
 
 export default combineReducers({
   statusCode,
   login,
   drivers,
-  deliveries
+  deliveries,
+  signingProcess
 })

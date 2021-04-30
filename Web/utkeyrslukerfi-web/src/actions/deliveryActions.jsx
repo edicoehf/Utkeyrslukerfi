@@ -1,4 +1,4 @@
-import { GET_DELIVERY, SET_DELIVERY, UPDATE_DELIVERY} from '../constants'
+import { GET_DELIVERY, SET_DELIVERY, UPDATE_DELIVERY } from '../constants'
 import deliveryService from '../services/deliveryService'
 import toastr from 'toastr'
 
