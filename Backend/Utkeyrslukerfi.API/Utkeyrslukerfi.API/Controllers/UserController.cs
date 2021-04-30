@@ -24,7 +24,7 @@ namespace Utkeyrslukerfi.API.Controllers
         /// <summary>
         /// Returns a specific user by ID/Barcode
         /// </summary>
-        /// <param name="id">ID</param>
+        /// <param name="ID">ID</param>
         /// <remarks>
         /// Sample request:
         ///
@@ -42,10 +42,10 @@ namespace Utkeyrslukerfi.API.Controllers
         /// <response code="401">The Auth token was invalid </response>
         /// <response code="404">There is no user with the given ID</response> 
         [HttpGet]
-        [Route("{id:int}")]
-        public IActionResult GetUser(int id)
+        [Route("{ID:Guid}")]
+        public IActionResult GetUser(Guid ID)
         {
-            var user = _userService.GetUser(id);
+            var user = _userService.GetUser(ID);
             return Ok(user);
         }
 
@@ -91,13 +91,13 @@ namespace Utkeyrslukerfi.API.Controllers
 
         [HttpPut]
         [Route("{id:int}", Name = "UpdateUser")]
-        public IActionResult UpdateUser([FromBody] UserInputModel user, int id)
+        public IActionResult UpdateUser([FromBody] UserInputModel user, Guid ID)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest("User is not valid!");
             }
-            _userService.UpdateUser(user, id);
+            _userService.UpdateUser(user, ID);
             return NoContent();
         }
     }

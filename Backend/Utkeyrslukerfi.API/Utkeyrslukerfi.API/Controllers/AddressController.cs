@@ -23,7 +23,7 @@ namespace Utkeyrslukerfi.API.Controllers
         /// <summary>
         /// Returns a specific Address by ID
         /// </summary>
-        /// <param name="id">ID</param>
+        /// <param name="ID">ID</param>
         /// <remarks>
         /// Sample request:
         ///
@@ -44,9 +44,9 @@ namespace Utkeyrslukerfi.API.Controllers
         /// <response code="404">There is no Address with the given ID</response> 
         [HttpGet]
         [Route("{id:int}")]
-        public IActionResult GetAddress(int id)
+        public IActionResult GetAddress(Guid ID)
         {
-            var address = _addressService.GetAddress(id);
+            var address = _addressService.GetAddress(ID);
             return Ok(address);
         }
         /// <summary>
