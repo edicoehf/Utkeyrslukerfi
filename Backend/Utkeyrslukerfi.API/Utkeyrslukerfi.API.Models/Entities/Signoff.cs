@@ -9,6 +9,10 @@ namespace Utkeyrslukerfi.API.Models.Entities
         public string ImageURI { get; set; }
         public string SignatureUri { get; set; }
         public string Recipient { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public DateTime CreatedOn { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        public DateTime LastUpdated { get; set; }
 
         // Navigation Property
         [ForeignKey("Delivery")]
