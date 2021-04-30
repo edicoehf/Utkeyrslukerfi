@@ -41,3 +41,13 @@
 .home-btn:active {
   box-shadow: inset 0 0 10px white;
 }
+
+.disabled-btn {
+  background-color: #d8d8d8;
+  color: #8c8c8c;
+}
+.disabled-btn:hover {
+  text-decoration: none;
+  color: #8c8c8c;
+  cursor: not-allowed; 
+}
