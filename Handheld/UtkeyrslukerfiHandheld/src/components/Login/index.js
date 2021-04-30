@@ -35,7 +35,7 @@ const Login = () => {
         itemStyle={{
           justifyContent: 'flex-start'
         }}
-        dropDownStyle={{ backgroundColor: '#fafafa', height: 120 }}
+        dropDownStyle={{ backgroundColor: '#fafafa', minHeight: 40, maxHeight:120 }}
         onChangeItem={item => setSelected(item.value)}
       />
       <View
