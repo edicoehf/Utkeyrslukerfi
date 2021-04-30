@@ -16,6 +16,9 @@ using Utkeyrslukerfi.API.Repositories.Implementations;
 using Utkeyrslukerfi.API.Repositories.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Utkeyrslukerfi.API.Middlewares;
+using Hangfire;
+using Hangfire.MemoryStorage;
+using System.Collections.Specialized;
 
 namespace Utkeyrslukerfi.API
 {
@@ -37,7 +40,13 @@ namespace Utkeyrslukerfi.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            System.Console.WriteLine();
+            // adding Hangfire
+            services.AddHangfire(options =>
+              {
+                  options.UseMemoryStorage();
+              });
+
+
             services.AddControllers();
             services.AddSwaggerGen(options =>
             {
@@ -47,6 +56,9 @@ namespace Utkeyrslukerfi.API
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
                 options.IncludeXmlComments(xmlPath);
             });
+
+
+
             // Tries to get the connectionString from the azure storage
             var myConnString = _configuration.GetConnectionString("MYSQL:connectionString");
             // if the connectionString is null, it means we're running locally
@@ -89,6 +101,9 @@ namespace Utkeyrslukerfi.API
             IMapper mapper = mapperConfig.CreateMapper();
             services.AddSingleton(mapper);
 
+            // adding configuration so it can be accesed from other classes
+            services.AddSingleton<IConfiguration>(Configuration);
+
             // Adding Transients
             // maps the Interface to the Implementation
             // and adds the Service to every controller
@@ -99,7 +114,7 @@ namespace Utkeyrslukerfi.API
             services.AddTransient<IVehicleService, VehicleService>();
             services.AddTransient<IJwtTokenService, JwtTokenService>();
             services.AddTransient<IAccountService, AccountService>();
-
+            services.AddTransient<IFetchDataService, FetchDataService>();
             // Since token service constructor takes in strings
             var jwtConfig = Configuration.GetSection("JwtConfig");
             services.AddTransient<ITokenService>((c) =>
@@ -118,6 +133,7 @@ namespace Utkeyrslukerfi.API
             services.AddTransient<ITokenRepository, TokenRepository>();
             services.AddTransient<IPackageRepository, PackageRepository>();
             services.AddTransient<IVehicleRepository, VehicleRepository>();
+            services.AddTransient<IFetchDataRepository, FetchDataRepository>();
 
         }
 
@@ -131,6 +147,9 @@ namespace Utkeyrslukerfi.API
 
             app.UseSwagger();
             app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Utkeyrslukerfi v1"));
+
+            app.UseHangfireDashboard();
+            app.UseHangfireServer();
 
             app.UseMiddleware(typeof(ErrorHandlingMiddleware));
 
@@ -151,6 +170,8 @@ namespace Utkeyrslukerfi.API
             {
                 endpoints.MapControllers();
             });
+            // starting cron jobs with hangfire
+            RecurringJob.AddOrUpdate<IFetchDataService>(x => x.GetDeliveries(), Cron.Daily);
         }
     }
 }
