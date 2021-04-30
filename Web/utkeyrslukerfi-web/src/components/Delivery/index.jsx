@@ -11,7 +11,6 @@ import configData from '../../constants/config.json'
 const Delivery = () => {
   const packages = useSelector(({ packages }) => packages)
   const delivery = useSelector(({ delivery }) => delivery)
-  const address = useSelector(({ address }) => address)
   const users = useSelector(({ users }) => users)
   const token = useSelector(({ login }) => login.token)
   const dispatch = useDispatch()
@@ -70,28 +69,30 @@ const Delivery = () => {
     dispatch(setDelivery(tempObj))
   }
 
+  let reservedGuid = 'mmmm0000-9999-xxxx-yyyy-qqqq0000vvvv'
+
   const handleSubmit = (event) => {
     event.preventDefault()
     const newDelivery = {
       ...delivery,
-      VehicleID: delivery.vehicle.id,
-      DriverID: delivery.DriverID ? delivery.DriverID : delivery.driver.id,
+      VehicleID: delivery.vehicle.id === null ? reservedGuid : delivery.vehicle.id,
+      DriverID: delivery.driver === null ? delivery.DriverID : delivery.driver.id,
       // pickup address
-      PickupAddressID: pickupAddChanged ? -1 : delivery.pickupAddress.id,
+      PickupAddressID: pickupAddChanged ? reservedGuid : delivery.pickupAddress.id,
       PickupAddressHouseNumber: delivery.pickupAddress.houseNumber,
       PickupAddressZipCode: delivery.pickupAddress.zipCode,
       PickupAddressCity: delivery.pickupAddress.city,
       PickupAddressCountry: delivery.pickupAddress.country,
       PickupAddressStreetName: delivery.pickupAddress.streetName,
       // delivery address
-      DeliveryAddressID: deliveryAddChanged ? -1 : delivery.deliveryAddress.id,
+      DeliveryAddressID: deliveryAddChanged ? reservedGuid : delivery.deliveryAddress.id,
       DeliveryAddressHouseNumber: delivery.deliveryAddress.houseNumber,
       DeliveryAddressZipCode: delivery.deliveryAddress.zipCode,
       DeliveryAddressCity: delivery.deliveryAddress.city,
       DeliveryAddressCountry: delivery.deliveryAddress.country,
       DeliveryAddressStreetName: delivery.deliveryAddress.streetName,
     }
-
+    console.log(newDelivery)
     dispatch(updateDelivery(token, id, newDelivery))
   }
 
@@ -114,6 +115,11 @@ const Delivery = () => {
     dispatch(setDelivery(delivery))
   }
 
+  const onStatusChange = (e) => {
+    delivery.status = e.target.value
+    dispatch(setDelivery(delivery))
+  }
+
   const updateAddressesState = (didCh, val) => {
     if (val === 'delivery') {
       setDeliveryAddChanged(true)
@@ -133,15 +139,23 @@ const Delivery = () => {
             <label className='mt-3 mx-3'>Recipient</label><input className='border-none my-3 ml-auto' disabled={editable} type='text' name='recipient' onChange={handleChange} defaultValue={delivery?.recipient} />
           </div>
           <div className='row'>
-            <label className='mt-3 mx-3'>Status</label><input className='border-none my-3 ml-auto' disabled={editable} type='text' name='status' onChange={handleChange} defaultValue={configData.STATUS[delivery?.status]} />
+            {/* <label className='mt-3 mx-3'>Status</label><input className='border-none my-3 ml-auto' disabled={editable} type='text' name='status' onChange={handleChange} defaultValue={configData.STATUS[delivery?.status]} /> */}
+            <label className='mt-3 mx-3'>Status</label>
+            <select onChange={onStatusChange} className='border-none my-3 ml-auto'>
+              <option key={-1} value={-1} disabled={true}>--</option>
+              <option key={1} value={1} selected={delivery.status === 1 ? true : false}>Í ferli</option>
+              <option key={2} value={2} selected={delivery.status === 2 ? true : false}>Á leiðinni</option>
+              <option key={3} value={3} selected={delivery.status === 3 ? true : false}>Móttekin</option>
+              <option key={4} value={4} selected={delivery.status === 4 ? true : false}>Týnd</option>
+            </select>
           </div>
           <div className='row'>
             <label className='mt-3 mx-3'>Seller</label><input className='border-none my-3 ml-auto' disabled={editable} type='text' name='seller' onChange={handleChange} defaultValue={delivery?.seller} />
           </div>
           <div className='row'>
-            {/* <label className='mt-3 mx-3'>Driver</label><input className='border-none my-3 ml-auto' disabled={editable} type='text' name='driver' onChange={e => dispatch(setDelivery({ ...delivery, driver: { ...delivery.driver, name: e.target.value } }))} defaultValue={driver} /> */}
             <label className='mt-3 mx-3'>Driver</label>
             <select onChange={onDriverChange} className='border-none my-3 ml-auto'>
+              <option key={-1} value={-1} >--</option>
               {populateOptions(users)}
             </select>
           </div>
