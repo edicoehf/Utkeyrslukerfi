@@ -20,6 +20,11 @@ namespace Utkeyrslukerfi.API.Models.Entities
         [ForeignKey("Address")]
         public Guid DeliveryAddressID { get; set; }
         public Address DeliveryAddress { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public DateTime CreatedOn { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        public DateTime LastUpdated { get; set; }
+        public DateTime DeliveryDate { get; set; }
 
         // Navigation Properties
         public Vehicle Vehicle { get; set; }
