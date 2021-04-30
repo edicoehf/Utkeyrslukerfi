@@ -19,22 +19,20 @@ const ProductTable = ({ tableHeaders, tableData }) => {
 
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      {
-        <FlatList
-          data={tableData}
-          style={{width:'90%'}}
-          keyExtractor={(_, index) => index+''}
-          ListHeaderComponent={tableHeaderComponent}
-          stickyHeaderIndices={[0]}
-          renderItem={({item, index}) => {
-            return (
-              <View style={{...styles.tableRow, backgroundColor: index % 2 == 1 ? "#F0FBFC" : "white"}}>
-                {Object.keys(item).map((k) => k !== 'status' && <Text key={k} style={styles.columnRowTxt}>{item[k]}</Text>)}
-              </View>
-            )
-          }}
-        />
-      }
+      <FlatList
+        data={tableData}
+        style={{ width: '90%' }}
+        keyExtractor={(_, index) => index + ''}
+        ListHeaderComponent={tableHeaderComponent}
+        stickyHeaderIndices={[0]}
+        renderItem={({ item, index }) => {
+          return (
+            <View style={{ ...styles.tableRow, backgroundColor: index % 2 == 1 ? '#F0FBFC' : 'white' }}>
+              {Object.keys(item).map((k) => k !== 'status' && <Text key={k} style={styles.columnRowTxt}>{item[k]}</Text>)}
+            </View>
+          )
+        }}
+      />
     </View>
   )
 }
@@ -45,35 +43,35 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
-    paddingTop:80
+    paddingTop: 80
   },
   tableHeader: {
-    flexDirection: "row",
-    justifyContent: "space-evenly",
-    alignItems: "center",
-    backgroundColor: "#4A79BA",
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    alignItems: 'center',
+    backgroundColor: '#4A79BA',
     borderTopEndRadius: 10,
     borderTopStartRadius: 10,
     height: 50
   },
   tableRow: {
-    flexDirection: "row",
+    flexDirection: 'row',
     height: 40,
-    alignItems:"center",
+    alignItems: 'center'
   },
   columnHeader: {
-    width: "25%",
-    justifyContent: "center",
-    alignItems:"center"
+    width: '25%',
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   columnHeaderTxt: {
-    color: "white",
-    fontWeight: "bold",
+    color: 'white',
+    fontWeight: 'bold'
   },
   columnRowTxt: {
-    width:"25%",
-    textAlign:"center",
+    width: '25%',
+    textAlign: 'center'
   }
-});
+})
 
 export default ProductTable

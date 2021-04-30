@@ -10,12 +10,10 @@ export const getUsers = (token) => async (dispatch) => {
   }
 }
 
-
 const getUsersSuccess = (users) => ({
   type: GET_USERS,
   payload: users
 })
-
 
 export const getDrivers = (token) => async (dispatch) => {
   try {

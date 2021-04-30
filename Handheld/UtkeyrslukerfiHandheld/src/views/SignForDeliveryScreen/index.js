@@ -32,7 +32,7 @@ const SignForDeliveryScreen = ({ navigation }) => {
       <TextInput
         onChangeText={setName}
       />
-      <Signature 
+      <Signature
         onOK={handleSignature}
         onEmpty={handleEmpty}
         descriptionText='Undirskrift móttakanda'
