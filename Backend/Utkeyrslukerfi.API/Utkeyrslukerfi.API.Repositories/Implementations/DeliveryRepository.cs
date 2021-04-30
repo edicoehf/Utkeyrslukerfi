@@ -121,25 +121,29 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
 
         public void UpdateDelivery(DeliveryInputModel delivery, string id)
         {
+            Guid defaultId = new Guid("00000000-0000-0000-0000-000000000000");
             // Get delivery
+            System.Console.WriteLine("here");
             var tempDelivery = _dbContext.Deliveries.FirstOrDefault(d => d.ID == id);
             if (tempDelivery == null) { throw new NotFoundException("Delivery not found."); }
-
+            System.Console.WriteLine("DriverId: " + delivery.DriverID);
+            System.Console.WriteLine("VehicleId: " + delivery.VehicleID);
             // Get vehicle
-            if (delivery.VehicleID != null)
+            if (delivery.VehicleID != defaultId)
             {
                 var vehicle = _dbContext.Vehicles.FirstOrDefault(v => v.ID == delivery.VehicleID);
                 if (vehicle == null) { throw new NotFoundException("Vehicle not found!"); }
                 tempDelivery.Vehicle = vehicle;
             }
             // Get driver 
-            if (delivery.DriverID != null)
+            if (delivery.DriverID != defaultId)
             {
                 var driver = _dbContext.Users.FirstOrDefault(u => u.ID == delivery.DriverID);
                 if (driver == null) { throw new NotFoundException("Driver is not found."); }
                 tempDelivery.Driver = driver;
             }
             // Get pickupAddress
+            System.Console.WriteLine("some");
             if (delivery.PickupAddressID != null)
             {
                 // create new pickup address
