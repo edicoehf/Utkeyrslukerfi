@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using AutoMapper;
 using Utkeyrslukerfi.API.Models.Dtos;
@@ -19,14 +20,14 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
             _mapper = mapper;
         }
 
-        public AddressDTO GetAddress(int ID)
+        public AddressDTO GetAddress(Guid ID)
         {
             var entity = _dbContext.Addresses.FirstOrDefault(a => a.ID == ID);
             if (entity == null) { return null; }
             return _mapper.Map<AddressDTO>(entity);
         }
 
-        public int CreateAddress(AddressInputModel address)
+        public Guid CreateAddress(AddressInputModel address)
         {
             var entity = new Address
             {

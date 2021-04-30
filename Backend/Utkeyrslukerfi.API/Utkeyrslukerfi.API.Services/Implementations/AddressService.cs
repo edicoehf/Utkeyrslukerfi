@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Utkeyrslukerfi.API.Models.Dtos;
 using Utkeyrslukerfi.API.Models.Entities;
@@ -16,12 +17,12 @@ namespace Utkeyrslukerfi.API.Services.Implementations
             _addressRepo = addressRepository;
         }
 
-        public AddressDTO GetAddress(int ID)
+        public AddressDTO GetAddress(Guid ID)
         {
             return _addressRepo.GetAddress(ID);
         }
 
-        public int CreateAddress(AddressInputModel address)
+        public Guid CreateAddress(AddressInputModel address)
         {
             return _addressRepo.CreateAddress(address);
         }

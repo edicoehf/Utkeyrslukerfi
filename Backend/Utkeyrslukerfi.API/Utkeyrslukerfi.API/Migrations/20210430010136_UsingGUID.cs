@@ -1,9 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 using MySql.EntityFrameworkCore.Metadata;
 
 namespace Utkeyrslukerfi.API.Migrations
 {
-    public partial class Initial : Migration
+    public partial class UsingGUID : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -11,8 +12,7 @@ namespace Utkeyrslukerfi.API.Migrations
                 name: "Addresses",
                 columns: table => new
                 {
-                    ID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    ID = table.Column<byte[]>(type: "varbinary(16)", nullable: false),
                     StreetName = table.Column<string>(type: "text", nullable: true),
                     HouseNumber = table.Column<string>(type: "text", nullable: true),
                     ZipCode = table.Column<string>(type: "text", nullable: true),
@@ -28,12 +28,17 @@ namespace Utkeyrslukerfi.API.Migrations
                 name: "Users",
                 columns: table => new
                 {
-                    ID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    ID = table.Column<byte[]>(type: "varbinary(16)", nullable: false),
                     Name = table.Column<string>(type: "text", nullable: true),
                     Password = table.Column<string>(type: "text", nullable: true),
                     Email = table.Column<string>(type: "text", nullable: true),
-                    Role = table.Column<int>(type: "int", nullable: false)
+                    Role = table.Column<int>(type: "int", nullable: false),
+                    ChangePassword = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    TokenID = table.Column<int>(type: "int", nullable: false),
+                    CreatedOn = table.Column<DateTime>(type: "datetime", nullable: false)
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    LastUpdated = table.Column<DateTime>(type: "datetime", nullable: false)
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.ComputedColumn)
                 },
                 constraints: table =>
                 {
@@ -44,8 +49,7 @@ namespace Utkeyrslukerfi.API.Migrations
                 name: "Vehicles",
                 columns: table => new
                 {
-                    ID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    ID = table.Column<byte[]>(type: "varbinary(16)", nullable: false),
                     LicensePlate = table.Column<string>(type: "text", nullable: true),
                     Length = table.Column<double>(type: "double", nullable: false),
                     Height = table.Column<double>(type: "double", nullable: false),
@@ -57,17 +61,39 @@ namespace Utkeyrslukerfi.API.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "JwtTokens",
+                columns: table => new
+                {
+                    ID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    Blacklisted = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    UserID = table.Column<byte[]>(type: "varbinary(16)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_JwtTokens", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_JwtTokens_Users_UserID",
+                        column: x => x.UserID,
+                        principalTable: "Users",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Deliveries",
                 columns: table => new
                 {
                     ID = table.Column<string>(type: "varchar(767)", nullable: false),
                     Recipient = table.Column<string>(type: "text", nullable: true),
                     Seller = table.Column<string>(type: "text", nullable: true),
+                    DriverComment = table.Column<string>(type: "text", nullable: true),
+                    CustomerComment = table.Column<string>(type: "text", nullable: true),
                     Status = table.Column<int>(type: "int", nullable: false),
-                    PickupAddressID = table.Column<int>(type: "int", nullable: false),
-                    DeliveryAddressID = table.Column<int>(type: "int", nullable: false),
-                    VehicleID = table.Column<int>(type: "int", nullable: true),
-                    DriverID = table.Column<int>(type: "int", nullable: true)
+                    PickupAddressID = table.Column<byte[]>(type: "varbinary(16)", nullable: false),
+                    DeliveryAddressID = table.Column<byte[]>(type: "varbinary(16)", nullable: false),
+                    VehicleID = table.Column<byte[]>(type: "varbinary(16)", nullable: true),
+                    DriverID = table.Column<byte[]>(type: "varbinary(16)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -124,8 +150,7 @@ namespace Utkeyrslukerfi.API.Migrations
                 name: "Signoffs",
                 columns: table => new
                 {
-                    ID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    ID = table.Column<byte[]>(type: "varbinary(16)", nullable: false),
                     ImageURI = table.Column<string>(type: "text", nullable: true),
                     SignatureUri = table.Column<string>(type: "text", nullable: true),
                     Recipient = table.Column<string>(type: "text", nullable: true),
@@ -163,6 +188,11 @@ namespace Utkeyrslukerfi.API.Migrations
                 column: "VehicleID");
 
             migrationBuilder.CreateIndex(
+                name: "IX_JwtTokens_UserID",
+                table: "JwtTokens",
+                column: "UserID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Packages_DeliveryID",
                 table: "Packages",
                 column: "DeliveryID");
@@ -176,6 +206,9 @@ namespace Utkeyrslukerfi.API.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "JwtTokens");
+
             migrationBuilder.DropTable(
                 name: "Packages");
 

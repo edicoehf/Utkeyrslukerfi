@@ -125,30 +125,29 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
             var tempDelivery = _dbContext.Deliveries.FirstOrDefault(d => d.ID == id);
             if (tempDelivery == null) { throw new NotFoundException("Delivery not found."); }
             // Get vehicle
-            if (delivery.VehicleID != 0)
+            if (delivery.VehicleID != null)
             {
                 var vehicle = _dbContext.Vehicles.FirstOrDefault(v => v.ID == delivery.VehicleID);
                 if (vehicle == null) { throw new NotFoundException("Vehicle not found!"); }
                 tempDelivery.Vehicle = vehicle;
             }
             // Get driver 
-            if (delivery.DriverID != 0)
+            if (delivery.DriverID != null)
             {
                 var driver = _dbContext.Users.FirstOrDefault(u => u.ID == delivery.DriverID);
                 if (driver == null) { throw new NotFoundException("Driver is not found."); }
                 tempDelivery.Driver = driver;
             }
             // Get pickupAddress
-            if (delivery.PickupAddressID != 0)
+            if (delivery.PickupAddressID != null)
             {
                 var pickupAddress = _dbContext.Addresses.FirstOrDefault(a => a.ID == tempDelivery.PickupAddressID);
                 if (pickupAddress == null) { throw new NotFoundException("Pickup Address not found."); }
                 tempDelivery.PickupAddressID = delivery.PickupAddressID;
                 tempDelivery.PickupAddress = pickupAddress;
             }
-            System.Console.Write("delivery: " + tempDelivery.DeliveryAddressID);
             // Get deliveryAddress
-            if (delivery.DeliveryAddressID != 0)
+            if (delivery.DeliveryAddressID != null)
             {
                 var deliveryAddress = _dbContext.Addresses.FirstOrDefault(a => a.ID == tempDelivery.DeliveryAddressID);
                 if (deliveryAddress == null) { throw new NotFoundException("Delivery Address not found."); }

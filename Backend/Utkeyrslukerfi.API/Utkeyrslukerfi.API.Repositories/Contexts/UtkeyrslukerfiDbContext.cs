@@ -1,5 +1,7 @@
 using Utkeyrslukerfi.API.Models.Entities;
 using Microsoft.EntityFrameworkCore;
+using System;
+using Utkeyrslukerfi.API.Repositories.Helpers;
 
 namespace Utkeyrslukerfi.API.Repositories.Context
 {
@@ -9,6 +11,7 @@ namespace Utkeyrslukerfi.API.Repositories.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
             // Mapping the one to one relationship between 
             // Delivery and Signoff
             modelBuilder.Entity<Signoff>()
@@ -35,6 +38,22 @@ namespace Utkeyrslukerfi.API.Repositories.Context
             modelBuilder.Entity<JwtToken>()
                 .HasOne(t => t.User)
                 .WithMany(u => u.JwtTokens);
+            
+            // TODO make this work
+            // seeding admin user
+            // var tempPass = HashingHelper.HashPassword("");
+            // modelBuilder.Entity<User>()
+            //     .HasData(
+            //         new User(){
+            //             Name = "Admin",
+            //             Email = "admin@edico.is",
+            //             Password = tempPass,
+            //             Role = 1,
+            //             ChangePassword = false,
+            //             CreatedOn = DateTime.UtcNow,
+            //             TokenID = 0,
+            //         }
+            //     );
         }
 
         public DbSet<User> Users { get; set; }

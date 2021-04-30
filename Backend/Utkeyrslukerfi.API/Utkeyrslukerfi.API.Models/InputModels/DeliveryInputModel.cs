@@ -1,3 +1,4 @@
+using System;
 using System.ComponentModel.DataAnnotations;
 using Utkeyrslukerfi.API.Models.Entities;
 
@@ -13,22 +14,22 @@ namespace Utkeyrslukerfi.API.Models.InputModels
         public string CustomerComment { get; set; }
         public int Status { get; set; }
         // pickup address
-        public int PickupAddressID { get; set; }
+        public Guid PickupAddressID { get; set; }
         public string PickupAddressStreetName { get; set; }
         public string PickupAddressHouseNumber { get; set; }
         public string PickupAddressZipCode { get; set; }
         public string PickupAddressCity { get; set; }
         public string PickupAddressCountry { get; set; }
         // deliveries address
-        public int DeliveryAddressID { get; set; }
+        public Guid DeliveryAddressID { get; set; }
         public string DeliveryAddressStreetName { get; set; }
         public string DeliveryAddressHouseNumber { get; set; }
         public string DeliveryAddressZipCode { get; set; }
         public string DeliveryAddressCity { get; set; }
         public string DeliveryAddressCountry { get; set; }
         // Foreign keys
-        public int VehicleID { get; set; }
-        public int DriverID { get; set; }
-        public int SignoffID { get; set; }
+        public Guid VehicleID { get; set; }
+        public Guid DriverID { get; set; }
+        public Guid SignoffID { get; set; }
     }
 }
