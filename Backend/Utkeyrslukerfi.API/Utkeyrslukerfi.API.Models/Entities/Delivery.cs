@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics.CodeAnalysis;
@@ -14,15 +15,14 @@ namespace Utkeyrslukerfi.API.Models.Entities
         public string CustomerComment { get; set; }
         public int Status { get; set; }
         [ForeignKey("Address")]
-        public int PickupAddressID { get; set; }
+        public Guid PickupAddressID { get; set; }
         public Address PickupAddress { get; set; }
         [ForeignKey("Address")]
-        public int DeliveryAddressID { get; set; }
+        public Guid DeliveryAddressID { get; set; }
         public Address DeliveryAddress { get; set; }
 
         // Navigation Properties
         public Vehicle Vehicle { get; set; }
-
         public User Driver { get; set; }
         public List<Package> Packages { get; set; }
         public Signoff Signoff { get; set; }

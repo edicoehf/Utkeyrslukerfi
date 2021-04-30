@@ -9,8 +9,8 @@ using Utkeyrslukerfi.API.Repositories.Context;
 namespace Utkeyrslukerfi.API.Migrations
 {
     [DbContext(typeof(UtkeyrslukerfiDbContext))]
-    [Migration("20210224191339_Initial")]
-    partial class Initial
+    [Migration("20210430010136_UsingGUID")]
+    partial class UsingGUID
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -21,9 +21,9 @@ namespace Utkeyrslukerfi.API.Migrations
 
             modelBuilder.Entity("Utkeyrslukerfi.API.Models.Entities.Address", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<byte[]>("ID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("varbinary(16)");
 
                     b.Property<string>("City")
                         .HasColumnType("text");
@@ -50,14 +50,22 @@ namespace Utkeyrslukerfi.API.Migrations
                     b.Property<string>("ID")
                         .HasColumnType("varchar(767)");
 
-                    b.Property<int>("DeliveryAddressID")
-                        .HasColumnType("int");
+                    b.Property<string>("CustomerComment")
+                        .HasColumnType("text");
 
-                    b.Property<int?>("DriverID")
-                        .HasColumnType("int");
+                    b.Property<byte[]>("DeliveryAddressID")
+                        .IsRequired()
+                        .HasColumnType("varbinary(16)");
 
-                    b.Property<int>("PickupAddressID")
-                        .HasColumnType("int");
+                    b.Property<string>("DriverComment")
+                        .HasColumnType("text");
+
+                    b.Property<byte[]>("DriverID")
+                        .HasColumnType("varbinary(16)");
+
+                    b.Property<byte[]>("PickupAddressID")
+                        .IsRequired()
+                        .HasColumnType("varbinary(16)");
 
                     b.Property<string>("Recipient")
                         .HasColumnType("text");
@@ -68,8 +76,8 @@ namespace Utkeyrslukerfi.API.Migrations
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
-                    b.Property<int?>("VehicleID")
-                        .HasColumnType("int");
+                    b.Property<byte[]>("VehicleID")
+                        .HasColumnType("varbinary(16)");
 
                     b.HasKey("ID");
 
@@ -82,6 +90,26 @@ namespace Utkeyrslukerfi.API.Migrations
                     b.HasIndex("VehicleID");
 
                     b.ToTable("Deliveries");
+                });
+
+            modelBuilder.Entity("Utkeyrslukerfi.API.Models.Entities.JwtToken", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<bool>("Blacklisted")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<byte[]>("UserID")
+                        .IsRequired()
+                        .HasColumnType("varbinary(16)");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("UserID");
+
+                    b.ToTable("JwtTokens");
                 });
 
             modelBuilder.Entity("Utkeyrslukerfi.API.Models.Entities.Package", b =>
@@ -113,9 +141,9 @@ namespace Utkeyrslukerfi.API.Migrations
 
             modelBuilder.Entity("Utkeyrslukerfi.API.Models.Entities.Signoff", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<byte[]>("ID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("varbinary(16)");
 
                     b.Property<string>("DeliveryID")
                         .HasColumnType("varchar(767)");
@@ -139,12 +167,23 @@ namespace Utkeyrslukerfi.API.Migrations
 
             modelBuilder.Entity("Utkeyrslukerfi.API.Models.Entities.User", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<byte[]>("ID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("varbinary(16)");
+
+                    b.Property<bool>("ChangePassword")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime");
 
                     b.Property<string>("Email")
                         .HasColumnType("text");
+
+                    b.Property<DateTime>("LastUpdated")
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("datetime");
 
                     b.Property<string>("Name")
                         .HasColumnType("text");
@@ -155,6 +194,9 @@ namespace Utkeyrslukerfi.API.Migrations
                     b.Property<int>("Role")
                         .HasColumnType("int");
 
+                    b.Property<int>("TokenID")
+                        .HasColumnType("int");
+
                     b.HasKey("ID");
 
                     b.ToTable("Users");
@@ -162,9 +204,9 @@ namespace Utkeyrslukerfi.API.Migrations
 
             modelBuilder.Entity("Utkeyrslukerfi.API.Models.Entities.Vehicle", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<byte[]>("ID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("varbinary(16)");
 
                     b.Property<double>("Height")
                         .HasColumnType("double");
@@ -214,6 +256,17 @@ namespace Utkeyrslukerfi.API.Migrations
                     b.Navigation("Vehicle");
                 });
 
+            modelBuilder.Entity("Utkeyrslukerfi.API.Models.Entities.JwtToken", b =>
+                {
+                    b.HasOne("Utkeyrslukerfi.API.Models.Entities.User", "User")
+                        .WithMany("JwtTokens")
+                        .HasForeignKey("UserID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Utkeyrslukerfi.API.Models.Entities.Package", b =>
                 {
                     b.HasOne("Utkeyrslukerfi.API.Models.Entities.Delivery", "Delivery")
@@ -242,6 +295,8 @@ namespace Utkeyrslukerfi.API.Migrations
             modelBuilder.Entity("Utkeyrslukerfi.API.Models.Entities.User", b =>
                 {
                     b.Navigation("Deliveries");
+
+                    b.Navigation("JwtTokens");
                 });
 
             modelBuilder.Entity("Utkeyrslukerfi.API.Models.Entities.Vehicle", b =>

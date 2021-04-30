@@ -1,3 +1,4 @@
+using System;
 using Utkeyrslukerfi.API.Models.Entities;
 
 namespace Utkeyrslukerfi.API.Repositories.Interfaces
@@ -7,6 +8,6 @@ namespace Utkeyrslukerfi.API.Repositories.Interfaces
         JwtToken CreateNewToken(User user);
         bool IsTokenBlacklisted(int tokenID);
         void VoidToken(int tokenID);
-        int GetUserID(int tokenID);
+        Guid GetUserID(int tokenID);
     }
 }

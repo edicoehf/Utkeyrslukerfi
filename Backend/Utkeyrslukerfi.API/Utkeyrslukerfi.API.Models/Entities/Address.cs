@@ -1,10 +1,11 @@
+using System;
 using System.Collections.Generic;
 
 namespace Utkeyrslukerfi.API.Models.Entities
 {
     public class Address
     {
-        public int ID { get; set; }
+        public Guid ID { get; set; }
         public string StreetName { get; set; }
         public string HouseNumber { get; set; }
         public string ZipCode { get; set; }

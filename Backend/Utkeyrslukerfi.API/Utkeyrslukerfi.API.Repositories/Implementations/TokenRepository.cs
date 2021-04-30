@@ -45,7 +45,7 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
             _dbContext.SaveChanges();
         }
 
-        public int GetUserID(int tokenID)
+        public Guid GetUserID(int tokenID)
         {
             var token = _dbContext.JwtTokens.FirstOrDefault(t => t.ID == tokenID);
             if (token == null) { throw new NotFoundException($"Not found."); }

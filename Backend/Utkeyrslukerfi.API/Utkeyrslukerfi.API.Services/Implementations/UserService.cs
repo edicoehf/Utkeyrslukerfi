@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Utkeyrslukerfi.API.Models.Dtos;
 using Utkeyrslukerfi.API.Models.InputModels;
@@ -15,7 +16,7 @@ namespace Utkeyrslukerfi.API.Services.Implementations
             _userRepo = userRepository;
         }
 
-        public UserDTO GetUser(int ID)
+        public UserDTO GetUser(Guid ID)
         {
             return _userRepo.GetUser(ID);
         }
@@ -40,13 +41,13 @@ namespace Utkeyrslukerfi.API.Services.Implementations
         {
             return _userRepo.CreateUser(user);
         }
-        public void UpdateUser(UserInputModel user, int id)
+        public void UpdateUser(UserInputModel user, Guid ID)
         {
-            _userRepo.UpdateUser(user, id);
+            _userRepo.UpdateUser(user, ID);
         }
-        public void UpdatePassword(PasswordInputModel password, int id)
+        public void UpdatePassword(PasswordInputModel password, Guid ID)
         {
-            _userRepo.UpdatePassword(password, id);
+            _userRepo.UpdatePassword(password, ID);
         }
     }
 }
