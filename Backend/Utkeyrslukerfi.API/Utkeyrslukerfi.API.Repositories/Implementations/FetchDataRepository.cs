@@ -336,13 +336,13 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
         /// <returns>Delivery with DeliveryDate added to it</returns>
         private Delivery AddDeliveryDate(Delivery delivery, JToken data)
         {
-          var conf = _config.GetSection("DeliveryDate").Value.ToString();
-          if (conf == "")
-          {
+            var conf = _config.GetSection("DeliveryDate").Value.ToString();
+            if (conf == "")
+            {
+                return delivery;
+            }
+            delivery.DeliveryDate = DateTime.Parse(data.SelectToken($".{conf}").ToString());
             return delivery;
-          }
-          delivery.DeliveryDate = DateTime.Parse(data.SelectToken($".{conf}").ToString());
-          return delivery;
         }
         /// <summary>
         /// Takes in api respose on the Json format, and extracts data 
