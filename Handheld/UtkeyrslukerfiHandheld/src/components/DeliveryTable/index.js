@@ -24,21 +24,19 @@ const DeliveryTable = ({ data }) => {
     <View style={styles.tableHeader}>
       {
               columns.map((column, index) => {
-                {
-                  return (
-                    <TouchableOpacity
-                      key={index}
-                      style={styles.columnHeader}
-                      onPress={() => sortTable(column)}
-                    >
-                      <Text style={styles.columnHeaderTxt}>{columnText[index] + ' '}
-                        {selectedColumn === column && <Icon
-                          name={direction === 'desc' ? 'arrow-down-drop-circle' : 'arrow-up-drop-circle'}
-                                                      />}
-                      </Text>
-                    </TouchableOpacity>
-                  )
-                }
+                return (
+                  <TouchableOpacity
+                    key={index}
+                    style={styles.columnHeader}
+                    onPress={() => sortTable(column)}
+                  >
+                    <Text style={styles.columnHeaderTxt}>{columnText[index] + ' '}
+                      {selectedColumn === column && <Icon
+                        name={direction === 'desc' ? 'arrow-down-drop-circle' : 'arrow-up-drop-circle'}
+                                                    />}
+                    </Text>
+                  </TouchableOpacity>
+                )
               })
           }
     </View>
@@ -59,7 +57,7 @@ const DeliveryTable = ({ data }) => {
         stickyHeaderIndices={[0]}
         renderItem={({ item, index }) => {
           return (
-            <View style={{ ...styles.tableRow, backgroundColor: index % 2 == 1 ? '#F0FBFC' : 'white' }}>
+            <View style={{ ...styles.tableRow, backgroundColor: index % 2 === 1 ? '#F0FBFC' : 'white' }}>
               <Text style={{ ...styles.columnRowTxt, fontWeight: 'bold' }}>{item.id}</Text>
               <Text style={styles.columnRowTxt}>{item.status}</Text>
               <Text style={styles.columnRowTxt}>{item.pickupAddress.city}</Text>
