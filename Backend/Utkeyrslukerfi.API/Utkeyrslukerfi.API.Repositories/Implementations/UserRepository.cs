@@ -24,7 +24,7 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
             _mapper = mapper;
             _tokenRepository = tokenRepository;
         }
-        public UserDTO GetUser(int ID)
+        public UserDTO GetUser(Guid ID)
         {
             var user = _dbContext.Users.FirstOrDefault(u => u.ID == ID);
             if (user == null)
@@ -80,7 +80,7 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
 
             return _mapper.Map<UserDTO>(entity);
         }
-        public void UpdateUser(UserInputModel user, int id)
+        public void UpdateUser(UserInputModel user, Guid id)
         {
             var tempPass = HashingHelper.HashPassword(user.Password);
             var tempUser = _dbContext.Users.FirstOrDefault(u => u.ID == id);
@@ -96,7 +96,7 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
             // save changes
             _dbContext.SaveChanges();
         }
-        public void UpdatePassword(PasswordInputModel password, int id)
+        public void UpdatePassword(PasswordInputModel password, Guid id)
         {
             var tempPass = HashingHelper.HashPassword(password.Password);
             var tempUser = _dbContext.Users.FirstOrDefault(u => u.ID == id);

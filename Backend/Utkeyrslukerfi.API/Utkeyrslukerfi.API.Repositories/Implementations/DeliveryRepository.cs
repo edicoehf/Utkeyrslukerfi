@@ -9,6 +9,7 @@ using Utkeyrslukerfi.API.Repositories.Interfaces;
 using Utkeyrslukerfi.API.Models.Exceptions;
 using Utkeyrslukerfi.API.Models.Envelope;
 using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace Utkeyrslukerfi.API.Repositories.Implementations
 {
@@ -125,21 +126,21 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
             if (tempDelivery == null) { throw new NotFoundException("Delivery not found."); }
 
             // Get vehicle
-            if (delivery.VehicleID != 0)
+            if (delivery.VehicleID != null)
             {
                 var vehicle = _dbContext.Vehicles.FirstOrDefault(v => v.ID == delivery.VehicleID);
                 if (vehicle == null) { throw new NotFoundException("Vehicle not found!"); }
                 tempDelivery.Vehicle = vehicle;
             }
             // Get driver 
-            if (delivery.DriverID != 0)
+            if (delivery.DriverID != null)
             {
                 var driver = _dbContext.Users.FirstOrDefault(u => u.ID == delivery.DriverID);
                 if (driver == null) { throw new NotFoundException("Driver is not found."); }
                 tempDelivery.Driver = driver;
             }
             // Get pickupAddress
-            if (delivery.PickupAddressID == -1)
+            if (delivery.PickupAddressID != null)
             {
                 // create new pickup address
                 var pickupAddress = new AddressInputModel
@@ -151,12 +152,11 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
                     City = delivery.PickupAddressCity,
                 };
 
-                int pId = _addressRepository.CreateAddress(pickupAddress);
+                Guid pId = _addressRepository.CreateAddress(pickupAddress);
                 tempDelivery.PickupAddressID = pId;
             }
-
             // Get deliveryAddress
-            if (delivery.DeliveryAddressID == -1)
+            if (delivery.DeliveryAddressID != null)
             {
                 // create new delivery address
                 var deliveryAddress = new AddressInputModel
@@ -167,7 +167,7 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
                     City = delivery.DeliveryAddressCity,
                     Country = delivery.DeliveryAddressCountry
                 };
-                int dId = _addressRepository.CreateAddress(deliveryAddress);
+                Guid dId = _addressRepository.CreateAddress(deliveryAddress);
                 tempDelivery.DeliveryAddressID = dId;
             }
 
