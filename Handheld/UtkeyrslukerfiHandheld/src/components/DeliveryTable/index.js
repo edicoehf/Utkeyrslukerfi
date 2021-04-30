@@ -4,8 +4,6 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import styles from '../../styles/deliveryTable'
 import _ from 'lodash'
 
-// TODO: Print data out into table
-// TODO: Allow sorting of each row
 const DeliveryTable = ({ data }) => {
   const [columns, setColumns] = useState([
     'id',

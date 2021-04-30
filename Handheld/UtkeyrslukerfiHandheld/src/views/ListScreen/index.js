@@ -14,8 +14,6 @@ const ListScreen = () => {
     dispatch(getDeliveries(token))
   }, [])
 
-  // TODO: Display all deliveries in a list/table
-  // TODO: Allow user to sort by ID, Date, Status (?)
   // TODO: Open map with locations of deliveries marked (C Krafa)
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
