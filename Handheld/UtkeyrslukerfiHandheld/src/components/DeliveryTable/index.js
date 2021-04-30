@@ -22,26 +22,26 @@ const DeliveryTable = ({ data }) => {
 
   const tableHeader = () => (
     <View style={styles.tableHeader}>
-          {
+      {
               columns.map((column, index) => {
-                  {
-                    return (
-                      <TouchableOpacity
-                        key={index}
-                        style={styles.columnHeader}
-                        onPress={() => sortTable(column)}
-                      >
-                        <Text style={styles.columnHeaderTxt}>{columnText[index] + ' '}
-                          {selectedColumn === column && <Icon
-                            name={direction === 'desc' ? 'arrow-down-drop-circle' : 'arrow-up-drop-circle'}
-                                                        />}
-                        </Text>
-                      </TouchableOpacity>
-                    )
-                  }
+                {
+                  return (
+                    <TouchableOpacity
+                      key={index}
+                      style={styles.columnHeader}
+                      onPress={() => sortTable(column)}
+                    >
+                      <Text style={styles.columnHeaderTxt}>{columnText[index] + ' '}
+                        {selectedColumn === column && <Icon
+                          name={direction === 'desc' ? 'arrow-down-drop-circle' : 'arrow-up-drop-circle'}
+                                                      />}
+                      </Text>
+                    </TouchableOpacity>
+                  )
+                }
               })
           }
-      </View>
+    </View>
   )
 
   const tableBody = () => {
