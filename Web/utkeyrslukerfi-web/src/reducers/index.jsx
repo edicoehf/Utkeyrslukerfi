@@ -6,7 +6,6 @@ import user from './userReducer'
 import login from './loginReducer'
 import packages from './packagesReducer'
 import pack from './packageReducer'
-import address from './addressReducer'
 
 export default combineReducers({
   login,
@@ -16,5 +15,4 @@ export default combineReducers({
   deliveries,
   packages,
   pack,
-  address
 })

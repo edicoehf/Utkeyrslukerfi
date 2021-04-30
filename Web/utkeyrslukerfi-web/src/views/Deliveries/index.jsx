@@ -32,8 +32,8 @@ const Deliveries = () => {
           <td>{obj.id}</td>
           <td>{configData.STATUS[obj.status]}</td>
           <td>{obj.recipient}</td>
-          <td>{obj.seller}</td>
-          <td>{obj.driver.name}</td>
+          <td>{obj.seller === null ? 'N/A' : obj.seller}</td>
+          <td>{obj.driver === null ? 'N/A' : obj.driver.name}</td>
           <td>{obj.deliveryAddress.streetName} {obj.deliveryAddress.houseNumber}</td>
           <td>{obj.pickupAddress.streetName} {obj.pickupAddress.houseNumber}</td>
         </tr>
