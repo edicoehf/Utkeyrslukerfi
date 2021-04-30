@@ -5,11 +5,7 @@ import styles from '../../styles/deliveryTable'
 import _ from 'lodash'
 
 const DeliveryTable = ({ data }) => {
-  const [columns, setColumns] = useState([
-    'id',
-    'status',
-    'date'
-  ])
+  const columns = ['id', 'status', 'date']
   const columnText = ['Sendingarnúmer', 'Staða', 'Dagsetning']
   const [direction, setDirection] = useState(null)
   const [selectedColumn, setSelectedColumn] = useState(null)
