@@ -23,9 +23,9 @@ export const setLogin = (email, password) => async (dispatch) => {
 
 const setLoginSuccess = (body) => (
   {
-  type: SET_LOGIN,
-  payload: body
-})
+    type: SET_LOGIN,
+    payload: body
+  })
 
 export const getLogin = () => async (dispatch) => {
   try {
