@@ -1,5 +1,4 @@
 using AutoMapper;
-using Newtonsoft.Json.Linq;
 using Utkeyrslukerfi.API.Models.Dtos;
 using Utkeyrslukerfi.API.Models.Entities;
 using Utkeyrslukerfi.API.Models.InputModels;

@@ -8,6 +8,7 @@ using Utkeyrslukerfi.API.Models.InputModels;
 using Utkeyrslukerfi.API.Repositories.Context;
 using Utkeyrslukerfi.API.Repositories.Interfaces;
 using Utkeyrslukerfi.API.Models.Envelope;
+using Utkeyrslukerfi.API.Models.Exceptions;
 
 namespace Utkeyrslukerfi.API.Repositories.Implementations
 {
@@ -38,6 +39,9 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
 
         public Guid CreateVehicle(VehicleInputModel vehicle)
         {
+            var temp_vehicle = _dbContext.Vehicles.FirstOrDefault(v => v.LicensePlate == vehicle.LicensePlate);
+            // It is not email exception, but it works exactly the same.
+            if (temp_vehicle != null) { throw new EmailAlreadyExistsException($"Vehicle with License Plate: {vehicle.LicensePlate} already exists!"); }
             var entity = new Vehicle
             {
                 LicensePlate = vehicle.LicensePlate,
@@ -47,7 +51,7 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
             };
             _dbContext.Vehicles.Add(entity);
             _dbContext.SaveChanges();
-            
+
             return entity.ID;
         }
 
@@ -55,12 +59,6 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
         {
             // TODO:
             // _dbContext.SaveChanges();
-        }
-
-        public IEnumerable<VehicleDTO> GetVehicles()
-        {
-            var vehicles = _dbContext.Vehicles.ToList();
-            return _mapper.Map<IEnumerable<VehicleDTO>>(vehicles);
         }
 
     }
