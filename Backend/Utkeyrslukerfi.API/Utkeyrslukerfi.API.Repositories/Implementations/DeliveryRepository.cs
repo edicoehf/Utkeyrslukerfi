@@ -59,65 +59,68 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
             Envelope<Delivery> envelope = new(pageNumber, pageSize, deliveries);
             return _mapper.Map<IEnumerable<DeliveryDTO>>(envelope.Items);
         }
-
+        // Refactor Create Delivery, To Create everything inside the Input model
+        // this is not importat since this is not used. it was just thought of for
+        // if there needs to be a middleware to create deliveries from other systems
         public DeliveryDTO CreateDelivery(DeliveryInputModel delivery)
         {
             // Get Driver
-            var driver = _dbContext.Users.FirstOrDefault(u => u.ID == delivery.DriverID);
-            if (driver == null) { throw new NotFoundException("User not found."); }
+            // var driver = _dbContext.Users.FirstOrDefault(u => u.ID == delivery.DriverID);
+            // if (driver == null) { throw new NotFoundException("User not found."); }
 
-            // Get vehicle
-            var vehicle = _dbContext.Vehicles.FirstOrDefault(v => v.ID == delivery.VehicleID);
-            if (vehicle == null) { throw new NotFoundException("Vehicle not registered."); }
+            // // Get vehicle
+            // var vehicle = _dbContext.Vehicles.FirstOrDefault(v => v.ID == delivery.VehicleID);
+            // if (vehicle == null) { throw new NotFoundException("Vehicle not registered."); }
 
             // Create PickupAddress
-            var pickupAddress = new Address
-            {
-                StreetName = delivery.PickupAddressStreetName,
-                HouseNumber = delivery.PickupAddressHouseNumber,
-                ZipCode = delivery.PickupAddressZipCode,
-                Country = delivery.PickupAddressCountry,
-                City = delivery.PickupAddressCity,
-            };
+            // var pickupAddress = new Address
+            // {
+            //     StreetName = delivery.PickupAddressStreetName,
+            //     HouseNumber = delivery.PickupAddressHouseNumber,
+            //     ZipCode = delivery.PickupAddressZipCode,
+            //     Country = delivery.PickupAddressCountry,
+            //     City = delivery.PickupAddressCity,
+            // };
 
-            _dbContext.Addresses.Add(pickupAddress);
+            // _dbContext.Addresses.Add(pickupAddress);
 
 
-            // Create DeliveryAddress
-            var deliveryAddress = new Address
-            {
-                StreetName = delivery.DeliveryAddressStreetName,
-                HouseNumber = delivery.DeliveryAddressHouseNumber,
-                ZipCode = delivery.DeliveryAddressZipCode,
-                City = delivery.DeliveryAddressCity,
-                Country = delivery.DeliveryAddressCountry
-            };
+            // // Create DeliveryAddress
+            // var deliveryAddress = new Address
+            // {
+            //     StreetName = delivery.DeliveryAddressStreetName,
+            //     HouseNumber = delivery.DeliveryAddressHouseNumber,
+            //     ZipCode = delivery.DeliveryAddressZipCode,
+            //     City = delivery.DeliveryAddressCity,
+            //     Country = delivery.DeliveryAddressCountry
+            // };
 
-            _dbContext.Addresses.Add(deliveryAddress);
+            // _dbContext.Addresses.Add(deliveryAddress);
 
             // Create Delivery
-            var entity = new Delivery
-            {
-                ID = delivery.ID,
-                Recipient = delivery.Recipient,
-                Seller = delivery.Seller,
-                DriverComment = delivery.DriverComment,
-                CustomerComment = delivery.CustomerComment,
-                Status = delivery.Status,
-                PickupAddressID = pickupAddress.ID,
-                PickupAddress = pickupAddress,
-                DeliveryAddressID = deliveryAddress.ID,
-                DeliveryAddress = deliveryAddress,
-                Vehicle = vehicle,
-                Driver = driver,
-                Packages = null,
-                Signoff = null
-            };
+            // var entity = new Delivery
+            // {
+            //     ID = delivery.ID,
+            //     Recipient = delivery.Recipient,
+            //     Seller = delivery.Seller,
+            //     DriverComment = delivery.DriverComment,
+            //     CustomerComment = delivery.CustomerComment,
+            //     Status = delivery.Status,
+            //     PickupAddressID = pickupAddress.ID,
+            //     PickupAddress = pickupAddress,
+            //     DeliveryAddressID = deliveryAddress.ID,
+            //     DeliveryAddress = deliveryAddress,
+            //     Vehicle = vehicle,
+            //     Driver = driver,
+            //     Packages = null,
+            //     Signoff = null
+            // };
 
-            _dbContext.Deliveries.Add(entity);
-            _dbContext.SaveChanges();
+            // _dbContext.Deliveries.Add(entity);
+            // _dbContext.SaveChanges();
 
-            return _mapper.Map<DeliveryDTO>(entity);
+            // return _mapper.Map<DeliveryDTO>(entity);
+            return new DeliveryDTO();
         }
 
         public void UpdateDelivery(DeliveryInputModel newdelivery, string id)
@@ -146,6 +149,16 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
                 delivery.DeliveryAddress.HouseNumber = newdelivery.DeliveryAddressHouseNumber ?? delivery.DeliveryAddress.HouseNumber;
                 delivery.DeliveryAddress.StreetName = newdelivery.DeliveryAddressStreetName ?? delivery.DeliveryAddress.StreetName;
                 delivery.DeliveryAddress.ZipCode = newdelivery.DeliveryAddressZipCode ?? delivery.DeliveryAddress.ZipCode;
+            }
+            if (delivery.Vehicle != null)
+            {
+                delivery.Vehicle.LicensePlate = newdelivery.VehicleLicensePlate ?? delivery.Vehicle.LicensePlate;
+            }
+            if (delivery.Signoff != null)
+            {
+                delivery.Signoff.ImageURI = newdelivery.SignoffImageURI ?? delivery.Signoff.ImageURI;
+                delivery.Signoff.SignatureUri = newdelivery.SignoffSignatureUri ?? delivery.Signoff.SignatureUri;
+                delivery.Signoff.Recipient = newdelivery.SignoffRecipient ?? delivery.Signoff.Recipient;
             }
 
             // Save changes
