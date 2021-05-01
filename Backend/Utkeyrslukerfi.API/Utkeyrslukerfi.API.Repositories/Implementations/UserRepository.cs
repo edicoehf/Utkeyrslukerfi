@@ -10,6 +10,7 @@ using Utkeyrslukerfi.API.Models.Entities;
 using Utkeyrslukerfi.API.Models.Envelope;
 using Utkeyrslukerfi.API.Repositories.Helpers;
 using System;
+using Utkeyrslukerfi.API.Repositories.IContext;
 
 namespace Utkeyrslukerfi.API.Repositories.Implementations
 {
@@ -61,10 +62,9 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
         }
         public UserDTO CreateUser(UserInputModel user)
         {
-            var tempPass = HashingHelper.HashPassword(user.Password);
             var tempUser = _dbContext.Users.FirstOrDefault(u => u.Email == user.Email);
             if (tempUser != null) { throw new EmailAlreadyExistsException($"User with email: {user.Email} already exists!"); }
-
+            var tempPass = user.Password == null ? null : HashingHelper.HashPassword(user.Password);
             // create new entity with the hashed password
             var entity = new User
             {
