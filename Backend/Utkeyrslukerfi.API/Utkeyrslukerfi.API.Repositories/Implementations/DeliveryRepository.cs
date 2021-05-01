@@ -119,68 +119,31 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
             return _mapper.Map<DeliveryDTO>(entity);
         }
 
-        public void UpdateDelivery(DeliveryInputModel delivery, string id)
+        public void UpdateDelivery(DeliveryInputModel newdelivery, string id)
         {
             // Get delivery
-            var tempDelivery = _dbContext.Deliveries.FirstOrDefault(d => d.ID == id);
-            if (tempDelivery == null) { throw new NotFoundException("Delivery not found."); }
+            var delivery = _deliveryObj.FirstOrDefault(d => d.ID == id);
+            // delivery.Recipient = newdelivery.Recipient ?? delivery.Recipient;
+            delivery.Seller = newdelivery.Seller ?? delivery.Seller;
+            delivery.Recipient = newdelivery.Recipient ?? delivery.Recipient;
+            delivery.DriverComment = newdelivery.DriverComment ?? delivery.DriverComment;
+            delivery.CustomerComment = newdelivery.CustomerComment ?? delivery.CustomerComment;
+            delivery.Status = newdelivery.Status ?? delivery.Status;
 
-            // Get vehicle
-            if (delivery.VehicleID != null)
-            {
-                var vehicle = _dbContext.Vehicles.FirstOrDefault(v => v.ID == delivery.VehicleID);
-                if (vehicle == null) { throw new NotFoundException("Vehicle not found!"); }
-                tempDelivery.Vehicle = vehicle;
+            if(delivery.PickupAddress != null){
+              delivery.PickupAddress.City = newdelivery.PickupAddressCity ?? delivery.PickupAddress.City;
+              delivery.PickupAddress.Country = newdelivery.PickupAddressCountry ?? delivery.PickupAddress.Country;
+              delivery.PickupAddress.HouseNumber = newdelivery.PickupAddressHouseNumber ?? delivery.PickupAddress.HouseNumber;
+              delivery.PickupAddress.StreetName = newdelivery.PickupAddressStreetName ?? delivery.PickupAddress.StreetName;
+              delivery.PickupAddress.ZipCode = newdelivery.DeliveryAddressZipCode ?? delivery.DeliveryAddress.ZipCode;
             }
-            // Get driver 
-            if (delivery.DriverID != null)
-            {
-                var driver = _dbContext.Users.FirstOrDefault(u => u.ID == delivery.DriverID);
-                if (driver == null) { throw new NotFoundException("Driver is not found."); }
-                tempDelivery.Driver = driver;
+            if(delivery.DeliveryAddress != null){
+              delivery.DeliveryAddress.City = newdelivery.DeliveryAddressCity ?? delivery.DeliveryAddress.City;
+              delivery.DeliveryAddress.Country = newdelivery.DeliveryAddressCountry ?? delivery.DeliveryAddress.Country;
+              delivery.DeliveryAddress.HouseNumber = newdelivery.DeliveryAddressHouseNumber ?? delivery.DeliveryAddress.HouseNumber;
+              delivery.DeliveryAddress.StreetName = newdelivery.DeliveryAddressStreetName ?? delivery.DeliveryAddress.StreetName;
+              delivery.DeliveryAddress.ZipCode = newdelivery.DeliveryAddressZipCode ?? delivery.DeliveryAddress.ZipCode;
             }
-            // Get pickupAddress
-            if (delivery.PickupAddressID != null)
-            {
-                // create new pickup address
-                var pickupAddress = new AddressInputModel
-                {
-                    StreetName = delivery.PickupAddressStreetName,
-                    HouseNumber = delivery.PickupAddressHouseNumber,
-                    ZipCode = delivery.PickupAddressZipCode,
-                    Country = delivery.PickupAddressCountry,
-                    City = delivery.PickupAddressCity,
-                };
-
-                Guid pId = _addressRepository.CreateAddress(pickupAddress);
-                tempDelivery.PickupAddressID = pId;
-            }
-            // Get deliveryAddress
-            if (delivery.DeliveryAddressID != null)
-            {
-                // create new delivery address
-                var deliveryAddress = new AddressInputModel
-                {
-                    StreetName = delivery.DeliveryAddressStreetName,
-                    HouseNumber = delivery.DeliveryAddressHouseNumber,
-                    ZipCode = delivery.DeliveryAddressZipCode,
-                    City = delivery.DeliveryAddressCity,
-                    Country = delivery.DeliveryAddressCountry
-                };
-                Guid dId = _addressRepository.CreateAddress(deliveryAddress);
-                tempDelivery.DeliveryAddressID = dId;
-            }
-
-            // Delivery
-            tempDelivery.Recipient = delivery.Recipient != null ? delivery.Recipient : tempDelivery.Recipient;
-            tempDelivery.DriverComment = delivery.DriverComment != null ? delivery.DriverComment : tempDelivery.DriverComment;
-            tempDelivery.CustomerComment = delivery.CustomerComment != null ? delivery.CustomerComment : tempDelivery.CustomerComment;
-            tempDelivery.Seller = delivery.Seller != null ? delivery.Seller : tempDelivery.Seller;
-            tempDelivery.Status = delivery.Status != 0 ? delivery.Status : tempDelivery.Status;
-
-            // Packages
-            tempDelivery.Packages = tempDelivery.Packages;
-            tempDelivery.Signoff = tempDelivery.Signoff;
 
             // Save changes
             _dbContext.SaveChanges();
