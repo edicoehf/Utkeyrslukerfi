@@ -1,40 +1,209 @@
 using System;
 using Xunit;
-using System.Collections;
 using System.Collections.Generic;
-using Utkeyrslukerfi.API.Models;
 using Utkeyrslukerfi.API.Models.InputModels;
-using System.ComponentModel.DataAnnotations;
 using Utkeyrslukerfi.API.Models.Entities;
 using Utkeyrslukerfi.API.Repositories.Implementations;
 using Utkeyrslukerfi.API.Models.Exceptions;
 using AutoMapper;
 using Utkeyrslukerfi.API;
 using Utkeyrslukerfi.API.Repositories.Context;
+using Utkeyrslukerfi.API.Repositories.IContext;
 using Microsoft.EntityFrameworkCore;
-using Utkeyrslukerfi.API.Models.Dtos;
-using Utkeyrslukerfi.API.Repositories.Interfaces;
 using System.Linq;
-using Moq;
 
 namespace Tests
 {
   public class UnitTestDeliveryRepository
   {
-      private readonly UserRepository _userRepo;
-      private readonly IMapper _mapper;
-      private readonly Mock<IUtkeyrslukerfiDbContext> _mockContext = new Mock<IUtkeyrslukerfiDbContext>();
+    private readonly IUtkeyrslukerfiDbContext _dbContext;
+    private readonly DeliveryRepository _delivRepo; 
 
-      public UnitTestDeliveryRepository(){
-        _
+    public UnitTestDeliveryRepository(){
+      _dbContext = GetContext();
+      _delivRepo = GetDeliveryRepository(_dbContext);
+    }
+    private static UtkeyrslukerfiDbContext GetContext(){
+      var options = new DbContextOptionsBuilder<UtkeyrslukerfiDbContext>()
+                            .UseInMemoryDatabase("Utkeyrslukerfi")
+                            .Options;
+      var dbContext = new UtkeyrslukerfiDbContext(options);
+      return dbContext;
+    }
+
+    private static DeliveryRepository GetDeliveryRepository(IUtkeyrslukerfiDbContext dbContext){
+      // Generating Mapper annd dbcontext, as it's needed in the Repository class
+      var mapperConfig = new MapperConfiguration(mc => { mc.AddProfile(new MappingProfile()); });
+      var mapper = mapperConfig.CreateMapper();
+
+      // Creating the Address Repository and Delivery Repository
+      var addressRepo = new AddressRepository(mapper, dbContext);
+      var delRepo = new DeliveryRepository(mapper, dbContext, addressRepo);
+      return delRepo;
+    }
+    
+    private static Delivery GetDelivery(IUtkeyrslukerfiDbContext dbContext, string deliveryID){
+      
+      // start by adding a valid Delivery
+      var pickup = new Address()
+      {
+        ID = Guid.NewGuid(),
+        StreetName = "Nestún",
+        HouseNumber = "9a",
+        ZipCode = "340",
+        City = "Stykkishólmur",
+        Country = "Ísland"
+      };
+      var deliv = new Address()
+      {
+        ID = Guid.NewGuid(),
+        StreetName = "Hólar",
+        HouseNumber = "92",
+        ZipCode = "322",
+        City = "Ólafsvík",
+        Country = "Ísland"
+      };
+      var vehicle = new Vehicle()
+      {
+        ID = Guid.NewGuid(),
+        LicensePlate = "R91"
+      };
+      var driver = new User()
+      {
+        ID = Guid.NewGuid(),
+        Name = "Kolbeinn Blandon",
+        Email = "kolbeinnhardi@gmail.com",
+        Role = 3
+      };
+
+      var delivery = new Delivery()
+      {
+        ID = deliveryID,
+        Recipient = "Mikael Máni Jónsson",
+        Seller = "Core ehf.",
+        DriverComment = "Original driver comment",
+        CustomerComment = "Original customer comment",
+        Status = 3,
+        PickupAddress = pickup,
+        DeliveryAddress = deliv,
+        DeliveryDate = DateTime.UtcNow,
+        Vehicle = vehicle,
+        Driver = driver
+      };
+      dbContext.Addresses.Add(pickup);
+      dbContext.Addresses.Add(deliv);
+      dbContext.Vehicles.Add(vehicle);
+      dbContext.Users.Add(driver);
+      return delivery;
+    }
+
+    [Theory]
+    [ClassData(typeof(DeliveryDataValid))]
+    public void ShouldBeValid_CreateDelivery(DeliveryInputModel data)
+    {
+      var driver = new User()
+      {
+        ID = data.DriverID,
+        Name = "Kalli Halli",
+        Email = "Kalli@halli.is",
+        Role = 3
+      };
+      _dbContext.Users.Add(driver);
+
+      // adding the vehicle to the database
+      var vehicle = new Vehicle()
+      {
+        ID = data.VehicleID,
+        LicensePlate = "YU354"
+      };
+      _dbContext.Vehicles.Add(vehicle);
+      _dbContext.SaveChanges();
+
+      var deliv = _delivRepo.CreateDelivery(data);
+      // Checking the simple datatypes
+      Assert.Equal(data.ID, deliv.ID);
+      Assert.Equal(data.CustomerComment, deliv.CustomerComment);
+      Assert.Equal(data.DriverComment, deliv.DriverComment);
+      Assert.Equal(data.Status, deliv.Status);
+      Assert.Equal(data.Seller, deliv.Seller);
+      Assert.Equal(data.Recipient, deliv.Recipient);
+      // Checking PickupAddress
+      Assert.IsType<Guid>(deliv.PickupAddress.ID);
+      Assert.Equal(data.PickupAddressCity, deliv.PickupAddress.City);
+      Assert.Equal(data.PickupAddressCountry, deliv.PickupAddress.Country);
+      Assert.Equal(data.PickupAddressHouseNumber, deliv.PickupAddress.HouseNumber);
+      Assert.Equal(data.PickupAddressStreetName, deliv.PickupAddress.StreetName);
+      Assert.Equal(data.PickupAddressZipCode, deliv.PickupAddress.ZipCode);
+      // Checking DeliveryAddress
+      Assert.IsType<Guid>(deliv.PickupAddress.ID);
+      Assert.Equal(data.DeliveryAddressCity, deliv.DeliveryAddress.City);
+      Assert.Equal(data.DeliveryAddressCountry, deliv.DeliveryAddress.Country);
+      Assert.Equal(data.DeliveryAddressHouseNumber, deliv.DeliveryAddress.HouseNumber);
+      Assert.Equal(data.DeliveryAddressStreetName, deliv.DeliveryAddress.StreetName);
+      Assert.Equal(data.DeliveryAddressZipCode, deliv.DeliveryAddress.ZipCode);
+      // Checking Vehicle
+      Assert.IsType<Guid>(deliv.Vehicle.ID);
+      Assert.True(data.VehicleID == deliv.Vehicle.ID);
+      // Checking Driver
+      Assert.True(data.DriverID == deliv.Driver.ID);
+    }
+
+
+    [Theory]
+    [ClassData(typeof(DeliveryDataInValid))]
+    public void ShouldBeInvalid_CreateDelivery(DeliveryInputModel data)
+    {
+      // neither the driver nor the Vehicle exists
+      Assert.Throws<NotFoundException>(() => _delivRepo.CreateDelivery(data));
+      // adding the driver to the db
+      var driver = new User()
+      {
+        ID = data.DriverID,
+        Name = "Kalli Halli",
+        Email = "Kalli@halli.is",
+        Role = 3
+      };
+      Assert.Throws<NotFoundException>(() => _delivRepo.CreateDelivery(data));
+    }
+    /// <summary>
+    /// This is not a test that tests update fully
+    /// It does not test if update on Vehicle, Driver, PickupAddress, DeliveryAddress
+    /// </summary>
+    [Theory]
+    [ClassData(typeof(DeliveryUpdateDataValid))]
+    public void ShouldBeValid_UpdateDelivery(DeliveryInputModel data)
+    {
+      var deliveryID = "7340131602103";
+
+      var delivery = GetDelivery(_dbContext, deliveryID);
+
+      _dbContext.Deliveries.Add(delivery);
+
+      _dbContext.SaveChanges();
+      // gets a copy of the delivery
+      var unUpdatedDeliv = _dbContext.Deliveries.AsNoTracking().FirstOrDefault(d => d.ID == deliveryID);
+
+      // Update the valid delivery
+      _delivRepo.UpdateDelivery(data, deliveryID);
+
+      if (data.CustomerComment != null) { Assert.NotEqual(unUpdatedDeliv.CustomerComment, delivery.CustomerComment); }
+      if (data.DriverComment != null) { Assert.NotEqual(unUpdatedDeliv.DriverComment, delivery.DriverComment); }
+      if (data.Recipient != null) { Assert.NotEqual(unUpdatedDeliv.Recipient, delivery.Recipient); }
+      if (data.Seller != null) { Assert.NotEqual(unUpdatedDeliv.Seller, delivery.Seller); }
+      if (data.CustomerComment != null) { Assert.NotEqual(unUpdatedDeliv.CustomerComment, delivery.CustomerComment); }
+
+      // removing the delivery from the database
+      _dbContext.Deliveries.Remove(delivery);
+      _dbContext.Deliveries.Remove(unUpdatedDeliv);
+      _dbContext.SaveChanges();
       }
+    
+    [Fact]
+    public void ShouldBeInvalid_UpdateDelivery(){
+      Assert.Throws<NotFoundException>(() => _delivRepo.UpdateDelivery(new DeliveryInputModel(), "Not a Valid ID"));
+    } 
+  
   }
-
-
-
-
-
-
   public class DeliveryDataValid : TheoryData<DeliveryInputModel>
   {
     public DeliveryDataValid()
@@ -60,8 +229,9 @@ namespace Tests
       });
     }
   }
-  
-  public class DeliveryDataInValid : TheoryData<DeliveryInputModel>{
+
+  public class DeliveryDataInValid : TheoryData<DeliveryInputModel>
+  {
     public DeliveryDataInValid()
     {
       Add(new DeliveryInputModel
@@ -86,7 +256,8 @@ namespace Tests
     }
   }
 
-  public class DeliveryUpdateDataValid : TheoryData<DeliveryInputModel>{
+  public class DeliveryUpdateDataValid : TheoryData<DeliveryInputModel>
+  {
     public DeliveryUpdateDataValid()
     {
       Add(new DeliveryInputModel { Recipient = "Mikki" });
@@ -113,186 +284,5 @@ namespace Tests
     {
       Add(new DeliveryInputModel { Status = 1337 });
     }
-  }
-
-  public class DeliveryTests
-  {
-    public class ValidateDeliveryCreate : ValidationAttribute
-    {
-      private static UtkeyrslukerfiDbContext GetContext(){
-        var options = new DbContextOptionsBuilder<UtkeyrslukerfiDbContext>()
-                              .UseInMemoryDatabase("Utkeyrslukerfi")
-                              .Options;
-        var dbContext = new UtkeyrslukerfiDbContext(options);
-        return dbContext;
-      }
-
-      private static DeliveryRepository GetDeliveryRepository(UtkeyrslukerfiDbContext dbContext){
-        // Generating Mapper annd dbcontext, as it's needed in the Repository class
-        var mapperConfig = new MapperConfiguration(mc => { mc.AddProfile(new MappingProfile()); });
-        var mapper = mapperConfig.CreateMapper();
-
-        // Creating the Address Repository and Delivery Repository
-        var addressRepo = new AddressRepository(mapper, dbContext);
-        var delRepo = new DeliveryRepository(mapper, dbContext, addressRepo);
-        return delRepo;
-      }
-
-      [Theory]
-      [ClassData(typeof(DeliveryDataValid))]
-      public void CanCreate(DeliveryInputModel data)
-      {
-        // getting the repository and dbcontext
-        var dbContext = GetContext();
-        var delRepo = GetDeliveryRepository(dbContext);
-
-        var driver = new User()
-        {
-          ID = data.DriverID,
-          Name = "Kalli Halli",
-          Email = "Kalli@halli.is",
-          Role = 3
-        };
-        dbContext.Users.Add(driver);
-
-        // adding the vehicle to the database
-        var vehicle = new Vehicle()
-        {
-          ID = data.VehicleID,
-          LicensePlate = "YU354"
-        };
-        dbContext.Vehicles.Add(vehicle);
-        dbContext.SaveChanges();
-
-        var deliv = delRepo.CreateDelivery(data);
-        // Checking the simple datatypes
-        Assert.Equal(data.ID, deliv.ID);
-        Assert.Equal(data.CustomerComment, deliv.CustomerComment);
-        Assert.Equal(data.DriverComment, deliv.DriverComment);
-        Assert.Equal(data.Status, deliv.Status);
-        Assert.Equal(data.Seller, deliv.Seller);
-        Assert.Equal(data.Recipient, deliv.Recipient);
-        // Checking PickupAddress
-        Assert.IsType<Guid>(deliv.PickupAddress.ID);
-        Assert.Equal(data.PickupAddressCity, deliv.PickupAddress.City);
-        Assert.Equal(data.PickupAddressCountry, deliv.PickupAddress.Country);
-        Assert.Equal(data.PickupAddressHouseNumber, deliv.PickupAddress.HouseNumber);
-        Assert.Equal(data.PickupAddressStreetName, deliv.PickupAddress.StreetName);
-        Assert.Equal(data.PickupAddressZipCode, deliv.PickupAddress.ZipCode);
-        // Checking DeliveryAddress
-        Assert.IsType<Guid>(deliv.PickupAddress.ID);
-        Assert.Equal(data.DeliveryAddressCity, deliv.DeliveryAddress.City);
-        Assert.Equal(data.DeliveryAddressCountry, deliv.DeliveryAddress.Country);
-        Assert.Equal(data.DeliveryAddressHouseNumber, deliv.DeliveryAddress.HouseNumber);
-        Assert.Equal(data.DeliveryAddressStreetName, deliv.DeliveryAddress.StreetName);
-        Assert.Equal(data.DeliveryAddressZipCode, deliv.DeliveryAddress.ZipCode);
-        // Checking Vehicle
-        Assert.IsType<Guid>(deliv.Vehicle.ID);
-        Assert.True(data.VehicleID == deliv.Vehicle.ID);
-        // Checking Driver
-        Assert.True(data.DriverID == deliv.Driver.ID);
-      }
-
-      private static Delivery GetDelivery(UtkeyrslukerfiDbContext dbContext, string deliveryID){
-        
-        // start by adding a valid Delivery
-        var pickup = new Address()
-        {
-          ID = Guid.NewGuid(),
-          StreetName = "Nestún",
-          HouseNumber = "9a",
-          ZipCode = "340",
-          City = "Stykkishólmur",
-          Country = "Ísland"
-        };
-        var deliv = new Address()
-        {
-          ID = Guid.NewGuid(),
-          StreetName = "Hólar",
-          HouseNumber = "92",
-          ZipCode = "322",
-          City = "Ólafsvík",
-          Country = "Ísland"
-        };
-        var vehicle = new Vehicle()
-        {
-          ID = Guid.NewGuid(),
-          LicensePlate = "R91"
-        };
-        var driver = new User()
-        {
-          ID = Guid.NewGuid(),
-          Name = "Kolbeinn Blandon",
-          Email = "kolbeinnhardi@gmail.com",
-          Role = 3
-        };
-
-        var delivery = new Delivery()
-        {
-          ID = deliveryID,
-          Recipient = "Mikael Máni Jónsson",
-          Seller = "Core ehf.",
-          DriverComment = "Original driver comment",
-          CustomerComment = "Original customer comment",
-          Status = 3,
-          PickupAddress = pickup,
-          DeliveryAddress = deliv,
-          DeliveryDate = DateTime.UtcNow,
-          Vehicle = vehicle,
-          Driver = driver
-        };
-        dbContext.Addresses.Add(pickup);
-        dbContext.Addresses.Add(deliv);
-        dbContext.Vehicles.Add(vehicle);
-        dbContext.Users.Add(driver);
-        return delivery;
-      }
-
-      [Theory]
-      [ClassData(typeof(DeliveryDataInValid))]
-      public void CanNotCreate(DeliveryInputModel data)
-      {
-        // getting the repository and dbcontext
-        var dbContext = GetContext();
-        var delRepo = GetDeliveryRepository(dbContext);
-        // neither the driver nor the Vehicle exists
-        Assert.Throws<NotFoundException>(() => delRepo.CreateDelivery(data));
-        // adding the driver to the db
-        var driver = new User()
-        {
-          ID = data.DriverID,
-          Name = "Kalli Halli",
-          Email = "Kalli@halli.is",
-          Role = 3
-        };
-        Assert.Throws<NotFoundException>(() => delRepo.CreateDelivery(data));
-      }
-
-      [Theory]
-      [ClassData(typeof(DeliveryUpdateDataValid))]
-      public void CanUpdate(DeliveryInputModel data){
-        var dbContext = GetContext();
-        var delRepo = GetDeliveryRepository(dbContext);
-        var deliveryID = "7340131602103";
-
-        var delivery = GetDelivery(dbContext, deliveryID);
-
-        dbContext.Deliveries.Add(delivery);
-
-        dbContext.SaveChanges();
-
-        // Update the valid delivery
-        var updatedDeliv = dbContext.Deliveries
-                                    .FirstOrDefault(d => d.ID == deliveryID);
-        Assert.True(delivery.Equals(updatedDeliv));
-        delRepo.UpdateDelivery(data, deliveryID);
-
-        Assert.Equal()
-        
-        dbContext.Deliveries.Remove(delivery);
-        dbContext.SaveChanges();
-      }
-    }
-
   }
 }
