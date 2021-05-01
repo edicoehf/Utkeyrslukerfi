@@ -15,10 +15,10 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
 {
     public class UserRepository : IUserRepository
     {
-        private readonly UtkeyrslukerfiDbContext _dbContext;
+        private readonly IUtkeyrslukerfiDbContext _dbContext;
         private readonly ITokenRepository _tokenRepository;
         private readonly IMapper _mapper;
-        public UserRepository(IMapper mapper, UtkeyrslukerfiDbContext dbContext, ITokenRepository tokenRepository)
+        public UserRepository(IMapper mapper, IUtkeyrslukerfiDbContext dbContext, ITokenRepository tokenRepository)
         {
             _dbContext = dbContext;
             _mapper = mapper;

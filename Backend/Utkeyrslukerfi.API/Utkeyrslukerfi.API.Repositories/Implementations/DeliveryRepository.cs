@@ -15,12 +15,12 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
 {
     public class DeliveryRepository : IDeliveryRepository
     {
-        private readonly UtkeyrslukerfiDbContext _dbContext;
+        private readonly IUtkeyrslukerfiDbContext _dbContext;
         private readonly IMapper _mapper;
         private readonly IAddressRepository _addressRepository;
         private readonly IEnumerable<Delivery> _deliveryObj;
 
-        public DeliveryRepository(IMapper mapper, UtkeyrslukerfiDbContext dbContext, IAddressRepository addressRepository)
+        public DeliveryRepository(IMapper mapper, IUtkeyrslukerfiDbContext dbContext, IAddressRepository addressRepository)
         {
             _dbContext = dbContext;
             _mapper = mapper;

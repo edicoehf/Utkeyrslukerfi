@@ -13,10 +13,10 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
 {
     public class PackageRepository : IPackageRepository
     {
-        private readonly UtkeyrslukerfiDbContext _dbContext;
+        private readonly IUtkeyrslukerfiDbContext _dbContext;
         private readonly IMapper _mapper;
 
-        public PackageRepository(IMapper mapper, UtkeyrslukerfiDbContext dbContext)
+        public PackageRepository(IMapper mapper, IUtkeyrslukerfiDbContext dbContext)
         {
             _dbContext = dbContext;
             _mapper = mapper;

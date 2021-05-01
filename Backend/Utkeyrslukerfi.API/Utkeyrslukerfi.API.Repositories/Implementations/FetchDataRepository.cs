@@ -12,10 +12,10 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
 {
     public class FetchDataRepository : IFetchDataRepository
     {
-        private readonly UtkeyrslukerfiDbContext _dbContext;
+        private readonly IUtkeyrslukerfiDbContext _dbContext;
         private readonly IConfiguration _config;
 
-        public FetchDataRepository(UtkeyrslukerfiDbContext dbContext, IConfiguration configuration)
+        public FetchDataRepository(IUtkeyrslukerfiDbContext dbContext, IConfiguration configuration)
         {
             _config = configuration.GetSection("ExternalDeliveryMapping");
             _dbContext = dbContext;

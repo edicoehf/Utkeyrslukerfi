@@ -11,10 +11,10 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
 {
     public class AddressRepository : IAddressRepository
     {
-        private readonly UtkeyrslukerfiDbContext _dbContext;
+        private readonly IUtkeyrslukerfiDbContext _dbContext;
         private readonly IMapper _mapper;
 
-        public AddressRepository(IMapper mapper, UtkeyrslukerfiDbContext dbContext)
+        public AddressRepository(IMapper mapper, IUtkeyrslukerfiDbContext dbContext)
         {
             _dbContext = dbContext;
             _mapper = mapper;

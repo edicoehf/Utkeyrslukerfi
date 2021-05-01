@@ -76,6 +76,8 @@ namespace Utkeyrslukerfi.API
                       }
                     );
             });
+            // Register service and implementation for the db context, need lambda expression to resolve an actual instance through the container
+            services.AddScoped<IUtkeyrslukerfiDbContext>(provider => provider.GetService<UtkeyrslukerfiDbContext>()); 
             services.AddAuthentication(config =>
             {
                 config.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
