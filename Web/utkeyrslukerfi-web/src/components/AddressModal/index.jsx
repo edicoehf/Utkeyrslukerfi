@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux'
 import { setDelivery } from '../../actions/deliveryActions'
 import Modal from 'react-modal'
 
-
 const customStyles = {
   content: {
     top: '50%',
@@ -13,16 +12,16 @@ const customStyles = {
     marginRight: '-50%',
     transform: 'translate(-50%, -50%)'
   }
-};
+}
 
 const AddressModal = ({ canShow, updateModalState, didChange, isDelivery }) => {
   const delivery = useSelector(({ delivery }) => delivery)
   const dispatch = useDispatch()
   const [dAddres, setDAddress] = useState(isDelivery ? delivery.deliveryAddress : delivery.pickupAddress)
   Modal.setAppElement('#root')
-  let subtitle;
-  function afterOpenModal() {
-    subtitle.style.color = '#139ffd';
+  let subtitle
+  function afterOpenModal () {
+    subtitle.style.color = '#139ffd'
   }
 
   const updateData = () => {
@@ -52,26 +51,26 @@ const AddressModal = ({ canShow, updateModalState, didChange, isDelivery }) => {
         style={customStyles}
       >
         <h2 ref={_subtitle => (subtitle = _subtitle)}>{isDelivery ? 'Update Delivery Address' : 'Update Pickup Address'}</h2>
-        <button onClick={updateModalState} className="btn btn-outline-warning">Close</button>
+        <button onClick={updateModalState} className='btn btn-outline-warning'>Close</button>
         <form>
-          <div className="row">
-            <label className="mx-3 my-3">Street Name</label><input className='border-none my-3 ml-auto' type='text' name='streetName' onChange={e => setDAddress(state => ({ ...state, streetName: e.target.value }))} defaultValue={dAddres.streetName} />
+          <div className='row'>
+            <label className='mx-3 my-3'>Street Name</label><input className='border-none my-3 ml-auto' type='text' name='streetName' onChange={e => setDAddress(state => ({ ...state, streetName: e.target.value }))} defaultValue={dAddres.streetName} />
           </div>
-          <div className="row">
-            <label className="mx-3 my-3">House Number</label><input className='border-none my-3 ml-auto' type='text' name='houseNumber' onChange={e => setDAddress(state => ({ ...state, houseNumber: e.target.value }))} defaultValue={dAddres.houseNumber} />
+          <div className='row'>
+            <label className='mx-3 my-3'>House Number</label><input className='border-none my-3 ml-auto' type='text' name='houseNumber' onChange={e => setDAddress(state => ({ ...state, houseNumber: e.target.value }))} defaultValue={dAddres.houseNumber} />
           </div>
-          <div className="row">
-            <label className="mx-3 my-3">City</label><input className='border-none my-3 ml-auto' type='text' name='city' onChange={e => setDAddress(state => ({ ...state, city: e.target.value }))} defaultValue={dAddres.city} />
+          <div className='row'>
+            <label className='mx-3 my-3'>City</label><input className='border-none my-3 ml-auto' type='text' name='city' onChange={e => setDAddress(state => ({ ...state, city: e.target.value }))} defaultValue={dAddres.city} />
           </div>
-          <div className="row">
-            <label className="mx-3 my-3">ZIP Code</label><input className='border-none my-3 ml-auto' type='text' name='zipCode' onChange={e => setDAddress(state => ({ ...state, zipCode: e.target.value }))} defaultValue={dAddres.zipCode} />
+          <div className='row'>
+            <label className='mx-3 my-3'>ZIP Code</label><input className='border-none my-3 ml-auto' type='text' name='zipCode' onChange={e => setDAddress(state => ({ ...state, zipCode: e.target.value }))} defaultValue={dAddres.zipCode} />
           </div>
         </form>
-        <button className="btn btn-primary" onClick={updateData}>Update</button>
+        <button className='btn btn-primary' onClick={updateData}>Update</button>
       </Modal>
     )
   }
-  return null;
+  return null
 }
 
 export default AddressModal

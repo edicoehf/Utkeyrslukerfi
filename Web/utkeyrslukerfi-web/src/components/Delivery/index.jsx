@@ -20,7 +20,6 @@ const Delivery = () => {
   const { id } = useParams()
   const history = useHistory()
 
-
   if (Object.entries(delivery).length === 0) {
     dispatch(getDelivery(token, id))
   }
@@ -30,7 +29,6 @@ const Delivery = () => {
       dispatch(getPackages(token, id))
     }
   }, [token])
-
 
   useEffect(() => {
     dispatch(setDelivery(delivery))
@@ -42,7 +40,6 @@ const Delivery = () => {
       methods.setValue('pickupAddress', delivery.pickupAddress.streetName)
     }
   }, [delivery])
-
 
   const navigateToPackage = (obj) => {
     history.push(`/deliveries/${id}/packages/${obj.id}`, { params: obj })
@@ -89,7 +86,7 @@ const Delivery = () => {
       DeliveryAddressZipCode: delivery.deliveryAddress.zipCode,
       DeliveryAddressCity: delivery.deliveryAddress.city,
       DeliveryAddressCountry: delivery.deliveryAddress.country,
-      DeliveryAddressStreetName: delivery.deliveryAddress.streetName,
+      DeliveryAddressStreetName: delivery.deliveryAddress.streetName
     }
 
     dispatch(updateDelivery(token, id, newDelivery))
@@ -105,7 +102,7 @@ const Delivery = () => {
 
   const populateOptions = (options) => {
     return options.map((option, index) => (
-      <option key={index} value={option.id} selected={driver === option.name ? true : false} >{option.name}</option>
+      <option key={index} value={option.id} selected={driver === option.name}>{option.name}</option>
     ))
   }
 
@@ -163,12 +160,13 @@ const Delivery = () => {
             packages.map(function (obj) {
               return <p key={obj.id} onClick={() => navigateToPackage(obj)}>ID/Barcode: {obj.id}</p>
             })
-          } </> : <> <p>No packages found</p></>
+          }
+          </> : <> <p>No packages found</p></>
         }
       </div>
       <button onClick={() => setEditable(editable => !editable)} className='btn btn-outline-info m-4'>Edit</button>
       <button onClick={(event) => handleSubmit(event)} className='btn btn-success m-4 ml-auto'>Vista</button>
-      <AddressModal canShow={showDeliveryModal} updateModalState={toggleDeliveryModal} didChange={updateAddressesState} isDelivery={true} />
+      <AddressModal canShow={showDeliveryModal} updateModalState={toggleDeliveryModal} didChange={updateAddressesState} isDelivery />
       <AddressModal canShow={showPickupModal} updateModalState={togglePickupModal} didChange={updateAddressesState} isDelivery={false} />
     </div>
   )

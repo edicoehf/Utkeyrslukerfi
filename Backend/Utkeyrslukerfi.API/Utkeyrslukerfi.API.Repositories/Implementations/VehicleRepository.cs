@@ -11,10 +11,10 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
 {
     public class VehicleRepository : IVehicleRepository
     {
-        private readonly UtkeyrslukerfiDbContext _dbContext;
+        private readonly IUtkeyrslukerfiDbContext _dbContext;
         private readonly IMapper _mapper;
 
-        public VehicleRepository(IMapper mapper, UtkeyrslukerfiDbContext dbContext)
+        public VehicleRepository(IMapper mapper, IUtkeyrslukerfiDbContext dbContext)
         {
             _dbContext = dbContext;
             _mapper = mapper;

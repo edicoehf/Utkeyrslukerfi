@@ -7,7 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.Bcl.Async" Version="1.0.168" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.7.1" />
+    <PackageReference Include="Moq" Version="4.16.1" />
     <PackageReference Include="xunit" Version="2.4.1" />
     <PackageReference Include="Moq" Version="4.16.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="5.0.5" />
@@ -23,6 +25,9 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Utkeyrslukerfi.API\Utkeyrslukerfi.API\Utkeyrslukerfi.API.csproj" />
+    <ProjectReference Include="..\Utkeyrslukerfi.API\Utkeyrslukerfi.API.Repositories\Utkeyrslukerfi.API.Repositories.csproj" />
+    <ProjectReference Include="..\Utkeyrslukerfi.API\Utkeyrslukerfi.API.Models\Utkeyrslukerfi.API.Models.csproj" />
+    <ProjectReference Include="..\Utkeyrslukerfi.API\Utkeyrslukerfi.API.Services\Utkeyrslukerfi.API.Services.csproj" />
   </ItemGroup>
 
 </Project>

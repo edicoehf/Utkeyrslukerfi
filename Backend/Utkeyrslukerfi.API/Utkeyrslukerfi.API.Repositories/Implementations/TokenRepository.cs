@@ -9,8 +9,8 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
 {
     public class TokenRepository : ITokenRepository
     {
-        private readonly UtkeyrslukerfiDbContext _dbContext;
-        public TokenRepository(UtkeyrslukerfiDbContext dbContext)
+        private readonly IUtkeyrslukerfiDbContext _dbContext;
+        public TokenRepository(IUtkeyrslukerfiDbContext dbContext)
         {
             _dbContext = dbContext;
         }

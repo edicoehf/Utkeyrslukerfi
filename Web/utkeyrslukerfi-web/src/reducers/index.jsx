@@ -14,5 +14,5 @@ export default combineReducers({
   delivery,
   deliveries,
   packages,
-  pack,
+  pack
 })
