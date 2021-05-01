@@ -6,6 +6,7 @@ namespace Utkeyrslukerfi.API.Models.InputModels
 {
     public class DeliveryInputModel
     {
+        public string ID { get; set; }
         public string Recipient { get; set; }
         public string Seller { get; set; }
         public string DriverComment { get; set; }
