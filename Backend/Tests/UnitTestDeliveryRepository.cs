@@ -107,7 +107,7 @@ namespace Tests
         {
             var driver = new User()
             {
-                ID = data.DriverID,
+                ID = Guid.NewGuid(),
                 Name = "Kalli Halli",
                 Email = "Kalli@halli.is",
                 Role = 3
@@ -117,7 +117,7 @@ namespace Tests
             // adding the vehicle to the database
             var vehicle = new Vehicle()
             {
-                ID = data.VehicleID,
+                ID = Guid.NewGuid(),
                 LicensePlate = "YU354"
             };
             _dbContext.Vehicles.Add(vehicle);
@@ -145,11 +145,6 @@ namespace Tests
             Assert.Equal(data.DeliveryAddressHouseNumber, deliv.DeliveryAddress.HouseNumber);
             Assert.Equal(data.DeliveryAddressStreetName, deliv.DeliveryAddress.StreetName);
             Assert.Equal(data.DeliveryAddressZipCode, deliv.DeliveryAddress.ZipCode);
-            // Checking Vehicle
-            Assert.IsType<Guid>(deliv.Vehicle.ID);
-            Assert.True(data.VehicleID == deliv.Vehicle.ID);
-            // Checking Driver
-            Assert.True(data.DriverID == deliv.Driver.ID);
         }
 
 
@@ -162,7 +157,7 @@ namespace Tests
             // adding the driver to the db
             var driver = new User()
             {
-                ID = data.DriverID,
+                ID = Guid.NewGuid(),
                 Name = "Kalli Halli",
                 Email = "Kalli@halli.is",
                 Role = 3
@@ -228,9 +223,7 @@ namespace Tests
                 DeliveryAddressCity = "Kópavogur",
                 DeliveryAddressHouseNumber = "null",
                 DeliveryAddressZipCode = "203",
-                DeliveryAddressCountry = "null",
-                VehicleID = Guid.NewGuid(),
-                DriverID = Guid.NewGuid()
+                DeliveryAddressCountry = "null"
             });
         }
     }
@@ -254,9 +247,7 @@ namespace Tests
                 DeliveryAddressCity = "Kópavogur",
                 DeliveryAddressHouseNumber = null,
                 DeliveryAddressZipCode = "203",
-                DeliveryAddressCountry = null,
-                VehicleID = Guid.NewGuid(),
-                DriverID = Guid.NewGuid()
+                DeliveryAddressCountry = null
             });
         }
     }
