@@ -124,26 +124,28 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
         {
             // Get delivery
             var delivery = _deliveryObj.FirstOrDefault(d => d.ID == id);
-            if(delivery == null){ throw new NotFoundException($"No delivery with ID: {id}"); }
+            if (delivery == null) { throw new NotFoundException($"No delivery with ID: {id}"); }
             delivery.Seller = newdelivery.Seller ?? delivery.Seller;
             delivery.Recipient = newdelivery.Recipient ?? delivery.Recipient;
             delivery.DriverComment = newdelivery.DriverComment ?? delivery.DriverComment;
             delivery.CustomerComment = newdelivery.CustomerComment ?? delivery.CustomerComment;
             delivery.Status = newdelivery.Status ?? delivery.Status;
 
-            if(delivery.PickupAddress != null){
-              delivery.PickupAddress.City = newdelivery.PickupAddressCity ?? delivery.PickupAddress.City;
-              delivery.PickupAddress.Country = newdelivery.PickupAddressCountry ?? delivery.PickupAddress.Country;
-              delivery.PickupAddress.HouseNumber = newdelivery.PickupAddressHouseNumber ?? delivery.PickupAddress.HouseNumber;
-              delivery.PickupAddress.StreetName = newdelivery.PickupAddressStreetName ?? delivery.PickupAddress.StreetName;
-              delivery.PickupAddress.ZipCode = newdelivery.DeliveryAddressZipCode ?? delivery.DeliveryAddress.ZipCode;
+            if (delivery.PickupAddress != null)
+            {
+                delivery.PickupAddress.City = newdelivery.PickupAddressCity ?? delivery.PickupAddress.City;
+                delivery.PickupAddress.Country = newdelivery.PickupAddressCountry ?? delivery.PickupAddress.Country;
+                delivery.PickupAddress.HouseNumber = newdelivery.PickupAddressHouseNumber ?? delivery.PickupAddress.HouseNumber;
+                delivery.PickupAddress.StreetName = newdelivery.PickupAddressStreetName ?? delivery.PickupAddress.StreetName;
+                delivery.PickupAddress.ZipCode = newdelivery.DeliveryAddressZipCode ?? delivery.DeliveryAddress.ZipCode;
             }
-            if(delivery.DeliveryAddress != null){
-              delivery.DeliveryAddress.City = newdelivery.DeliveryAddressCity ?? delivery.DeliveryAddress.City;
-              delivery.DeliveryAddress.Country = newdelivery.DeliveryAddressCountry ?? delivery.DeliveryAddress.Country;
-              delivery.DeliveryAddress.HouseNumber = newdelivery.DeliveryAddressHouseNumber ?? delivery.DeliveryAddress.HouseNumber;
-              delivery.DeliveryAddress.StreetName = newdelivery.DeliveryAddressStreetName ?? delivery.DeliveryAddress.StreetName;
-              delivery.DeliveryAddress.ZipCode = newdelivery.DeliveryAddressZipCode ?? delivery.DeliveryAddress.ZipCode;
+            if (delivery.DeliveryAddress != null)
+            {
+                delivery.DeliveryAddress.City = newdelivery.DeliveryAddressCity ?? delivery.DeliveryAddress.City;
+                delivery.DeliveryAddress.Country = newdelivery.DeliveryAddressCountry ?? delivery.DeliveryAddress.Country;
+                delivery.DeliveryAddress.HouseNumber = newdelivery.DeliveryAddressHouseNumber ?? delivery.DeliveryAddress.HouseNumber;
+                delivery.DeliveryAddress.StreetName = newdelivery.DeliveryAddressStreetName ?? delivery.DeliveryAddress.StreetName;
+                delivery.DeliveryAddress.ZipCode = newdelivery.DeliveryAddressZipCode ?? delivery.DeliveryAddress.ZipCode;
             }
 
             // Save changes
