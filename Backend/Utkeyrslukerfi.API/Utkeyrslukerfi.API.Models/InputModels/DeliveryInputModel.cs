@@ -6,8 +6,6 @@ namespace Utkeyrslukerfi.API.Models.InputModels
 {
     public class DeliveryInputModel
     {
-        // [Required(ErrorMessage = "Id is required")]
-        public string ID { get; set; }
         public string Recipient { get; set; }
         public string Seller { get; set; }
         public string DriverComment { get; set; }
