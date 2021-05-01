@@ -10,6 +10,7 @@ using Utkeyrslukerfi.API.Models.Exceptions;
 using Utkeyrslukerfi.API.Models.Envelope;
 using Microsoft.EntityFrameworkCore;
 using System;
+using Utkeyrslukerfi.API.Repositories.IContext;
 
 namespace Utkeyrslukerfi.API.Repositories.Implementations
 {
@@ -123,7 +124,7 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
         {
             // Get delivery
             var delivery = _deliveryObj.FirstOrDefault(d => d.ID == id);
-            // delivery.Recipient = newdelivery.Recipient ?? delivery.Recipient;
+            if(delivery == null){ throw new NotFoundException($"No delivery with ID: {id}"); }
             delivery.Seller = newdelivery.Seller ?? delivery.Seller;
             delivery.Recipient = newdelivery.Recipient ?? delivery.Recipient;
             delivery.DriverComment = newdelivery.DriverComment ?? delivery.DriverComment;

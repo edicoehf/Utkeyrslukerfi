@@ -4,21 +4,10 @@ using System;
 using Utkeyrslukerfi.API.Repositories.Helpers;
 using System.Threading;
 using System.Threading.Tasks;
+using Utkeyrslukerfi.API.Repositories.IContext;
 
 namespace Utkeyrslukerfi.API.Repositories.Context
 {
-    public interface IUtkeyrslukerfiDbContext  
-    {
-        DbSet<User> Users { get; set; }
-        DbSet<JwtToken> JwtTokens { get; set; }
-        DbSet<Address> Addresses { get; set; }
-        DbSet<Signoff> Signoffs { get; set; }
-        DbSet<Vehicle> Vehicles { get; set; }
-        DbSet<Delivery> Deliveries { get; set; }
-        DbSet<Package> Packages { get; set; }
-        int SaveChanges();
-        Task<int> SaveChangesAsync();
-    }
     public class UtkeyrslukerfiDbContext : DbContext, IUtkeyrslukerfiDbContext
     {
         public UtkeyrslukerfiDbContext(DbContextOptions<UtkeyrslukerfiDbContext> options) : base(options) { }

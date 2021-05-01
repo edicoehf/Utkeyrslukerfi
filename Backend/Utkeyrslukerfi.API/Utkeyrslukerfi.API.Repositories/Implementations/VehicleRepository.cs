@@ -5,6 +5,7 @@ using Utkeyrslukerfi.API.Models.Dtos;
 using Utkeyrslukerfi.API.Models.Entities;
 using Utkeyrslukerfi.API.Models.InputModels;
 using Utkeyrslukerfi.API.Repositories.Context;
+using Utkeyrslukerfi.API.Repositories.IContext;
 using Utkeyrslukerfi.API.Repositories.Interfaces;
 
 namespace Utkeyrslukerfi.API.Repositories.Implementations

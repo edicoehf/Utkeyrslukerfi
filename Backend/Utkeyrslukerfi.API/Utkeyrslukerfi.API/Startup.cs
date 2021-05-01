@@ -19,6 +19,7 @@ using Utkeyrslukerfi.API.Middlewares;
 using Hangfire;
 using Hangfire.MemoryStorage;
 using System.Collections.Specialized;
+using Utkeyrslukerfi.API.Repositories.IContext;
 
 namespace Utkeyrslukerfi.API
 {

@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Utkeyrslukerfi.API.Repositories.Helpers;
+using Utkeyrslukerfi.API.Repositories.IContext;
 
 namespace Utkeyrslukerfi.API.Repositories.Implementations
 {

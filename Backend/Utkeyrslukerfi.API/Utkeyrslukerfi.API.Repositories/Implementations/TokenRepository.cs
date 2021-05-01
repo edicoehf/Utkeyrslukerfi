@@ -4,6 +4,7 @@ using Utkeyrslukerfi.API.Repositories.Interfaces;
 using Utkeyrslukerfi.API.Models.Entities;
 using Utkeyrslukerfi.API.Repositories.Context;
 using Utkeyrslukerfi.API.Models.Exceptions;
+using Utkeyrslukerfi.API.Repositories.IContext;
 
 namespace Utkeyrslukerfi.API.Repositories.Implementations
 {
