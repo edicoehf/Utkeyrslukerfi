@@ -26,7 +26,7 @@ namespace Utkeyrslukerfi.API.Models.InputModels
         public string DeliveryAddressCountry { get; set; }
         // vehicle
         public string VehicleLicensePlate { get; set; }
-        public double VehicleLength { get; set; } 
+        public double VehicleLength { get; set; }
         public double VehicleHeight { get; set; }
         public double VehicleWidth { get; set; }
         // driver
