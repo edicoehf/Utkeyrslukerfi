@@ -50,11 +50,26 @@ namespace Utkeyrslukerfi.API.Controllers
             return Ok(vehicle);
         }
 
+        /// <summary>
+        /// Returns the list of all vehicles
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     GET api/vehicles
+        ///
+        /// </remarks>
+        /// <returns> The list of all Vehicles</returns>
+        /// <response code="200">Returns the list of all Vehicles</response>
+        /// <response code="400">Bad Request</response>
+        /// <response code="401">The Auth token was invalid</response>
+        /// <response code="404">There is a server error</response> 
+
         [HttpGet]
         [Route("", Name = "GetVehicles")]
-        public IActionResult GetVehicles()
+        public IActionResult GetVehicles([FromQuery] int pageSize = 25, int pageNumber = 0)
         {
-            var vehicles = _vehicleService.GetVehicles();
+            var vehicles = _vehicleService.GetVehicles(pageSize, pageNumber);
             return Ok(vehicles);
         }
         [Authorize(Roles = "1")]
@@ -67,13 +82,11 @@ namespace Utkeyrslukerfi.API.Controllers
             {
                 return BadRequest("Model is not valid!");
             }
-            // some check if it is authorized
-            // TODO: Authorization service.
             _vehicleService.UpdateVehicle(vehicle, id);
             return NoContent();
         }
-        [Authorize(Roles = "1")]
-        [Authorize(Roles = "2")]
+        // [Authorize(Roles = "1")]
+        // [Authorize(Roles = "2")]
         [HttpPost]
         [Route("", Name = "CreateVehicle")]
         public IActionResult CreateVehicle([FromBody] VehicleInputModel vehicle)
@@ -83,7 +96,7 @@ namespace Utkeyrslukerfi.API.Controllers
                 throw new Exception("Error in CreateVehicle controller");
             }
             var newVehicle = _vehicleService.CreateVehicle(vehicle);
-            return CreatedAtRoute("CreateVehicle", newVehicle.ID, newVehicle);
+            return CreatedAtRoute("CreateVehicle", newVehicle);
         }
     }
 }

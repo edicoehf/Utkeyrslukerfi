@@ -72,7 +72,7 @@ const Delivery = () => {
     event.preventDefault()
     const newDelivery = {
       ...delivery,
-      VehicleID: delivery.vehicle.id === null ? reservedGuid : delivery.vehicle.id,
+      VehicleID: delivery.vehicle === null ? reservedGuid : delivery.vehicle.id,
       DriverID: delivery.driver === null ? delivery.DriverID : delivery.driver.id,
       // pickup address
       PickupAddressID: pickupAddChanged ? reservedGuid : delivery.pickupAddress.id,

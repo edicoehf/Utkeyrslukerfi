@@ -54,7 +54,6 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
         public IEnumerable<DeliveryDTO> GetDeliveriesByStatus(int status, int pageSize, int pageNumber)
         {
             var deliveries = _deliveryObj.ToList();
-
             Envelope<Delivery> envelope = new(pageNumber, pageSize, deliveries);
             return _mapper.Map<IEnumerable<DeliveryDTO>>(envelope.Items);
         }

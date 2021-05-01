@@ -22,9 +22,11 @@ export const SET_ERROR = 'SET_ERROR'
 export const RESET_ERROR = 'RESET_ERROR'
 
 export const GET_DRIVERS = 'GET_DRIVERS'
+export const GET_VEHICLES = 'GET_VEHICLES'
 
 // URLS
 export const USER_URL = 'https://localhost:5001/api/users'
 export const DELIVERY_URL = 'https://localhost:5001/api/deliveries'
 export const LOGIN_URL = 'https://localhost:5001/api/account/login'
 export const LOGOUT_URL = 'https://localhost:5001/api/account/logout'
+export const VEHICLE_URL = 'https://localhost:5001/api/vehicles'
