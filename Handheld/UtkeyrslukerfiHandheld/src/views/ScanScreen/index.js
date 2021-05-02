@@ -11,8 +11,7 @@ import deliveryService from '../../services/deliveryService'
 // This screen is used to scan multiple products and change their status
 const ScanScreen = () => {
   // TODO:
-  // - error checking, error messages (error check, error messages, check if in table already?)
-  // - css
+  // - css of error messages, error checking, error messages (error check, error messages, check if in table already?)
   const availableStatusCodes = useSelector(({ statusCode }) => statusCode)
   const token = useSelector(({ login }) => login.token)
   const [status, setStatus] = useState(2)

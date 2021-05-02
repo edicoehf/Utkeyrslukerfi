@@ -29,22 +29,9 @@ const ProductTable = ({ tableHeaders, tableData }) => {
           return (
             <View style={{ ...styles.tableRow, backgroundColor: index % 2 === 1 ? '#F0FBFC' : 'white' }}>
               {
-                Object.keys(item).map((k) => {
-                  if (k !== 'status') {
-                    return (
-                      k === 'button'
-                        ? item[k]
-                        : <Text
-                            key={k}
-                            style={styles.columnRowTxt}
-                            numberOfLines={1}
-                            ellipsizeMode='tail'
-                          >
-                          {item[k]}
-                        </Text>
-                    )
-                  }
-                })
+                Object.keys(item).map((k) =>
+                  k !== 'status' && k === 'button' ? item[k] : <Text key={k} style={styles.columnRowTxt} numberOfLines={1} ellipsizeMode='tail'>{item[k]}</Text>
+                )
               }
             </View>
           )
