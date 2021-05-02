@@ -67,7 +67,7 @@ const DeliverScreen = ({ route, navigation }) => {
 
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <BarcodeForm barcode={barcode} setBarcode={setBarcode} enterBarcode={addBarcode} />
+      <BarcodeForm barcode={barcode} setBarcode={setBarcode} enterBarcode={addBarcode} labelText='Strikamerki pakka' />
       <ProductTable tableHeaders={tableHeaders} tableData={tableData} />
       <CommentBox label='Athugasemd viðskiptavinar' editable={false} comment={customerComment} setComment={setCustomerComment} />
       <CommentBox label='Athugasemd bílstjóra' editable comment={driverComment} setComment={setDriverComment} />

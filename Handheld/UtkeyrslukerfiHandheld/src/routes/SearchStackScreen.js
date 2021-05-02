@@ -7,7 +7,7 @@ import DeliverScreen from '../views/DeliverScreen'
 import SignForDeliveryScreen from '../views/SignForDeliveryScreen'
 import DeliveryReceivedScreen from '../views/DeliveryReceivedScreen'
 
-import { blue } from '../constants'
+import { BLUE } from '../constants'
 
 const SearchStack = createStackNavigator()
 
@@ -19,7 +19,7 @@ const SearchStackScreen = () => {
         headerShown: true,
         title: 'Leit',
         headerStyle: {
-          backgroundColor: blue
+          backgroundColor: BLUE
         },
         headerTitleStyle: {
           fontWeight: 'bold'

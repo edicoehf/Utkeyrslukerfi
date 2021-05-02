@@ -9,7 +9,7 @@ import MaterialIcon from 'react-native-vector-icons/MaterialIcons'
 import ScanScreen from '../views/ScanScreen'
 import ListScreen from '../views/ListScreen'
 
-import { blue } from '../constants'
+import { BLUE } from '../constants'
 
 import Header from '../components/Header'
 
@@ -22,7 +22,7 @@ const AppContainer = () => {
       <Tab.Navigator
         initialRouteName='Scan'
         tabBarOptions={{
-          tabStyle: { backgroundColor: blue }
+          tabStyle: { backgroundColor: BLUE }
         }}
       >
         <Tab.Screen
