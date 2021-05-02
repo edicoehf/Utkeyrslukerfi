@@ -4,13 +4,14 @@ using Utkeyrslukerfi.API.Repositories.Interfaces;
 using Utkeyrslukerfi.API.Models.Entities;
 using Utkeyrslukerfi.API.Repositories.Context;
 using Utkeyrslukerfi.API.Models.Exceptions;
+using Utkeyrslukerfi.API.Repositories.IContext;
 
 namespace Utkeyrslukerfi.API.Repositories.Implementations
 {
     public class TokenRepository : ITokenRepository
     {
-        private readonly UtkeyrslukerfiDbContext _dbContext;
-        public TokenRepository(UtkeyrslukerfiDbContext dbContext)
+        private readonly IUtkeyrslukerfiDbContext _dbContext;
+        public TokenRepository(IUtkeyrslukerfiDbContext dbContext)
         {
             _dbContext = dbContext;
         }

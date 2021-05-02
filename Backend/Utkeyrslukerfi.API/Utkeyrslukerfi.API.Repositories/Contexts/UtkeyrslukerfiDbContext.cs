@@ -2,10 +2,13 @@ using Utkeyrslukerfi.API.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
 using Utkeyrslukerfi.API.Repositories.Helpers;
+using System.Threading;
+using System.Threading.Tasks;
+using Utkeyrslukerfi.API.Repositories.IContext;
 
 namespace Utkeyrslukerfi.API.Repositories.Context
 {
-    public class UtkeyrslukerfiDbContext : DbContext
+    public class UtkeyrslukerfiDbContext : DbContext, IUtkeyrslukerfiDbContext
     {
         public UtkeyrslukerfiDbContext(DbContextOptions<UtkeyrslukerfiDbContext> options) : base(options) { }
 
@@ -63,6 +66,6 @@ namespace Utkeyrslukerfi.API.Repositories.Context
         public DbSet<Vehicle> Vehicles { get; set; }
         public DbSet<Delivery> Deliveries { get; set; }
         public DbSet<Package> Packages { get; set; }
-
+        public Task<int> SaveChangesAsync() => base.SaveChangesAsync();
     }
 }

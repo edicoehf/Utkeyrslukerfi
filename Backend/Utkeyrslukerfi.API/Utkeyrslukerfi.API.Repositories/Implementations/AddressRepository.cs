@@ -5,16 +5,17 @@ using Utkeyrslukerfi.API.Models.Dtos;
 using Utkeyrslukerfi.API.Models.Entities;
 using Utkeyrslukerfi.API.Models.InputModels;
 using Utkeyrslukerfi.API.Repositories.Context;
+using Utkeyrslukerfi.API.Repositories.IContext;
 using Utkeyrslukerfi.API.Repositories.Interfaces;
 
 namespace Utkeyrslukerfi.API.Repositories.Implementations
 {
     public class AddressRepository : IAddressRepository
     {
-        private readonly UtkeyrslukerfiDbContext _dbContext;
+        private readonly IUtkeyrslukerfiDbContext _dbContext;
         private readonly IMapper _mapper;
 
-        public AddressRepository(IMapper mapper, UtkeyrslukerfiDbContext dbContext)
+        public AddressRepository(IMapper mapper, IUtkeyrslukerfiDbContext dbContext)
         {
             _dbContext = dbContext;
             _mapper = mapper;

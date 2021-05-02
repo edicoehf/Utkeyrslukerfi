@@ -10,17 +10,18 @@ using Utkeyrslukerfi.API.Models.Exceptions;
 using Utkeyrslukerfi.API.Models.Envelope;
 using Microsoft.EntityFrameworkCore;
 using System;
+using Utkeyrslukerfi.API.Repositories.IContext;
 
 namespace Utkeyrslukerfi.API.Repositories.Implementations
 {
     public class DeliveryRepository : IDeliveryRepository
     {
-        private readonly UtkeyrslukerfiDbContext _dbContext;
+        private readonly IUtkeyrslukerfiDbContext _dbContext;
         private readonly IMapper _mapper;
         private readonly IAddressRepository _addressRepository;
         private readonly IEnumerable<Delivery> _deliveryObj;
 
-        public DeliveryRepository(IMapper mapper, UtkeyrslukerfiDbContext dbContext, IAddressRepository addressRepository)
+        public DeliveryRepository(IMapper mapper, IUtkeyrslukerfiDbContext dbContext, IAddressRepository addressRepository)
         {
             _dbContext = dbContext;
             _mapper = mapper;
@@ -58,129 +59,107 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
             Envelope<Delivery> envelope = new(pageNumber, pageSize, deliveries);
             return _mapper.Map<IEnumerable<DeliveryDTO>>(envelope.Items);
         }
-
+        // Refactor Create Delivery, To Create everything inside the Input model
+        // this is not importat since this is not used. it was just thought of for
+        // if there needs to be a middleware to create deliveries from other systems
         public DeliveryDTO CreateDelivery(DeliveryInputModel delivery)
         {
             // Get Driver
-            var driver = _dbContext.Users.FirstOrDefault(u => u.ID == delivery.DriverID);
-            if (driver == null) { throw new NotFoundException("User not found."); }
+            // var driver = _dbContext.Users.FirstOrDefault(u => u.ID == delivery.DriverID);
+            // if (driver == null) { throw new NotFoundException("User not found."); }
 
-            // Get vehicle
-            var vehicle = _dbContext.Vehicles.FirstOrDefault(v => v.ID == delivery.VehicleID);
-            if (vehicle == null) { throw new NotFoundException("Vehicle not registered."); }
+            // // Get vehicle
+            // var vehicle = _dbContext.Vehicles.FirstOrDefault(v => v.ID == delivery.VehicleID);
+            // if (vehicle == null) { throw new NotFoundException("Vehicle not registered."); }
 
             // Create PickupAddress
-            var pickupAddress = new Address
-            {
-                StreetName = delivery.PickupAddressStreetName,
-                HouseNumber = delivery.PickupAddressHouseNumber,
-                ZipCode = delivery.PickupAddressZipCode,
-                Country = delivery.PickupAddressCountry,
-                City = delivery.PickupAddressCity,
-            };
+            // var pickupAddress = new Address
+            // {
+            //     StreetName = delivery.PickupAddressStreetName,
+            //     HouseNumber = delivery.PickupAddressHouseNumber,
+            //     ZipCode = delivery.PickupAddressZipCode,
+            //     Country = delivery.PickupAddressCountry,
+            //     City = delivery.PickupAddressCity,
+            // };
 
-            _dbContext.Addresses.Add(pickupAddress);
+            // _dbContext.Addresses.Add(pickupAddress);
 
 
-            // Create DeliveryAddress
-            var deliveryAddress = new Address
-            {
-                StreetName = delivery.DeliveryAddressStreetName,
-                HouseNumber = delivery.DeliveryAddressHouseNumber,
-                ZipCode = delivery.DeliveryAddressZipCode,
-                City = delivery.DeliveryAddressCity,
-                Country = delivery.DeliveryAddressCountry
-            };
+            // // Create DeliveryAddress
+            // var deliveryAddress = new Address
+            // {
+            //     StreetName = delivery.DeliveryAddressStreetName,
+            //     HouseNumber = delivery.DeliveryAddressHouseNumber,
+            //     ZipCode = delivery.DeliveryAddressZipCode,
+            //     City = delivery.DeliveryAddressCity,
+            //     Country = delivery.DeliveryAddressCountry
+            // };
 
-            _dbContext.Addresses.Add(deliveryAddress);
+            // _dbContext.Addresses.Add(deliveryAddress);
 
             // Create Delivery
-            var entity = new Delivery
-            {
-                ID = delivery.ID,
-                Recipient = delivery.Recipient,
-                Seller = delivery.Seller,
-                DriverComment = delivery.DriverComment,
-                CustomerComment = delivery.CustomerComment,
-                Status = delivery.Status,
-                PickupAddressID = pickupAddress.ID,
-                PickupAddress = pickupAddress,
-                DeliveryAddressID = deliveryAddress.ID,
-                DeliveryAddress = deliveryAddress,
-                Vehicle = vehicle,
-                Driver = driver,
-                Packages = null,
-                Signoff = null
-            };
+            // var entity = new Delivery
+            // {
+            //     ID = delivery.ID,
+            //     Recipient = delivery.Recipient,
+            //     Seller = delivery.Seller,
+            //     DriverComment = delivery.DriverComment,
+            //     CustomerComment = delivery.CustomerComment,
+            //     Status = delivery.Status,
+            //     PickupAddressID = pickupAddress.ID,
+            //     PickupAddress = pickupAddress,
+            //     DeliveryAddressID = deliveryAddress.ID,
+            //     DeliveryAddress = deliveryAddress,
+            //     Vehicle = vehicle,
+            //     Driver = driver,
+            //     Packages = null,
+            //     Signoff = null
+            // };
 
-            _dbContext.Deliveries.Add(entity);
-            _dbContext.SaveChanges();
+            // _dbContext.Deliveries.Add(entity);
+            // _dbContext.SaveChanges();
 
-            return _mapper.Map<DeliveryDTO>(entity);
+            // return _mapper.Map<DeliveryDTO>(entity);
+            return new DeliveryDTO();
         }
 
-        public void UpdateDelivery(DeliveryInputModel delivery, string id)
+        public void UpdateDelivery(DeliveryInputModel newdelivery, string id)
         {
             // Get delivery
-            var tempDelivery = _dbContext.Deliveries.FirstOrDefault(d => d.ID == id);
-            if (tempDelivery == null) { throw new NotFoundException("Delivery not found."); }
+            var delivery = _deliveryObj.FirstOrDefault(d => d.ID == id);
+            if (delivery == null) { throw new NotFoundException($"No delivery with ID: {id}"); }
+            delivery.Seller = newdelivery.Seller ?? delivery.Seller;
+            delivery.Recipient = newdelivery.Recipient ?? delivery.Recipient;
+            delivery.DriverComment = newdelivery.DriverComment ?? delivery.DriverComment;
+            delivery.CustomerComment = newdelivery.CustomerComment ?? delivery.CustomerComment;
+            delivery.Status = newdelivery.Status ?? delivery.Status;
 
-            // Get vehicle
-            if (delivery.VehicleID != null)
+            if (delivery.PickupAddress != null)
             {
-                var vehicle = _dbContext.Vehicles.FirstOrDefault(v => v.ID == delivery.VehicleID);
-                if (vehicle == null) { throw new NotFoundException("Vehicle not found!"); }
-                tempDelivery.Vehicle = vehicle;
+                delivery.PickupAddress.City = newdelivery.PickupAddressCity ?? delivery.PickupAddress.City;
+                delivery.PickupAddress.Country = newdelivery.PickupAddressCountry ?? delivery.PickupAddress.Country;
+                delivery.PickupAddress.HouseNumber = newdelivery.PickupAddressHouseNumber ?? delivery.PickupAddress.HouseNumber;
+                delivery.PickupAddress.StreetName = newdelivery.PickupAddressStreetName ?? delivery.PickupAddress.StreetName;
+                delivery.PickupAddress.ZipCode = newdelivery.DeliveryAddressZipCode ?? delivery.DeliveryAddress.ZipCode;
             }
-            // Get driver 
-            if (delivery.DriverID != null)
+            if (delivery.DeliveryAddress != null)
             {
-                var driver = _dbContext.Users.FirstOrDefault(u => u.ID == delivery.DriverID);
-                if (driver == null) { throw new NotFoundException("Driver is not found."); }
-                tempDelivery.Driver = driver;
+                delivery.DeliveryAddress.City = newdelivery.DeliveryAddressCity ?? delivery.DeliveryAddress.City;
+                delivery.DeliveryAddress.Country = newdelivery.DeliveryAddressCountry ?? delivery.DeliveryAddress.Country;
+                delivery.DeliveryAddress.HouseNumber = newdelivery.DeliveryAddressHouseNumber ?? delivery.DeliveryAddress.HouseNumber;
+                delivery.DeliveryAddress.StreetName = newdelivery.DeliveryAddressStreetName ?? delivery.DeliveryAddress.StreetName;
+                delivery.DeliveryAddress.ZipCode = newdelivery.DeliveryAddressZipCode ?? delivery.DeliveryAddress.ZipCode;
             }
-            // Get pickupAddress
-            if (delivery.PickupAddressID != null)
+            if (delivery.Vehicle != null)
             {
-                // create new pickup address
-                var pickupAddress = new AddressInputModel
-                {
-                    StreetName = delivery.PickupAddressStreetName,
-                    HouseNumber = delivery.PickupAddressHouseNumber,
-                    ZipCode = delivery.PickupAddressZipCode,
-                    Country = delivery.PickupAddressCountry,
-                    City = delivery.PickupAddressCity,
-                };
-
-                Guid pId = _addressRepository.CreateAddress(pickupAddress);
-                tempDelivery.PickupAddressID = pId;
+                delivery.Vehicle.LicensePlate = newdelivery.VehicleLicensePlate ?? delivery.Vehicle.LicensePlate;
             }
-            // Get deliveryAddress
-            if (delivery.DeliveryAddressID != null)
+            if (delivery.Signoff != null)
             {
-                // create new delivery address
-                var deliveryAddress = new AddressInputModel
-                {
-                    StreetName = delivery.DeliveryAddressStreetName,
-                    HouseNumber = delivery.DeliveryAddressHouseNumber,
-                    ZipCode = delivery.DeliveryAddressZipCode,
-                    City = delivery.DeliveryAddressCity,
-                    Country = delivery.DeliveryAddressCountry
-                };
-                Guid dId = _addressRepository.CreateAddress(deliveryAddress);
-                tempDelivery.DeliveryAddressID = dId;
+                delivery.Signoff.ImageURI = newdelivery.SignoffImageURI ?? delivery.Signoff.ImageURI;
+                delivery.Signoff.SignatureUri = newdelivery.SignoffSignatureUri ?? delivery.Signoff.SignatureUri;
+                delivery.Signoff.Recipient = newdelivery.SignoffRecipient ?? delivery.Signoff.Recipient;
             }
-
-            // Delivery
-            tempDelivery.Recipient = delivery.Recipient != null ? delivery.Recipient : tempDelivery.Recipient;
-            tempDelivery.DriverComment = delivery.DriverComment != null ? delivery.DriverComment : tempDelivery.DriverComment;
-            tempDelivery.CustomerComment = delivery.CustomerComment != null ? delivery.CustomerComment : tempDelivery.CustomerComment;
-            tempDelivery.Seller = delivery.Seller != null ? delivery.Seller : tempDelivery.Seller;
-            tempDelivery.Status = delivery.Status != 0 ? delivery.Status : tempDelivery.Status;
-
-            // Packages
-            tempDelivery.Packages = tempDelivery.Packages;
-            tempDelivery.Signoff = tempDelivery.Signoff;
 
             // Save changes
             _dbContext.SaveChanges();
