@@ -1,27 +1,18 @@
 using System;
 using Xunit;
-using System.Collections;
 using System.Collections.Generic;
-using Utkeyrslukerfi.API.Models;
-using System.ComponentModel.DataAnnotations;
-
-using Moq;
-using Utkeyrslukerfi.API.Models.Dtos;
-using Utkeyrslukerfi.API.Services;
-using Utkeyrslukerfi.API.Services.Implementations;
-using Utkeyrslukerfi.API.Repositories.Implementations;
-using Utkeyrslukerfi.API.Repositories.Interfaces;
-using Utkeyrslukerfi.API.Repositories.Context;
-using Utkeyrslukerfi.API.Models.Entities;
 using Utkeyrslukerfi.API.Models.InputModels;
-using System.Threading;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+using Utkeyrslukerfi.API.Models.Entities;
+using Utkeyrslukerfi.API.Repositories.Implementations;
+using Utkeyrslukerfi.API.Models.Exceptions;
 using AutoMapper;
 using Utkeyrslukerfi.API;
-using Utkeyrslukerfi.API.Models.Exceptions;
-using Utkeyrslukerfi.API.Repositories.Helpers;
+using Utkeyrslukerfi.API.Repositories.Context;
+using Utkeyrslukerfi.API.Repositories.IContext;
+using Microsoft.EntityFrameworkCore;
 using System.Linq;
+using Utkeyrslukerfi.API.Repositories.Helpers;
+using Utkeyrslukerfi.API.Models.Dtos;
 
 namespace Tests
 {
