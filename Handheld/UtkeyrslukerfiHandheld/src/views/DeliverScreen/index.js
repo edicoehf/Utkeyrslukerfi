@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { View, Text, Button } from 'react-native'
+import { View, Text } from 'react-native'
 import BarcodeForm from '../../components/BarcodeForm'
 import CommentBox from '../../components/CommentBox'
 import ProductTable from '../../components/ProductTable'
@@ -7,6 +7,7 @@ import RemoveButton from '../../components/RemoveButton'
 import CheckBox from '@react-native-community/checkbox'
 import { useDispatch, useSelector } from 'react-redux'
 import { setStep } from '../../actions/signingProcessActions'
+import BasicButton from '../../components/BasicButton'
 
 // Driver can scan in packages in current delivery, comment on the delivery and continue with the delivery
 const DeliverScreen = ({ route, navigation }) => {
@@ -73,7 +74,7 @@ const DeliverScreen = ({ route, navigation }) => {
       <CommentBox label='Athugasemd bílstjóra' editable comment={driverComment} setComment={setDriverComment} />
       <CheckBox value={receiverNotHome} onValueChange={setReveiverNotHome} />
       <Text>Móttakandi ekki við</Text>
-      <Button title='Áfram' onPress={continueWithDelivery} accessibilityLabel='Continue with delivery.' />
+      <BasicButton buttonText='Áfram' onPressFunction={continueWithDelivery} />
     </View>
   )
 }
