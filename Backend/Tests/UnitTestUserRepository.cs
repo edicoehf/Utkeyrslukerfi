@@ -122,7 +122,7 @@ namespace Tests
         public void ShouldBeInvalid_NoUser_LoginDriver()
         {
             // Arrange
-            var loginInfo = new DriverLoginInputModel() { Name = "Maria Jónsdóttir"};
+            var loginInfo = new DriverLoginInputModel() { Name = "Maria Jónsdóttir" };
             Assert.Throws<InvalidLoginException>(() => _userRepo.DriverLogin(loginInfo));
         }
 
@@ -166,27 +166,27 @@ namespace Tests
         {
             public LoginUserValidData()
             {
-                Add(new User() { Role = 1, Email = "sera@admin.is", Password = HashingHelper.HashPassword("wow_flott_pw")}, 
+                Add(new User() { Role = 1, Email = "sera@admin.is", Password = HashingHelper.HashPassword("wow_flott_pw") },
                     new LoginInputModel() { Email = "sera@admin.is", Password = "wow_flott_pw" });
-                Add(new User() { Role = 2, Email = "sera1@admin.is", Password = HashingHelper.HashPassword("wow_flott_pw")},
-                    new LoginInputModel() { Email = "sera1@admin.is", Password = "wow_flott_pw"});
+                Add(new User() { Role = 2, Email = "sera1@admin.is", Password = HashingHelper.HashPassword("wow_flott_pw") },
+                    new LoginInputModel() { Email = "sera1@admin.is", Password = "wow_flott_pw" });
             }
         }
         public class LoginUserInvalidData : TheoryData<User, LoginInputModel>
         {
             public LoginUserInvalidData()
             {
-                Add(new User() { Role = 3, Email = "sera2@admin.is" }, 
-                    new LoginInputModel() { Email = "sera2@admin.is", Password = "wow_flott_pw"});
-                Add(new User() { Role = 4, Email = "sera3@admin.is" }, 
-                    new LoginInputModel() { Email = "sera3@admin.is", Password = "wow_flott_pw"});
+                Add(new User() { Role = 3, Email = "sera2@admin.is" },
+                    new LoginInputModel() { Email = "sera2@admin.is", Password = "wow_flott_pw" });
+                Add(new User() { Role = 4, Email = "sera3@admin.is" },
+                    new LoginInputModel() { Email = "sera3@admin.is", Password = "wow_flott_pw" });
             }
         }
         public class LoginDriverValidData : TheoryData<User, DriverLoginInputModel>
         {
             public LoginDriverValidData()
             {
-                Add(new User() { Role = 3, Name = "Séra Admin 3"}, 
+                Add(new User() { Role = 3, Name = "Séra Admin 3" },
                     new DriverLoginInputModel() { Name = "Séra Admin 3" });
             }
         }
@@ -194,12 +194,12 @@ namespace Tests
         {
             public LoginDriverInvalidData()
             {
-                Add(new User() { Role = 1, Name = "Séra Admin 1", Password = HashingHelper.HashPassword("wow_flott_pw")},
-                    new DriverLoginInputModel() { Name = "Séra Admin 1"});
-                Add(new User() { Role = 2, Name = "Séra Admin 2", Password = HashingHelper.HashPassword("wow_flott_pw")}, 
-                    new DriverLoginInputModel() { Name = "Séra Admin 2"});
-                Add(new User() { Role = 4, Name = "Séra Admin 4" }, 
-                    new DriverLoginInputModel() { Name = "Séra Admin 4"});
+                Add(new User() { Role = 1, Name = "Séra Admin 1", Password = HashingHelper.HashPassword("wow_flott_pw") },
+                    new DriverLoginInputModel() { Name = "Séra Admin 1" });
+                Add(new User() { Role = 2, Name = "Séra Admin 2", Password = HashingHelper.HashPassword("wow_flott_pw") },
+                    new DriverLoginInputModel() { Name = "Séra Admin 2" });
+                Add(new User() { Role = 4, Name = "Séra Admin 4" },
+                    new DriverLoginInputModel() { Name = "Séra Admin 4" });
             }
         }
         public class CreateUserValidData : TheoryData<UserInputModel>
