@@ -7,8 +7,6 @@ import DeliverScreen from '../views/DeliverScreen'
 import SignForDeliveryScreen from '../views/SignForDeliveryScreen'
 import DeliveryReceivedScreen from '../views/DeliveryReceivedScreen'
 
-import { BLUE } from '../constants'
-
 const SearchStack = createStackNavigator()
 
 const SearchStackScreen = () => {
@@ -16,14 +14,7 @@ const SearchStackScreen = () => {
     <SearchStack.Navigator
       initialRouteName='Search'
       screenOptions={{
-        headerShown: true,
-        title: 'Leit',
-        headerStyle: {
-          backgroundColor: BLUE
-        },
-        headerTitleStyle: {
-          fontWeight: 'bold'
-        }
+        headerShown: false
       }}
     >
       <SearchStack.Screen name='Search' component={SearchScreen} />

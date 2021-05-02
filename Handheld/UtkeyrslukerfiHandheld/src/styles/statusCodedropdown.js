@@ -4,9 +4,12 @@ const windowHeight = Dimensions.get('window').height
 const windowWidth = Dimensions.get('window').width
 
 const styles = StyleSheet.create({
+  mainContainer: {
+    width: windowWidth * 0.70
+  },
   container: {
     height: windowHeight * 0.05,
-    width: windowWidth * 0.40
+    width: windowWidth * 0.50
   },
   preDropdown: {
     backgroundColor: '#fafafa'

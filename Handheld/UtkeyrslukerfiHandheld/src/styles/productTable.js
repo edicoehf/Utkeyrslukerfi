@@ -22,12 +22,14 @@ const styles = StyleSheet.create({
     borderTopEndRadius: 10,
     borderTopStartRadius: 10,
     height: 50,
-    width: windowWidth * 0.9
+    width: windowWidth * 0.9,
+    paddingRight: '10%'
   },
   tableRow: {
     flexDirection: 'row',
     height: 40,
-    alignItems: 'center'
+    alignItems: 'center',
+    padding: 5
   },
   columnHeader: {
     width: '25%',
@@ -39,7 +41,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold'
   },
   columnRowTxt: {
-    width: '30%',
     textAlign: 'center'
   },
   removeButton: {

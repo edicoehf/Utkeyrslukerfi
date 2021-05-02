@@ -50,7 +50,7 @@ const SearchScreen = ({ navigation }) => {
 
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>Skanna fyrir nánri upplýsingar</Text>
+      <Text>Skanna fyrir nánari upplýsingar</Text>
       <BarcodeForm barcode={barcodeDetails} setBarcode={setBarcodeDetails} enterBarcode={searchForDelivery} labelText='Strikamerki sendingar' />
       <Text>Skanna til að afhenda</Text>
       <BarcodeForm barcode={barcodeDeliver} setBarcode={setBarcodeDeliver} enterBarcode={deliverDelivery} labelText='Strikamerki sendingar' />

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Text } from 'react-native'
+import { Text, View } from 'react-native'
 import DropDownPicker from 'react-native-dropdown-picker'
 import { useSelector } from 'react-redux'
 import styles from '../../styles/statusCodedropdown'
@@ -8,7 +8,7 @@ const StatusCodeDropdown = ({ status, setStatus }) => {
   const availableStatusCodes = useSelector(({ statusCode }) => statusCode)
 
   return (
-    <>
+    <View style={styles.mainContainer}>
       <Text style={styles.label}>Staða</Text>
       <DropDownPicker
         items={
@@ -26,7 +26,7 @@ const StatusCodeDropdown = ({ status, setStatus }) => {
         dropDownStyle={styles.dropdown}
         onChangeItem={item => setStatus(item.value)}
       />
-    </>
+    </View>
   )
 }
 
