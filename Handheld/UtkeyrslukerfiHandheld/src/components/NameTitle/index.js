@@ -1,8 +1,6 @@
-import React, { useState } from 'react'
-import { Text, TouchableOpacity, View } from 'react-native'
-import { useDispatch, useSelector } from 'react-redux'
-import { logout } from '../../actions/loginActions'
-import Icon from 'react-native-vector-icons/SimpleLineIcons'
+import React from 'react'
+import { Text } from 'react-native'
+import { useSelector } from 'react-redux'
 
 // LogutButton - logout functionality triggered when pressed
 const NameTitle = () => {
