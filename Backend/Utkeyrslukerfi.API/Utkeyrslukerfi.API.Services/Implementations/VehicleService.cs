@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Utkeyrslukerfi.API.Models.Dtos;
 using Utkeyrslukerfi.API.Models.InputModels;
@@ -19,11 +20,12 @@ namespace Utkeyrslukerfi.API.Services.Implementations
         {
             return _vehicleRepo.GetVehicle(ID);
         }
-        public IEnumerable<VehicleDTO> GetVehicles()
+
+        public IEnumerable<VehicleDTO> GetVehicles(int pageSize, int pageNumber)
         {
-            return _vehicleRepo.GetVehicles();
+            return _vehicleRepo.GetVehicles(pageSize, pageNumber);
         }
-        public VehicleDTO CreateVehicle(VehicleInputModel vehicle)
+        public Guid CreateVehicle(VehicleInputModel vehicle)
         {
             return _vehicleRepo.CreateVehicle(vehicle);
         }

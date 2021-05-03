@@ -7,10 +7,10 @@ namespace Utkeyrslukerfi.API.Models.InputModels
         [Required(ErrorMessage = "License Plate is required")]
         public string LicensePlate { get; set; }
         [Required(ErrorMessage = "Length is required")]
-        public string Length { get; set; }
+        public double Length { get; set; }
         [Required(ErrorMessage = "Height is required")]
-        public int Height { get; set; }
+        public double Height { get; set; }
         [Required(ErrorMessage = "Width is required")]
-        public string Width { get; set; }
+        public double Width { get; set; }
     }
 }

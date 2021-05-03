@@ -1,5 +1,4 @@
 using System;
-
 namespace Utkeyrslukerfi.API.Models.Dtos
 {
     public class VehicleDTO
