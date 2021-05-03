@@ -13,7 +13,7 @@ const Users = () => {
   const history = useHistory()
   const token = useSelector(({ login }) => login.token)
   const users = useSelector(({ users }) => users)
-  const [userState, setUserState] = useState([]);
+  const [userState, setUserState] = useState([])
   const [filterModal, setFilterModel] = useState(false)
   const dispatch = useDispatch()
 
@@ -47,7 +47,7 @@ const Users = () => {
           <td>{user.name}</td>
           <td>{user.email}</td>
           <td>{configData.ROLES[user.role]}</td>
-          <td onClick={() => navigateToUser(user)}><BsPencilSquare size='1.5em' className="clickable"/></td>
+          <td onClick={() => navigateToUser(user)}><BsPencilSquare size='1.5em' className='clickable' /></td>
         </tr>
       )
     })
@@ -71,7 +71,7 @@ const Users = () => {
             </th>
             <th>
               {/* Edit pen icon */}
-              <BsFunnel onClick={toggleModal} size='2em' color='white' className="clickable" />
+              <BsFunnel onClick={toggleModal} size='2em' color='white' className='clickable' />
             </th>
           </tr>
         </thead>
@@ -81,7 +81,7 @@ const Users = () => {
             users.length > 0 ? renderRows() : null
           }
           <tr>
-            <td onClick={() => navigateToCreateUser()}><ImPlus size='2em' className="clickable"/></td>
+            <td onClick={() => navigateToCreateUser()}><ImPlus size='2em' className='clickable' /></td>
             <td />
             <td />
             <td />

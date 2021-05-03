@@ -20,10 +20,10 @@ const UserFilterModal = ({ visible, users, setUsers, updateModalState }) => {
   function afterOpenModal () {
     subtitle.style.color = '#139ffd'
   }
-  const [role, setRole] = useState('');
+  const [role, setRole] = useState('')
 
-  function getIDByRole(role) {
-    return Object.keys(config.ROLES).find(key => config.ROLES[key] === role);
+  function getIDByRole (role) {
+    return Object.keys(config.ROLES).find(key => config.ROLES[key] === role)
   }
 
   const filter = () => {
@@ -32,12 +32,12 @@ const UserFilterModal = ({ visible, users, setUsers, updateModalState }) => {
       setUsers(users)
       return
     }
-    setUsers(_.filter(users, user => user.role == getIDByRole(role))) 
+    setUsers(_.filter(users, user => user.role == getIDByRole(role)))
     setRole('')
   }
 
   const submitHandler = (e) => {
-    e.preventDefault();
+    e.preventDefault()
     filter()
   }
 
@@ -47,14 +47,14 @@ const UserFilterModal = ({ visible, users, setUsers, updateModalState }) => {
         isOpen={visible}
         onAfterOpen={afterOpenModal}
         onRequestClose={updateModalState}
-        contentLabel={'Test'}
+        contentLabel='Test'
         style={customStyles}
       >
-        <h2 ref={_subtitle => (subtitle = _subtitle)}>{'Sía notendur'}</h2>
+        <h2 ref={_subtitle => (subtitle = _subtitle)}>Sía notendur</h2>
         <form onSubmit={submitHandler}>
           <label>
             Starf:
-            <input type="text" onChange={event => setRole(event.target.value)} name="role" />
+            <input type='text' onChange={event => setRole(event.target.value)} name='role' />
           </label>
         </form>
         <button className='btn btn-primary' onClick={filter}>Filter</button>
