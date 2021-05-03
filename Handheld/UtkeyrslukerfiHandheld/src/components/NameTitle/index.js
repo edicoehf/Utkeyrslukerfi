@@ -7,7 +7,8 @@ const NameTitle = () => {
   const recipientTitle = useSelector(({ recipientTitle }) => recipientTitle)
 
   return (
-    <Text>{recipientTitle}</Text>
+    // <Text>{recipientTitle}</Text>
+    <></>
   )
 }
 
