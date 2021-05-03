@@ -20,7 +20,7 @@ const SignForDeliveryScreen = ({ navigation }) => {
     }
     console.log(signature)
     const route = signingProcess.process[signingProcess.step]
-    dispatch(setStep(signingProcess.step + 1))
+    dispatch(setStep(1))
     navigation.navigate(route)
   }
 
