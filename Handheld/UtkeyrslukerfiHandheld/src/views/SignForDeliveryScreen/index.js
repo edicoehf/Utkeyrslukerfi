@@ -15,7 +15,7 @@ const SignForDeliveryScreen = ({ navigation }) => {
   const handleSignature = (signature) => {
     // TODO: save the image on a server and save the link in the db, get the link for the image from signature.data
     if (!name) {
-      ToastAndroid.show('Vinsamlegast settu inn nafn móttakanda.', ToastAndroid.LONG)
+      ToastAndroid.showWithGravity('Vinsamlegast settu inn nafn móttakanda.', ToastAndroid.LONG, ToastAndroid.TOP)
       return
     }
     console.log(signature)
@@ -24,7 +24,7 @@ const SignForDeliveryScreen = ({ navigation }) => {
     navigation.navigate(route)
   }
 
-  const handleEmpty = () => { ToastAndroid.show('Undirskrift vantar.', ToastAndroid.LONG) }
+  const handleEmpty = () => { ToastAndroid.showWithGravity('Undirskrift vantar.', ToastAndroid.LONG, ToastAndroid.TOP) }
 
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
