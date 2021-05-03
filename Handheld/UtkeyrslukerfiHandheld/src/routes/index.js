@@ -2,23 +2,20 @@ import React from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import SearchStackScreen from './SearchStackScreen'
+import ScanStackScreen from './ScanStackScreen' 
+import ListStackScreen from './ListStackScreen' 
 // Icons
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons'
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons'
 // Views
-import ScanScreen from '../views/ScanScreen'
-import ListScreen from '../views/ListScreen'
 
 import { BLUE } from '../constants'
-
-import Header from '../components/Header'
 
 const Tab = createBottomTabNavigator()
 
 const AppContainer = () => {
   return (
     <NavigationContainer>
-      <Header />
       <Tab.Navigator
         initialRouteName='Scan'
         tabBarOptions={{
@@ -27,7 +24,7 @@ const AppContainer = () => {
       >
         <Tab.Screen
           name='List'
-          component={ListScreen}
+          component={ListStackScreen}
           options={{
             showIcon: true,
             tabBarLabel: 'List',
@@ -36,7 +33,7 @@ const AppContainer = () => {
         />
         <Tab.Screen
           name='Scan'
-          component={ScanScreen}
+          component={ScanStackScreen}
           options={{
             showIcon: true,
             tabBarLabel: 'Scan',
