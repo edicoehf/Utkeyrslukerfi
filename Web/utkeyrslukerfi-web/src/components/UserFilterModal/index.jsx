@@ -16,10 +16,6 @@ const customStyles = {
 
 const UserFilterModal = ({ visible, users, setUsers, updateModalState }) => {
   Modal.setAppElement('#root')
-  let subtitle
-  function afterOpenModal () {
-    subtitle.style.color = '#139ffd'
-  }
   const [role, setRole] = useState('')
 
   function getIDByRole (role) {
@@ -45,12 +41,11 @@ const UserFilterModal = ({ visible, users, setUsers, updateModalState }) => {
     return (
       <Modal
         isOpen={visible}
-        onAfterOpen={afterOpenModal}
         onRequestClose={updateModalState}
         contentLabel='Test'
         style={customStyles}
       >
-        <h2 ref={_subtitle => (subtitle = _subtitle)}>Sía notendur</h2>
+        <h2>Sía notendur</h2>
         <form onSubmit={submitHandler}>
           <label>
             Starf:
