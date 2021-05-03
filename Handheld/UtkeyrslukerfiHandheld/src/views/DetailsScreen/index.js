@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux'
 import CommentBox from '../../components/CommentBox'
 import deliveryService from '../../services/deliveryService'
 import BasicButton from '../../components/BasicButton'
+import styles from '../../styles/detailPageStyles'
 
 // Driver can view details about delivery, comment on it or start delivery
 const DetailsScreen = ({ route, navigation }) => {
@@ -40,25 +41,31 @@ const DetailsScreen = ({ route, navigation }) => {
   }
 
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>Móttakandi:</Text>
-      <Text>Nafn</Text>
-      <Text>{delivery.recipient}</Text>
-      <Text>Götuheiti:</Text>
-      <Text>{delivery.deliveryAddress.streetName} {delivery.deliveryAddress.houseNumber}</Text>
-      <Text>Borg:</Text>
-      <Text>{delivery.deliveryAddress.zipCode} {delivery.deliveryAddress.city}</Text>
-      <Text>Sending:</Text>
-      <Text>Sendingarnúmer</Text>
-      <Text>{delivery.id}</Text>
-      <Text>Fjöldi pakka í sendingu</Text>
-      <Text>{delivery.packages.length}</Text>
-      <Text>Staða sendingar</Text>
-      <Text>{availableStatusCodes[delivery.status]}</Text>
+    <View style={styles.mainView}>
+      <View style={styles.section}>
+        <Text style={styles.mottakandi}>Móttakandi</Text>
+        <Text style={styles.nameText}>Nafn: <Text>{delivery.recipient}</Text>
+        </Text>
+        <Text>Götuheiti: <Text>{delivery.deliveryAddress.streetName} {delivery.deliveryAddress.houseNumber}</Text>
+        </Text>
+        <Text>Borg: <Text>{delivery.deliveryAddress.zipCode} {delivery.deliveryAddress.city}</Text>
+        </Text>
+      </View>
+      <View style={styles.section}>
+        <Text style={styles.mottakandi}>Sending</Text>
+        <Text>Sendingarnúmer: <Text>{delivery.id}</Text>
+        </Text>
+        <Text>Fjöldi pakka í sendingu: <Text>{delivery.packages.length}</Text>
+        </Text>
+        <Text>Staða sendingar: <Text>{availableStatusCodes[delivery.status]}</Text>
+        </Text>
+      </View>
       <CommentBox label='Athugasemd viðskiptavinar' editable={false} comment={customerComment} setComment={setCustomerComment} />
       <CommentBox label='Athugasemd bílstjóra' editable comment={driverComment} setComment={setDriverComment} />
-      <BasicButton buttonText='Vista' onPressFunction={saveComment} />
-      <BasicButton buttonText='Afhenda' onPressFunction={deliver} />
+      <View style={styles.bottomButtons}>
+        <BasicButton buttonText='Vista' onPressFunction={saveComment} />
+        <BasicButton buttonText='Afhenda' onPressFunction={deliver} />
+      </View>
     </View>
   )
 }
