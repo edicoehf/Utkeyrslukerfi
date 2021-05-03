@@ -1,23 +1,27 @@
 import React from 'react'
-import { TextInput, Button } from 'react-native'
+import { TextInput, TouchableOpacity, Text, View } from 'react-native'
+import styles from '../../styles/barcodeForm'
 
 // Form to search for, delivery or add delivery to a table
-const BarcodeForm = ({ barcode, setBarcode, enterBarcode }) => {
+const BarcodeForm = ({ barcode, setBarcode, enterBarcode, labelText }) => {
   return (
-    <>
-      <TextInput
-        onChangeText={setBarcode}
-        value={barcode}
-        placeholder='Strikamerki...'
-        style={{ backgroundColor: '#fafafa' }}
-      />
-      <Button
+    <View style={styles.container}>
+      <View style={styles.container1}>
+        <Text style={styles.label}>{labelText}</Text>
+        <TextInput
+          onChangeText={setBarcode}
+          value={barcode}
+          placeholder='Strikamerki...'
+          style={styles.input}
+        />
+      </View>
+      <TouchableOpacity
         onPress={enterBarcode}
-        title='Bæta við'
-        color='grey'
-        accessibilityLabel='Press button to add barcode number'
-      />
-    </>
+        style={styles.button}
+      >
+        <Text style={styles.buttonText}>Bæta við</Text>
+      </TouchableOpacity>
+    </View>
   )
 }
 

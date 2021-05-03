@@ -4,11 +4,13 @@ import login from './loginReducer'
 import drivers from './driversReducer'
 import deliveries from './deliveryReducer'
 import signingProcess from './signingProcessReducer'
+import recipientTitle from './recipientTitleReducer'
 
 export default combineReducers({
   statusCode,
   login,
   drivers,
   deliveries,
-  signingProcess
+  signingProcess,
+  recipientTitle
 })

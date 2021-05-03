@@ -20,6 +20,7 @@ using Hangfire;
 using Hangfire.MemoryStorage;
 using System.Collections.Specialized;
 using Utkeyrslukerfi.API.Repositories.IContext;
+using System.Collections.Generic;
 
 namespace Utkeyrslukerfi.API
 {
@@ -86,13 +87,17 @@ namespace Utkeyrslukerfi.API
             }).AddJwtTokenAuthentication(Configuration);
             services.AddCors(options =>
             {
-                options.AddPolicy(name: MyAllowSpecificOrigins,
-                                    builder =>
-                                    {
-                                        builder.WithOrigins("http://localhost:3000")
-                                                  .AllowAnyHeader()
-                                                  .AllowAnyMethod(); ;
-                                    });
+                var CorsAddresses = Configuration.GetSection("CorsAddresses:Addresses").Get<List<string>>();
+                foreach (var address in CorsAddresses)
+                {
+                    options.AddPolicy(name: MyAllowSpecificOrigins,
+                                        builder =>
+                                        {
+                                            builder.WithOrigins(address)
+                                                    .AllowAnyHeader()
+                                                    .AllowAnyMethod(); ;
+                                        });
+                }
             });
 
             // Adding Mapper

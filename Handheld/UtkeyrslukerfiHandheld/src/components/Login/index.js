@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react'
-import { View, Button, Text } from 'react-native'
+import { View, Text } from 'react-native'
 import { setLogin } from '../../actions/loginActions'
 import { useDispatch, useSelector } from 'react-redux'
 import DropDownPicker from 'react-native-dropdown-picker'
 import { getDrivers } from '../../actions/driversActions'
+import BasicButton from '../../components/BasicButton'
 
 const Login = () => {
   // TODO: Style
@@ -35,15 +36,15 @@ const Login = () => {
         itemStyle={{
           justifyContent: 'flex-start'
         }}
-        dropDownStyle={{ backgroundColor: '#fafafa', height: 120 }}
+        dropDownStyle={{ backgroundColor: '#fafafa', minHeight: 40, maxHeight: 120 }}
         onChangeItem={item => setSelected(item.value)}
       />
       <View
         style={{ zIndex: 0 }}
       >
-        <Button
-          onPress={handleSubmit}
-          title='Log In'
+        <BasicButton
+          onPressFunction={handleSubmit}
+          buttonText='Skrá inn'
         />
       </View>
     </View>

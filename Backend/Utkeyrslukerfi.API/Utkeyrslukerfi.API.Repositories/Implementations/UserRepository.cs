@@ -82,9 +82,9 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
         }
         public void UpdateUser(UserInputModel user, Guid id)
         {
-            var tempPass = HashingHelper.HashPassword(user.Password);
             var tempUser = _dbContext.Users.FirstOrDefault(u => u.ID == id);
             if (tempUser == null) { throw new NotFoundException($"User with id: {id} is not found!"); }
+            var tempPass = HashingHelper.HashPassword(user.Password);
 
             // Update old user with the new user
             tempUser.Name = user.Name;
@@ -114,6 +114,7 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
             var user = _dbContext.Users.FirstOrDefault(u =>
                 u.Email == loginInputModel.Email &&
                 u.Password == HashingHelper.HashPassword(loginInputModel.Password) &&
+                u.Role != 3 &&
                 u.Role != 4);
             if (user == null) { throw new InvalidLoginException("Either Email or Password is incorrect!"); }
 
