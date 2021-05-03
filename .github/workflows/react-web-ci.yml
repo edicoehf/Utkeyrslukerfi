@@ -23,10 +23,15 @@ jobs:
       with:
         node-version: '14.x'
 
-    - name: npm install, build, and test
+   - name: Install dependencies
       working-directory: ./Web/utkeyrslukerfi-web/
-      run: |
-        git config core.ignorecase false
-        npm install
-        npm run build
+      run: npm install
+
+    - name: Run the tests
+      working-directory: ./Web/utkeyrslukerfi-web/
+      run: npm test
+
+    - name: Build
+      working-directory: ./Web/utkeyrslukerfi-web/
+      run: npm run build
 
