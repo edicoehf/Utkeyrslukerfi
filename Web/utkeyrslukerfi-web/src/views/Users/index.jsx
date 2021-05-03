@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { getUsers } from '../../actions/usersActions'
@@ -6,19 +6,30 @@ import { BsPencilSquare, BsFunnel } from 'react-icons/bs'
 import { ImPlus } from 'react-icons/im'
 import configData from '../../constants/config.json'
 import '../../styles/users.css'
+import UserFilterModal from '../../components/UserFilterModal'
 
 // Users - display all users in a table
 const Users = () => {
   const history = useHistory()
   const token = useSelector(({ login }) => login.token)
   const users = useSelector(({ users }) => users)
+  const [userState, setUserState] = useState([])
+  const [filterModal, setFilterModel] = useState(false)
   const dispatch = useDispatch()
+
+  const toggleModal = () => {
+    setFilterModel(state => !state)
+  }
 
   useEffect(() => {
     if (token) {
       dispatch(getUsers(token))
     }
   }, [token])
+
+  useEffect(() => {
+    setUserState(users)
+  }, [users])
 
   const navigateToUser = (user) => {
     history.push(`/users/${user.id}`, { params: user })
@@ -29,14 +40,14 @@ const Users = () => {
   }
 
   const renderRows = () => {
-    return users.map(function (user, id) {
+    return userState.map(function (user, id) {
       return (
         <tr key={id}>
           <td>{user.id}</td>
           <td>{user.name}</td>
           <td>{user.email}</td>
           <td>{configData.ROLES[user.role]}</td>
-          <td onClick={() => navigateToUser(user)}><BsPencilSquare size='1.5em' /></td>
+          <td onClick={() => navigateToUser(user)}><BsPencilSquare size='1.5em' className='clickable' /></td>
         </tr>
       )
     })
@@ -60,7 +71,7 @@ const Users = () => {
             </th>
             <th>
               {/* Edit pen icon */}
-              <BsFunnel size='2em' color='white' />
+              <BsFunnel onClick={toggleModal} size='2em' color='white' className='clickable' />
             </th>
           </tr>
         </thead>
@@ -70,7 +81,7 @@ const Users = () => {
             users.length > 0 ? renderRows() : null
           }
           <tr>
-            <td onClick={() => navigateToCreateUser()}><ImPlus size='2em' /></td>
+            <td onClick={() => navigateToCreateUser()}><ImPlus size='2em' className='clickable' /></td>
             <td />
             <td />
             <td />
@@ -87,6 +98,7 @@ const Users = () => {
             </div>
           : null
       }
+      <UserFilterModal visible={filterModal} users={users} setUsers={setUserState} updateModalState={toggleModal} />
     </div>
   )
 }
