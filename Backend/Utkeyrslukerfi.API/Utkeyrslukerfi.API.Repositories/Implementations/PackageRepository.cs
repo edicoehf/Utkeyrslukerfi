@@ -8,15 +8,16 @@ using Utkeyrslukerfi.API.Repositories.Interfaces;
 using Utkeyrslukerfi.API.Models.Exceptions;
 using Utkeyrslukerfi.API.Models.Entities;
 using Utkeyrslukerfi.API.Models.Envelope;
+using Utkeyrslukerfi.API.Repositories.IContext;
 
 namespace Utkeyrslukerfi.API.Repositories.Implementations
 {
     public class PackageRepository : IPackageRepository
     {
-        private readonly UtkeyrslukerfiDbContext _dbContext;
+        private readonly IUtkeyrslukerfiDbContext _dbContext;
         private readonly IMapper _mapper;
 
-        public PackageRepository(IMapper mapper, UtkeyrslukerfiDbContext dbContext)
+        public PackageRepository(IMapper mapper, IUtkeyrslukerfiDbContext dbContext)
         {
             _dbContext = dbContext;
             _mapper = mapper;

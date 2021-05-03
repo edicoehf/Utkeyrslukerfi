@@ -6,6 +6,7 @@ using Utkeyrslukerfi.API.Models.Dtos;
 using Utkeyrslukerfi.API.Models.Entities;
 using Utkeyrslukerfi.API.Models.InputModels;
 using Utkeyrslukerfi.API.Repositories.Context;
+using Utkeyrslukerfi.API.Repositories.IContext;
 using Utkeyrslukerfi.API.Repositories.Interfaces;
 using Utkeyrslukerfi.API.Models.Envelope;
 using Utkeyrslukerfi.API.Models.Exceptions;
@@ -14,10 +15,10 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
 {
     public class VehicleRepository : IVehicleRepository
     {
-        private readonly UtkeyrslukerfiDbContext _dbContext;
+        private readonly IUtkeyrslukerfiDbContext _dbContext;
         private readonly IMapper _mapper;
 
-        public VehicleRepository(IMapper mapper, UtkeyrslukerfiDbContext dbContext)
+        public VehicleRepository(IMapper mapper, IUtkeyrslukerfiDbContext dbContext)
         {
             _dbContext = dbContext;
             _mapper = mapper;

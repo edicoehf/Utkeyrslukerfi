@@ -19,6 +19,7 @@ using Utkeyrslukerfi.API.Middlewares;
 using Hangfire;
 using Hangfire.MemoryStorage;
 using System.Collections.Specialized;
+using Utkeyrslukerfi.API.Repositories.IContext;
 
 namespace Utkeyrslukerfi.API
 {
@@ -76,6 +77,8 @@ namespace Utkeyrslukerfi.API
                       }
                     );
             });
+            // Register service and implementation for the db context, need lambda expression to resolve an actual instance through the container
+            services.AddScoped<IUtkeyrslukerfiDbContext>(provider => provider.GetService<UtkeyrslukerfiDbContext>());
             services.AddAuthentication(config =>
             {
                 config.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;

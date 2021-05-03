@@ -14,6 +14,7 @@ namespace Utkeyrslukerfi.API
             CreateMap<Package, PackageDTO>();
             CreateMap<User, UserDTO>();
             CreateMap<User, DriverDTO>();
+            CreateMap<UserInputModel, UserDTO>();
             CreateMap<UserInputModel, User>();
             CreateMap<Address, AddressDTO>();
             CreateMap<Vehicle, VehicleDTO>();
