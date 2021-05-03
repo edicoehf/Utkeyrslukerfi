@@ -22,6 +22,7 @@
     "react-native-bootstrap-styles": "^4.5.0-r",
     "react-native-dropdown-picker": "^4.0.9",
     "react-native-gesture-handler": "^1.10.3",
+    "react-native-image-picker": "^3.5.0",
     "react-native-reanimated": "^2.1.0",
     "react-native-safe-area-context": "^3.2.0",
     "react-native-screens": "^3.1.1",
