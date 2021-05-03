@@ -67,7 +67,7 @@ const Delivery = () => {
     dispatch(setDelivery(tempObj))
   }
 
-  let reservedGuid = '00000000-0000-0000-0000-000000000000'
+  const reservedGuid = '00000000-0000-0000-0000-000000000000'
 
   const handleSubmit = (event) => {
     event.preventDefault()
@@ -136,7 +136,6 @@ const Delivery = () => {
     dispatch(setDelivery(delivery))
   }
 
-
   return (
     // TODO: make selection list for available options such as driver, vehicle, status etc.
     <div className='row align-items-start border rounded shadow mt-3 pr-2'>
@@ -149,11 +148,11 @@ const Delivery = () => {
           <div className='row'>
             <label className='mt-3 mx-3'>Status</label>
             <select onChange={onStatusChange} className='border-none my-3 ml-auto'>
-              <option key={-1} value={-1} disabled={true}>--</option>
-              <option key={1} value={1} selected={delivery.status === 1 ? true : false}>Í ferli</option>
-              <option key={2} value={2} selected={delivery.status === 2 ? true : false}>Á leiðinni</option>
-              <option key={3} value={3} selected={delivery.status === 3 ? true : false}>Móttekin</option>
-              <option key={4} value={4} selected={delivery.status === 4 ? true : false}>Týnd</option>
+              <option key={-1} value={-1} disabled>--</option>
+              <option key={1} value={1} selected={delivery.status === 1}>Í ferli</option>
+              <option key={2} value={2} selected={delivery.status === 2}>Á leiðinni</option>
+              <option key={3} value={3} selected={delivery.status === 3}>Móttekin</option>
+              <option key={4} value={4} selected={delivery.status === 4}>Týnd</option>
             </select>
           </div>
           <div className='row'>
@@ -162,7 +161,7 @@ const Delivery = () => {
           <div className='row'>
             <label className='mt-3 mx-3'>Driver</label>
             <select onChange={onDriverChange} className='border-none my-3 ml-auto'>
-              <option key={-1} value={-1} >--</option>
+              <option key={-1} value={-1}>--</option>
               {populateOptions(users)}
             </select>
           </div>
@@ -175,7 +174,7 @@ const Delivery = () => {
           <div className='row'>
             <label className='mt-3 mx-3'>Vehicle</label>
             <select onChange={onVehicleChange} className='border-none my-3 ml-auto'>
-              <option key={-1} value={-1} >--</option>
+              <option key={-1} value={-1}>--</option>
               {populateVehicleOptions(vehicles)}
             </select>
           </div>
