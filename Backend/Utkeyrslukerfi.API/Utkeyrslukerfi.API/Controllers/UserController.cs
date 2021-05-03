@@ -90,7 +90,7 @@ namespace Utkeyrslukerfi.API.Controllers
         }
 
         [HttpPut]
-        [Route("{id:int}", Name = "UpdateUser")]
+        [Route("{ID:Guid}", Name = "UpdateUser")]
         public IActionResult UpdateUser([FromBody] UserInputModel user, Guid ID)
         {
             if (!ModelState.IsValid)
