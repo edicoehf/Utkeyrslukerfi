@@ -29,9 +29,3 @@ export const DELIVERY_URL = 'https://utkeyrslukerfiapi.azurewebsites.net/api/del
 export const LOGIN_URL = 'https://utkeyrslukerfiapi.azurewebsites.net/api/account/login'
 export const LOGOUT_URL = 'https://utkeyrslukerfiapi.azurewebsites.net/api/account/logout'
 export const VEHICLE_URL = 'https://utkeyrslukerfiapi.azurewebsites.net/api/vehicles'
-
-// export const USER_URL = 'https://localhost:5001/api/users'
-// export const DELIVERY_URL = 'https://localhost:5001/api/deliveries'
-// export const LOGIN_URL = 'https://localhost:5001/api/account/login'
-// export const LOGOUT_URL = 'https://localhost:5001/api/account/logout'
-// export const VEHICLE_URL = 'https://localhost:5001/api/vehicles'
