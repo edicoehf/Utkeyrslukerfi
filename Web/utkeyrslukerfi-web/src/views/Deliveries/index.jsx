@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { getDeliveries } from '../../actions/deliveriesActions'
 import { setDelivery } from '../../actions/deliveryActions'
 import { getDrivers } from '../../actions/usersActions'
+import { getVehicles } from '../../actions/vehiclesActions'
 import configData from '../../constants/config.json'
 import '../../styles/deliveries.css'
 
@@ -17,6 +18,7 @@ const Deliveries = () => {
     if (token) {
       dispatch(getDeliveries(token))
       dispatch(getDrivers(token))
+      dispatch(getVehicles(token))
     }
   }, [token])
 
