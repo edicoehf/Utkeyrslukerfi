@@ -5,7 +5,6 @@ import CommentBox from '../../components/CommentBox'
 import deliveryService from '../../services/deliveryService'
 import BasicButton from '../../components/BasicButton'
 
-
 // Driver can view details about delivery, comment on it or start delivery
 const DetailsScreen = ({ route, navigation }) => {
   // TODO:
@@ -49,7 +48,6 @@ const DetailsScreen = ({ route, navigation }) => {
       <Text>{delivery.deliveryAddress.streetName} {delivery.deliveryAddress.houseNumber}</Text>
       <Text>Borg:</Text>
       <Text>{delivery.deliveryAddress.zipCode} {delivery.deliveryAddress.city}</Text>
-
       <Text>Sending:</Text>
       <Text>Sendingarnúmer</Text>
       <Text>{delivery.id}</Text>
@@ -57,7 +55,6 @@ const DetailsScreen = ({ route, navigation }) => {
       <Text>{delivery.packages.length}</Text>
       <Text>Staða sendingar</Text>
       <Text>{availableStatusCodes[delivery.status]}</Text>
-
       <CommentBox label='Athugasemd viðskiptavinar' editable={false} comment={customerComment} setComment={setCustomerComment} />
       <CommentBox label='Athugasemd bílstjóra' editable comment={driverComment} setComment={setDriverComment} />
       <BasicButton buttonText='Vista' onPressFunction={saveComment} />
