@@ -14,19 +14,19 @@ const ListStackScreen = () => {
       screenOptions={{
         headerShown: true,
         headerStyle: {
-          backgroundColor: BLUE,
+          backgroundColor: BLUE
         },
-        headerTintColor: "#ffffff",
+        headerTintColor: '#ffffff',
         headerTitleStyle: {
           fontWeight: 'bold'
         },
         headerTitleAlign: 'center',
         headerRight: () => (
-          <LogoutButton/>
+          <LogoutButton />
         )
       }}
     >
-      <ListStack.Screen name='List' component={ListScreen} options={{title: "Listi yfir sendingar"}}/>
+      <ListStack.Screen name='List' component={ListScreen} options={{ title: 'Listi yfir sendingar' }} />
     </ListStack.Navigator>
   )
 }

@@ -19,23 +19,23 @@ const SearchStackScreen = () => {
       screenOptions={{
         headerShown: true,
         headerStyle: {
-          backgroundColor: BLUE,
+          backgroundColor: BLUE
         },
-        headerTintColor: "#ffffff",
+        headerTintColor: '#ffffff',
         headerTitleStyle: {
           fontWeight: 'bold'
         },
         headerTitleAlign: 'center',
         headerRight: () => (
-          <LogoutButton/>
+          <LogoutButton />
         )
       }}
     >
-      <SearchStack.Screen name='Search' component={SearchScreen} options={{ title: "Leita" }}/>
+      <SearchStack.Screen name='Search' component={SearchScreen} options={{ title: 'Leita' }} />
       <SearchStack.Screen name='Details' component={DetailsScreen} options={{ headerTitle: <NameTitle /> }} />
       <SearchStack.Screen name='Deliver' component={DeliverScreen} options={{ headerTitle: <NameTitle /> }} />
       <SearchStack.Screen name='SignForDelivery' component={SignForDeliveryScreen} options={{ headerTitle: <NameTitle /> }} />
-      <SearchStack.Screen name='DeliveryReceived' component={DeliveryReceivedScreen} options={{ headerTitle: <NameTitle /> }}/>
+      <SearchStack.Screen name='DeliveryReceived' component={DeliveryReceivedScreen} options={{ headerTitle: <NameTitle /> }} />
     </SearchStack.Navigator>
   )
 }

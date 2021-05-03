@@ -14,19 +14,19 @@ const ScanStackScreen = () => {
       screenOptions={{
         headerShown: true,
         headerStyle: {
-          backgroundColor: BLUE,
+          backgroundColor: BLUE
         },
-        headerTintColor: "#ffffff",
+        headerTintColor: '#ffffff',
         headerTitleStyle: {
           fontWeight: 'bold'
         },
         headerTitleAlign: 'center',
         headerRight: () => (
-          <LogoutButton/>
+          <LogoutButton />
         )
       }}
     >
-      <ScanStack.Screen name='Scan' component={ScanScreen} options={{title: "Skanna"}}/>
+      <ScanStack.Screen name='Scan' component={ScanScreen} options={{ title: 'Skanna' }} />
     </ScanStack.Navigator>
   )
 }
