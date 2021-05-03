@@ -47,7 +47,6 @@ const updateUserSuccess = (user) => ({
 export const createUser = (token, user) => async (dispatch) => {
   try {
     const body = await userService.createUser(token, user)
-    console.log(body?.status)
 
     if (body?.status === 400) { toastr.error('Netfang er nú þegar í notkun.') }
     if (body?.status === 401) { toastr.error('Notandi er ekki innskráður.') }
