@@ -88,7 +88,8 @@ namespace Utkeyrslukerfi.API
             services.AddCors(options =>
             {
                 var CorsAddresses = Configuration.GetSection("CorsAddresses:Addresses").Get<List<string>>();
-                foreach(var address in CorsAddresses){
+                foreach (var address in CorsAddresses)
+                {
                     options.AddPolicy(name: MyAllowSpecificOrigins,
                                         builder =>
                                         {
