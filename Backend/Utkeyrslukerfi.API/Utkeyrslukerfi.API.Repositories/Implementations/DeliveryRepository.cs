@@ -4,7 +4,6 @@ using AutoMapper;
 using Utkeyrslukerfi.API.Models.Dtos;
 using Utkeyrslukerfi.API.Models.Entities;
 using Utkeyrslukerfi.API.Models.InputModels;
-using Utkeyrslukerfi.API.Repositories.Context;
 using Utkeyrslukerfi.API.Repositories.Interfaces;
 using Utkeyrslukerfi.API.Models.Exceptions;
 using Utkeyrslukerfi.API.Models.Envelope;
@@ -154,6 +153,12 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
                 var vid = newdelivery.VehicleID ?? delivery.Vehicle.ID;
                 var tempVehicle = _dbContext.Vehicles.FirstOrDefault(v => v.ID == vid);
                 delivery.Vehicle = tempVehicle;
+            }
+            if (delivery.Driver != null || newdelivery.DriverID != null)
+            {
+                var vid = newdelivery.DriverID ?? delivery.Driver.ID;
+                var tempDriver = _dbContext.Users.FirstOrDefault(v => v.ID == vid);
+                delivery.Driver = tempDriver;
             }
             if (delivery.Signoff != null)
             {

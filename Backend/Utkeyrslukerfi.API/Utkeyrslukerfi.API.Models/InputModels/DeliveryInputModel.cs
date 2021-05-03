@@ -31,6 +31,7 @@ namespace Utkeyrslukerfi.API.Models.InputModels
         public double VehicleHeight { get; set; }
         public double VehicleWidth { get; set; }
         // driver
+        public Guid? DriverID { get; set; }
         public string DriverName { get; set; }
         public string DriverPassword { get; set; }
         public string DriverEmail { get; set; }

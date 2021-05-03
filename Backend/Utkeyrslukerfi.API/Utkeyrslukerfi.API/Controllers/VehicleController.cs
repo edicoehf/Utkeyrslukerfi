@@ -85,8 +85,8 @@ namespace Utkeyrslukerfi.API.Controllers
             _vehicleService.UpdateVehicle(vehicle, id);
             return NoContent();
         }
-        // [Authorize(Roles = "1")]
-        // [Authorize(Roles = "2")]
+        [Authorize(Roles = "1")]
+        [Authorize(Roles = "2")]
         [HttpPost]
         [Route("", Name = "CreateVehicle")]
         public IActionResult CreateVehicle([FromBody] VehicleInputModel vehicle)
