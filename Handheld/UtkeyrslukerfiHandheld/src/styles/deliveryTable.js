@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native'
+import { LIGHTER_BLUE } from '../constants'
 
 const styles = StyleSheet.create({
   container: {
@@ -12,7 +13,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-evenly',
     alignItems: 'center',
-    backgroundColor: '#37C2D0',
+    backgroundColor: LIGHTER_BLUE,
     borderTopEndRadius: 10,
     borderTopStartRadius: 10,
     height: 50
