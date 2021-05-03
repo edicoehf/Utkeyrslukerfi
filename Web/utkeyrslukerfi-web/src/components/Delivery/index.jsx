@@ -11,6 +11,7 @@ import configData from '../../constants/config.json'
 const Delivery = () => {
   const packages = useSelector(({ packages }) => packages)
   const delivery = useSelector(({ delivery }) => delivery)
+  const vehicles = useSelector(({ vehicles }) => vehicles)
   const users = useSelector(({ users }) => users)
   const token = useSelector(({ login }) => login.token)
   const dispatch = useDispatch()
@@ -66,14 +67,12 @@ const Delivery = () => {
     dispatch(setDelivery(tempObj))
   }
 
-  let reservedGuid = 'mmmm0000-9999-xxxx-yyyy-qqqq0000vvvv'
+  let reservedGuid = '00000000-0000-0000-0000-000000000000'
 
   const handleSubmit = (event) => {
     event.preventDefault()
     const newDelivery = {
       ...delivery,
-      VehicleID: delivery.vehicle === null ? reservedGuid : delivery.vehicle.id,
-      DriverID: delivery.driver === null ? delivery.DriverID : delivery.driver.id,
       // pickup address
       PickupAddressID: pickupAddChanged ? reservedGuid : delivery.pickupAddress.id,
       PickupAddressHouseNumber: delivery.pickupAddress.houseNumber,
@@ -126,6 +125,18 @@ const Delivery = () => {
     }
   }
 
+  const populateVehicleOptions = (options) => {
+    return options.map((option, index) => (
+      <option key={index} value={option.id} selected={vehicle === option.licensePlate}>{option.licensePlate}</option>
+    ))
+  }
+
+  const onVehicleChange = (e) => {
+    delivery.VehicleID = e.target.value
+    dispatch(setDelivery(delivery))
+  }
+
+
   return (
     // TODO: make selection list for available options such as driver, vehicle, status etc.
     <div className='row align-items-start border rounded shadow mt-3 pr-2'>
@@ -136,7 +147,6 @@ const Delivery = () => {
             <label className='mt-3 mx-3'>Recipient</label><input className='border-none my-3 ml-auto' disabled={editable} type='text' name='recipient' onChange={handleChange} defaultValue={delivery?.recipient} />
           </div>
           <div className='row'>
-            {/* <label className='mt-3 mx-3'>Status</label><input className='border-none my-3 ml-auto' disabled={editable} type='text' name='status' onChange={handleChange} defaultValue={configData.STATUS[delivery?.status]} /> */}
             <label className='mt-3 mx-3'>Status</label>
             <select onChange={onStatusChange} className='border-none my-3 ml-auto'>
               <option key={-1} value={-1} disabled={true}>--</option>
@@ -163,7 +173,11 @@ const Delivery = () => {
             <label className='mt-3 mx-3'>PickupAddress</label><input className='border-none my-3 ml-auto' disabled={editable} type='text' name='pickupAddress' onClick={togglePickupModal} value={pickupAddress} />
           </div>
           <div className='row'>
-            <label className='mt-3 mx-3'>Vehicle</label><input className='border-none my-3 ml-auto' disabled={editable} type='text' name='licensePlate' onChange={e => dispatch(setDelivery({ ...delivery, vehicle: { ...delivery.vehicle, licensePlate: e.target.value } }))} defaultValue={vehicle} />
+            <label className='mt-3 mx-3'>Vehicle</label>
+            <select onChange={onVehicleChange} className='border-none my-3 ml-auto'>
+              <option key={-1} value={-1} >--</option>
+              {populateVehicleOptions(vehicles)}
+            </select>
           </div>
         </form>
       </div>

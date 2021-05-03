@@ -150,9 +150,11 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
                 delivery.DeliveryAddress.StreetName = newdelivery.DeliveryAddressStreetName ?? delivery.DeliveryAddress.StreetName;
                 delivery.DeliveryAddress.ZipCode = newdelivery.DeliveryAddressZipCode ?? delivery.DeliveryAddress.ZipCode;
             }
-            if (delivery.Vehicle != null)
+            if (delivery.Vehicle != null || newdelivery.VehicleID != null)
             {
-                delivery.Vehicle.LicensePlate = newdelivery.VehicleLicensePlate ?? delivery.Vehicle.LicensePlate;
+                var vid = newdelivery.VehicleID ?? delivery.Vehicle.ID;
+                var tempVehicle = _dbContext.Vehicles.FirstOrDefault(v => v.ID == vid);
+                delivery.Vehicle = tempVehicle;
             }
             if (delivery.Signoff != null)
             {
