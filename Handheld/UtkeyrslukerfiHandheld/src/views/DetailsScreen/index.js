@@ -60,15 +60,8 @@ const DetailsScreen = ({ route, navigation }) => {
 
       <CommentBox label='Athugasemd viðskiptavinar' editable={false} comment={customerComment} setComment={setCustomerComment} />
       <CommentBox label='Athugasemd bílstjóra' editable comment={driverComment} setComment={setDriverComment} />
-
-<<<<<<< HEAD
-      <Button title='Vista' onClick={saveComment}/>
-      <Button title='Afhenda' onClick={deliver} />
-=======
       <BasicButton buttonText='Vista' onPressFunction={saveComment} />
       <BasicButton buttonText='Afhenda' onPressFunction={deliver} />
->>>>>>> 0a05c59d6038f4ece68a36bf9a806b7212c06bbb
-
     </View>
   )
 }
