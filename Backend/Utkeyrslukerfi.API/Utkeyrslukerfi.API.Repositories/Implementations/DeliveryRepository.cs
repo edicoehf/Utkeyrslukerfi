@@ -124,7 +124,6 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
 
         public void UpdateDelivery(DeliveryInputModel newdelivery, string id)
         {
-            Guid defaultId = new Guid("00000000-0000-0000-0000-000000000000");
             // Get delivery
             var delivery = _deliveryObj.FirstOrDefault(d => d.ID == id);
             if (delivery == null) { throw new NotFoundException($"No delivery with ID: {id}"); }

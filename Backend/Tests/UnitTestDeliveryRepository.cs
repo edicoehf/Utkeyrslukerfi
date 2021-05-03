@@ -100,8 +100,9 @@ namespace Tests
             return delivery;
         }
 
-        [Theory]
-        [ClassData(typeof(DeliveryDataValid))]
+        // Test for create delivery, function not needed
+        // [Theory]
+        // [ClassData(typeof(DeliveryDataValid))]
         public void ShouldBeValid_CreateDelivery(DeliveryInputModel data)
         {
             var driver = new User()
@@ -146,9 +147,9 @@ namespace Tests
             Assert.Equal(data.DeliveryAddressZipCode, deliv.DeliveryAddress.ZipCode);
         }
 
-
-        [Theory]
-        [ClassData(typeof(DeliveryDataInValid))]
+        // Test for create delivery, function not needed
+        // [Theory]
+        // [ClassData(typeof(DeliveryDataInValid))]
         public void ShouldBeInvalid_CreateDelivery(DeliveryInputModel data)
         {
             // neither the driver nor the Vehicle exists

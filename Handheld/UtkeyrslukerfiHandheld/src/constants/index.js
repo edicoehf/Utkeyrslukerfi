@@ -11,4 +11,5 @@ export const LOGOUT_URL = 'https://utkeyrslukerfiapi.azurewebsites.net/api/accou
 export const DRIVER_LOGIN_URL = 'https://utkeyrslukerfiapi.azurewebsites.net/api/account/driverlogin'
 export const DRIVERS_URL = 'https://utkeyrslukerfiapi.azurewebsites.net/api/users/drivers'
 
-export const blue = '#4A79BA'
+export const BLUE = '#4A79BA'
+export const LIGHTER_BLUE = '#81ABE4'

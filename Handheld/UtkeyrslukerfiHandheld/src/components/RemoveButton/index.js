@@ -1,12 +1,13 @@
 import React from 'react'
-import { TouchableHighlight } from 'react-native'
+import { TouchableOpacity } from 'react-native'
 import Feather from 'react-native-vector-icons/Feather'
+import styles from '../../styles/productTable'
 
 const RemoveButton = ({ barcode, removeBarcode }) => {
   return (
-    <TouchableHighlight onPress={() => { removeBarcode(barcode) }}>
+    <TouchableOpacity onPress={() => { removeBarcode(barcode) }} style={styles.removeButton}>
       <Feather name='x' style={{ width: 26 - 32 }} color='#333' size={24} />
-    </TouchableHighlight>
+    </TouchableOpacity>
   )
 }
 
