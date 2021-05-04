@@ -7,7 +7,7 @@ namespace Utkeyrslukerfi.API.Models.Entities
     {
         public Guid ID { get; set; }
         public string ImageURI { get; set; }
-        public string SignatureUri { get; set; }
+        public string SignatureURI { get; set; }
         public string Recipient { get; set; }
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public DateTime CreatedOn { get; set; }
