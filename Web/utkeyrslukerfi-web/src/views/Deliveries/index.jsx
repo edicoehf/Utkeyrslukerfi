@@ -25,6 +25,7 @@ const Deliveries = () => {
       dispatch(getDrivers(token))
       dispatch(getVehicles(token))
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [token])
 
   useEffect(() => {

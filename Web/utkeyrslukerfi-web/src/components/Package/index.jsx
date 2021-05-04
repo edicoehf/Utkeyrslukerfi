@@ -17,7 +17,8 @@ const Package = () => {
     } else {
       dispatch(getViewingPackage(token, id, delid))
     }
-  }, [])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  })
 
   return ( // TODO: Style
     <>

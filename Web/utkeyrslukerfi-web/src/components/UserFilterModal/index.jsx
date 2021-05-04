@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import Modal from 'react-modal'
 import config from '../../constants/config.json'
 import _ from 'lodash'
@@ -29,7 +29,7 @@ const UserFilterModal = ({ visible, users, setUsers, updateModalState }) => {
       clearFilter()
       return
     }
-    setUsers(_.filter(users, user => user.role == getIDByRole(role)))
+    setUsers(_.filter(users, user => user.role === parseInt(getIDByRole(role))))
     setRole('')
   }
 

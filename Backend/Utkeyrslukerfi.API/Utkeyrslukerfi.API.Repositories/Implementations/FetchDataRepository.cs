@@ -239,6 +239,8 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
             deliveryAddress.HouseNumber = GetAddressSubsection(data, "DeliveryAddress", "HouseNumber");
             deliveryAddress.StreetName = GetAddressSubsection(data, "DeliveryAddress", "StreetName");
             deliveryAddress.ZipCode = GetAddressSubsection(data, "DeliveryAddress", "ZipCode");
+            deliveryAddress.XCoords = GetAddressSubsection(data, "DeliveryAddress", "XCoords");
+            deliveryAddress.YCoords = GetAddressSubsection(data, "DeliveryAddress", "YCoords");
             _dbContext.Addresses.Add(deliveryAddress);
             delivery.DeliveryAddress = deliveryAddress;
             return delivery;
