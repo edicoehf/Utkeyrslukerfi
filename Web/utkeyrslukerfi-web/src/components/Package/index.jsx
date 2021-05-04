@@ -20,7 +20,7 @@ const Package = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   })
 
-  return ( // TODO: Style and make editable
+  return ( // TODO: Style
     <>
       <div className='col col-md-6 border mt-2 px-auto pt-1'>
         <p>ID/Barcode: {viewingPackage.id}</p>

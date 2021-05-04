@@ -2,3 +2,7 @@
   margin-top: 0;
   width: 100%;
 }
+
+.clickable {
+  cursor: pointer;
+}

@@ -8,14 +8,18 @@ import FormGroupDropdown from '../FormGroupDropdown'
 import FormGroupButton from '../FormGroupButton'
 import configData from '../../constants/config.json'
 import '../../styles/user.css'
+import { useHistory } from 'react-router-dom'
 
 const CreateUserForm = () => {
   const methods = useForm()
   const token = useSelector(({ login }) => login.token)
   const dispatch = useDispatch()
 
+  const history = useHistory()
+
   const submitForm = async (data) => {
     dispatch(createUser(token, { ...data, changePassword: true }))
+    history.push('/users')
   }
 
   return (
