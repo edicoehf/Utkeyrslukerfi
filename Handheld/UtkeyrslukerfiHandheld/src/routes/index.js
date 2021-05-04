@@ -20,7 +20,7 @@ const AppContainer = () => {
         tabBarOptions={{
           tabStyle: { backgroundColor: BLUE },
           activeTintColor: 'black',
-          inactiveTintColor: 'white',
+          inactiveTintColor: 'white'
         }}
       >
         <Tab.Screen

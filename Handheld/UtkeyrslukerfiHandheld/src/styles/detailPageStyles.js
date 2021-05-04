@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native'
 
 export default StyleSheet.create({
   mainView: {
@@ -26,6 +26,6 @@ export default StyleSheet.create({
   },
   textHighlighted: {
     fontSize: 16,
-    textAlign: 'right',
+    textAlign: 'right'
   }
-});
+})
