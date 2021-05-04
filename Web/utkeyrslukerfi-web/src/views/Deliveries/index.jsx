@@ -42,7 +42,7 @@ const Deliveries = () => {
   }
 
   const renderRows = () => {
-    return deliveries.map(function (obj, id) {
+    return deliveryState.map(function (obj, id) {
       return (
         <tr key={id}>
           <td>{obj.id}</td>
@@ -50,7 +50,7 @@ const Deliveries = () => {
           <td>{obj.recipient}</td>
           <td>{obj.seller === null ? 'N/A' : obj.seller}</td>
           <td>{obj.driver === null ? 'N/A' : obj.driver.name}</td>
-          <td>{obj.deliveryDate === null ? 'N/A' : format(new Date(obj.deliveryDate), 'MMMM Do, yyyy')}</td>
+          <td>{obj.deliveryDate === null ? 'N/A' : format(new Date(obj.deliveryDate), 'MMMM do, yyyy')}</td>
           <td>{obj.deliveryAddress.streetName} {obj.deliveryAddress.houseNumber}</td>
           <td>{obj.pickupAddress.streetName} {obj.pickupAddress.houseNumber}</td>
           <td onClick={() => navigateToDelivery(obj)} className='clickable'><BsPencilSquare size='1.5em' /></td>

@@ -1,22 +1,28 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import Modal from 'react-modal'
 import config from '../../constants/config.json'
+import DatePicker from "react-datepicker"
+import "react-datepicker/dist/react-datepicker.css"
 import _ from 'lodash'
+import { isWithinInterval } from 'date-fns'
 
 const customStyles = {
   content: {
-    top: '50%',
-    left: '50%',
-    right: 'auto',
-    bottom: 'auto',
-    marginRight: '-50%',
-    transform: 'translate(-50%, -50%)'
+    // top: '50%',
+    // left: '50%',
+    // right: 'auto',
+    // bottom: 'auto',
+    // marginRight: '-50%',
+    // transform: 'translate(-50%, -50%)'
   }
 }
 
 const UserFilterModal = ({ visible, deliveries, setDeliveries, updateModalState }) => {
   Modal.setAppElement('#root')
   const [status, setStatus] = useState('')
+  const [filtered, setFiltered] = useState('')
+  const [startDate, setStartDate] = useState(new Date(Date.now() - (6.048e+8)))
+  const [endDate, setEndDate] = useState(new Date(Date.now() + (6.048e+8 * 2)))
 
   function getIDByStatus (status) {
     return Object.keys(config.STATUS).find(key => config.STATUS[key] === status)
@@ -24,12 +30,30 @@ const UserFilterModal = ({ visible, deliveries, setDeliveries, updateModalState 
 
   const filter = () => {
     updateModalState()
-    // if (role === '') {
-    //   setUsers(users)
-    //   return
-    // }
-    // setUsers(_.filter(users, user => user.role == getIDByRole(role)))
-    // setRole('')
+    filterStatus()
+    filterDate()
+  }
+
+  const filterStatus = () => {
+    if (status === '') {
+      clearFilter()
+      return
+    }
+    setFiltered(_.filter(deliveries, delivery => delivery.status === parseInt(getIDByStatus(status))))
+    setStatus('')
+  }
+
+  console.log(isWithinInterval(new Date(2014, 0, 3), { start: startDate, end: endDate }))
+
+  const filterDate = () => {
+    filtered.map(function (delivery) {
+      console.log(new Date(delivery.deliveryDate))
+    })
+  }
+
+  const clearFilter = () => {
+    setDeliveries(deliveries)
+    updateModalState()
   }
 
   const submitHandler = (e) => {
@@ -47,13 +71,33 @@ const UserFilterModal = ({ visible, deliveries, setDeliveries, updateModalState 
       >
         <h2>Sía sendingar</h2>
         <form onSubmit={submitHandler}>
-          {/* <label>
-            Starf:
-            <input type='text' onChange={event => setRole(event.target.value)} name='role' />
-          </label> */}
+          <label>Staða:
+            <select id="status" name="status" onChange={event => setStatus(event.target.value)} >
+              <option value=""></option>
+              <option value="Í ferli">Í ferli</option>
+              <option value="Á leiðinni">Á leiðinni</option>
+              <option value="Móttekin">Móttekin</option>
+              <option value="Týnd">Týnd</option>
+            </select>
+          </label>
+          <DatePicker
+            selected={startDate}
+            onChange={date => setStartDate(date)}
+            selectsStart
+            startDate={startDate}
+            endDate={endDate}
+          />
+          <DatePicker
+            selected={endDate}
+            onChange={date => setEndDate(date)}
+            selectsEnd
+            startDate={startDate}
+            endDate={endDate}
+            minDate={startDate}
+          />
         </form>
         <button className='btn btn-primary' onClick={filter}>Filter</button>
-        <button onClick={updateModalState} className='btn btn-outline-warning'>Close</button>
+        <button onClick={clearFilter} className='btn btn-outline-warning'>Hreinsa síu</button>
       </Modal>
     )
   }
