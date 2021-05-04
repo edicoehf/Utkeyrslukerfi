@@ -47,7 +47,7 @@ const DetailsScreen = ({ route, navigation }) => {
   return (
     <View style={styles.mainView}>
       <View style={styles.section}>
-        <Text style={styles.mottakandi}>Móttakandi</Text>
+        <Text style={styles.receiver}>Móttakandi</Text>
         <Text>Nafn: <Text style={styles.textHighlighted}>{delivery.recipient}</Text>
         </Text>
         <Text>Götuheiti: <Text style={styles.textHighlighted}>{delivery.deliveryAddress.streetName} {delivery.deliveryAddress.houseNumber}</Text>
@@ -56,7 +56,7 @@ const DetailsScreen = ({ route, navigation }) => {
         </Text>
       </View>
       <View style={styles.section}>
-        <Text style={styles.mottakandi}>Sending</Text>
+        <Text style={styles.receiver}>Sending</Text>
         <Text>Sendingarnúmer: <Text style={styles.textHighlighted}>{delivery.id}</Text>
         </Text>
         <Text>Fjöldi pakka í sendingu: <Text style={styles.textHighlighted}>{delivery.packages.length}</Text>

@@ -7,21 +7,22 @@ export default StyleSheet.create({
     padding: 6
   },
   section: {
-    marginBottom: 2,
+    marginBottom: 4,
     padding: 4,
-    borderRadius: 3,
+    borderRadius: 6,
     borderColor: 'black',
     borderWidth: 1,
     fontSize: 20,
     paddingBottom: 5
   },
-  mottakandi: {
-    fontSize: 20,
+  receiver: {
+    fontSize: 25,
     paddingLeft: 1
   },
   bottomButtons: {
     flex: 1,
     flexDirection: 'row',
+    alignItems: 'flex-end',
     justifyContent: 'space-around'
   },
   textHighlighted: {

@@ -8,7 +8,7 @@ import ListStackScreen from './ListStackScreen'
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons'
 // Views
 
-import { BLUE } from '../constants'
+import { BLUE, LIGHT_BLUE } from '../constants'
 
 const Tab = createBottomTabNavigator()
 
@@ -19,7 +19,7 @@ const AppContainer = () => {
         initialRouteName='Scan'
         tabBarOptions={{
           tabStyle: { backgroundColor: BLUE },
-          activeTintColor: 'black',
+          activeTintColor: LIGHT_BLUE,
           inactiveTintColor: 'white'
         }}
       >
