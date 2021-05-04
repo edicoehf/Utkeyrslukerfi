@@ -46,9 +46,9 @@ const UserFilterModal = ({ visible, deliveries, setDeliveries, updateModalState 
   console.log(isWithinInterval(new Date(2014, 0, 3), { start: startDate, end: endDate }))
 
   const filterDate = () => {
-    filtered.map(function (delivery) {
-      console.log(new Date(delivery.deliveryDate))
-    })
+    // filtered.map(function (delivery) {
+    //   console.log(new Date(delivery.deliveryDate))
+    // })
   }
 
   const clearFilter = () => {
