@@ -19,6 +19,7 @@ jobs:
   build:
     env:
       VALIDATE_JSCPD: false
+      VALIDATE_JAVA: false
     # The type of runner that the job will run on
     name: Linter
     runs-on: ubuntu-latest
