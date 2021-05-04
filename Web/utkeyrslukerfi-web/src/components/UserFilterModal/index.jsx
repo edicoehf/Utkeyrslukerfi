@@ -14,7 +14,7 @@ const customStyles = {
   }
 }
 
-//TODO: Increase size of modal(style)
+// TODO: Increase size of modal(style)
 const UserFilterModal = ({ visible, users, setUsers, updateModalState }) => {
   Modal.setAppElement('#root')
   const [role, setRole] = useState('')
@@ -54,12 +54,12 @@ const UserFilterModal = ({ visible, users, setUsers, updateModalState }) => {
         <h2>Sía notendur</h2>
         <form onSubmit={submitHandler}>
           <label>Starf:
-            <select id="roles" name="roles" onChange={event => setRole(event.target.value)} >
-              <option value=""></option>
-              <option value="Bílstjóri">Bílstjóri</option>
-              <option value="Skrifstofumaður">Skrifstofumaður</option>
-              <option value="Stjórnandi">Stjórnandi</option>
-              <option value="Óvirkur">Óvirkur</option>
+            <select id='roles' name='roles' onChange={event => setRole(event.target.value)}>
+              <option value='' />
+              <option value='Bílstjóri'>Bílstjóri</option>
+              <option value='Skrifstofumaður'>Skrifstofumaður</option>
+              <option value='Stjórnandi'>Stjórnandi</option>
+              <option value='Óvirkur'>Óvirkur</option>
             </select>
           </label>
         </form>

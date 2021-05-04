@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import Modal from 'react-modal'
 import config from '../../constants/config.json'
-import DatePicker from "react-datepicker"
-import "react-datepicker/dist/react-datepicker.css"
+import DatePicker from 'react-datepicker'
+import 'react-datepicker/dist/react-datepicker.css'
 import _ from 'lodash'
 import { isWithinInterval } from 'date-fns'
 
@@ -72,12 +72,12 @@ const UserFilterModal = ({ visible, deliveries, setDeliveries, updateModalState 
         <h2>Sía sendingar</h2>
         <form onSubmit={submitHandler}>
           <label>Staða:
-            <select id="status" name="status" onChange={event => setStatus(event.target.value)} >
-              <option value=""></option>
-              <option value="Í ferli">Í ferli</option>
-              <option value="Á leiðinni">Á leiðinni</option>
-              <option value="Móttekin">Móttekin</option>
-              <option value="Týnd">Týnd</option>
+            <select id='status' name='status' onChange={event => setStatus(event.target.value)}>
+              <option value='' />
+              <option value='Í ferli'>Í ferli</option>
+              <option value='Á leiðinni'>Á leiðinni</option>
+              <option value='Móttekin'>Móttekin</option>
+              <option value='Týnd'>Týnd</option>
             </select>
           </label>
           <DatePicker
