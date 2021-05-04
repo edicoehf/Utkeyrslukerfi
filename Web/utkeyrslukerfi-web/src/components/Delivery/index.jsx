@@ -68,21 +68,19 @@ const Delivery = () => {
     dispatch(setDelivery(tempObj))
   }
 
-  const reservedGuid = '00000000-0000-0000-0000-000000000000'
-
   const handleSubmit = (event) => {
     event.preventDefault()
     const newDelivery = {
       ...delivery,
       // pickup address
-      PickupAddressID: pickupAddChanged ? reservedGuid : delivery.pickupAddress.id,
+      PickupAddressID: pickupAddChanged ? null : delivery.pickupAddress.id,
       PickupAddressHouseNumber: delivery.pickupAddress.houseNumber,
       PickupAddressZipCode: delivery.pickupAddress.zipCode,
       PickupAddressCity: delivery.pickupAddress.city,
       PickupAddressCountry: delivery.pickupAddress.country,
       PickupAddressStreetName: delivery.pickupAddress.streetName,
       // delivery address
-      DeliveryAddressID: deliveryAddChanged ? reservedGuid : delivery.deliveryAddress.id,
+      DeliveryAddressID: deliveryAddChanged ? null : delivery.deliveryAddress.id,
       DeliveryAddressHouseNumber: delivery.deliveryAddress.houseNumber,
       DeliveryAddressZipCode: delivery.deliveryAddress.zipCode,
       DeliveryAddressCity: delivery.deliveryAddress.city,
