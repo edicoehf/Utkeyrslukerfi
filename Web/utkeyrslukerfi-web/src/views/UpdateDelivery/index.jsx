@@ -87,8 +87,8 @@ const UpdateDelivery = () => {
       DeliveryAddressCountry: delivery.deliveryAddress.country,
       DeliveryAddressStreetName: delivery.deliveryAddress.streetName
     }
-    console.log(newDelivery)
     dispatch(updateDelivery(token, id, newDelivery))
+    history.push('/deliveries')
   }
 
   const toggleDeliveryModal = () => {
