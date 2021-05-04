@@ -6,6 +6,7 @@ import user from './userReducer'
 import login from './loginReducer'
 import packages from './packagesReducer'
 import pack from './packageReducer'
+import vehicles from './vehiclesReducer'
 
 export default combineReducers({
   login,
@@ -14,5 +15,6 @@ export default combineReducers({
   delivery,
   deliveries,
   packages,
-  pack
+  pack,
+  vehicles
 })
