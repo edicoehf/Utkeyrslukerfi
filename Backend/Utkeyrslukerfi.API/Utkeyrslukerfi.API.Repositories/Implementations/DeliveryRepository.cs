@@ -30,7 +30,8 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
                             .Include(d => d.DeliveryAddress)
                             .Include(d => d.Driver)
                             .Include(d => d.Vehicle)
-                            .Include(d => d.Packages);
+                            .Include(d => d.Packages)
+                            .Include(d => d.Signoff);
         }
 
         public DeliveryDTO GetDelivery(string ID)
