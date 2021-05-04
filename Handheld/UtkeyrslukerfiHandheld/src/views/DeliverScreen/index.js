@@ -13,7 +13,6 @@ import styles from '../../styles/deliverScreen'
 // Driver can scan in packages in current delivery, comment on the delivery and continue with the delivery
 const DeliverScreen = ({ route, navigation }) => {
   // TODO:
-  // - css
   // - add consecutive screens that depend on checkbox
   // - Make sure back buttons decrement steps
   const { delivery } = route.params
@@ -46,7 +45,7 @@ const DeliverScreen = ({ route, navigation }) => {
 
   // All packages in current delivery about to be delivered should be scanned
   const addBarcode = () => {
-    if (!barcode) { ToastAndroid.show('Strikamerki er ekki til staðar', ToastAndroid.LONG) }
+    if (!barcode) { ToastAndroid.showWithGravity('Strikamerki er ekki til staðar', ToastAndroid.LONG, ToastAndroid.TOP) }
     if (delivery.packages.some(p => p.id === barcode)) {
       setTableData([
         ...tableData,
@@ -58,7 +57,7 @@ const DeliverScreen = ({ route, navigation }) => {
       ])
       setCount(count + 1)
     } else {
-      ToastAndroid.show('Rangt strikamerki', ToastAndroid.LONG)
+      ToastAndroid.showWithGravity('Rangt strikamerki', ToastAndroid.LONG, ToastAndroid.TOP)
     }
     setBarcode('')
   }

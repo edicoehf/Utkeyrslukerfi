@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
     width: windowWidth * 0.70
   },
   input: {
-    backgroundColor: '#fafafa',
+    backgroundColor: '#ffffff',
     height: windowHeight * 0.05,
     width: windowWidth * 0.50,
     borderColor: '#cccccc',
