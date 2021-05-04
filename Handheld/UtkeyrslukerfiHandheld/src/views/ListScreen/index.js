@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { View, Text } from 'react-native'
+import { View } from 'react-native'
 import { getDeliveries } from '../../actions/deliveryActions'
 import { useDispatch, useSelector } from 'react-redux'
 import DeliveryTable from '../../components/DeliveryTable'

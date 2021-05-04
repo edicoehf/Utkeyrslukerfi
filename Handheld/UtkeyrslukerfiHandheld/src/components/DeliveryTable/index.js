@@ -33,10 +33,8 @@ const DeliveryTable = ({ data }) => {
               onPress={() => sortTable(column)}
             >
               <Text style={styles.columnHeaderTxt}>{columnText[index] + ' '}
-                {selectedColumn === column &&
-                  <Icon
-                    name={direction === 'desc' ? 'arrow-down-drop-circle' : 'arrow-up-drop-circle'}
-                  />
+                {selectedColumn === column && <Icon
+                  name={direction === 'desc' ? 'arrow-down-drop-circle' : 'arrow-up-drop-circle'} />
                 }
               </Text>
             </TouchableOpacity>
