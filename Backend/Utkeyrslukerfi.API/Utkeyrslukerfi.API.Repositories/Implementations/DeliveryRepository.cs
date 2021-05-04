@@ -164,7 +164,7 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
             if (delivery.Signoff != null)
             {
                 delivery.Signoff.ImageURI = newdelivery.SignoffImageURI ?? delivery.Signoff.ImageURI;
-                delivery.Signoff.SignatureURI = newdelivery.SignoffSignatureURI ?? delivery.Signoff.SignatureURI;
+                delivery.Signoff.SignatureUri = newdelivery.SignoffSignatureUri ?? delivery.Signoff.SignatureUri;
                 delivery.Signoff.Recipient = newdelivery.SignoffRecipient ?? delivery.Signoff.Recipient;
             }
 
