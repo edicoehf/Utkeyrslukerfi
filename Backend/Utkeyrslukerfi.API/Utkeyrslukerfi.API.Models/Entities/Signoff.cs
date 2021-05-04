@@ -29,7 +29,7 @@ namespace Utkeyrslukerfi.API.Models.Entities
         // ------------------------------------------------
         /// </summary>
         /// <value></value>
-        public int? Settings { get ; set; }
+        public int? Settings { get; set; }
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public DateTime CreatedOn { get; set; }
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
