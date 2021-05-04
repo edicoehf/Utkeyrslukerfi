@@ -14,6 +14,7 @@ const customStyles = {
   }
 }
 
+// TODO: Increase size of modal(style)
 const UserFilterModal = ({ visible, users, setUsers, updateModalState }) => {
   Modal.setAppElement('#root')
   const [role, setRole] = useState('')
@@ -25,11 +26,16 @@ const UserFilterModal = ({ visible, users, setUsers, updateModalState }) => {
   const filter = () => {
     updateModalState()
     if (role === '') {
-      setUsers(users)
+      clearFilter()
       return
     }
     setUsers(_.filter(users, user => user.role === parseInt(getIDByRole(role))))
     setRole('')
+  }
+
+  const clearFilter = () => {
+    setUsers(users)
+    updateModalState()
   }
 
   const submitHandler = (e) => {
@@ -47,13 +53,18 @@ const UserFilterModal = ({ visible, users, setUsers, updateModalState }) => {
       >
         <h2>Sía notendur</h2>
         <form onSubmit={submitHandler}>
-          <label>
-            Starf:
-            <input type='text' onChange={event => setRole(event.target.value)} name='role' />
+          <label>Starf:
+            <select id='roles' name='roles' onChange={event => setRole(event.target.value)}>
+              <option value='' />
+              <option value='Bílstjóri'>Bílstjóri</option>
+              <option value='Skrifstofumaður'>Skrifstofumaður</option>
+              <option value='Stjórnandi'>Stjórnandi</option>
+              <option value='Óvirkur'>Óvirkur</option>
+            </select>
           </label>
         </form>
-        <button className='btn btn-primary' onClick={filter}>Filter</button>
-        <button onClick={updateModalState} className='btn btn-outline-warning'>Close</button>
+        <button className='btn btn-primary' onClick={filter}>Sía</button>
+        <button onClick={clearFilter} className='btn btn-outline-warning'>Hreinsa síu</button>
       </Modal>
     )
   }
