@@ -34,7 +34,7 @@ const DeliveryTable = ({ data }) => {
             >
               <Text style={styles.columnHeaderTxt}>{columnText[index] + ' '} {
                 selectedColumn === column &&
-                  <Icon name={direction === 'desc' ? 'arrow-down-drop-circle' : 'arrow-up-drop-circle'} />
+                <Icon name={direction === 'desc' ? 'arrow-down-drop-circle' : 'arrow-up-drop-circle'} />
               }
               </Text>
             </TouchableOpacity>
@@ -53,7 +53,7 @@ const DeliveryTable = ({ data }) => {
     return (
       <FlatList
         data={deliveries}
-        style={{ width: '90%' }}
+        style={styles.flatList}
         keyExtractor={(item, index) => index + ''}
         ListHeaderComponent={tableHeader}
         stickyHeaderIndices={[0]}
