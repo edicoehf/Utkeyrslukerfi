@@ -1,6 +1,5 @@
 using System;
 using Xunit;
-using System.Collections.Generic;
 using Utkeyrslukerfi.API.Models.InputModels;
 using Utkeyrslukerfi.API.Models.Entities;
 using Utkeyrslukerfi.API.Repositories.Implementations;

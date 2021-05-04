@@ -25,11 +25,13 @@ namespace Utkeyrslukerfi.API.Models.InputModels
         public string DeliveryAddressCity { get; set; }
         public string DeliveryAddressCountry { get; set; }
         // vehicle
+        public Guid? VehicleID { get; set; }
         public string VehicleLicensePlate { get; set; }
         public double VehicleLength { get; set; }
         public double VehicleHeight { get; set; }
         public double VehicleWidth { get; set; }
         // driver
+        public Guid? DriverID { get; set; }
         public string DriverName { get; set; }
         public string DriverPassword { get; set; }
         public string DriverEmail { get; set; }

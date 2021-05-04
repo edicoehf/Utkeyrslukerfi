@@ -5,6 +5,9 @@ export const CLEAR_LOGIN = 'CLEAR_LOGIN'
 export const GET_DELIVERIES = 'GET_DELIVERIES'
 export const SET_STEP = 'SET_STEP'
 
+export const GET_RECIPIENT_TITLE = 'GET_RECIPIENT_TITLE'
+export const SET_RECIPIENT_TITLE = 'SET_RECIPIENT_TITLE'
+
 export const DELIVERY_URL = 'https://utkeyrslukerfiapi.azurewebsites.net/api/deliveries'
 export const LOGIN_URL = 'https://utkeyrslukerfiapi.azurewebsites.net/api/account/login'
 export const LOGOUT_URL = 'https://utkeyrslukerfiapi.azurewebsites.net/api/account/logout'
