@@ -19,7 +19,6 @@ const ListScreen = () => {
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
       <BasicButton buttonText='Opna kort' />
-      <Text>List Screen</Text>
       <DeliveryTable data={deliveries} />
     </View>
   )

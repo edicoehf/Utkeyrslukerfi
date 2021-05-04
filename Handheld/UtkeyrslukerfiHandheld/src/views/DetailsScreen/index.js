@@ -48,20 +48,20 @@ const DetailsScreen = ({ route, navigation }) => {
     <View style={styles.mainView}>
       <View style={styles.section}>
         <Text style={styles.mottakandi}>Móttakandi</Text>
-        <Text style={styles.nameText}>Nafn: <Text>{delivery.recipient}</Text>
+        <Text>Nafn: <Text style={styles.textHighlighted}>{delivery.recipient}</Text>
         </Text>
-        <Text>Götuheiti: <Text>{delivery.deliveryAddress.streetName} {delivery.deliveryAddress.houseNumber}</Text>
+        <Text>Götuheiti: <Text style={styles.textHighlighted}>{delivery.deliveryAddress.streetName} {delivery.deliveryAddress.houseNumber}</Text>
         </Text>
-        <Text>Borg: <Text>{delivery.deliveryAddress.zipCode} {delivery.deliveryAddress.city}</Text>
+        <Text>Borg: <Text style={styles.textHighlighted}>{delivery.deliveryAddress.zipCode} {delivery.deliveryAddress.city}</Text>
         </Text>
       </View>
       <View style={styles.section}>
         <Text style={styles.mottakandi}>Sending</Text>
-        <Text>Sendingarnúmer: <Text>{delivery.id}</Text>
+        <Text>Sendingarnúmer: <Text style={styles.textHighlighted}>{delivery.id}</Text>
         </Text>
-        <Text>Fjöldi pakka í sendingu: <Text>{delivery.packages.length}</Text>
+        <Text>Fjöldi pakka í sendingu: <Text style={styles.textHighlighted}>{delivery.packages.length}</Text>
         </Text>
-        <Text>Staða sendingar: <Text>{availableStatusCodes[delivery.status]}</Text>
+        <Text>Staða sendingar: <Text style={styles.textHighlighted}>{availableStatusCodes[delivery.status]}</Text>
         </Text>
       </View>
       <CommentBox label='Athugasemd viðskiptavinar' editable={false} comment={customerComment} setComment={setCustomerComment} />
