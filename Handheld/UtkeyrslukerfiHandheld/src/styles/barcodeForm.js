@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
   },
   input: {
     backgroundColor: '#ffffff',
-    height: windowHeight * 0.05,
+    height: windowHeight * 0.06,
     width: windowWidth * 0.50,
     borderColor: '#cccccc',
     borderWidth: 0.5,
