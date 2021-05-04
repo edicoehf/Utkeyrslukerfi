@@ -58,18 +58,10 @@ const UsersList = () => {
       <table className='table table-bordered'>
         <thead className='thead-dark'>
           <tr>
-            <th>
-              ID
-            </th>
-            <th>
-              Nafn
-            </th>
-            <th>
-              Netfang
-            </th>
-            <th>
-              Starf
-            </th>
+            <th>ID</th>
+            <th>Nafn</th>
+            <th>Netfang</th>
+            <th>Starf</th>
             <th onClick={toggleModal} className='clickable'>
               {/* Edit pen icon */}
               <BsFunnel size='2em' color='white' />
