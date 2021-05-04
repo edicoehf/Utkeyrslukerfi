@@ -32,18 +32,18 @@ const ImageOnDeliveryScreen = ({ navigation }) => {
     navigation.navigate(route)
   }
 
-  const takeImage = () => { 
-    launchCamera({noData: true}, (response) => {
-      console.log('Response = ', response); // {"fileName": "rn_image_picker_lib_temp_62a34ffd-77e1-4929-a7ec-c71f4f24bdf2.jpg", "fileSize": 198418, "height": 1280, "type": "image/jpeg", "uri": "file:///data/user/0/com.utkeyrslukerfihandheld/cache/rn_image_picker_lib_temp_62a34ffd-77e1-4929-a7ec-c71f4f24bdf2.jpg", "width": 960}
+  const takeImage = () => {
+    launchCamera({ noData: true }, (response) => {
+      console.log('Response = ', response) // {"fileName": "rn_image_picker_lib_temp_62a34ffd-77e1-4929-a7ec-c71f4f24bdf2.jpg", "fileSize": 198418, "height": 1280, "type": "image/jpeg", "uri": "file:///data/user/0/com.utkeyrslukerfihandheld/cache/rn_image_picker_lib_temp_62a34ffd-77e1-4929-a7ec-c71f4f24bdf2.jpg", "width": 960}
       if (response.didCancel) {
-          console.log('User cancelled image picker');
+        console.log('User cancelled image picker')
       } else if (response.error) {
-          console.log('ImagePicker Error: ', response.error);
+        console.log('ImagePicker Error: ', response.error)
       } else if (response.customButton) {
-          console.log('User tapped custom button: ', response.customButton);
+        console.log('User tapped custom button: ', response.customButton)
       } else {
-          const source = response.uri;
-          setImageSource(source);
+        const source = response.uri
+        setImageSource(source)
       }
     })
   }
@@ -55,9 +55,9 @@ const ImageOnDeliveryScreen = ({ navigation }) => {
         style={styles.input}
         onChangeText={setName}
       />
-      { !imageSource && <ImageBackground style={styles.image} source={ require('../../images/no_image_available.jpg') } />}
-      { imageSource && <ImageBackground style={styles.image} source={ {uri: imageSource} } /> }
-      <View style={styles.buttonContainer} >
+      {!imageSource && <ImageBackground style={styles.image} source={require('../../images/no_image_available.jpg')} />}
+      {imageSource && <ImageBackground style={styles.image} source={{ uri: imageSource }} />}
+      <View style={styles.buttonContainer}>
         <TouchableOpacity onPress={takeImage}>
           <FontAwesome name='camera' style={{ width: 26 - 32 }} color='#333' size={35} />
         </TouchableOpacity>

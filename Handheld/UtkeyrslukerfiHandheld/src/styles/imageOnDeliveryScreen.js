@@ -5,7 +5,7 @@ const windowWidth = Dimensions.get('window').width
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1, 
+    flex: 1,
     alignItems: 'center'
   },
   image: {

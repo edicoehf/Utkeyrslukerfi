@@ -1,4 +1,3 @@
-import { Children } from 'react'
 import { Dimensions, StyleSheet } from 'react-native'
 
 const windowHeight = Dimensions.get('window').height
@@ -6,7 +5,7 @@ const windowWidth = Dimensions.get('window').width
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1, 
+    flex: 1,
     alignItems: 'center'
   },
   canvas: {
@@ -19,7 +18,7 @@ const styles = StyleSheet.create({
     height: windowWidth * 0.9,
     right: windowWidth * 0.1,
     margin: windowHeight * 0.05
-  }, 
+  },
   input: {
     backgroundColor: '#ffffff',
     height: windowHeight * 0.05,

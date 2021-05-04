@@ -46,14 +46,14 @@ const SignForDeliveryScreen = ({ navigation }) => {
           style={styles.canvas}
           onOK={handleSignature}
           onEmpty={handleEmpty}
-          bgColor={"#000000"}
+          bgColor='#000000'
           webStyle={`
           .m-signature-pad--footer {display: none !important;}
           `}
         />
       </View>
       <View style={styles.buttonContainer}>
-        <BasicButton 
+        <BasicButton
           buttonText='Hreinsa'
           onPressFunction={handleClear}
         />
