@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { View, Text, ToastAndroid, TextInput, ImageBackground, TouchableOpacity, Platform } from 'react-native'
+import { View, Text, ToastAndroid, TextInput, ImageBackground, TouchableOpacity } from 'react-native'
 import { launchCamera } from 'react-native-image-picker'
 import { useDispatch, useSelector } from 'react-redux'
 import { setStep } from '../../actions/signingProcessActions'
@@ -17,22 +17,21 @@ const ImageOnDeliveryScreen = ({ route, navigation }) => {
   const [name, setName] = useState('')
   const signingProcess = useSelector(({ signingProcess }) => signingProcess)
   const dispatch = useDispatch()
-  const [imageSource, setImageSource] = useState(null)
   const [image, setImage] = useState(null)
   const token = useSelector(({ login }) => login.token)
   const { delivery } = route.params
 
   useEffect(async () => {
     EAzureBlobStorageFile.configure(
-      "utkeyrslukerfistorage",
+      'utkeyrslukerfistorage',
       REACT_APP_STORAGE_KEY,
-      "images"
+      'images'
     )
   })
 
   const updateDelivery = async () => {
     try {
-      delivery.signoffImageURI = image.uri  // Update delivery
+      delivery.signoffImageURI = image.uri // Update delivery
       const res = await deliveryService.updateDelivery(token, delivery)
       console.log(res)
     } catch (err) {
@@ -44,9 +43,9 @@ const ImageOnDeliveryScreen = ({ route, navigation }) => {
     // TODO: error catch and error messages to user
     try {
       const name = await EAzureBlobStorageFile.uploadFile({
-        "filePath": image.uri,
-        "contentType": image.type,
-        "fileName": image.fileName
+        filePath: image.uri,
+        contentType: image.type,
+        fileName: image.fileName
       })
       console.log(name)
     } catch (error) {
