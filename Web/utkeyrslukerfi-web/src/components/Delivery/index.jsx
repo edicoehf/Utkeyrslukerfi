@@ -11,7 +11,6 @@ import configData from '../../constants/config.json'
 const Delivery = () => {
   const packages = useSelector(({ packages }) => packages)
   const delivery = useSelector(({ delivery }) => delivery)
-  const address = useSelector(({ address }) => address)
   const users = useSelector(({ users }) => users)
   const token = useSelector(({ login }) => login.token)
   const dispatch = useDispatch()
@@ -28,17 +27,20 @@ const Delivery = () => {
     if (token) {
       dispatch(getPackages(token, id))
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [token])
 
   useEffect(() => {
     dispatch(setDelivery(delivery))
-  }, [])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  })
 
   useEffect(() => {
     if (delivery) {
       methods.setValue('deliveryAddress', delivery.deliveryAddress.streetName)
       methods.setValue('pickupAddress', delivery.pickupAddress.streetName)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [delivery])
 
   const navigateToPackage = (obj) => {

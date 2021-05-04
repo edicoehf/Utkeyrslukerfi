@@ -18,6 +18,7 @@ const Deliveries = () => {
       dispatch(getDeliveries(token))
       dispatch(getDrivers(token))
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [token])
 
   const navigateToDelivery = (obj) => {
