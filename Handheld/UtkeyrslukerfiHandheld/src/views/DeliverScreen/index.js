@@ -66,7 +66,7 @@ const DeliverScreen = ({ route, navigation }) => {
   const continueWithDelivery = () => {
     const route = signingProcess.process[signingProcess.step]
     dispatch(setStep(signingProcess.step + 1))
-    navigation.navigate(route)
+    navigation.navigate(route, { delivery: delivery })
   }
 
   return (
