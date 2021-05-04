@@ -34,18 +34,18 @@ const SearchScreen = ({ navigation }) => {
 
   const getDelivery = async (barcode) => {
     if (!barcode) {
-      ToastAndroid.show('Strikamerki er ekki til staðar', ToastAndroid.LONG)
+      ToastAndroid.showWithGravity('Strikamerki er ekki til staðar', ToastAndroid.LONG, ToastAndroid.TOP)
       return
     }
     try {
       const del = await deliveryService.getDelivery(token, barcode)
       if (del?.errors) {
-        ToastAndroid.show(del.errors.Message[0], ToastAndroid.LONG)
+        ToastAndroid.showWithGravity(del.errors.Message[0], ToastAndroid.LONG, ToastAndroid.TOP)
         return
       }
       return del
     } catch (error) {
-      ToastAndroid.show(error, ToastAndroid.LONG)
+      ToastAndroid.showWithGravity(error, ToastAndroid.LONG, ToastAndroid.TOP)
     }
   }
 

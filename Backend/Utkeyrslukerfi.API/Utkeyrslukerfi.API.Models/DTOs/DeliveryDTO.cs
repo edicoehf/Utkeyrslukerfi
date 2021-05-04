@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 namespace Utkeyrslukerfi.API.Models.Dtos
@@ -10,6 +11,7 @@ namespace Utkeyrslukerfi.API.Models.Dtos
         public string DriverComment { get; set; }
         public string CustomerComment { get; set; }
         public int Status { get; set; }
+        public DateTime DeliveryDate { get; set; }
         public UserDTO Driver { get; set; }
         public AddressDTO PickupAddress { get; set; }
         public AddressDTO DeliveryAddress { get; set; }
