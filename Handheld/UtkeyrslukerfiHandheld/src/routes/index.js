@@ -29,8 +29,7 @@ const AppContainer = () => {
           options={{
             showIcon: true,
             tabBarLabel: ({ focused, color }) => {
-              let iconName;
-              iconName = focused ? 'view-list' : 'view-list-outline'
+              const iconName = focused ? 'view-list' : 'view-list-outline'
               return <MaterialCommunityIcon name={iconName} size={45} color={color} />
             },
             tabBarAccessibilityLabel: 'ListScreen'
@@ -42,8 +41,7 @@ const AppContainer = () => {
           options={{
             showIcon: true,
             tabBarLabel: ({ focused, color }) => {
-              let iconName;
-              iconName = focused ? 'barcode-scan' : 'barcode'
+              const iconName = focused ? 'barcode-scan' : 'barcode'
               return <MaterialCommunityIcon name={iconName} style={{ width: 26 - 32 }} color={color} size={45} />
             },
             tabBarAccessibilityLabel: 'ScanScreen'
@@ -55,8 +53,7 @@ const AppContainer = () => {
           options={{
             showIcon: true,
             tabBarLabel: ({ focused, color }) => {
-              let iconName;
-              iconName = focused ? 'magnify-scan' : 'magnify'
+              const iconName = focused ? 'magnify-scan' : 'magnify'
               return <MaterialCommunityIcon name={iconName} style={{ width: 26 - 32 }} color={color} size={45} />
             },
             tabBarAccessibilityLabel: 'SearchScreen'

@@ -13,11 +13,11 @@ export default StyleSheet.create({
     borderColor: 'black',
     borderWidth: 1,
     fontSize: 20,
-    paddingBottom: 5,
+    paddingBottom: 5
   },
   mottakandi: {
     fontSize: 20,
-    paddingLeft: 1,
+    paddingLeft: 1
   },
   bottomButtons: {
     flex: 1,

@@ -33,9 +33,11 @@ const DeliveryTable = ({ data }) => {
               onPress={() => sortTable(column)}
             >
               <Text style={styles.columnHeaderTxt}>{columnText[index] + ' '}
-                {selectedColumn === column && <Icon
-                  name={direction === 'desc' ? 'arrow-down-drop-circle' : 'arrow-up-drop-circle'}
-                />}
+                {selectedColumn === column &&
+                  <Icon
+                    name={direction === 'desc' ? 'arrow-down-drop-circle' : 'arrow-up-drop-circle'}
+                  />
+                }
               </Text>
             </TouchableOpacity>
           )
@@ -45,7 +47,6 @@ const DeliveryTable = ({ data }) => {
   )
 
   const tableBody = () => {
-
     // TODO: Laga þessa þvælu
     if (counter <= 0) {
       setDeliveries(data)
