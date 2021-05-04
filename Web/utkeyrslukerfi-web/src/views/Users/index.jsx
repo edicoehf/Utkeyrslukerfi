@@ -48,7 +48,7 @@ const Users = () => {
           <td>{user.name}</td>
           <td>{user.email}</td>
           <td>{configData.ROLES[user.role]}</td>
-          <td onClick={() => navigateToUser(user)}><BsPencilSquare size='1.5em' className='clickable' /></td>
+          <td onClick={() => navigateToUser(user)} className='clickable'><BsPencilSquare size='1.5em' /></td>
         </tr>
       )
     })
@@ -70,9 +70,9 @@ const Users = () => {
             <th>
               Starf
             </th>
-            <th>
+            <th onClick={toggleModal} className='clickable'>
               {/* Edit pen icon */}
-              <BsFunnel onClick={toggleModal} size='2em' color='white' className='clickable' />
+              <BsFunnel size='2em' color='white' />
             </th>
           </tr>
         </thead>
