@@ -195,8 +195,9 @@ namespace Utkeyrslukerfi.API.Migrations
 
                     b.Property<string>("SignatureURI")
                        .HasColumnType("text");
+
                     b.Property<int?>("Settings")
-                        .HasColumnType("int")                        
+                        .HasColumnType("int");                     
 
                     b.HasKey("ID");
 
