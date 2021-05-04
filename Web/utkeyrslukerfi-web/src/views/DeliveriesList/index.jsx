@@ -8,7 +8,7 @@ import { getVehicles } from '../../actions/vehiclesActions'
 import configData from '../../constants/config.json'
 import '../../styles/deliveries.css'
 
-const Deliveries = () => {
+const DeliveriesList = () => {
   const history = useHistory()
   const token = useSelector(({ login }) => login.token)
   const deliveries = useSelector(({ deliveries }) => deliveries)
@@ -90,4 +90,4 @@ const Deliveries = () => {
   )
 }
 
-export default Deliveries
+export default DeliveriesList

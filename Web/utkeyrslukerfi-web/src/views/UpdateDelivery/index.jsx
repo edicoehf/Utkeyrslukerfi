@@ -3,10 +3,10 @@ import { useHistory, useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { getDelivery, setDelivery, updateDelivery } from '../../actions/deliveryActions'
 import { getPackages } from '../../actions/packageActions'
-import AddressModal from '../AddressModal'
+import AddressModal from '../../components/AddressModal'
 import { useForm } from 'react-hook-form'
 
-const Delivery = () => {
+const UpdateDelivery = () => {
   const packages = useSelector(({ packages }) => packages)
   const delivery = useSelector(({ delivery }) => delivery)
   const vehicles = useSelector(({ vehicles }) => vehicles)
@@ -198,4 +198,4 @@ const Delivery = () => {
   )
 }
 
-export default Delivery
+export default UpdateDelivery

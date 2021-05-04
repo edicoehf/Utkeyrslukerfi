@@ -9,7 +9,7 @@ import '../../styles/users.css'
 import UserFilterModal from '../../components/UserFilterModal'
 
 // Users - display all users in a table
-const Users = () => {
+const UsersList = () => {
   const history = useHistory()
   const token = useSelector(({ login }) => login.token)
   const users = useSelector(({ users }) => users)
@@ -104,4 +104,4 @@ const Users = () => {
   )
 }
 
-export default Users
+export default UsersList
