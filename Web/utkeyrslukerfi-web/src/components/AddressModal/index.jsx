@@ -22,7 +22,7 @@ const AddressModal = ({ canShow, updateModalState, didChange, isDelivery }) => {
   // then set dAddress as delivery address otherwise it will set as pickup address 
   const [dAddres, setDAddress] = useState(isDelivery ? delivery.deliveryAddress : delivery.pickupAddress)
   Modal.setAppElement('#root')
-  const subtitle
+  let subtitle
   function afterOpenModal () {
     subtitle.style.color = '#139ffd'
   }
