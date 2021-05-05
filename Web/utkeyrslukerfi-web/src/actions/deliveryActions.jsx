@@ -44,7 +44,7 @@ export const updateDelivery = (token, id, delivery) => async (dispatch) => {
     }
     const res = await deliveryService.updateDelivery(token, id, deliveryInputModel)
     console.log(res)
-    if (res?.status === 401) { toastr.error('Þú hefur ekki leifi til að uppfæra sendingu.') }
+    if (res?.status === 401) { toastr.error('Þú hefur ekki leyfi til að uppfæra sendingu.') }
     if (res?.status === 404) { toastr.error('Sending fannst ekki.') }
     if (res?.status === 400) { toastr.error('Slæm beiðni.') }
     if (res?.status === 204) {
@@ -52,7 +52,6 @@ export const updateDelivery = (token, id, delivery) => async (dispatch) => {
       toastr.success('Sending hefur verið uppfærð!')
     }
   } catch (err) {
-    console.log(err)
     toastr.error('Ekki náðist samband við netþjón.')
   }
 }

@@ -92,7 +92,7 @@ const UpdateDelivery = ({ delivery }) => {
           />
           <FormGroupInput
             groupType='seller'
-            label='Seljandi'
+            label='Sendandi'
             fieldType='text'
             typeOfForm='UpdateDelivery'
             required='false'

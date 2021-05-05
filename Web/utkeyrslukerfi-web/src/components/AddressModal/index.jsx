@@ -32,7 +32,6 @@ const AddressModal = ({ openModal, setOpenModal, address, setAddress }) => {
     address.zipCode = data.zipcode
     address.houseNumber = data.housenumber
     address.streetName = data.streetname
-    console.log(address)
     setAddress(address)
     setOpenModal(false)
   }
@@ -50,13 +49,13 @@ const AddressModal = ({ openModal, setOpenModal, address, setAddress }) => {
         >
           <FormGroupInput
             groupType='streetname'
-            label='Götu Nafn'
+            label='Götuheiti'
             fieldType='text'
             typeOfForm='UpdateAddress'
           />
           <FormGroupInput
             groupType='housenumber'
-            label='Hús Númer'
+            label='Húsnúmer'
             fieldType='text'
             typeOfForm='UpdateAddress'
           />

@@ -42,7 +42,7 @@ const DeliveriesList = () => {
             <th>Móttakandi</th>
             <th>Sendandi</th>
             <th>Bílstjóri</th>
-            <th>Sendingar dagsetning</th>
+            <th>Dagsetning Sendingar</th>
             <th>Heimilisfang móttakanda</th>
             <th>Heimilisfang sendanda</th>
             <th onClick={toggleModal} className='clickable'>

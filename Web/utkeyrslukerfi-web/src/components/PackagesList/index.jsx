@@ -15,7 +15,7 @@ const PackageList = ({ packages, deliveryID }) => {
             className='package'
             onClick={() => navigateToPackage(p)}
           >
-            <span>Barkóði:</span>
+            <span>Strikamerki:</span>
             <span>{p.id}</span>
           </div>
         )
