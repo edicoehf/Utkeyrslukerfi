@@ -4,14 +4,14 @@ import { GRAY_98 } from '../constants'
 export default StyleSheet.create({
   mainView: {
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: 'center'
   },
   dropDown: {
     flex: 1,
     justifyContent: 'center',
     marginBottom: 15,
     marginHorizontal: 5,
-    padding: 5,
+    padding: 5
   },
   mainText: {
     fontSize: 20,
