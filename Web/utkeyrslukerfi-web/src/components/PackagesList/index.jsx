@@ -7,13 +7,15 @@ const PackageList = ({ packages, deliveryID }) => {
   }
 
   return (
-    <div>
-      <h3>Packages</h3>
+    <div className="package-list">
+      <span className="package-title">Packages</span>
       {packages.map((p) =>
         (
-          <div onClick={() => navigateToPackage(p)}>
-            <h4>Barkóði:</h4>
-            <h4>{p.id}</h4>
+          <div
+            className="package"
+            onClick={() => navigateToPackage(p)}>
+            <span>Barkóði:</span>
+            <span>{p.id}</span>
           </div>
         )
       )}

@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { updateDelivery } from '../../actions/deliveryActions'
 import { getPackages } from '../../actions/packageActions'
 import AddressModal from '../../components/AddressModal'
+import '../../styles/deliveryupdateform.css'
 // form imports
 import Form from 'react-bootstrap/Form'
 import FormGroupInput from '../FormGroupInput'
@@ -65,7 +66,7 @@ const UpdateDelivery = ({ delivery }) => {
   }
 
   return (
-    <div>
+    <div className="delivery-info">
       <FormProvider {...methods}>
         <Form onSubmit={methods.handleSubmit(submitForm)} className='form form-horizontal'>
           <FormGroupInput
@@ -111,24 +112,28 @@ const UpdateDelivery = ({ delivery }) => {
             typeOfForm='UpdateDelivery'
           />
           {/* TODO add Form group for this */}
-          <div className='row'>
-            <label className='mt-3 mx-3'>Heimilisfang Sendada</label>
-            <input
-              className='form-control'
-              type='text'
-              name='pickupAddress'
-              onClick={() => setShowPickupModal(true)}
-              value={delivery?.pickupAddress?.streetName}
-            />
+          <div className='form-group row'>
+            <label>Heimilisfang Sendanda:</label>
+            <div className="col-sm-8">
+              <input
+                className='form-control'
+                type='text'
+                name='pickupAddress'
+                onClick={() => setShowPickupModal(true)}
+                value={delivery?.pickupAddress?.streetName}
+              />
+            </div>
           </div>
-          <div className='row'>
-            <label className='mt-3 mx-3'>Heimilisfang Móttakanda</label>
-            <input
-              className='form-control'
-              type='text' name='deliveryAddress'
-              onClick={() => setShowDeliveryModal(true)}
-              value={delivery?.deliveryAddress?.streetName}
-            />
+          <div className='form-group row'>
+            <label>Heimilisfang Móttakanda:</label>
+            <div className="col-sm-8">
+              <input
+                className='form-control'
+                type='text' name='deliveryAddress'
+                onClick={() => setShowDeliveryModal(true)}
+                value={delivery?.deliveryAddress?.streetName}
+                />
+            </div>
           </div>
           <FormGroupDropdown
             groupType='vehicleID'
