@@ -38,7 +38,7 @@ namespace Utkeyrslukerfi.API.Models.InputModels
         public bool DriverChangePassword { get; set; }
         // signoff
         public string SignoffImageURI { get; set; }
-        public string SignoffSignatureUri { get; set; }
+        public string SignoffSignatureURI { get; set; }
         public string SignoffRecipient { get; set; }
     }
 }

@@ -1,40 +1,80 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { View, Text, ToastAndroid, TextInput, ImageBackground, TouchableOpacity } from 'react-native'
 import { launchCamera } from 'react-native-image-picker'
-import { useDispatch, useSelector } from 'react-redux'
-import { setStep } from '../../actions/signingProcessActions'
+import { useSelector } from 'react-redux'
 import BasicButton from '../../components/BasicButton'
 import styles from '../../styles/imageOnDeliveryScreen'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
+import { EAzureBlobStorageFile } from 'react-native-azure-blob-storage'
+import { REACT_APP_STORAGE_KEY } from '@env'
+import deliveryService from '../../services/deliveryService'
 
 // Let the receiver sign for the delivery
-const ImageOnDeliveryScreen = ({ navigation }) => {
-  // TODO:
-  // - css
+const ImageOnDeliveryScreen = ({ route, navigation }) => {
   const [name, setName] = useState('')
   const signingProcess = useSelector(({ signingProcess }) => signingProcess)
-  const dispatch = useDispatch()
-  const [imageSource, setImageSource] = useState(null)
+  const [image, setImage] = useState(null)
+  const token = useSelector(({ login }) => login.token)
+  const { delivery } = route.params
 
-  const continueWithDelivery = () => {
-    // TODO: save the image on a server and save the link in the db, get the link for the image from imageSource
+  // TODO: Blob configuration is not updating from signForDeliveryScreen, still saving to signatures container
+  useEffect(() => {
+    (async () => {
+      await EAzureBlobStorageFile.configure(
+        'utkeyrslukerfistorage',
+        REACT_APP_STORAGE_KEY,
+        'images'
+      )
+    })()
+    setName(delivery.recipient)
+  }, [])
+
+  const updateDeliveryInDatabase = async () => {
+    try {
+      delivery.signoffImageURI = image.fileName // Update delivery
+      const res = await deliveryService.updateDelivery(token, delivery)
+      console.log(res)
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
+  const saveImageToBlobStorage = async () => {
+    // TODO: error catch and error messages to user
+    try {
+      const name = await EAzureBlobStorageFile.uploadFile({
+        filePath: image.uri,
+        contentType: image.type,
+        fileName: image.fileName
+      })
+      console.log(name)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  // Continue to next step after saving image to cloud adding new image uri to delivery
+  const continueWithDelivery = async () => {
     if (!name) {
       ToastAndroid.showWithGravity('Vinsamlegast settu inn nafn móttakanda.', ToastAndroid.LONG, ToastAndroid.TOP)
       return
     }
-    if (!imageSource) {
+    if (!image) {
       ToastAndroid.showWithGravity('Vinsamlegast settu inn mynd.', ToastAndroid.LONG, ToastAndroid.TOP)
       return
     }
-    console.log(imageSource) // Response =  "file:///data/user/0/com.utkeyrslukerfihandheld/cache/rn_image_picker_lib_temp_62a34ffd-77e1-4929-a7ec-c71f4f24bdf2.jpg"
+    // Save image to cloud
+    await saveImageToBlobStorage()
+
+    // Update delivery in db so url to image is saved
+    await updateDeliveryInDatabase() // TODO: where should we update delivery
     const route = signingProcess.process[signingProcess.step]
-    dispatch(setStep(2))
     navigation.navigate(route)
   }
 
   const takeImage = () => {
     launchCamera({ noData: true }, (response) => {
-      console.log('Response = ', response) // {"fileName": "rn_image_picker_lib_temp_62a34ffd-77e1-4929-a7ec-c71f4f24bdf2.jpg", "fileSize": 198418, "height": 1280, "type": "image/jpeg", "uri": "file:///data/user/0/com.utkeyrslukerfihandheld/cache/rn_image_picker_lib_temp_62a34ffd-77e1-4929-a7ec-c71f4f24bdf2.jpg", "width": 960}
+      console.log('Response = ', response)
       if (response.didCancel) {
         console.log('User cancelled image picker')
       } else if (response.error) {
@@ -42,8 +82,7 @@ const ImageOnDeliveryScreen = ({ navigation }) => {
       } else if (response.customButton) {
         console.log('User tapped custom button: ', response.customButton)
       } else {
-        const source = response.uri
-        setImageSource(source)
+        setImage(response)
       }
     })
   }
@@ -54,9 +93,10 @@ const ImageOnDeliveryScreen = ({ navigation }) => {
       <TextInput
         style={styles.input}
         onChangeText={setName}
+        defaultValue={delivery.recipient}
       />
-      {!imageSource && <ImageBackground style={styles.image} source={require('../../images/no_image_available.jpg')} />}
-      {imageSource && <ImageBackground style={styles.image} source={{ uri: imageSource }} />}
+      {!image && <ImageBackground style={styles.image} source={require('../../images/no_image_available.jpg')} />}
+      {image && <ImageBackground style={styles.image} source={{ uri: image.uri }} />}
       <View style={styles.buttonContainer}>
         <TouchableOpacity onPress={takeImage}>
           <FontAwesome name='camera' style={{ width: 26 - 32 }} color='#333' size={35} />
