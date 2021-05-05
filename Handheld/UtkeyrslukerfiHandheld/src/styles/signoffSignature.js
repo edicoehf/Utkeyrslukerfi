@@ -4,10 +4,6 @@ const windowHeight = Dimensions.get('window').height
 const windowWidth = Dimensions.get('window').width
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center'
-  },
   canvas: {
     width: windowWidth * 0.9,
     height: windowWidth * 0.9,

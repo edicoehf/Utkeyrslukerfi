@@ -6,9 +6,9 @@ import NameTitle from '../components/NameTitle'
 import SearchScreen from '../views/SearchScreen'
 import DetailsScreen from '../views/DetailsScreen'
 import DeliverScreen from '../views/DeliverScreen'
-import SignForDeliveryScreen from '../views/SignForDeliveryScreen'
+import SignoffScreen from '../views/SignoffScreen'
 import DeliveryReceivedScreen from '../views/DeliveryReceivedScreen'
-import ImageOnDeliveryScreen from '../views/ImageOnDeliveryScreen'
+
 import { BLUE } from '../constants'
 
 const SearchStack = createStackNavigator()
@@ -35,9 +35,8 @@ const SearchStackScreen = () => {
       <SearchStack.Screen name='Search' component={SearchScreen} options={{ title: 'Leita' }} />
       <SearchStack.Screen name='Details' component={DetailsScreen} options={{ headerTitle: <NameTitle /> }} />
       <SearchStack.Screen name='Deliver' component={DeliverScreen} options={{ headerTitle: <NameTitle /> }} />
-      <SearchStack.Screen name='ImageOnDelivery' component={ImageOnDeliveryScreen} options={{ headerTitle: <NameTitle /> }} />
-      <SearchStack.Screen name='SignForDelivery' component={SignForDeliveryScreen} options={{ headerTitle: <NameTitle /> }} />
-      <SearchStack.Screen name='DeliveryReceived' component={DeliveryReceivedScreen} options={{ headerTitle: <NameTitle /> }} />
+      <SearchStack.Screen name='Signoff' component={SignoffScreen} options={{ headerTitle: <NameTitle /> }} />
+      <SearchStack.Screen name='DeliveryReceived' component={DeliveryReceivedScreen} options={{ headerTitle: <NameTitle /> }} /> 
     </SearchStack.Navigator>
   )
 }

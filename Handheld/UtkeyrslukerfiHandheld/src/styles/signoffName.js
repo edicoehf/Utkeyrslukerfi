@@ -4,19 +4,6 @@ const windowHeight = Dimensions.get('window').height
 const windowWidth = Dimensions.get('window').width
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center'
-  },
-  image: {
-    width: windowWidth * 0.9,
-    height: windowWidth * 0.9,
-    overflow: 'hidden',
-    borderColor: '#cccccc',
-    borderWidth: windowWidth * 0.005,
-    borderRadius: 5,
-    margin: windowHeight * 0.05
-  },
   input: {
     backgroundColor: '#ffffff',
     height: windowHeight * 0.05,
@@ -35,7 +22,7 @@ const styles = StyleSheet.create({
     height: windowHeight * 0.10,
     width: windowWidth * 0.80,
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'flex-end',
     paddingTop: '2%',
     alignItems: 'center',
     position: 'absolute',
