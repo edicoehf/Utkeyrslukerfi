@@ -7,13 +7,14 @@ import BasicButton from '../../components/BasicButton'
 import styles from '../../styles/signForDeliveryScreen'
 
 // Let the receiver sign for the delivery
-const SignForDeliveryScreen = ({ navigation }) => {
+const SignForDeliveryScreen = ({ route, navigation }) => {
   // TODO:
   // - css
   const [name, setName] = useState('')
   const signingProcess = useSelector(({ signingProcess }) => signingProcess)
   const dispatch = useDispatch()
   const canvasRef = useRef()
+  const { delivery } = route.params
 
   const handleSignature = (signature) => {
     // TODO: save the image on a server and save the link in the db, get the link for the image from signature.data
@@ -24,7 +25,7 @@ const SignForDeliveryScreen = ({ navigation }) => {
     console.log(signature)
     const route = signingProcess.process[signingProcess.step]
     dispatch(setStep(1))
-    navigation.navigate(route)
+    navigation.navigate(route, { delivery: delivery })
   }
 
   const handleEmpty = () => { ToastAndroid.showWithGravity('Undirskrift vantar.', ToastAndroid.LONG, ToastAndroid.TOP) }
