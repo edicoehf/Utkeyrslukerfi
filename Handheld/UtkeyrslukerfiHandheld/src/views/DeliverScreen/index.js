@@ -65,7 +65,7 @@ const DeliverScreen = ({ route, navigation }) => {
   // Navigate to sign page, camera page or delivery received page depending on delivery process
   const continueWithDelivery = () => {
     const route = signingProcess.process[signingProcess.step]
-    dispatch(setStep(signingProcess.step + 1))
+    dispatch(setStep(1))
     navigation.navigate(route, { delivery: delivery })
   }
 

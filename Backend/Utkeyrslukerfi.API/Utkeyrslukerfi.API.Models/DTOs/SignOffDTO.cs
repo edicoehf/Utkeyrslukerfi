@@ -8,5 +8,6 @@ namespace Utkeyrslukerfi.API.Models.Dtos
         public string ImageURI { get; set; }
         public string SignatureUri { get; set; }
         public string Recipient { get; set; }
+        public int? Settings { get; set; }
     }
 }
