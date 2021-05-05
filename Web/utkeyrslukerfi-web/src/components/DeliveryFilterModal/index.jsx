@@ -34,7 +34,7 @@ const UserFilterModal = ({ visible, deliveries, setDeliveries, deliveryState, up
       setDeliveries(deliveryState => deliveryState.filter(d => d.status === parseInt(getIDByStatus(status))))
     }
   }
-  
+
   const clearFilter = () => {
     setDeliveries(deliveries)
     updateModalState()
