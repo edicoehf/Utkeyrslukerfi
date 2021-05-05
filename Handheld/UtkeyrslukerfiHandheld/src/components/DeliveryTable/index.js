@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { Text, View, FlatList, TouchableOpacity, RefreshControl } from 'react-native'
 import { useSelector, useDispatch } from 'react-redux'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
@@ -14,7 +14,7 @@ const DeliveryTable = ({ data }) => {
   const [selectedColumn, setSelectedColumn] = useState(null)
   const [deliveries, setDeliveries] = useState()
   const [counter, setCounter] = useState(0)
-  const [refreshing, setRefreshing] = useState(false);
+  const [refreshing, setRefreshing] = useState(false)
   const token = useSelector(({ login }) => login.token)
   const dispatch = useDispatch()
 
@@ -31,6 +31,7 @@ const DeliveryTable = ({ data }) => {
     // Call the Service to get the latest deliveries
     dispatch(getDeliveries(token))
     setDeliveries(data)
+    setRefreshing(false)
   }
   const tableHeader = () => (
     <View style={styles.tableHeader}>
@@ -44,7 +45,7 @@ const DeliveryTable = ({ data }) => {
             >
               <Text style={styles.columnHeaderTxt}>{columnText[index] + ' '} {
                 selectedColumn === column &&
-                <Icon name={direction === 'desc' ? 'arrow-down-drop-circle' : 'arrow-up-drop-circle'} />
+                  <Icon name={direction === 'desc' ? 'arrow-down-drop-circle' : 'arrow-up-drop-circle'} />
               }
               </Text>
             </TouchableOpacity>
@@ -69,7 +70,7 @@ const DeliveryTable = ({ data }) => {
         stickyHeaderIndices={[0]}
         refreshControl={
           <RefreshControl
-            //refresh control used for the Pull to Refresh
+            // refresh control used for the Pull to Refresh
             refreshing={refreshing}
             onRefresh={onRefresh}
           />
