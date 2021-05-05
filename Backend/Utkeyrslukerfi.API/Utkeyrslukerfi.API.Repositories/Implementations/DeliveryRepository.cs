@@ -8,7 +8,6 @@ using Utkeyrslukerfi.API.Repositories.Interfaces;
 using Utkeyrslukerfi.API.Models.Exceptions;
 using Utkeyrslukerfi.API.Models.Envelope;
 using Microsoft.EntityFrameworkCore;
-using System;
 using Utkeyrslukerfi.API.Repositories.IContext;
 
 namespace Utkeyrslukerfi.API.Repositories.Implementations
@@ -123,12 +122,12 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
             return new DeliveryDTO();
         }
 
-        public void UpdateDelivery(DeliveryInputModel newdelivery, string id)
+        public void UpdateDelivery(DeliveryInputModel newdelivery, string ID)
         {
             // Finds the delivery with the given id
-            var delivery = _deliveryObj.FirstOrDefault(d => d.ID == id);
+            var delivery = _deliveryObj.FirstOrDefault(d => d.ID == ID);
             // Return null and throw an exception if it does not exist
-            if (delivery == null) { throw new NotFoundException($"No delivery with ID: {id}"); }
+            if (delivery == null) { throw new NotFoundException($"No delivery with ID: {ID}"); }
             // If delivery exists, then update its properties.
             delivery.Seller = newdelivery.Seller ?? delivery.Seller;
             delivery.Recipient = newdelivery.Recipient ?? delivery.Recipient;
@@ -154,17 +153,17 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
             }
             if (delivery.Vehicle != null || newdelivery.VehicleID != null)
             {
-                var vid = newdelivery.VehicleID ?? delivery.Vehicle.ID;
+                var vId = newdelivery.VehicleID ?? delivery.Vehicle.ID;
                 // Find the vehicle of the delivery.
-                var tempVehicle = _dbContext.Vehicles.FirstOrDefault(v => v.ID == vid);
+                var tempVehicle = _dbContext.Vehicles.FirstOrDefault(v => v.ID == vId);
                 // Update the delivery vehicle with the new vehicle
                 delivery.Vehicle = tempVehicle;
             }
             if (delivery.Driver != null || newdelivery.DriverID != null)
             {
-                var vid = newdelivery.DriverID ?? delivery.Driver.ID;
+                var vId = newdelivery.DriverID ?? delivery.Driver.ID;
                 // Find the new driver
-                var tempDriver = _dbContext.Users.FirstOrDefault(v => v.ID == vid);
+                var tempDriver = _dbContext.Users.FirstOrDefault(v => v.ID == vId);
                 // Update the current driver with the new driver
                 delivery.Driver = tempDriver;
             }

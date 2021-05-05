@@ -17,23 +17,20 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
     {
         private readonly IUtkeyrslukerfiDbContext _dbContext;
         private readonly IMapper _mapper;
-
         public VehicleRepository(IMapper mapper, IUtkeyrslukerfiDbContext dbContext)
         {
             _dbContext = dbContext;
             _mapper = mapper;
         }
-
         public VehicleDTO GetVehicle(string ID)
         {
             // // Find the vehicle in the database.
             var entity = _dbContext.Vehicles.FirstOrDefault(v => v.LicensePlate == ID);
-            // If it does not exist, return null
-            if (entity == null) { throw new NotFoundException($"Did not find Vehicle with id: {ID}");}
+            // If it does not exist, return null, throws not found exception
+            if (entity == null) { throw new NotFoundException($"Did not find Vehicle with id: {ID}"); }
             // If exists then map the vehicle according to DTO and return.
             return _mapper.Map<VehicleDTO>(entity);
         }
-
         public IEnumerable<VehicleDTO> GetVehicles(int pageSize, int pageNumber)
         {
             // Find all vehicles
@@ -43,7 +40,6 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
             // Return the list of the vehicles mapped according to the DTO
             return _mapper.Map<IEnumerable<VehicleDTO>>(envelope.Items);
         }
-
         public Guid CreateVehicle(VehicleInputModel vehicle)
         {
             // Find the vehicle in the database.
@@ -66,12 +62,10 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
             // Return the id of the entity that was created 
             return entity.ID;
         }
-
         public void UpdateVehicle(VehicleInputModel vehicle, string id)
         {
             // TODO:
             // _dbContext.SaveChanges();
         }
-
     }
 }

@@ -16,8 +16,8 @@ export default StyleSheet.create({
     width: 12,
     height: 11,
     transform: [
-      {scaleX: 2.5},
-      {scaleY: 2.5}
+      { scaleX: 2.5 },
+      { scaleY: 2.5 }
     ]
   },
   container: {
