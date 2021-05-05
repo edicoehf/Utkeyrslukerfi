@@ -7,10 +7,12 @@ import FormGroupInput from '../FormGroupInput'
 import FormGroupDropdown from '../FormGroupDropdown'
 import FormGroupButton from '../FormGroupButton'
 import configData from '../../constants/config.json'
+import { useHistory } from 'react-router'
 
 // Update User - users can be updated by admins
 const UpdateUserForm = ({ user }) => {
   const methods = useForm()
+  const history = useHistory()
   const token = useSelector(({ login }) => login.token)
   const dispatch = useDispatch()
 
@@ -21,11 +23,12 @@ const UpdateUserForm = ({ user }) => {
       methods.setValue('email', user.email)
       methods.setValue('role', user.role)
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line
   }, [user])
 
   const submitForm = (data) => {
     dispatch(updateUser(token, user.id, { ...data, changePassword: true }))
+    history.push('/users')
   }
 
   return (

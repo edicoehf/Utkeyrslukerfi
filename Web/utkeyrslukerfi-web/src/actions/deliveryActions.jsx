@@ -1,38 +1,58 @@
-import { GET_DELIVERY, SET_DELIVERY, UPDATE_DELIVERY } from '../constants'
+import {
+  UPDATE_DELIVERY,
+  GET_VIEWING_DELIVERY,
+  SET_VIEWING_DELIVERY
+} from '../constants'
 import deliveryService from '../services/deliveryService'
 import toastr from 'toastr'
 
-const getDelivery = (token, id) => async (dispatch) => {
+export const getViewingDelivery = (token, id) => async (dispatch) => {
   try {
     const delivery = await deliveryService.getDelivery(token, id)
-    dispatch(getDeliverySuccess(delivery))
+    dispatch(getViewingDeliverySuccess(delivery))
   } catch (err) {
     console.log('Bad delivery request, please try loading again.')
   }
 }
 
-const getDeliverySuccess = (delivery) => ({
-  type: GET_DELIVERY,
+const getViewingDeliverySuccess = (delivery) => ({
+  type: GET_VIEWING_DELIVERY,
   payload: delivery
 })
 
-const setDelivery = (delivery) => ({
-  type: SET_DELIVERY,
+export const setViewingDelivery = (delivery) => ({
+  type: SET_VIEWING_DELIVERY,
   payload: delivery
 })
 
-const updateDelivery = (token, id, delivery) => async (dispatch) => {
+export const updateDelivery = (token, id, delivery) => async (dispatch) => {
   try {
-    const res = await deliveryService.updateDelivery(token, id, delivery)
-    if (res?.status === 401) { toastr.error('You are unauthorized to perform this operation!') }
-    if (res?.status === 404) { toastr.error('Operation did not found!') }
-    if (res?.status === 400) { toastr.error('Bad Request.') }
+    const deliveryInputModel = {
+      ...delivery,
+      PickupAddressStreetName: delivery?.pickupAddress?.streetName,
+      PickupAddressHouseNumber: delivery?.pickupAddress?.houseNumber,
+      PickupAddressZipCode: delivery?.pickupAddress?.zipCode,
+      PickupAddressCity: delivery?.pickupAddress?.city,
+      PickupAddressCountry: delivery?.pickupAddress?.counntry,
+      DeliveryAddressStreetName: delivery?.deliveryAddress?.streetName,
+      DeliveryAddressHouseNumber: delivery?.deliveryAddress?.houseNumber,
+      DeliveryAddressZipCode: delivery?.deliveryAddress?.zipCode,
+      DeliveryAddressCity: delivery?.deliveryAddress?.city,
+      DeliveryAddressCountry: delivery?.deliveryAddress?.counntry,
+      VehicleID: delivery?.vehicle?.id,
+      DriverID: delivery?.driver?.id
+    }
+    const res = await deliveryService.updateDelivery(token, id, deliveryInputModel)
+    console.log(res)
+    if (res?.status === 401) { toastr.error('Þú hefur ekki leyfi til að uppfæra sendingu.') }
+    if (res?.status === 404) { toastr.error('Sending fannst ekki.') }
+    if (res?.status === 400) { toastr.error('Slæm beiðni.') }
     if (res?.status === 204) {
-      toastr.success('Delivery updated successfully!')
-      dispatch(updateDeliverySuccess({ id, ...delivery }))
+      dispatch(updateDeliverySuccess(delivery))
+      toastr.success('Sending hefur verið uppfærð!')
     }
   } catch (err) {
-    toastr.error('Update Delivery Connection error!')
+    toastr.error('Ekki náðist samband við netþjón.')
   }
 }
 
@@ -40,5 +60,3 @@ const updateDeliverySuccess = (delivery) => ({
   type: UPDATE_DELIVERY,
   payload: delivery
 })
-
-export { getDelivery, setDelivery, updateDelivery }

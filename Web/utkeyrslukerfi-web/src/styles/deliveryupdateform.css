@@ -1,0 +1,47 @@
+.delivery-info {
+  margin-top: 32px;
+  display: flex;
+}
+
+.delivery-info form {
+  display: flex;
+  width: 60%;
+}
+
+.package-list {
+  display: flex;
+  flex-wrap: wrap;
+  width: 40%;
+  height: 2em;
+}
+
+.package-list .package {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  font-size: 1.2em;
+  cursor: pointer;
+}
+
+.package-title {
+  text-decoration: black underline;
+  width: 100%;
+  font-size: 2em;
+  display: flex;
+  justify-content: center;
+}
+
+.row {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  text-align: left;
+}
+
+.col-sm-8 {
+  padding: 0;
+}
+
+.col-sm-3 {
+  padding: 0;
+}

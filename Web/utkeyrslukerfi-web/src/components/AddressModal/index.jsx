@@ -1,7 +1,9 @@
-import React, { useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { setDelivery } from '../../actions/deliveryActions'
+import React from 'react'
 import Modal from 'react-modal'
+import Form from 'react-bootstrap/Form'
+import FormGroupInput from '../FormGroupInput'
+import FormGroupButton from '../FormGroupButton'
+import { useForm, FormProvider } from 'react-hook-form'
 
 const customStyles = {
   content: {
@@ -14,63 +16,69 @@ const customStyles = {
   }
 }
 
-const AddressModal = ({ canShow, updateModalState, didChange, isDelivery }) => {
-  const delivery = useSelector(({ delivery }) => delivery)
-  const dispatch = useDispatch()
-  const [dAddres, setDAddress] = useState(isDelivery ? delivery.deliveryAddress : delivery.pickupAddress)
+const AddressModal = ({ openModal, setOpenModal, address, setAddress }) => {
+  const methods = useForm()
   Modal.setAppElement('#root')
-  let subtitle
-  function afterOpenModal () {
-    subtitle.style.color = '#139ffd'
+
+  const afterOpenModal = () => {
+    methods.setValue('streetname', address.streetName)
+    methods.setValue('housenumber', address.houseNumber)
+    methods.setValue('city', address.city)
+    methods.setValue('zipcode', address.zipCode)
   }
 
-  const updateData = () => {
-    if (isDelivery) {
-      dispatch(setDelivery({
-        ...delivery,
-        deliveryAddress: dAddres
-      }))
-      didChange(true, 'delivery')
-    } else {
-      dispatch(setDelivery({
-        ...delivery,
-        pickupAddress: dAddres
-      }))
-      didChange(true, 'pickup')
-    }
-    updateModalState()
+  const submitForm = (data) => {
+    address.city = data.city
+    address.zipCode = data.zipcode
+    address.houseNumber = data.housenumber
+    address.streetName = data.streetname
+    setAddress(address)
+    setOpenModal(false)
   }
-
-  if (canShow) {
-    return (
-      <Modal
-        isOpen={canShow}
-        onAfterOpen={afterOpenModal}
-        onRequestClose={updateModalState}
-        contentLabel={isDelivery ? 'Update Delivery Address' : 'Update Pickup Address'}
-        style={customStyles}
-      >
-        <h2 ref={_subtitle => (subtitle = _subtitle)}>{isDelivery ? 'Update Delivery Address' : 'Update Pickup Address'}</h2>
-        <button onClick={updateModalState} className='btn btn-outline-warning'>Close</button>
-        <form>
-          <div className='row'>
-            <label className='mx-3 my-3'>Street Name</label><input className='border-none my-3 ml-auto' type='text' name='streetName' onChange={e => setDAddress(state => ({ ...state, streetName: e.target.value }))} defaultValue={dAddres.streetName} />
-          </div>
-          <div className='row'>
-            <label className='mx-3 my-3'>House Number</label><input className='border-none my-3 ml-auto' type='text' name='houseNumber' onChange={e => setDAddress(state => ({ ...state, houseNumber: e.target.value }))} defaultValue={dAddres.houseNumber} />
-          </div>
-          <div className='row'>
-            <label className='mx-3 my-3'>City</label><input className='border-none my-3 ml-auto' type='text' name='city' onChange={e => setDAddress(state => ({ ...state, city: e.target.value }))} defaultValue={dAddres.city} />
-          </div>
-          <div className='row'>
-            <label className='mx-3 my-3'>ZIP Code</label><input className='border-none my-3 ml-auto' type='text' name='zipCode' onChange={e => setDAddress(state => ({ ...state, zipCode: e.target.value }))} defaultValue={dAddres.zipCode} />
-          </div>
-        </form>
-        <button className='btn btn-primary' onClick={updateData}>Update</button>
-      </Modal>
-    )
-  }
-  return null
+  return (
+    <Modal
+      isOpen={openModal}
+      onAfterOpen={afterOpenModal}
+      onRequestClose={() => setOpenModal(false)}
+      style={customStyles}
+    >
+      <FormProvider {...methods}>
+        <Form
+          onSubmit={methods.handleSubmit(submitForm)}
+          className='form form-horizontal'
+        >
+          <FormGroupInput
+            groupType='streetname'
+            label='Götuheiti'
+            fieldType='text'
+            typeOfForm='UpdateAddress'
+          />
+          <FormGroupInput
+            groupType='housenumber'
+            label='Húsnúmer'
+            fieldType='text'
+            typeOfForm='UpdateAddress'
+          />
+          <FormGroupInput
+            groupType='city'
+            label='Sveitarfélag'
+            fieldType='text'
+            typeOfForm='UpdateAddress'
+          />
+          <FormGroupInput
+            groupType='zipcode'
+            label='Póstnúmer'
+            fieldType='text'
+            typeOfForm='UpdateAddress'
+          />
+          <FormGroupButton
+            label='Vista'
+            typeOfForm='UpdateAddress'
+          />
+        </Form>
+      </FormProvider>
+    </Modal>
+  )
 }
 
 export default AddressModal
