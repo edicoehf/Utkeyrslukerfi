@@ -29,8 +29,8 @@ const Delivery = () => {
   }, [id, token])
 
   return (
-    <div className='user'>
-      <UpdateDeliveryForm user={viewingDelivery} />
+    <div>
+      <UpdateDeliveryForm delivery={viewingDelivery} />
     </div>
   )
 }

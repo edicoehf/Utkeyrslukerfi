@@ -11,27 +11,23 @@ import FormGroupButton from '../FormGroupButton'
 import FormGroupDropdown from '../FormGroupDropdown'
 import { useForm, FormProvider } from 'react-hook-form'
 import configData from '../../constants/config.json'
+import PackageList from '../PackagesList'
 
 
 
-const UpdateDelivery = () => {
+const UpdateDelivery = ({ delivery }) => {
   const packages = useSelector(({ packages }) => packages)
-  const delivery = useSelector(({ delivery }) => delivery)
   const vehicles = useSelector(({ vehicles }) => vehicles)
   const drivers = useSelector(({ users }) => users)
   const token = useSelector(({ login }) => login.token)
   const dispatch = useDispatch()
   const methods = useForm()
 
-  const [deliveryAddress, setDeliveryAddress] = useState(delivery.deliveryAddress)
-  const [pickupAddress, setPickupAddress] = useState(delivery.pickupAddress)
+  const [deliveryAddress, setDeliveryAddress] = useState({})
+  const [pickupAddress, setPickupAddress] = useState({})
 
   const { id } = useParams()
   const history = useHistory()
-
-  if (Object.entries(delivery).length === 0) {
-    dispatch(getViewingDelivery(token, id))
-  }
 
   useEffect(() => {
     if (token) {
@@ -41,18 +37,14 @@ const UpdateDelivery = () => {
   }, [token])
 
   useEffect(() => {
-    dispatch(setViewingDelivery(delivery))
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  })
-
-  useEffect(() => {
+    console.log(delivery.driver)
     methods.setValue('deliveryAddress', delivery?.deliveryAddress.streetName)
     methods.setValue('pickupAddress', delivery?.pickupAddress.streetName)
     methods.setValue('recipient', delivery?.recipient)
     methods.setValue('status', delivery?.status)
     methods.setValue('seller', delivery?.seller)
-    methods.setValue('driver', delivery?.driver?.id)
-    methods.setValue('vehicle', delivery?.vehicle?.id)
+    methods.setValue('driverID', delivery?.driver?.id)
+    methods.setValue('vehicleID', delivery?.vehicle?.id)
     setDeliveryAddress(delivery?.deliveryAddress)
     setPickupAddress(delivery?.pickupAddress)
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -65,12 +57,11 @@ const UpdateDelivery = () => {
     const newDelivery = {
       ...delivery,
       recipient: data.recipient === "" ? null : data.recipient,
-      driver: data.driver === "" ? null : data.driver,
+      driver: data.driver === "" ? null : drivers.find((d) => d.id === data.driverID),
       seller: data.seller === "" ? null : data.seller,
       status: data.status === "" ? null : data.status,
-      vehicle: data.driverID === "" ? null : data.driver,
-      deliveryDate: data.deliveryDate,
-      pickupAddress: data.pickupAddress,
+      vehicle: data.driverID === "" ? null : vehicles.find((v) => v.id === data.vehicleID),
+      // deliveryDate: data.deliveryDate,
     }
     dispatch(updateDelivery(token, id, newDelivery))
     history.push('/deliveries')
@@ -109,7 +100,7 @@ const UpdateDelivery = () => {
             required='false'
           />
           <FormGroupDropdown
-            groupType='driver'
+            groupType='driverID'
             label='Bílstjóri'
             options={
               <>
@@ -122,25 +113,26 @@ const UpdateDelivery = () => {
             }
             typeOfForm='UpdateDelivery'
           />
+          {/* TODO add Form group for this */}
           <div className='row'>
             <label className='mt-3 mx-3'>Heimilisfang Sendada</label>
-            <input className='border-none my-3 ml-auto'
+            <input className='form-control'
               type='text'
               name='pickupAddress'
               onClick={() => setShowPickupModal(true)}
-              value={delivery.pickupAddress?.streetName}
+              value={delivery?.pickupAddress?.streetName}
             />
           </div>
           <div className='row'>
             <label className='mt-3 mx-3'>Heimilisfang Móttakanda</label>
-            <input className='border-none my-3 ml-auto'
+            <input className='form-control'
               type='text' name='deliveryAddress'
               onClick={() => setShowDeliveryModal(true)}
-              value={delivery.deliveryAddress?.streetName}
+              value={delivery?.deliveryAddress?.streetName}
             />
           </div>
           <FormGroupDropdown
-            groupType='vehicle'
+            groupType='vehicleID'
             label='Bíll'
             options={
               <>
@@ -168,7 +160,8 @@ const UpdateDelivery = () => {
         openModal={showPickupModal} 
         setOpenModal={setShowPickupModal} 
         address={pickupAddress} 
-        setAddress={setPickupAddress}/>
+        setAddress={setPickupAddress} />
+    <PackageList packages={delivery.packages} deliveryID={delivery.id} />
     </div>
   )
 }

@@ -10,7 +10,7 @@ namespace Utkeyrslukerfi.API.Models.Dtos
         public string Seller { get; set; }
         public string DriverComment { get; set; }
         public string CustomerComment { get; set; }
-        public int Status { get; set; }
+        public int? Status { get; set; }
         public DateTime DeliveryDate { get; set; }
         public UserDTO Driver { get; set; }
         public AddressDTO PickupAddress { get; set; }

@@ -11,8 +11,8 @@ const DeliveryDetails = ({delivery}) => {
     const history = useHistory()
 
     const navigateToDelivery = (delivery) => {
-        dispatch(setViewingDelivery(delivery))
-        history.push(`/deliveries/${delivery.id}`)
+      dispatch(setViewingDelivery(delivery))
+      history.push(`/deliveries/${delivery.id}`, { params: delivery })
     }
     return (
         <tr key={delivery.id}>

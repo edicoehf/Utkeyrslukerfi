@@ -36,6 +36,7 @@ const AddressModal = ({ openModal, setOpenModal, address, setAddress }) => {
     address.zipCode = data.zipcode
     address.houseNumber = data.housenumber
     address.streetName = data.streetname
+    console.log(address);
     setAddress(address);
     setOpenModal(false)
   }

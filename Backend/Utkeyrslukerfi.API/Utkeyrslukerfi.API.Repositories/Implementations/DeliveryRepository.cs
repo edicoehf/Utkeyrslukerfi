@@ -133,7 +133,7 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
             delivery.CustomerComment = newdelivery.CustomerComment ?? delivery.CustomerComment;
             delivery.Status = newdelivery.Status ?? delivery.Status;
 
-            System.Console.WriteLine(delivery.DeliveryAddress);
+            System.Console.WriteLine(newdelivery.PickupAddressStreetName);
 
             if (delivery.PickupAddress != null)
             {

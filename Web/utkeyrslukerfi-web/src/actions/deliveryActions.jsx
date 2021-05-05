@@ -26,15 +26,32 @@ export const setViewingDelivery = (delivery) => ({
 
 export const updateDelivery = (token, id, delivery) => async (dispatch) => {
   try {
-    const res = await deliveryService.updateDelivery(token, id, delivery)
+    const deliveryInputModel = {
+      ...delivery,
+      PickupAddressStreetName: delivery?.pickupAddress?.streetName,
+      PickupAddressHouseNumber: delivery?.pickupAddress?.houseNumber,
+      PickupAddressZipCode: delivery?.pickupAddress?.zipCode,
+      PickupAddressCity: delivery?.pickupAddress?.city,
+      PickupAddressCountry: delivery?.pickupAddress?.counntry,
+      DeliveryAddressStreetName: delivery?.deliveryAddress?.streetName,
+      DeliveryAddressHouseNumber: delivery?.deliveryAddress?.houseNumber,
+      DeliveryAddressZipCode: delivery?.deliveryAddress?.zipCode,
+      DeliveryAddressCity: delivery?.deliveryAddress?.city,
+      DeliveryAddressCountry: delivery?.deliveryAddress?.counntry,
+      VehicleID: delivery?.vehicle?.id,
+      DriverID: delivery?.driver?.id,
+    }
+    const res = await deliveryService.updateDelivery(token, id, deliveryInputModel)
+    console.log(res);
     if (res?.status === 401) { toastr.error('Þú hefur ekki leifi til að uppfæra sendingu.') }
     if (res?.status === 404) { toastr.error('Sending fannst ekki.') }
     if (res?.status === 400) { toastr.error('Slæm beiðni.') }
     if (res?.status === 204) {
+      dispatch(updateDeliverySuccess(delivery))
       toastr.success('Sending hefur verið uppfærð!')
-      dispatch(updateDeliverySuccess({ id, ...delivery }))
     }
   } catch (err) {
+    console.log(err)
     toastr.error('Ekki náðist samband við netþjón.')
   }
 }

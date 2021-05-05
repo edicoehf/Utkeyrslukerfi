@@ -31,8 +31,8 @@ export const updateUser = (token, id, user) => async (dispatch) => {
     if (res?.status === 404) { toastr.error('Notandi fannst ekki.') }
     if (res?.status === 400) { toastr.error('Slæm beiðni.') }
     if (res?.status === 204) {
-      toastr.success('Notandi hefur verið uppfærður!')
       dispatch(updateUserSuccess({ id, ...user }))
+      toastr.success('Notandi hefur verið uppfærður!')
     }
   } catch (err) {
     toastr.error('Ekki náðist samband við netþjón.')
