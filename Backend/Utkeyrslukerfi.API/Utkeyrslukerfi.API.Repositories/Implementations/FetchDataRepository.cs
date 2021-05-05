@@ -348,21 +348,21 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
             return delivery;
         }
         /// <summary>
-        /// Checks if the api has some data for us to set in SignOff, 
+        /// Checks if the api has some data for us to set in Signoff, 
         /// if not it defaults to 5 which means to take name and signiture
         /// </summary>
         /// <param name="delivery">Delivery Entity</param>
         /// <param name="data">api response in json format</param>
-        /// <returns>Delivery with SignOff Added to it</returns>
-        private Delivery AddSignOff(Delivery delivery, JToken data)
+        /// <returns>Delivery with Signoff Added to it</returns>
+        private Delivery AddSignoff(Delivery delivery, JToken data)
         {
-            var signOff = new Signoff();
-            signOff.ID = Guid.NewGuid();
-            if (_config.GetSection("SignOff").Value == null)
+            var signoff = new Signoff();
+            signoff.ID = Guid.NewGuid();
+            if (_config.GetSection("Signoff").Value == null)
             {
-                signOff.Settings = 5;
-                _dbContext.Signoffs.Add(signOff);
-                delivery.Signoff = signOff;
+                signoff.Settings = 5;
+                _dbContext.Signoffs.Add(signoff);
+                delivery.Signoff = signoff;
                 return delivery;
             }
             return delivery;
@@ -386,7 +386,7 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
             entity = AddStatus(entity, delivery);
             entity = AddVehicle(entity, delivery);
             entity = AddDeliveryDate(entity, delivery);
-            entity = AddSignOff(entity, delivery);
+            entity = AddSignoff(entity, delivery);
             _dbContext.Deliveries.Add(entity);
             AddPackages(entity, delivery);
             _dbContext.SaveChangesAsync();
