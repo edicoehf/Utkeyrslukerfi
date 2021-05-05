@@ -1,8 +1,9 @@
-import React, { useState } from 'react'
-import { Text, View, FlatList, TouchableOpacity } from 'react-native'
-import { useSelector } from 'react-redux'
+import React, { useEffect, useState } from 'react'
+import { Text, View, FlatList, TouchableOpacity, RefreshControl } from 'react-native'
+import { useSelector, useDispatch } from 'react-redux'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import styles from '../../styles/deliveryTable'
+import { getDeliveries } from '../../actions/deliveryActions'
 import _ from 'lodash'
 
 const DeliveryTable = ({ data }) => {
@@ -13,6 +14,9 @@ const DeliveryTable = ({ data }) => {
   const [selectedColumn, setSelectedColumn] = useState(null)
   const [deliveries, setDeliveries] = useState()
   const [counter, setCounter] = useState(0)
+  const [refreshing, setRefreshing] = useState(false);
+  const token = useSelector(({ login }) => login.token)
+  const dispatch = useDispatch()
 
   const sortTable = (column) => {
     const newDirection = direction === 'desc' ? 'asc' : 'desc'
@@ -21,7 +25,14 @@ const DeliveryTable = ({ data }) => {
     setDirection(newDirection)
     setDeliveries(sortedData)
   }
-
+  const onRefresh = () => {
+    // Clear old data of the list
+    setDeliveries([])
+    // Call the Service to get the latest deliveries
+    dispatch(getDeliveries(token))
+    data = deliveries
+    setDeliveries(data)
+  }
   const tableHeader = () => (
     <View style={styles.tableHeader}>
       {
@@ -34,7 +45,7 @@ const DeliveryTable = ({ data }) => {
             >
               <Text style={styles.columnHeaderTxt}>{columnText[index] + ' '} {
                 selectedColumn === column &&
-                  <Icon name={direction === 'desc' ? 'arrow-down-drop-circle' : 'arrow-up-drop-circle'} />
+                <Icon name={direction === 'desc' ? 'arrow-down-drop-circle' : 'arrow-up-drop-circle'} />
               }
               </Text>
             </TouchableOpacity>
@@ -57,6 +68,13 @@ const DeliveryTable = ({ data }) => {
         keyExtractor={(item, index) => index + ''}
         ListHeaderComponent={tableHeader}
         stickyHeaderIndices={[0]}
+        refreshControl={
+          <RefreshControl
+            //refresh control used for the Pull to Refresh
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+          />
+        }
         renderItem={({ item, index }) => {
           return (
             <View style={{ ...styles.tableRow, backgroundColor: index % 2 === 1 ? '#F0FBFC' : 'white' }}>
