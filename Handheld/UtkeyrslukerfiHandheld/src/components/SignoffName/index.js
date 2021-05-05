@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { TextInput, Text, View, ToastAndroid } from 'react-native'
-import styles from '../../styles/singoffName'
+import styles from '../../styles/signoffName'
 import BasicButton from '../BasicButton'
 
 // Signoff Name, gets receivers name during delivery
