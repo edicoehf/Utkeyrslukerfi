@@ -17,3 +17,4 @@ export const DRIVERS_URL = 'https://utkeyrslukerfiapi.azurewebsites.net/api/user
 export const BLUE = '#4A79BA'
 export const LIGHTER_BLUE = '#81ABE4'
 export const LIGHT_BLUE = '#66C5FF'
+export const GRAY_98 = '#FAFAFA'
