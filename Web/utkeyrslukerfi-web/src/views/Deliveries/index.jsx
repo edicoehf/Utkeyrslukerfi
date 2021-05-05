@@ -25,7 +25,7 @@ const Deliveries = () => {
       dispatch(getDrivers(token))
       dispatch(getVehicles(token))
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line
   }, [token])
 
   useEffect(() => {
@@ -108,7 +108,7 @@ const Deliveries = () => {
           </div>
           : null
       }
-      <DeliveryFilterModal visible={filterModal} deliveries={deliveries} setDeliveries={setDeliveryState} updateModalState={toggleModal} />
+      <DeliveryFilterModal visible={filterModal} deliveries={deliveries} setDeliveries={setDeliveryState} deliveryState={deliveryState} updateModalState={toggleModal} />
     </div>
   )
 }

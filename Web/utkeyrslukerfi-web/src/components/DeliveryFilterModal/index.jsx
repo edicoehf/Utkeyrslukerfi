@@ -3,7 +3,6 @@ import Modal from 'react-modal'
 import config from '../../constants/config.json'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
-import _ from 'lodash'
 import { isWithinInterval } from 'date-fns'
 
 const customStyles = {
@@ -17,10 +16,9 @@ const customStyles = {
   }
 }
 
-const UserFilterModal = ({ visible, deliveries, setDeliveries, updateModalState }) => {
+const UserFilterModal = ({ visible, deliveries, setDeliveries, deliveryState, updateModalState }) => {
   Modal.setAppElement('#root')
   const [status, setStatus] = useState('')
-  const [filtered, setFiltered] = useState('')
   const [startDate, setStartDate] = useState(new Date(Date.now() - (6.048e+8)))
   const [endDate, setEndDate] = useState(new Date(Date.now() + (6.048e+8 * 2)))
 
@@ -30,25 +28,11 @@ const UserFilterModal = ({ visible, deliveries, setDeliveries, updateModalState 
 
   const filter = () => {
     updateModalState()
-    filterStatus()
-    filterDate()
-  }
-
-  const filterStatus = () => {
-    if (status === '') {
-      clearFilter()
-      return
+    setDeliveries([])
+    setDeliveries(deliveries.filter(d => isWithinInterval(new Date(d.deliveryDate), { start: startDate, end: endDate })))
+    if (status !== '') {
+      setDeliveries(deliveryState => deliveryState.filter(d => d.status === parseInt(getIDByStatus(status))))
     }
-    setFiltered(_.filter(deliveries, delivery => delivery.status === parseInt(getIDByStatus(status))))
-    setStatus('')
-  }
-
-  console.log(isWithinInterval(new Date(2014, 0, 3), { start: startDate, end: endDate }))
-
-  const filterDate = () => {
-    filtered.map(function (delivery) {
-      return (console.log(new Date(delivery.deliveryDate)))
-    })
   }
 
   const clearFilter = () => {
