@@ -16,7 +16,8 @@ const ListScreen = () => {
   useEffect(() => {
     dispatch(getDeliveries(token))
   }, [])
-
+  
+  // optional function for the open to map 
   const floatingButtonEvent = () => {
     Alert.alert("Floating Button Clicked");
   }
@@ -25,7 +26,6 @@ const ListScreen = () => {
   return (
     <View style={styles.container}>
       <DeliveryTable data={deliveries} />
-      {/* <BasicButton buttonText='Opna kort' /> */}
       <TouchableOpacity activeOpacity={0.5} onPress={floatingButtonEvent} style={styles.touchableOpacityStyle} >
         <MaterialCommunityIcon name='google-maps' style={styles.floatingButtonStyle}/>
       </TouchableOpacity>

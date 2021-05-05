@@ -26,23 +26,32 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
 
         public VehicleDTO GetVehicle(string ID)
         {
+            // // Find the vehicle in the database.
             var entity = _dbContext.Vehicles.FirstOrDefault(v => v.LicensePlate == ID);
-            if (entity == null) { return null; }
+            // If it does not exist, return null
+            if (entity == null) { throw new NotFoundException($"Did not find Vehicle with id: {ID}");}
+            // If exists then map the vehicle according to DTO and return.
             return _mapper.Map<VehicleDTO>(entity);
         }
 
         public IEnumerable<VehicleDTO> GetVehicles(int pageSize, int pageNumber)
         {
+            // Find all vehicles
             var vehicles = _dbContext.Vehicles;
+            // Put vehicles in an envelope according to the envelope size and fragment.
             Envelope<Vehicle> envelope = new Envelope<Vehicle>(pageNumber, pageSize, vehicles);
+            // Return the list of the vehicles mapped according to the DTO
             return _mapper.Map<IEnumerable<VehicleDTO>>(envelope.Items);
         }
 
         public Guid CreateVehicle(VehicleInputModel vehicle)
         {
-            var temp_vehicle = _dbContext.Vehicles.FirstOrDefault(v => v.LicensePlate == vehicle.LicensePlate);
+            // Find the vehicle in the database.
+            var tempVehicle = _dbContext.Vehicles.FirstOrDefault(v => v.LicensePlate == vehicle.LicensePlate);
             // It is not email exception, but it works exactly the same.
-            if (temp_vehicle != null) { throw new EmailAlreadyExistsException($"Vehicle with License Plate: {vehicle.LicensePlate} already exists!"); }
+            // If the vehicle does exist, then it will throw an expection notifying that the vehicle already exists.
+            if (tempVehicle != null) { throw new EmailAlreadyExistsException($"Vehicle with License Plate: {vehicle.LicensePlate} already exists!"); }
+            // Create a new vehicle entity
             var entity = new Vehicle
             {
                 LicensePlate = vehicle.LicensePlate,
@@ -50,9 +59,11 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
                 Height = vehicle.Height,
                 Width = vehicle.Width
             };
+            // Add newly created vehicle entity at database
             _dbContext.Vehicles.Add(entity);
+            // Finally save the changes that were made in database
             _dbContext.SaveChanges();
-
+            // Return the id of the entity that was created 
             return entity.ID;
         }
 

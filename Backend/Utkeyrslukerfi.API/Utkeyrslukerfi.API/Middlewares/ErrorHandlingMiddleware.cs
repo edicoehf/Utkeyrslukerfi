@@ -5,17 +5,18 @@ using Utkeyrslukerfi.API.Models.Exceptions;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 
+/// <summary>
+/// Middleware to handle the errors that are invoked while the server is running
+/// </summary>
 namespace Utkeyrslukerfi.API.Middlewares
 {
     public class ErrorHandlingMiddleware
     {
         private readonly RequestDelegate _next;
-
         public ErrorHandlingMiddleware(RequestDelegate next)
         {
             _next = next;
         }
-
         public async Task Invoke(HttpContext context)
         {
             try
@@ -27,13 +28,11 @@ namespace Utkeyrslukerfi.API.Middlewares
                 await HandleExceptionAsync(context, ex);
             }
         }
-
         private static Task HandleExceptionAsync(HttpContext context, Exception exception)
         {
             HttpStatusCode status;
             string message;
             var stackTrace = exception.StackTrace;
-
             var exceptionType = exception.GetType();
             if (exceptionType == typeof(NotFoundException))
             {
@@ -53,9 +52,8 @@ namespace Utkeyrslukerfi.API.Middlewares
             else
             {
                 status = HttpStatusCode.InternalServerError;
-                message = "🤡 Oppsie the server fucked up 🤡";
+                message = "🤡 Oopsie the server fucked up 🤡";
             }
-
             var result = JsonConvert.SerializeObject(new { errors = new { Message = new string[] { message } }, stacktrace = stackTrace });
             context.Response.ContentType = "application/json";
             context.Response.StatusCode = (int)status;

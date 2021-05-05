@@ -12,6 +12,8 @@ import { BLUE, LIGHT_BLUE } from '../constants'
 
 const Tab = createBottomTabNavigator()
 
+// AppContainer contains the routes of the application which are located at the bottom bar
+// By default Scan page is the landing page.
 const AppContainer = () => {
   return (
     <NavigationContainer>

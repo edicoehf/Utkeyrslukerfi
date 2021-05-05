@@ -35,19 +35,21 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
 
         public DeliveryDTO GetDelivery(string ID)
         {
+            // Finds the delivery given the ID
             var delivery = _deliveryObj.FirstOrDefault(d => d.ID == ID);
-            if (delivery == null)
-            {
-                throw new NotFoundException($"Did not find delivery with id {ID}");
-            }
-
+            // If it does not exist, return null
+            if (delivery == null) { throw new NotFoundException($"Did not find delivery with id: {ID}"); }
+            // If exists then map the delivery according to DTO and return.
             return _mapper.Map<DeliveryDTO>(delivery);
         }
 
         public IEnumerable<DeliveryDTO> GetDeliveries(int pageSize, int pageNumber)
         {
+            // Finds all deliveries
             var deliveries = _deliveryObj.ToList();
+            // Put deliveries in an envelope according to the envelope size and fragment.
             Envelope<Delivery> envelope = new(pageNumber, pageSize, deliveries);
+            // Return the list of the deliveries mapped according to the DTO
             return _mapper.Map<IEnumerable<DeliveryDTO>>(envelope.Items);
         }
 
@@ -123,9 +125,11 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
 
         public void UpdateDelivery(DeliveryInputModel newdelivery, string id)
         {
-            // Get delivery
+            // Finds the delivery with the given id
             var delivery = _deliveryObj.FirstOrDefault(d => d.ID == id);
+            // Return null and throw an exception if it does not exist
             if (delivery == null) { throw new NotFoundException($"No delivery with ID: {id}"); }
+            // If delivery exists, then update its properties.
             delivery.Seller = newdelivery.Seller ?? delivery.Seller;
             delivery.Recipient = newdelivery.Recipient ?? delivery.Recipient;
             delivery.DriverComment = newdelivery.DriverComment ?? delivery.DriverComment;
@@ -151,13 +155,17 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
             if (delivery.Vehicle != null || newdelivery.VehicleID != null)
             {
                 var vid = newdelivery.VehicleID ?? delivery.Vehicle.ID;
+                // Find the vehicle of the delivery.
                 var tempVehicle = _dbContext.Vehicles.FirstOrDefault(v => v.ID == vid);
+                // Update the delivery vehicle with the new vehicle
                 delivery.Vehicle = tempVehicle;
             }
             if (delivery.Driver != null || newdelivery.DriverID != null)
             {
                 var vid = newdelivery.DriverID ?? delivery.Driver.ID;
+                // Find the new driver
                 var tempDriver = _dbContext.Users.FirstOrDefault(v => v.ID == vid);
+                // Update the current driver with the new driver
                 delivery.Driver = tempDriver;
             }
             if (delivery.Signoff != null)
