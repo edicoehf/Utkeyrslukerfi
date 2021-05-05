@@ -99,7 +99,6 @@ namespace Utkeyrslukerfi.API.Controllers
         [Route("{id}", Name = "UpdateDelivery")]
         public IActionResult UpdateDelivery([FromBody] DeliveryInputModel delivery, string id)
         {
-            System.Console.WriteLine("Halló");
             if (!ModelState.IsValid)
             {
                 return BadRequest("Model is not valid!");
