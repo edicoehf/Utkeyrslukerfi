@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useLocation, useParams } from 'react-router-dom'
-import { setViewingPackage, getViewingPackage } from '../../actions/packageActions'
+import { useParams } from 'react-router-dom'
+import { getViewingPackage } from '../../actions/packageActions'
 
 const Package = () => {
   const { id, delid } = useParams()

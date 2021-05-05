@@ -1,11 +1,8 @@
-import React, { useState, useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { setViewingDelivery } from '../../actions/deliveryActions'
+import React from 'react'
 import Modal from 'react-modal'
 import Form from 'react-bootstrap/Form'
 import FormGroupInput from '../FormGroupInput'
 import FormGroupButton from '../FormGroupButton'
-import FormGroupDropdown from '../FormGroupDropdown'
 import { useForm, FormProvider } from 'react-hook-form'
 
 const customStyles = {
@@ -15,12 +12,11 @@ const customStyles = {
     right: 'auto',
     bottom: 'auto',
     marginRight: '-50%',
-    transform: 'translate(-50%, -50%)'
+    transform: 'translate(-50%, -50%)',
   }
 }
 
 const AddressModal = ({ openModal, setOpenModal, address, setAddress }) => {
-  const dispatch = useDispatch()
   const methods = useForm()
   Modal.setAppElement('#root')
 

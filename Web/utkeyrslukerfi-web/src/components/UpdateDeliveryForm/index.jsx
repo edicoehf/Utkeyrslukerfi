@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { getViewingDelivery, setViewingDelivery, updateDelivery } from '../../actions/deliveryActions'
+import { updateDelivery } from '../../actions/deliveryActions'
 import { getPackages } from '../../actions/packageActions'
 import AddressModal from '../../components/AddressModal'
 // form imports
@@ -14,7 +14,6 @@ import configData from '../../constants/config.json'
 import PackageList from '../PackagesList'
 
 const UpdateDelivery = ({ delivery }) => {
-  const packages = useSelector(({ packages }) => packages)
   const vehicles = useSelector(({ vehicles }) => vehicles)
   const drivers = useSelector(({ users }) => users)
   const token = useSelector(({ login }) => login.token)
