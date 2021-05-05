@@ -5,9 +5,6 @@ using Utkeyrslukerfi.API.Models.Exceptions;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 
-/// <summary>
-/// Middleware to handle the errors that are invoked while the server is running
-/// </summary>
 namespace Utkeyrslukerfi.API.Middlewares
 {
     public class ErrorHandlingMiddleware
