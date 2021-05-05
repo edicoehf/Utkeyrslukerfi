@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Utkeyrslukerfi.API.Repositories.Context;
 
 namespace Utkeyrslukerfi.API.Migrations
 {
     [DbContext(typeof(UtkeyrslukerfiDbContext))]
-    partial class UtkeyrslukerfiDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210504215944_Rm SignatureUri")]
+    partial class RmSignatureUri
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -192,12 +194,6 @@ namespace Utkeyrslukerfi.API.Migrations
 
                     b.Property<string>("Recipient")
                         .HasColumnType("text");
-
-                    b.Property<string>("SignatureURI")
-                       .HasColumnType("text");
-
-                    b.Property<int?>("Settings")
-                        .HasColumnType("int");                     
 
                     b.HasKey("ID");
 

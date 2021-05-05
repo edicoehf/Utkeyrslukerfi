@@ -30,7 +30,8 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
                             .Include(d => d.DeliveryAddress)
                             .Include(d => d.Driver)
                             .Include(d => d.Vehicle)
-                            .Include(d => d.Packages);
+                            .Include(d => d.Packages)
+                            .Include(d => d.Signoff);
         }
 
         public DeliveryDTO GetDelivery(string ID)
@@ -163,7 +164,7 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
             if (delivery.Signoff != null)
             {
                 delivery.Signoff.ImageURI = newdelivery.SignoffImageURI ?? delivery.Signoff.ImageURI;
-                delivery.Signoff.SignatureUri = newdelivery.SignoffSignatureUri ?? delivery.Signoff.SignatureUri;
+                delivery.Signoff.SignatureURI = newdelivery.SignoffSignatureURI ?? delivery.Signoff.SignatureURI;
                 delivery.Signoff.Recipient = newdelivery.SignoffRecipient ?? delivery.Signoff.Recipient;
             }
 
