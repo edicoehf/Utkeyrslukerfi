@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { View, Text, ToastAndroid, TextInput, ImageBackground, TouchableOpacity } from 'react-native'
 import { launchCamera } from 'react-native-image-picker'
-import { useDispatch, useSelector } from 'react-redux'
-import { setStep } from '../../actions/signingProcessActions'
+import { useSelector } from 'react-redux'
 import BasicButton from '../../components/BasicButton'
 import styles from '../../styles/imageOnDeliveryScreen'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
@@ -12,26 +11,27 @@ import deliveryService from '../../services/deliveryService'
 
 // Let the receiver sign for the delivery
 const ImageOnDeliveryScreen = ({ route, navigation }) => {
-  // TODO:
-  // - css
   const [name, setName] = useState('')
   const signingProcess = useSelector(({ signingProcess }) => signingProcess)
-  const dispatch = useDispatch()
   const [image, setImage] = useState(null)
   const token = useSelector(({ login }) => login.token)
   const { delivery } = route.params
 
-  useEffect(async () => {
-    EAzureBlobStorageFile.configure(
-      'utkeyrslukerfistorage',
-      REACT_APP_STORAGE_KEY,
-      'images'
-    )
-  })
+  // TODO: Blob configuration is not updating from signForDeliveryScreen, still saving to signatures container
+  useEffect(() => {
+    (async () => {
+      await EAzureBlobStorageFile.configure(
+        'utkeyrslukerfistorage',
+        REACT_APP_STORAGE_KEY,
+        'images'
+      )
+    })()
+    setName(delivery.recipient)
+  }, [])
 
-  const updateDelivery = async () => {
+  const updateDeliveryInDatabase = async () => {
     try {
-      delivery.signoffImageURI = image.uri // Update delivery
+      delivery.signoffImageURI = image.fileName // Update delivery
       const res = await deliveryService.updateDelivery(token, delivery)
       console.log(res)
     } catch (err) {
@@ -53,8 +53,8 @@ const ImageOnDeliveryScreen = ({ route, navigation }) => {
     }
   }
 
+  // Continue to next step after saving image to cloud adding new image uri to delivery
   const continueWithDelivery = async () => {
-    // TODO: save the image on a server and save the link in the db, get the link for the image from imageSource
     if (!name) {
       ToastAndroid.showWithGravity('Vinsamlegast settu inn nafn móttakanda.', ToastAndroid.LONG, ToastAndroid.TOP)
       return
@@ -67,10 +67,8 @@ const ImageOnDeliveryScreen = ({ route, navigation }) => {
     await saveImageToBlobStorage()
 
     // Update delivery in db so url to image is saved
-    await updateDelivery()
-
+    await updateDeliveryInDatabase() // TODO: where should we update delivery
     const route = signingProcess.process[signingProcess.step]
-    dispatch(setStep(2))
     navigation.navigate(route)
   }
 
@@ -95,6 +93,7 @@ const ImageOnDeliveryScreen = ({ route, navigation }) => {
       <TextInput
         style={styles.input}
         onChangeText={setName}
+        defaultValue={delivery.recipient}
       />
       {!image && <ImageBackground style={styles.image} source={require('../../images/no_image_available.jpg')} />}
       {image && <ImageBackground style={styles.image} source={{ uri: image.uri }} />}
