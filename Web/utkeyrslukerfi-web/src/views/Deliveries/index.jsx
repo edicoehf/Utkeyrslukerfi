@@ -108,7 +108,7 @@ const Deliveries = () => {
           </div>
           : null
       }
-      <DeliveryFilterModal visible={filterModal} deliveries={deliveries} setDeliveries={setDeliveryState} updateModalState={toggleModal} />
+      <DeliveryFilterModal visible={filterModal} deliveries={deliveries} setDeliveries={setDeliveryState} deliveryState={deliveryState} updateModalState={toggleModal} />
     </div>
   )
 }
