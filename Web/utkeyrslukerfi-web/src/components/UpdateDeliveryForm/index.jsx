@@ -13,8 +13,6 @@ import { useForm, FormProvider } from 'react-hook-form'
 import configData from '../../constants/config.json'
 import PackageList from '../PackagesList'
 
-
-
 const UpdateDelivery = ({ delivery }) => {
   const packages = useSelector(({ packages }) => packages)
   const vehicles = useSelector(({ vehicles }) => vehicles)
@@ -56,11 +54,11 @@ const UpdateDelivery = ({ delivery }) => {
   const submitForm = (data) => {
     const newDelivery = {
       ...delivery,
-      recipient: data.recipient === "" ? null : data.recipient,
-      driver: data.driver === "" ? null : drivers.find((d) => d.id === data.driverID),
-      seller: data.seller === "" ? null : data.seller,
-      status: data.status === "" ? null : data.status,
-      vehicle: data.driverID === "" ? null : vehicles.find((v) => v.id === data.vehicleID),
+      recipient: data.recipient === '' ? null : data.recipient,
+      driver: data.driver === '' ? null : drivers.find((d) => d.id === data.driverID),
+      seller: data.seller === '' ? null : data.seller,
+      status: data.status === '' ? null : data.status,
+      vehicle: data.driverID === '' ? null : vehicles.find((v) => v.id === data.vehicleID)
       // deliveryDate: data.deliveryDate,
     }
     dispatch(updateDelivery(token, id, newDelivery))
@@ -69,28 +67,28 @@ const UpdateDelivery = ({ delivery }) => {
 
   return (
     <div>
-    <FormProvider {...methods}>
+      <FormProvider {...methods}>
         <Form onSubmit={methods.handleSubmit(submitForm)} className='form form-horizontal'>
-        <FormGroupInput
-          groupType='recipient'
-          label='Móttakandi'
-          fieldType='text'
-          typeOfForm='UpdateDelivery'
-          required='false'
+          <FormGroupInput
+            groupType='recipient'
+            label='Móttakandi'
+            fieldType='text'
+            typeOfForm='UpdateDelivery'
+            required='false'
           />
-        <FormGroupDropdown
-          groupType='status'
-          label='Staða'
-          options={
-            <>
-              {Object.keys(configData.STATUS).map(function (k) {
-                return (
-                  <option key={k} value={k}>{configData.STATUS[k]}</option>
-                )
-              })}
-            </>
+          <FormGroupDropdown
+            groupType='status'
+            label='Staða'
+            options={
+              <>
+                {Object.keys(configData.STATUS).map(function (k) {
+                  return (
+                    <option key={k} value={k}>{configData.STATUS[k]}</option>
+                  )
+                })}
+              </>
           }
-          typeOfForm='UpdateDelivery'
+            typeOfForm='UpdateDelivery'
           />
           <FormGroupInput
             groupType='seller'
@@ -116,7 +114,8 @@ const UpdateDelivery = ({ delivery }) => {
           {/* TODO add Form group for this */}
           <div className='row'>
             <label className='mt-3 mx-3'>Heimilisfang Sendada</label>
-            <input className='form-control'
+            <input
+              className='form-control'
               type='text'
               name='pickupAddress'
               onClick={() => setShowPickupModal(true)}
@@ -125,7 +124,8 @@ const UpdateDelivery = ({ delivery }) => {
           </div>
           <div className='row'>
             <label className='mt-3 mx-3'>Heimilisfang Móttakanda</label>
-            <input className='form-control'
+            <input
+              className='form-control'
               type='text' name='deliveryAddress'
               onClick={() => setShowDeliveryModal(true)}
               value={delivery?.deliveryAddress?.streetName}
@@ -149,19 +149,21 @@ const UpdateDelivery = ({ delivery }) => {
             label='Vista'
             typeOfForm='UpdateDelivery'
           />
-      </Form>
-    </FormProvider>    
-      <AddressModal 
-        openModal={showDeliveryModal} 
-        setOpenModal={setShowDeliveryModal} 
-        address={deliveryAddress} 
-        setAddress={setDeliveryAddress}/>
-      <AddressModal 
-        openModal={showPickupModal} 
-        setOpenModal={setShowPickupModal} 
-        address={pickupAddress} 
-        setAddress={setPickupAddress} />
-    <PackageList packages={delivery.packages} deliveryID={delivery.id} />
+        </Form>
+      </FormProvider>
+      <AddressModal
+        openModal={showDeliveryModal}
+        setOpenModal={setShowDeliveryModal}
+        address={deliveryAddress}
+        setAddress={setDeliveryAddress}
+      />
+      <AddressModal
+        openModal={showPickupModal}
+        setOpenModal={setShowPickupModal}
+        address={pickupAddress}
+        setAddress={setPickupAddress}
+      />
+      <PackageList packages={delivery.packages} deliveryID={delivery.id} />
     </div>
   )
 }

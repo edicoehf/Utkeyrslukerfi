@@ -53,21 +53,20 @@ const DeliveriesList = () => {
         </thead>
         <tbody>
           {
-            deliveryState.length > 0 
-            ? 
-            deliveryState.map((deliv) => (
-              <DeliveryDetails delivery={deliv} />
-            )) 
-            : null
+            deliveryState.length > 0
+              ? deliveryState.map((deliv) => (
+                <DeliveryDetails delivery={deliv} />
+                ))
+              : null
           }
         </tbody>
       </table>
       {
         deliveries.length <= 0
           ? <div className='text-center'>
-              <div className='spinner-border' role='status'>
-                <span className='sr-only'>Loading...</span>
-              </div>
+            <div className='spinner-border' role='status'>
+              <span className='sr-only'>Loading...</span>
+            </div>
           </div>
           : null
       }

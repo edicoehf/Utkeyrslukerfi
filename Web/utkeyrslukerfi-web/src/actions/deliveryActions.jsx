@@ -1,7 +1,8 @@
 import {
   UPDATE_DELIVERY,
   GET_VIEWING_DELIVERY,
-  SET_VIEWING_DELIVERY } from '../constants'
+  SET_VIEWING_DELIVERY
+} from '../constants'
 import deliveryService from '../services/deliveryService'
 import toastr from 'toastr'
 
@@ -39,10 +40,10 @@ export const updateDelivery = (token, id, delivery) => async (dispatch) => {
       DeliveryAddressCity: delivery?.deliveryAddress?.city,
       DeliveryAddressCountry: delivery?.deliveryAddress?.counntry,
       VehicleID: delivery?.vehicle?.id,
-      DriverID: delivery?.driver?.id,
+      DriverID: delivery?.driver?.id
     }
     const res = await deliveryService.updateDelivery(token, id, deliveryInputModel)
-    console.log(res);
+    console.log(res)
     if (res?.status === 401) { toastr.error('Þú hefur ekki leifi til að uppfæra sendingu.') }
     if (res?.status === 404) { toastr.error('Sending fannst ekki.') }
     if (res?.status === 400) { toastr.error('Slæm beiðni.') }

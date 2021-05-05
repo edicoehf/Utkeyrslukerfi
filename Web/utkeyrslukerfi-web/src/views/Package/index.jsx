@@ -8,11 +8,10 @@ const Package = () => {
   const token = useSelector(({ login }) => login.token)
   const pack = useSelector(({ pack }) => pack)
   const dispatch = useDispatch()
-  
+
   useEffect(() => {
     dispatch(getViewingPackage(token, id, delid))
   })
-
 
   return (
     <>

@@ -15,7 +15,7 @@ const customStyles = {
     right: 'auto',
     bottom: 'auto',
     marginRight: '-50%',
-    transform: 'translate(-50%, -50%)',
+    transform: 'translate(-50%, -50%)'
   }
 }
 
@@ -36,53 +36,54 @@ const AddressModal = ({ openModal, setOpenModal, address, setAddress }) => {
     address.zipCode = data.zipcode
     address.houseNumber = data.housenumber
     address.streetName = data.streetname
-    console.log(address);
-    setAddress(address);
+    console.log(address)
+    setAddress(address)
     setOpenModal(false)
   }
-    return (
-      <Modal
-        isOpen={openModal}
-        onAfterOpen={afterOpenModal}
-        onRequestClose={() => setOpenModal(false)}
-        style={customStyles}
-      >
-        <FormProvider {...methods}>
-          <Form
-            onSubmit={methods.handleSubmit(submitForm)}
-            className='form form-horizontal'>
-            <FormGroupInput
-              groupType='streetname'
-              label='Götu Nafn'
-              fieldType='text'
-              typeOfForm='UpdateAddress'
-            />
-            <FormGroupInput
-              groupType='housenumber'
-              label='Hús Númer'
-              fieldType='text'
-              typeOfForm='UpdateAddress'
-            />
-            <FormGroupInput
-              groupType='city'
-              label='Sveitarfélag'
-              fieldType='text'
-              typeOfForm='UpdateAddress'
-            />
-            <FormGroupInput
-              groupType='zipcode'
-              label='Póstnúmer'
-              fieldType='text'
-              typeOfForm='UpdateAddress'
-            />
-            <FormGroupButton
-              label='Vista'
-              typeOfForm='UpdateAddress'
-            />
-          </Form>
-        </FormProvider>
-      </Modal>
-    )
+  return (
+    <Modal
+      isOpen={openModal}
+      onAfterOpen={afterOpenModal}
+      onRequestClose={() => setOpenModal(false)}
+      style={customStyles}
+    >
+      <FormProvider {...methods}>
+        <Form
+          onSubmit={methods.handleSubmit(submitForm)}
+          className='form form-horizontal'
+        >
+          <FormGroupInput
+            groupType='streetname'
+            label='Götu Nafn'
+            fieldType='text'
+            typeOfForm='UpdateAddress'
+          />
+          <FormGroupInput
+            groupType='housenumber'
+            label='Hús Númer'
+            fieldType='text'
+            typeOfForm='UpdateAddress'
+          />
+          <FormGroupInput
+            groupType='city'
+            label='Sveitarfélag'
+            fieldType='text'
+            typeOfForm='UpdateAddress'
+          />
+          <FormGroupInput
+            groupType='zipcode'
+            label='Póstnúmer'
+            fieldType='text'
+            typeOfForm='UpdateAddress'
+          />
+          <FormGroupButton
+            label='Vista'
+            typeOfForm='UpdateAddress'
+          />
+        </Form>
+      </FormProvider>
+    </Modal>
+  )
 }
 
 export default AddressModal

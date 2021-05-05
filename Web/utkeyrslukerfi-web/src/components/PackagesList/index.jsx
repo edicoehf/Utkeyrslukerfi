@@ -1,15 +1,15 @@
-import { useHistory } from "react-router";
+import { useHistory } from 'react-router'
 
 const PackageList = ({ packages, deliveryID }) => {
   const history = useHistory()
   const navigateToPackage = (p) => {
-    history.push(`/deliveries/${deliveryID}/packages/${p.id}`, { params: p})
+    history.push(`/deliveries/${deliveryID}/packages/${p.id}`, { params: p })
   }
 
   return (
     <div>
       <h3>Packages</h3>
-      {packages.map((p) => 
+      {packages.map((p) =>
         (
           <div onClick={() => navigateToPackage(p)}>
             <h4>Barkóði:</h4>
@@ -20,4 +20,4 @@ const PackageList = ({ packages, deliveryID }) => {
     </div>
   )
 }
-export default PackageList;
+export default PackageList

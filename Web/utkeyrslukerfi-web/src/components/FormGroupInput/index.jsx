@@ -15,31 +15,31 @@ const FormGroupInput = ({ groupType, label, fieldType, pattern, minLen, typeOfFo
         {label}:
       </Form.Label>
       <Col sm={8}>
-        {required !== 'false' ?
-          <Form.Control
-            name={groupType}
-            placeholder={`Sláðu inn: ${label}...`}
-            type={fieldType}
-            ref={register({
-              required: 'Nauðsynlegt er að fylla út í þennan reit.',
-              minLength: {
-                value: minLen,
-                message: `${label} þarf að vera að minnsta kosti ${minLen} að lengd.`
-              },
-              pattern: {
-                value: pattern,
-                message: `Vinsamlegast sláðu inn leyfilegt: ${label}.`
-              },
-              validate: validate
-            })}
-          />
+        {required !== 'false'
+          ? <Form.Control
+              name={groupType}
+              placeholder={`Sláðu inn: ${label}...`}
+              type={fieldType}
+              ref={register({
+                required: 'Nauðsynlegt er að fylla út í þennan reit.',
+                minLength: {
+                  value: minLen,
+                  message: `${label} þarf að vera að minnsta kosti ${minLen} að lengd.`
+                },
+                pattern: {
+                  value: pattern,
+                  message: `Vinsamlegast sláðu inn leyfilegt: ${label}.`
+                },
+                validate: validate
+              })}
+            />
           : <Form.Control
-            name={groupType}
-            placeholder={`Sláðu inn: ${label}...`}
-            type={fieldType}
-            ref={register()}
-          />}
-        </Col>
+              name={groupType}
+              placeholder={`Sláðu inn: ${label}...`}
+              type={fieldType}
+              ref={register()}
+            />}
+      </Col>
       <Col sm={4}>
         {errors[groupType] && <p>{errors[groupType].message}</p>}
       </Col>
