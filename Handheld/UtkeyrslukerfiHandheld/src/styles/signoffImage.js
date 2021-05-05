@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
     borderColor: '#cccccc',
     borderWidth: windowWidth * 0.005,
     borderRadius: 5,
-    margin: windowHeight * 0.05
+    margin: windowHeight * 0.01
   },
   buttonContainer: {
     height: windowHeight * 0.10,
@@ -23,6 +23,10 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: windowHeight * 0.03,
     left: windowWidth * 0.1
+  },
+  label: {
+    width: windowWidth * 0.9,
+    fontSize: windowHeight * 0.03
   }
 })
 

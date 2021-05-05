@@ -6,17 +6,16 @@ const windowWidth = Dimensions.get('window').width
 const styles = StyleSheet.create({
   input: {
     backgroundColor: '#ffffff',
-    height: windowHeight * 0.05,
-    width: windowWidth * 0.50,
+    height: windowHeight * 0.08,
+    width: windowWidth * 0.80,
     borderColor: '#cccccc',
     borderWidth: 0.5,
     borderRadius: 5,
-    marginBottom: windowWidth * 0.02
+    fontSize: windowHeight * 0.03
   },
   label: {
-    width: windowWidth * 0.50,
-    justifyContent: 'flex-start',
-    marginTop: windowHeight * 0.05
+    width: windowWidth * 0.80,
+    fontSize: windowHeight * 0.03
   },
   buttonContainer: {
     height: windowHeight * 0.10,

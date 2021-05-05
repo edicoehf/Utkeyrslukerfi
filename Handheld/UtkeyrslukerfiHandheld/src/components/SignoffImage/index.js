@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { View, ToastAndroid, ImageBackground, TouchableOpacity } from 'react-native'
+import { View, Text, ToastAndroid, ImageBackground, TouchableOpacity } from 'react-native'
 import { launchCamera } from 'react-native-image-picker'
 import BasicButton from '../../components/BasicButton'
 import styles from '../../styles/signoffImage'
@@ -68,6 +68,7 @@ const SignoffImage = ({ delivery, stepCounter, setStepCounter }) => {
 
   return (
     <>
+      <Text style={styles.label}>Mynd af sendingu:</Text>
       {getImage()}
       <View style={styles.buttonContainer}>
         <TouchableOpacity onPress={takeImage}>

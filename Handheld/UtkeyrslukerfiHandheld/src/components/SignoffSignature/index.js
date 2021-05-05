@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react'
-import { View, ToastAndroid } from 'react-native'
+import { View, ToastAndroid, Text } from 'react-native'
 import Signature from 'react-native-signature-canvas'
 import BasicButton from '../../components/BasicButton'
 import styles from '../../styles/signoffSignature'
@@ -63,6 +63,7 @@ const SignoffSignature = ({ delivery, stepCounter, setStepCounter }) => {
 
   return (
     <>
+      <Text style={styles.label}>Undirskrift móttakanda:</Text>
       <View style={styles.canvasContainer}>
         <Signature
           ref={canvasRef}
