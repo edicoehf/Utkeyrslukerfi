@@ -11,7 +11,7 @@ import * as FileSystem from 'react-native-fs'
 
 // Let the receiver sign for the delivery
 const SignForDeliveryScreen = ({ route, navigation }) => {
-  const [name, setName] = useState()
+  const [name, setName] = useState('')
   const signingProcess = useSelector(({ signingProcess }) => signingProcess)
   const dispatch = useDispatch()
   const canvasRef = useRef()
@@ -25,6 +25,7 @@ const SignForDeliveryScreen = ({ route, navigation }) => {
         'signatures'
         )
     })
+    setName(delivery.recipient)
   }, [])
 
   // First the signature base64 needs to be saved to the phones cache and then uploaded to the blob storage
@@ -50,6 +51,7 @@ const SignForDeliveryScreen = ({ route, navigation }) => {
     }
   }
 
+  // Save the signature and recipient
   const handleSignature = async (signature) => {
     // TODO: save the image on a server and save the link in the db, get the link for the image from signature.data
     if (!name) {

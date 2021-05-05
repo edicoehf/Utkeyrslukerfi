@@ -17,6 +17,7 @@ const ImageOnDeliveryScreen = ({ route, navigation }) => {
   const token = useSelector(({ login }) => login.token)
   const { delivery } = route.params
 
+  // TODO: Blob configuration is not updating from signForDeliveryScreen, still saving to signatures container 
   useEffect(() => {
     (async () => {
       await EAzureBlobStorageFile.configure(
@@ -25,11 +26,12 @@ const ImageOnDeliveryScreen = ({ route, navigation }) => {
         'images'
       )
     })
+    setName(delivery.recipient)
   }, [])
 
-  const updateDelivery = async () => {
+  const updateDeliveryInDatabase = async () => {
     try {
-      delivery.signoffImageURI = image.name // Update delivery
+      delivery.signoffImageURI = image.fileName // Update delivery
       const res = await deliveryService.updateDelivery(token, delivery)
       console.log(res)
     } catch (err) {
@@ -61,12 +63,11 @@ const ImageOnDeliveryScreen = ({ route, navigation }) => {
       ToastAndroid.showWithGravity('Vinsamlegast settu inn mynd.', ToastAndroid.LONG, ToastAndroid.TOP)
       return
     }
-    console.log(image)
     // Save image to cloud
     await saveImageToBlobStorage()
 
     // Update delivery in db so url to image is saved
-    await updateDelivery() // TODO: where should we update delivery
+    await updateDeliveryInDatabase() // TODO: where should we update delivery
     const route = signingProcess.process[signingProcess.step]
     navigation.navigate(route)
   }
