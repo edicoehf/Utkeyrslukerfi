@@ -1,6 +1,6 @@
 import { useDispatch } from "react-redux"
 import { useHistory } from "react-router"
-import { setDelivery } from '../../actions/deliveryActions'
+import { setViewingDelivery } from '../../actions/deliveryActions'
 import { BsPencilSquare } from 'react-icons/bs'
 import { format } from 'date-fns'
 import configData from '../../constants/config.json'
@@ -11,10 +11,9 @@ const DeliveryDetails = ({delivery}) => {
     const history = useHistory()
 
     const navigateToDelivery = (delivery) => {
-        dispatch(setDelivery(delivery))
+        dispatch(setViewingDelivery(delivery))
         history.push(`/deliveries/${delivery.id}`)
     }
-    console.log("halló")
     return (
         <tr key={delivery.id}>
           <td>{delivery.id}</td>

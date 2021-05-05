@@ -13,7 +13,7 @@ const UsersList = () => {
   const history = useHistory()
   const token = useSelector(({ login }) => login.token)
   const users = useSelector(({ users }) => users)
-  const [userState, setUserState] = useState([])
+  const [usersState, setUsersState] = useState([])
   const [filterModal, setFilterModel] = useState(false)
   const dispatch = useDispatch()
 
@@ -29,7 +29,7 @@ const UsersList = () => {
   }, [token])
 
   useEffect(() => {
-    setUserState(users)
+    setUsersState(users)
   }, [users])
 
   const navigateToUser = (user) => {
@@ -41,7 +41,7 @@ const UsersList = () => {
   }
 
   const renderRows = () => {
-    return userState.map(function (user, id) {
+    return usersState.map(function (user, id) {
       return (
         <tr key={id}>
           <td>{user.id}</td>
@@ -71,7 +71,7 @@ const UsersList = () => {
         <tbody>
           {/* Loading the Add user plus */}
           {
-            users.length > 0 ? renderRows() : null
+            usersState.length > 0 ? renderRows() : null
           }
           <tr>
             <td onClick={() => navigateToCreateUser()}><ImPlus size='2em' className='clickable' /></td>
@@ -83,7 +83,7 @@ const UsersList = () => {
         </tbody>
       </table>
       {
-        users.length <= 0
+        usersState.length <= 0
           ? <div className='text-center'>
             <div className='spinner-border' role='status'>
               <span className='sr-only'>Loading...</span>
@@ -91,7 +91,7 @@ const UsersList = () => {
             </div>
           : null
       }
-      <UserFilterModal visible={filterModal} users={users} setUsers={setUserState} updateModalState={toggleModal} />
+      <UserFilterModal visible={filterModal} users={users} setUsers={setUsersState} updateModalState={toggleModal} />
     </div>
   )
 }

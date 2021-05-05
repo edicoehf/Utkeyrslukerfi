@@ -12,7 +12,7 @@ import User from './views/User'
 import Home from './views/Home'
 import UsersList from './views/UsersList'
 import DeliveriesList from './views/DeliveriesList'
-import UpdateDelivery from './views/UpdateDelivery'
+import Delivery from './views/Delivery'
 import Package from './views/Package'
 import CreateUser from './views/CreateUser'
 import NotFound from './views/NotFound'
@@ -42,7 +42,7 @@ const App = () => {
           <Route exact path='/users/create' component={CreateUser} />
           <Route exact path='/users/:id' component={User} />
           <Route exact path='/deliveries' component={DeliveriesList} />
-          <Route exact path='/deliveries/:id' component={UpdateDelivery} />
+          <Route exact path='/deliveries/:id' component={Delivery} />
           <Route exact path='/deliveries/:delid/packages/:id' component={Package} />
           <Route exact path='*' component={NotFound} />
         </Switch>
