@@ -15,29 +15,33 @@ const customStyles = {
 }
 
 const AddressModal = ({ canShow, updateModalState, didChange, isDelivery }) => {
+  // delivery from the store state
   const delivery = useSelector(({ delivery }) => delivery)
   const dispatch = useDispatch()
+  // the address that has to be updates. If it is a delivery address,
+  // then set dAddress as delivery address otherwise it will set as pickup address 
   const [dAddres, setDAddress] = useState(isDelivery ? delivery.deliveryAddress : delivery.pickupAddress)
   Modal.setAppElement('#root')
-  let subtitle
+  const subtitle
   function afterOpenModal () {
     subtitle.style.color = '#139ffd'
   }
-
+  // function which will update the state of the delivery when update is clicked
   const updateData = () => {
     if (isDelivery) {
       dispatch(setDelivery({
         ...delivery,
         deliveryAddress: dAddres
       }))
-      didChange(true, 'delivery')
+      didChange('delivery')
     } else {
       dispatch(setDelivery({
         ...delivery,
         pickupAddress: dAddres
       }))
-      didChange(true, 'pickup')
+      didChange('pickup')
     }
+    // will update the state of the modal (from show to hide)
     updateModalState()
   }
 

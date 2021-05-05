@@ -10,7 +10,7 @@ export default StyleSheet.create({
     right: 30,
     bottom: 30,
     backgroundColor: 'lightblue',
-    borderRadius: 30,
+    borderRadius: 30
   },
   floatingButtonStyle: {
     width: 12,
@@ -23,6 +23,6 @@ export default StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    backgroundColor: "#e5e5e5"
+    backgroundColor: '#e5e5e5'
   }
 })
