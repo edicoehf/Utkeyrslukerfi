@@ -7,13 +7,14 @@ const PackageList = ({ packages, deliveryID }) => {
   }
 
   return (
-    <div className="package-list">
-      <span className="package-title">Packages</span>
+    <div className='package-list'>
+      <span className='package-title'>Packages</span>
       {packages.map((p) =>
         (
           <div
-            className="package"
-            onClick={() => navigateToPackage(p)}>
+            className='package'
+            onClick={() => navigateToPackage(p)}
+          >
             <span>Barkóði:</span>
             <span>{p.id}</span>
           </div>

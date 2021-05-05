@@ -66,7 +66,7 @@ const UpdateDelivery = ({ delivery }) => {
   }
 
   return (
-    <div className="delivery-info">
+    <div className='delivery-info'>
       <FormProvider {...methods}>
         <Form onSubmit={methods.handleSubmit(submitForm)} className='form form-horizontal'>
           <FormGroupInput
@@ -114,7 +114,7 @@ const UpdateDelivery = ({ delivery }) => {
           {/* TODO add Form group for this */}
           <div className='form-group row'>
             <label>Heimilisfang Sendanda:</label>
-            <div className="col-sm-8">
+            <div className='col-sm-8'>
               <input
                 className='form-control'
                 type='text'
@@ -126,13 +126,13 @@ const UpdateDelivery = ({ delivery }) => {
           </div>
           <div className='form-group row'>
             <label>Heimilisfang Móttakanda:</label>
-            <div className="col-sm-8">
+            <div className='col-sm-8'>
               <input
                 className='form-control'
                 type='text' name='deliveryAddress'
                 onClick={() => setShowDeliveryModal(true)}
                 value={delivery?.deliveryAddress?.streetName}
-                />
+              />
             </div>
           </div>
           <FormGroupDropdown
