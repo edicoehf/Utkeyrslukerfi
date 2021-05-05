@@ -30,7 +30,6 @@ const DeliveryTable = ({ data }) => {
     setDeliveries([])
     // Call the Service to get the latest deliveries
     dispatch(getDeliveries(token))
-    data = deliveries
     setDeliveries(data)
   }
   const tableHeader = () => (
