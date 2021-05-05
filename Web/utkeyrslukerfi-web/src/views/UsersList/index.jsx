@@ -25,7 +25,7 @@ const UsersList = () => {
     if (token) {
       dispatch(getUsers(token))
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line
   }, [token])
 
   useEffect(() => {

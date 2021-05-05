@@ -31,7 +31,7 @@ const UpdateDelivery = ({ delivery }) => {
     if (token) {
       dispatch(getPackages(token, id))
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line
   }, [token])
 
   useEffect(() => {
@@ -45,7 +45,7 @@ const UpdateDelivery = ({ delivery }) => {
     methods.setValue('vehicleID', delivery?.vehicle?.id)
     setDeliveryAddress(delivery?.deliveryAddress)
     setPickupAddress(delivery?.pickupAddress)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line
   }, [delivery])
 
   const [showDeliveryModal, setShowDeliveryModal] = useState(false)
