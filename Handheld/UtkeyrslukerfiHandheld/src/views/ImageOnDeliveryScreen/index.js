@@ -17,7 +17,7 @@ const ImageOnDeliveryScreen = ({ route, navigation }) => {
   const token = useSelector(({ login }) => login.token)
   const { delivery } = route.params
 
-  // TODO: Blob configuration is not updating from signForDeliveryScreen, still saving to signatures container 
+  // TODO: Blob configuration is not updating from signForDeliveryScreen, still saving to signatures container
   useEffect(() => {
     (async () => {
       await EAzureBlobStorageFile.configure(
@@ -25,7 +25,7 @@ const ImageOnDeliveryScreen = ({ route, navigation }) => {
         REACT_APP_STORAGE_KEY,
         'images'
       )
-    })
+    })()
     setName(delivery.recipient)
   }, [])
 

@@ -23,8 +23,8 @@ const SignForDeliveryScreen = ({ route, navigation }) => {
         'utkeyrslukerfistorage',
         REACT_APP_STORAGE_KEY,
         'signatures'
-        )
-    })
+      )
+    })()
     setName(delivery.recipient)
   }, [])
 
@@ -34,7 +34,7 @@ const SignForDeliveryScreen = ({ route, navigation }) => {
       const contentType = 'image/png'
       const b64Data = signature.replace('data:image/png;base64,', '')
       const fileName = `signature${delivery.id}.png`
-      const path = `file://${FileSystem.CachesDirectoryPath }/${fileName}`
+      const path = `file://${FileSystem.CachesDirectoryPath}/${fileName}`
 
       // Save file
       await FileSystem.writeFile(path, b64Data, 'base64')
@@ -63,7 +63,7 @@ const SignForDeliveryScreen = ({ route, navigation }) => {
 
     // Set file name
     const fileName = await saveSignature(signature)
-    delivery.signoffSignatureURI = fileName //TODO: save to db
+    delivery.signoffSignatureURI = fileName // TODO: save to db
     const route = signingProcess.process[signingProcess.step]
     dispatch(setStep(2)) // TODO: numbering
     navigation.navigate(route, { delivery: delivery })
