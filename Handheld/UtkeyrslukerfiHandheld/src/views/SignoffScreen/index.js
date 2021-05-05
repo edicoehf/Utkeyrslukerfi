@@ -11,8 +11,8 @@ import SignoffSignature from '../../components/SignoffSignature'
 const SignoffScreen = ({ route, navigation }) => {
   const token = useSelector(({ login }) => login.token)
   const { delivery } = route.params
-  const signoffMethods = delivery.signoff.settings            // 000 -> SignName TakePic TakeName
-  const [stepCounter,  setStepCounter] = useState(7)          // 111 -> 1 means it's left, 0 it's already done
+  const signoffMethods = delivery.signoff.settings // 000 -> SignName TakePic TakeName
+  const [stepCounter, setStepCounter] = useState(7) // 111 -> 1 means it's left, 0 it's already done
 
   // Update database
   const updateDeliveryInDatabase = async () => {
@@ -33,10 +33,10 @@ const SignoffScreen = ({ route, navigation }) => {
     await updateDeliveryInDatabase()
     navigation.navigate('DeliveryReceived')
   }
-  
+
   // Using binary operators,
   // check if relevant bit is set in the signoff methods, 1 means that signoff method is required
-  // then the stepCounter is checked, if the relevant bit is set it means that the method has not already been checked 
+  // then the stepCounter is checked, if the relevant bit is set it means that the method has not already been checked
   const getRelevantSignoffMethod = () => {
     // 001 - get receivers name
     if ((1 & signoffMethods) && (1 & stepCounter)) {
@@ -52,7 +52,6 @@ const SignoffScreen = ({ route, navigation }) => {
     }
     finishSignoff()
   }
-  
 
   return (
     <View style={styles.container}>

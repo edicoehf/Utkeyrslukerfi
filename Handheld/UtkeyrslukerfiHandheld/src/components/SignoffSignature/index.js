@@ -77,16 +77,16 @@ const SignoffSignature = ({ delivery, stepCounter, setStepCounter }) => {
         />
       </View>
       <View style={styles.buttonContainer}>
-      <BasicButton
-        buttonText='Hreinsa'
-        onPressFunction={handleClear}
-      />
-      <BasicButton
-        buttonText='Vista'
-        onPressFunction={handleConfirm}
-      />
-    </View>
-   </>
+        <BasicButton
+          buttonText='Hreinsa'
+          onPressFunction={handleClear}
+        />
+        <BasicButton
+          buttonText='Vista'
+          onPressFunction={handleConfirm}
+        />
+      </View>
+    </>
   )
 }
 

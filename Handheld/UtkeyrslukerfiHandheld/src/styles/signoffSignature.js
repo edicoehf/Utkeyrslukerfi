@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
     margin: windowHeight * 0.05,
     borderColor: '#cccccc',
     borderWidth: 2,
-    borderRadius: 5,
+    borderRadius: 5
   },
   canvasContainer: {
     width: windowWidth * 0.9,

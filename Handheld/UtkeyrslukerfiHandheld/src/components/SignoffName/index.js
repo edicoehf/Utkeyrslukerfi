@@ -27,7 +27,7 @@ const SignoffName = ({ delivery, stepCounter, setStepCounter }) => {
         value={name}
       />
       <View style={styles.buttonContainer}>
-        
+
         <BasicButton buttonText='Vista' onPressFunction={continueWithDelivery} />
       </View>
     </>

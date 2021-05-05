@@ -36,7 +36,7 @@ const SearchStackScreen = () => {
       <SearchStack.Screen name='Details' component={DetailsScreen} options={{ headerTitle: <NameTitle /> }} />
       <SearchStack.Screen name='Deliver' component={DeliverScreen} options={{ headerTitle: <NameTitle /> }} />
       <SearchStack.Screen name='Signoff' component={SignoffScreen} options={{ headerTitle: <NameTitle /> }} />
-      <SearchStack.Screen name='DeliveryReceived' component={DeliveryReceivedScreen} options={{ headerTitle: <NameTitle /> }} /> 
+      <SearchStack.Screen name='DeliveryReceived' component={DeliveryReceivedScreen} options={{ headerTitle: <NameTitle /> }} />
     </SearchStack.Navigator>
   )
 }
