@@ -26,12 +26,10 @@ const Delivery = () => {
     if (token) {
       dispatch(getPackages(token, id))
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [token])
 
   useEffect(() => {
     dispatch(setDelivery(delivery))
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   })
 
   useEffect(() => {
@@ -39,7 +37,6 @@ const Delivery = () => {
       methods.setValue('deliveryAddress', delivery.deliveryAddress.streetName)
       methods.setValue('pickupAddress', delivery.pickupAddress.streetName)
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [delivery])
 
   const navigateToPackage = (obj) => {
