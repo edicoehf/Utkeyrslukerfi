@@ -16,7 +16,7 @@ namespace Utkeyrslukerfi.API.Models.Dtos
         public AddressDTO PickupAddress { get; set; }
         public AddressDTO DeliveryAddress { get; set; }
         public VehicleDTO Vehicle { get; set; }
-        public SignOffDTO SignOff { get; set; }
+        public SignoffDTO Signoff { get; set; }
         public List<PackageDTO> Packages { get; set; }
     }
 }

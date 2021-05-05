@@ -2,7 +2,7 @@ using System;
 
 namespace Utkeyrslukerfi.API.Models.Dtos
 {
-    public class SignOffDTO
+    public class SignoffDTO
     {
         public Guid ID { get; set; }
         public string ImageURI { get; set; }

@@ -18,6 +18,7 @@ namespace Utkeyrslukerfi.API
             CreateMap<UserInputModel, User>();
             CreateMap<Address, AddressDTO>();
             CreateMap<Vehicle, VehicleDTO>();
+            CreateMap<Signoff, SignoffDTO>();
         }
     }
 }
