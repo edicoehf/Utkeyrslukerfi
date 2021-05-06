@@ -189,7 +189,7 @@ const Delivery = () => {
               return <p key={obj.id} onClick={() => navigateToPackage(obj)}>ID/Barcode: {obj.id}</p>
             })
           }
-          </> : <> <p>No packages found</p></>
+          </> : <> <p>Engir pakkar í sendingu</p></>
         }
       </div>
       <button onClick={() => setEditable(editable => !editable)} className='btn btn-outline-info m-4'>Edit</button>
