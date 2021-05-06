@@ -17,6 +17,7 @@
     "@react-navigation/native": "^5.9.4",
     "@react-navigation/stack": "^5.14.4",
     "babel-plugin-transform-inline-environment-variables": "^0.4.3",
+    "date-fns": "^2.21.2",
     "lodash": "^4.17.21",
     "react": "17.0.1",
     "react-native": "0.64.0",
