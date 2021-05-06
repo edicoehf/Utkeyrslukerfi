@@ -6,20 +6,23 @@ import ScanStackScreen from './ScanStackScreen'
 import ListStackScreen from './ListStackScreen'
 // Icons
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons'
-import MaterialIcon from 'react-native-vector-icons/MaterialIcons'
 // Views
 
-import { BLUE } from '../constants'
+import { BLUE, LIGHT_BLUE } from '../constants'
 
 const Tab = createBottomTabNavigator()
 
+// AppContainer contains the routes of the application which are located at the bottom bar
+// By default Scan page is the landing page.
 const AppContainer = () => {
   return (
     <NavigationContainer>
       <Tab.Navigator
         initialRouteName='Scan'
         tabBarOptions={{
-          tabStyle: { backgroundColor: BLUE }
+          tabStyle: { backgroundColor: BLUE },
+          activeTintColor: LIGHT_BLUE,
+          inactiveTintColor: 'white'
         }}
       >
         <Tab.Screen
@@ -27,8 +30,11 @@ const AppContainer = () => {
           component={ListStackScreen}
           options={{
             showIcon: true,
-            tabBarLabel: 'List',
-            tabBarIcon: () => <MaterialCommunityIcon name='format-list-bulleted' style={{ width: 26 - 32 }} color='#333' size={24} />
+            tabBarLabel: ({ focused, color }) => {
+              const iconName = focused ? 'view-list' : 'view-list-outline'
+              return <MaterialCommunityIcon name={iconName} size={45} color={color} />
+            },
+            tabBarAccessibilityLabel: 'ListScreen'
           }}
         />
         <Tab.Screen
@@ -36,8 +42,11 @@ const AppContainer = () => {
           component={ScanStackScreen}
           options={{
             showIcon: true,
-            tabBarLabel: 'Scan',
-            tabBarIcon: () => <MaterialCommunityIcon name='barcode-scan' style={{ width: 26 - 32 }} color='#333' size={24} />
+            tabBarLabel: ({ focused, color }) => {
+              const iconName = focused ? 'barcode-scan' : 'barcode'
+              return <MaterialCommunityIcon name={iconName} style={{ width: 26 - 32 }} color={color} size={45} />
+            },
+            tabBarAccessibilityLabel: 'ScanScreen'
           }}
         />
         <Tab.Screen
@@ -45,8 +54,11 @@ const AppContainer = () => {
           component={SearchStackScreen}
           options={{
             showIcon: true,
-            tabBarLabel: 'Search',
-            tabBarIcon: () => <MaterialIcon name='search' style={{ width: 26 - 32 }} color='#333' size={24} />
+            tabBarLabel: ({ focused, color }) => {
+              const iconName = focused ? 'magnify-scan' : 'magnify'
+              return <MaterialCommunityIcon name={iconName} style={{ width: 26 - 32 }} color={color} size={45} />
+            },
+            tabBarAccessibilityLabel: 'SearchScreen'
           }}
         />
       </Tab.Navigator>

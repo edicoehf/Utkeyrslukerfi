@@ -15,7 +15,6 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
         {
             _dbContext = dbContext;
         }
-
         public JwtToken CreateNewToken(User user)
         {
             var token = new JwtToken
@@ -30,14 +29,12 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
 
             return token;
         }
-
         public bool IsTokenBlacklisted(int tokenID)
         {
             var token = _dbContext.JwtTokens.FirstOrDefault(t => t.ID == tokenID);
             if (token == null) { return true; }
             return token.Blacklisted;
         }
-
         public void VoidToken(int tokenID)
         {
             var token = _dbContext.JwtTokens.FirstOrDefault(t => t.ID == tokenID);
@@ -45,7 +42,6 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
             token.Blacklisted = true;
             _dbContext.SaveChanges();
         }
-
         public Guid GetUserID(int tokenID)
         {
             var token = _dbContext.JwtTokens.FirstOrDefault(t => t.ID == tokenID);

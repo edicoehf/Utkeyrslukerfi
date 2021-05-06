@@ -15,7 +15,6 @@ namespace Utkeyrslukerfi.API.Models.Entities
         public DateTime CreatedOn { get; set; }
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime LastUpdated { get; set; }
-
         // Navigation Properties
         public List<Delivery> Deliveries { get; set; }
     }
