@@ -1,22 +1,17 @@
-import React, { useEffect, useRef, useState } from 'react'
-import { View, Text, ToastAndroid, TextInput } from 'react-native'
+import React, { useEffect, useRef } from 'react'
+import { View, ToastAndroid, Text } from 'react-native'
 import Signature from 'react-native-signature-canvas'
-import { useDispatch, useSelector } from 'react-redux'
-import { setStep } from '../../actions/signingProcessActions'
 import BasicButton from '../../components/BasicButton'
-import styles from '../../styles/signForDeliveryScreen'
+import styles from '../../styles/signoffSignature'
 import { EAzureBlobStorageFile } from 'react-native-azure-blob-storage'
 import { REACT_APP_STORAGE_KEY } from '@env'
 import * as FileSystem from 'react-native-fs'
 
-// Let the receiver sign for the delivery
-const SignForDeliveryScreen = ({ route, navigation }) => {
-  const [name, setName] = useState('')
-  const signingProcess = useSelector(({ signingProcess }) => signingProcess)
-  const dispatch = useDispatch()
+// Signoff Signature, gets receivers signature during delivery
+const SignoffSignature = ({ delivery, stepCounter, setStepCounter }) => {
   const canvasRef = useRef()
-  const { delivery } = route.params
 
+  // Set the correct configuration for the blob storage
   useEffect(() => {
     (async () => {
       await EAzureBlobStorageFile.configure(
@@ -25,8 +20,13 @@ const SignForDeliveryScreen = ({ route, navigation }) => {
         'signatures'
       )
     })()
-    setName(delivery.recipient)
   }, [])
+
+  const handleEmpty = () => { ToastAndroid.showWithGravity('Undirskrift vantar.', ToastAndroid.LONG, ToastAndroid.TOP) }
+
+  const handleClear = () => { canvasRef.current.clearSignature() }
+
+  const handleConfirm = () => { canvasRef.current.readSignature() }
 
   // First the signature base64 needs to be saved to the phones cache and then uploaded to the blob storage
   const saveSignature = async (signature) => {
@@ -47,47 +47,28 @@ const SignForDeliveryScreen = ({ route, navigation }) => {
       })
       return fileNameRet
     } catch (err) {
-      console.log(err)
+      ToastAndroid.showWithGravity('Ekki náðist að flytja myndina upp í skýið', ToastAndroid.LONG, ToastAndroid.TOP)
     }
   }
 
-  // Save the signature and recipient
-  const handleSignature = async (signature) => {
-    // TODO: save the image on a server and save the link in the db, get the link for the image from signature.data
-    if (!name) {
-      ToastAndroid.showWithGravity('Vinsamlegast settu inn nafn móttakanda.', ToastAndroid.LONG, ToastAndroid.TOP)
-      return
-    }
-    // Set recipient
-    delivery.recipient = name
-
+  // Save the signature
+  const continueWithDelivery = async (signature) => {
     // Set file name
     const fileName = await saveSignature(signature)
-    delivery.signoffSignatureURI = fileName // TODO: save to db
-    const route = signingProcess.process[signingProcess.step]
-    dispatch(setStep(2)) // TODO: numbering
-    navigation.navigate(route, { delivery: delivery })
+    delivery.signoffSignatureURI = fileName
+
+    // Mark SignoffSignature as done (0)
+    setStepCounter(stepCounter ^ 4)
   }
 
-  const handleEmpty = () => { ToastAndroid.showWithGravity('Undirskrift vantar.', ToastAndroid.LONG, ToastAndroid.TOP) }
-
-  const handleClear = () => { canvasRef.current.clearSignature() }
-
-  const handleConfirm = () => { canvasRef.current.readSignature() }
-
   return (
-    <View style={styles.container}>
-      <Text style={styles.label}>Nafn móttakanda:</Text>
-      <TextInput
-        style={styles.input}
-        onChangeText={setName}
-        defaultValue={delivery.name}
-      />
+    <>
+      <Text style={styles.label}>Undirskrift móttakanda:</Text>
       <View style={styles.canvasContainer}>
         <Signature
           ref={canvasRef}
           style={styles.canvas}
-          onOK={handleSignature}
+          onOK={continueWithDelivery}
           onEmpty={handleEmpty}
           bgColor='#000000'
           webStyle={`
@@ -105,8 +86,8 @@ const SignForDeliveryScreen = ({ route, navigation }) => {
           onPressFunction={handleConfirm}
         />
       </View>
-    </View>
+    </>
   )
 }
 
-export default SignForDeliveryScreen
+export default SignoffSignature

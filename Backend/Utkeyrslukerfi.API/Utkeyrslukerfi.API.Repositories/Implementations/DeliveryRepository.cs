@@ -8,7 +8,6 @@ using Utkeyrslukerfi.API.Repositories.Interfaces;
 using Utkeyrslukerfi.API.Models.Exceptions;
 using Utkeyrslukerfi.API.Models.Envelope;
 using Microsoft.EntityFrameworkCore;
-using System;
 using Utkeyrslukerfi.API.Repositories.IContext;
 
 namespace Utkeyrslukerfi.API.Repositories.Implementations
@@ -33,18 +32,23 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
                             .Include(d => d.Packages)
                             .Include(d => d.Signoff);
         }
-
+        /// <summary>
+        /// Find and returns a Delivery with a given ID
+        /// </summary>
+        /// <param name="ID">ID of the Delivery (Required)</param>
+        /// <returns>Returns a Delivery DTO</returns>
         public DeliveryDTO GetDelivery(string ID)
         {
             var delivery = _deliveryObj.FirstOrDefault(d => d.ID == ID);
-            if (delivery == null)
-            {
-                throw new NotFoundException($"Did not find delivery with id {ID}");
-            }
-
             return _mapper.Map<DeliveryDTO>(delivery);
         }
-
+        /// <summary>
+        /// Find and returns all Deliveries
+        /// Put deliveries in an envelope according to the envelope size and fragment.
+        /// </summary>
+        /// <param name="pageSize">Optional parameter for the list size.</param>
+        /// <param name="pageNumber">Optional parameter for the fragment of a delivery list.</param>
+        /// <returns>Return the list of the deliveries mapped according to the DTO</returns>
         public IEnumerable<DeliveryDTO> GetDeliveries(int pageSize, int pageNumber)
         {
             var deliveries = _deliveryObj.ToList();
@@ -121,12 +125,16 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
             // return _mapper.Map<DeliveryDTO>(entity);
             return new DeliveryDTO();
         }
-
-        public void UpdateDelivery(DeliveryInputModel newdelivery, string id)
+        /// <summary>
+        /// Find a delivery with a given ID and if it exists, then it updates
+        /// the delivery whith the new delivery object that was send <inheritdoc./>
+        /// </summary>
+        /// <param name="newdelivery">Delivery object that will be updated (Required).</param>
+        /// <param name="ID">ID of the delivery that will be updated (Required).</param>
+        public void UpdateDelivery(DeliveryInputModel newdelivery, string ID)
         {
-            // Get delivery
-            var delivery = _deliveryObj.FirstOrDefault(d => d.ID == id);
-            if (delivery == null) { throw new NotFoundException($"No delivery with ID: {id}"); }
+            var delivery = _deliveryObj.FirstOrDefault(d => d.ID == ID);
+            if (delivery == null) { throw new NotFoundException($"No delivery with ID: {ID}"); }
             delivery.Seller = newdelivery.Seller ?? delivery.Seller;
             delivery.Recipient = newdelivery.Recipient ?? delivery.Recipient;
             delivery.DriverComment = newdelivery.DriverComment ?? delivery.DriverComment;
@@ -151,14 +159,14 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
             }
             if (delivery.Vehicle != null || newdelivery.VehicleID != null)
             {
-                var vid = newdelivery.VehicleID ?? delivery.Vehicle.ID;
-                var tempVehicle = _dbContext.Vehicles.FirstOrDefault(v => v.ID == vid);
+                var vId = newdelivery.VehicleID ?? delivery.Vehicle.ID;
+                var tempVehicle = _dbContext.Vehicles.FirstOrDefault(v => v.ID == vId);
                 delivery.Vehicle = tempVehicle;
             }
             if (delivery.Driver != null || newdelivery.DriverID != null)
             {
-                var vid = newdelivery.DriverID ?? delivery.Driver.ID;
-                var tempDriver = _dbContext.Users.FirstOrDefault(v => v.ID == vid);
+                var vId = newdelivery.DriverID ?? delivery.Driver.ID;
+                var tempDriver = _dbContext.Users.FirstOrDefault(v => v.ID == vId);
                 delivery.Driver = tempDriver;
             }
             if (delivery.Signoff != null)
@@ -168,10 +176,12 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
                 delivery.Signoff.Recipient = newdelivery.SignoffRecipient ?? delivery.Signoff.Recipient;
             }
 
-            // Save changes
             _dbContext.SaveChanges();
         }
-
+        /// <summary>
+        /// Updates all deliveries
+        /// </summary>
+        /// <param name="deliveries">List of deliveries (Required).</param>
         public void UpdateDeliveries(DeliveriesInputModel deliveries)
         {
             for (int i = 0; i < deliveries.Deliveries.Length; i++)

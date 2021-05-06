@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import DropDownPicker from 'react-native-dropdown-picker'
 import { getDrivers } from '../../actions/driversActions'
 import BasicButton from '../../components/BasicButton'
+import styles from '../../styles/loginStyles'
 
 const Login = () => {
   // TODO: Style
@@ -22,26 +23,24 @@ const Login = () => {
   }
 
   return (
-    <View style={{ minHeight: 300, zIndex: 2 }}>
-      <Text style={{ paddingTop: 60 }}>Innskráning</Text>
-      <DropDownPicker
-        items={
-          drivers.map((driver) => {
-            return { label: driver.name, value: driver.name }
-          })
-        }
-        placeholder='Velja starfsmann...'
-        containerStyle={{ height: 40 }}
-        style={{ backgroundColor: '#fafafa' }}
-        itemStyle={{
-          justifyContent: 'flex-start'
-        }}
-        dropDownStyle={{ backgroundColor: '#fafafa', minHeight: 40, maxHeight: 120 }}
-        onChangeItem={item => setSelected(item.value)}
-      />
-      <View
-        style={{ zIndex: 0 }}
-      >
+    <View style={styles.mainView}>
+      <View style={styles.dropDown}>
+        <Text style={styles.mainText}>Innskráning</Text>
+        <DropDownPicker
+          items={
+            drivers.map((driver) => {
+              return { label: driver.name, value: driver.name }
+            })
+          }
+          placeholder='Velja starfsmann...'
+          containerStyle={styles.containerStyle}
+          style={styles.dropDownPickerStyle}
+          itemStyle={styles.itemStyle}
+          dropDownStyle={styles.dropDownStyle}
+          onChangeItem={item => setSelected(item.value)}
+        />
+      </View>
+      <View style={styles.loginButton}>
         <BasicButton
           onPressFunction={handleSubmit}
           buttonText='Skrá inn'

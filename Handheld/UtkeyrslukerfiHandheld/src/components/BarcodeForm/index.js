@@ -6,7 +6,7 @@ import styles from '../../styles/barcodeForm'
 const BarcodeForm = ({ barcode, setBarcode, enterBarcode, labelText }) => {
   return (
     <View style={styles.container}>
-      <View style={styles.container1}>
+      <View style={styles.inputContainer}>
         <Text style={styles.label}>{labelText}</Text>
         <TextInput
           onChangeText={setBarcode}

@@ -1,7 +1,7 @@
 import React from 'react'
 import { View, Text, FlatList } from 'react-native'
 import styles from '../../styles/productTable'
-
+import { MAINLY_BLUE } from '../../constants'
 // Table for products containing barcode, status and more
 const ProductTable = ({ tableHeaders, tableData, numberOfObjects }) => {
   const tableHeaderComponent = () => (
@@ -17,7 +17,7 @@ const ProductTable = ({ tableHeaders, tableData, numberOfObjects }) => {
   )
 
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+    <View style={styles.mainView}>
       <Text style={styles.label}>Skannaðir pakkar</Text>
       <FlatList
         data={tableData}
@@ -27,7 +27,7 @@ const ProductTable = ({ tableHeaders, tableData, numberOfObjects }) => {
         stickyHeaderIndices={[0]}
         renderItem={({ item, index }) => {
           return (
-            <View style={{ ...styles.tableRow, backgroundColor: index % 2 === 1 ? '#F0FBFC' : 'white' }}>
+            <View style={{ ...styles.tableRow, backgroundColor: index % 2 === 1 ? MAINLY_BLUE : 'white' }}>
               {
                 Object.keys(item).map((k) => {
                   if (k !== 'status') {

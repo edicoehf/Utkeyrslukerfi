@@ -5,8 +5,6 @@ import CommentBox from '../../components/CommentBox'
 import ProductTable from '../../components/ProductTable'
 import RemoveButton from '../../components/RemoveButton'
 import CheckBox from '@react-native-community/checkbox'
-import { useDispatch, useSelector } from 'react-redux'
-import { setStep } from '../../actions/signingProcessActions'
 import BasicButton from '../../components/BasicButton'
 import styles from '../../styles/deliverScreen'
 
@@ -14,7 +12,6 @@ import styles from '../../styles/deliverScreen'
 const DeliverScreen = ({ route, navigation }) => {
   // TODO:
   // - add consecutive screens that depend on checkbox
-  // - Make sure back buttons decrement steps
   const { delivery } = route.params
   const [count, setCount] = useState(1)
   const [barcode, setBarcode] = useState()
@@ -23,16 +20,16 @@ const DeliverScreen = ({ route, navigation }) => {
   const [tableData, setTableData] = useState([])
   const tableHeaders = ['Sendingarnr.', 'Pakki í sendingu', '']
   const [receiverNotHome, setReveiverNotHome] = useState(false)
-  const signingProcess = useSelector(({ signingProcess }) => signingProcess)
-  const dispatch = useDispatch()
 
   // A ref is neccessary since the remove buttons contain callbacks that reference the state at the time of creation otherwise
   const tableDataRef = useRef()
 
+  // Create reference to table data to get a pointer to the current table data
   useEffect(() => {
     tableDataRef.current = [...tableData]
   }, [tableData])
 
+  // Set the values for the comment sections
   useEffect(() => {
     if (delivery.driverComment) { setDriverComment(delivery.driverComment) }
     if (delivery.customerComment) { setCustomerComment(delivery.customerComment) }
@@ -62,11 +59,9 @@ const DeliverScreen = ({ route, navigation }) => {
     setBarcode('')
   }
 
-  // Navigate to sign page, camera page or delivery received page depending on delivery process
+  // Navigate to signoff screen where already configured signoff methods will be shown
   const continueWithDelivery = () => {
-    const route = signingProcess.process[signingProcess.step]
-    dispatch(setStep(1))
-    navigation.navigate(route, { delivery: delivery })
+    navigation.navigate('Signoff', { delivery: delivery })
   }
 
   return (
