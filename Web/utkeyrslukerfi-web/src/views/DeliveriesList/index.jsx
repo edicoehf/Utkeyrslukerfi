@@ -55,7 +55,7 @@ const DeliveriesList = () => {
           {
             deliveryState.length > 0
               ? deliveryState.map((deliv) => (
-                <DeliveryDetails delivery={deliv} />
+                <DeliveryDetails key={deliv.id} delivery={deliv} />
                 ))
               : null
           }

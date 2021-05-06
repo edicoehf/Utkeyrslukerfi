@@ -43,7 +43,6 @@ export const updateDelivery = (token, id, delivery) => async (dispatch) => {
       DriverID: delivery?.driver?.id
     }
     const res = await deliveryService.updateDelivery(token, id, deliveryInputModel)
-    console.log(res)
     if (res?.status === 401) { toastr.error('Þú hefur ekki leyfi til að uppfæra sendingu.') }
     if (res?.status === 404) { toastr.error('Sending fannst ekki.') }
     if (res?.status === 400) { toastr.error('Slæm beiðni.') }

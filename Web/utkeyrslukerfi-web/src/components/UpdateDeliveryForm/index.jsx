@@ -35,7 +35,6 @@ const UpdateDelivery = ({ delivery }) => {
   }, [token])
 
   useEffect(() => {
-    console.log(delivery.driver)
     methods.setValue('deliveryAddress', delivery?.deliveryAddress.streetName)
     methods.setValue('pickupAddress', delivery?.pickupAddress.streetName)
     methods.setValue('recipient', delivery?.recipient)
