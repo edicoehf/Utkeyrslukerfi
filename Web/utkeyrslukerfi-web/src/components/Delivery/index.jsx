@@ -182,7 +182,7 @@ const Delivery = () => {
         </form>
       </div>
       <div className='col col-md-6 border mt-2 px-auto pt-1'>
-        <p>Packages</p>
+        <p>Pakkar</p>
         {
           packages.length !== 0 ? <> {
             packages.map(function (obj) {
