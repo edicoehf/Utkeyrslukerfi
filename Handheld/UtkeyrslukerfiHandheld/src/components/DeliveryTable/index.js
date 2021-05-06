@@ -4,8 +4,8 @@ import { useSelector, useDispatch } from 'react-redux'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import styles from '../../styles/deliveryTable'
 import { getDeliveries } from '../../actions/deliveryActions'
-import Moment from 'moment'
 import _ from 'lodash'
+import { format } from 'date-fns'
 
 const DeliveryTable = ({ data }) => {
   const columns = ['id', 'status', 'date']
@@ -81,7 +81,7 @@ const DeliveryTable = ({ data }) => {
             <View style={{ ...styles.tableRow, backgroundColor: index % 2 === 1 ? '#F0FBFC' : 'white' }}>
               <Text style={{ ...styles.columnRowTxt, fontWeight: 'bold' }}>{item.id}</Text>
               <Text style={styles.columnRowTxt}>{availableStatusCodes[item.status]}</Text>
-              <Text style={styles.columnRowTxt}>{item.deliveryDate === null ? 'N/A' : Moment(item.deliveryDate).format('MMMM do, yyyy')}</Text>
+              <Text style={styles.columnRowTxt}>{format(new Date(item.deliveryDate), 'MMMM do, yyyy')}</Text>
             </View>
           )
         }}
