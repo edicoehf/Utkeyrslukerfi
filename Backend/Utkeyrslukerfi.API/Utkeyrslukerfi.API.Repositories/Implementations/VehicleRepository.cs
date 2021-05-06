@@ -12,68 +12,68 @@ using Utkeyrslukerfi.API.Models.Exceptions;
 
 namespace Utkeyrslukerfi.API.Repositories.Implementations
 {
-  /// <summary>
-  /// Implementation of of the Vehicle interface
-  /// </summary>
-  public class VehicleRepository : IVehicleRepository
-  {
-    private readonly IUtkeyrslukerfiDbContext _dbContext;
-    private readonly IMapper _mapper;
-    public VehicleRepository(IMapper mapper, IUtkeyrslukerfiDbContext dbContext)
-    {
-      _dbContext = dbContext;
-      _mapper = mapper;
-    }
     /// <summary>
-    /// Gets a vehicle by a given id
-    /// Throws an exception if the vehicle does not exist
+    /// Implementation of of the Vehicle interface
     /// </summary>
-    /// <param name="ID"></param>
-    /// <returns>Map the vehicle according to DTO</returns>
-    public VehicleDTO GetVehicle(string ID)
+    public class VehicleRepository : IVehicleRepository
     {
-      var entity = _dbContext.Vehicles.FirstOrDefault(v => v.LicensePlate == ID);
-      if (entity == null) { throw new NotFoundException($"Did not find Vehicle with id: {ID}"); }
-      return _mapper.Map<VehicleDTO>(entity);
+        private readonly IUtkeyrslukerfiDbContext _dbContext;
+        private readonly IMapper _mapper;
+        public VehicleRepository(IMapper mapper, IUtkeyrslukerfiDbContext dbContext)
+        {
+            _dbContext = dbContext;
+            _mapper = mapper;
+        }
+        /// <summary>
+        /// Gets a vehicle by a given id
+        /// Throws an exception if the vehicle does not exist
+        /// </summary>
+        /// <param name="ID"></param>
+        /// <returns>Map the vehicle according to DTO</returns>
+        public VehicleDTO GetVehicle(string ID)
+        {
+            var entity = _dbContext.Vehicles.FirstOrDefault(v => v.LicensePlate == ID);
+            if (entity == null) { throw new NotFoundException($"Did not find Vehicle with id: {ID}"); }
+            return _mapper.Map<VehicleDTO>(entity);
+        }
+        /// <summary>
+        /// Get the list of all vehicles
+        /// page size and page number are optional parameters
+        /// </summary>
+        /// <param name="pageSize">Optional</param>
+        /// <param name="pageNumber">Optional</param>
+        /// <returns>Return the list of the vehicles mapped according to the DTO</returns>
+        public IEnumerable<VehicleDTO> GetVehicles(int pageSize, int pageNumber)
+        {
+            var vehicles = _dbContext.Vehicles;
+            Envelope<Vehicle> envelope = new Envelope<Vehicle>(pageNumber, pageSize, vehicles);
+            return _mapper.Map<IEnumerable<VehicleDTO>>(envelope.Items);
+        }
+        /// <summary>
+        /// Creates a new vehicle
+        /// </summary>
+        /// <param name="vehicle">Of type VehicleInputModel</param>
+        /// <returns>The ID of the newly created vehicle</returns>
+        public Guid CreateVehicle(VehicleInputModel vehicle)
+        {
+            var tempVehicle = _dbContext.Vehicles.FirstOrDefault(v => v.LicensePlate == vehicle.LicensePlate);
+            // It is not email exception, but it works exactly the same.
+            if (tempVehicle != null) { throw new EmailAlreadyExistsException($"Vehicle with License Plate: {vehicle.LicensePlate} already exists!"); }
+            var entity = new Vehicle
+            {
+                LicensePlate = vehicle.LicensePlate,
+                Length = vehicle.Length,
+                Height = vehicle.Height,
+                Width = vehicle.Width
+            };
+            _dbContext.Vehicles.Add(entity);
+            _dbContext.SaveChanges();
+            return entity.ID;
+        }
+        public void UpdateVehicle(VehicleInputModel vehicle, string id)
+        {
+            // TODO:
+            // _dbContext.SaveChanges();
+        }
     }
-    /// <summary>
-    /// Get the list of all vehicles
-    /// page size and page number are optional parameters
-    /// </summary>
-    /// <param name="pageSize">Optional</param>
-    /// <param name="pageNumber">Optional</param>
-    /// <returns>Return the list of the vehicles mapped according to the DTO</returns>
-    public IEnumerable<VehicleDTO> GetVehicles(int pageSize, int pageNumber)
-    {
-      var vehicles = _dbContext.Vehicles;
-      Envelope<Vehicle> envelope = new Envelope<Vehicle>(pageNumber, pageSize, vehicles);
-      return _mapper.Map<IEnumerable<VehicleDTO>>(envelope.Items);
-    }
-    /// <summary>
-    /// Creates a new vehicle
-    /// </summary>
-    /// <param name="vehicle">Of type VehicleInputModel</param>
-    /// <returns>The ID of the newly created vehicle</returns>
-    public Guid CreateVehicle(VehicleInputModel vehicle)
-    {
-      var tempVehicle = _dbContext.Vehicles.FirstOrDefault(v => v.LicensePlate == vehicle.LicensePlate);
-      // It is not email exception, but it works exactly the same.
-      if (tempVehicle != null) { throw new EmailAlreadyExistsException($"Vehicle with License Plate: {vehicle.LicensePlate} already exists!"); }
-      var entity = new Vehicle
-      {
-        LicensePlate = vehicle.LicensePlate,
-        Length = vehicle.Length,
-        Height = vehicle.Height,
-        Width = vehicle.Width
-      };
-      _dbContext.Vehicles.Add(entity);
-      _dbContext.SaveChanges();
-      return entity.ID;
-    }
-    public void UpdateVehicle(VehicleInputModel vehicle, string id)
-    {
-      // TODO:
-      // _dbContext.SaveChanges();
-    }
-  }
 }
