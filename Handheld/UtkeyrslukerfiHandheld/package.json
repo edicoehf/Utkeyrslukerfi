@@ -18,6 +18,7 @@
     "@react-navigation/stack": "^5.14.4",
     "babel-plugin-transform-inline-environment-variables": "^0.4.3",
     "lodash": "^4.17.21",
+    "moment": "^2.29.1",
     "react": "17.0.1",
     "react-native": "0.64.0",
     "react-native-azure-blob-storage": "^1.2.3",
