@@ -60,7 +60,7 @@ const DeliveryTable = ({ data }) => {
             <View style={{ ...styles.tableRow, backgroundColor: index % 2 === 1 ? '#F0FBFC' : 'white' }}>
               <Text style={{ ...styles.columnRowTxt, fontWeight: 'bold' }}>{item.id}</Text>
               <Text style={styles.columnRowTxt}>{item.status}</Text>
-              <Text style={styles.columnRowTxt}>{item.pickupAddress.city}</Text>
+              <Text style={styles.columnRowTxt}>{item.deliveryDate}</Text>
             </View>
           )
         }}
