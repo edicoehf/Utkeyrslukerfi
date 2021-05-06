@@ -67,7 +67,7 @@ const ScanScreen = () => {
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
       <StatusCodeDropdown status={status} setStatus={setStatus} />
       <BarcodeForm barcode={barcode} setBarcode={setBarcode} enterBarcode={addBarcode} labelText='Strikamerki sendingar' />
-      <ProductTable tableHeaders={tableHeaders} tableData={tableData} numberOfObjects={3} />
+      <ProductTable tableHeaders={tableHeaders} tableData={tableData} numberOfObjects={3} label={'Skannaðar sendingar'} />
       <BasicButton buttonText='Uppfæra' onPressFunction={updateDeliveries} />
     </View>
   )

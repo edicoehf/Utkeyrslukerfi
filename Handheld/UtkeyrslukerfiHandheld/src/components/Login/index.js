@@ -8,8 +8,7 @@ import BasicButton from '../../components/BasicButton'
 import styles from '../../styles/loginStyles'
 
 const Login = () => {
-  // TODO: Style
-  const [selected, setSelected] = useState('') // Currently selected user
+  const [selected, setSelected] = useState('') // Currently selected driver
   const drivers = useSelector(({ drivers }) => drivers)
   const dispatch = useDispatch()
 
@@ -29,7 +28,7 @@ const Login = () => {
         <DropDownPicker
           items={
             drivers.map((driver) => {
-              return { label: driver.name, value: driver.name }
+              return { label: driver.name, value: driver }
             })
           }
           placeholder='Velja starfsmann...'
