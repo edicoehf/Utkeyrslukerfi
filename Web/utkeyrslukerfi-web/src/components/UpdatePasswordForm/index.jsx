@@ -5,6 +5,7 @@ import { updatePassword } from '../../actions/loginActions'
 import { useDispatch, useSelector } from 'react-redux'
 import FormGroupInput from '../FormGroupInput'
 import FormGroupButton from '../FormGroupButton'
+import '../../styles/updatepassword.css'
 
 // Update password - when a user logs in for the first time
 // or the account was updated in any way the user must update their password
@@ -22,31 +23,33 @@ const UpdatePasswordForm = () => {
   }
 
   return (
-    <FormProvider {...methods}>
-      <Form onSubmit={methods.handleSubmit(submitForm)} className='form form-horizontal'>
-        <FormGroupInput
-          groupType='password'
-          label='Lykilorð'
-          fieldType='password'
-          pattern={/^[^()[\]{}*&^%$#@!]+$/}
-          minLen={8}
-          typeOfForm='UpdatePassword'
-        />
-        <FormGroupInput
-          groupType='password_repeat'
-          label='Endurtekið lykilorð'
-          fieldType='password'
-          pattern={/^[^()[\]{}*&^%$#@!]+$/}
-          minLen={8}
-          typeOfForm='UpdatePassword'
-          validate={value => value === password.current || 'Lykilorðin eru ekki þau sömu.'}
-        />
-        <FormGroupButton
-          label='Vista'
-          typeOfForm='UpdatePassword'
-        />
-      </Form>
-    </FormProvider>
+    <div className="password">
+      <FormProvider {...methods}>
+        <Form onSubmit={methods.handleSubmit(submitForm)} className='form form-horizontal'>
+          <FormGroupInput
+            groupType='password'
+            label='Lykilorð'
+            fieldType='password'
+            pattern={/^[^()[\]{}*&^%$#@!]+$/}
+            minLen={8}
+            typeOfForm='UpdatePassword'
+          />
+          <FormGroupInput
+            groupType='password_repeat'
+            label='Endurtekið lykilorð'
+            fieldType='password'
+            pattern={/^[^()[\]{}*&^%$#@!]+$/}
+            minLen={8}
+            typeOfForm='UpdatePassword'
+            validate={value => value === password.current || 'Lykilorðin eru ekki þau sömu.'}
+          />
+          <FormGroupButton
+            label='Vista'
+            typeOfForm='UpdatePassword'
+          />
+        </Form>
+      </FormProvider>
+    </div>
   )
 }
 
