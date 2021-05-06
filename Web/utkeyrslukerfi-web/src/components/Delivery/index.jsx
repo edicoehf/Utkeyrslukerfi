@@ -6,11 +6,10 @@ import { getPackages } from '../../actions/packageActions'
 import AddressModal from '../AddressModal'
 import { useForm } from 'react-hook-form'
 
-import configData from '../../constants/config.json'
-
 const Delivery = () => {
   const packages = useSelector(({ packages }) => packages)
   const delivery = useSelector(({ delivery }) => delivery)
+  const vehicles = useSelector(({ vehicles }) => vehicles)
   const users = useSelector(({ users }) => users)
   const token = useSelector(({ login }) => login.token)
   const dispatch = useDispatch()
@@ -27,17 +26,19 @@ const Delivery = () => {
     if (token) {
       dispatch(getPackages(token, id))
     }
+    // eslint-disable-next-line
   }, [token])
 
   useEffect(() => {
     dispatch(setDelivery(delivery))
-  }, [])
+  })
 
   useEffect(() => {
     if (delivery) {
       methods.setValue('deliveryAddress', delivery.deliveryAddress.streetName)
       methods.setValue('pickupAddress', delivery.pickupAddress.streetName)
     }
+    // eslint-disable-next-line
   }, [delivery])
 
   const navigateToPackage = (obj) => {
@@ -66,58 +67,53 @@ const Delivery = () => {
     dispatch(setDelivery(tempObj))
   }
 
-  let reservedGuid = 'mmmm0000-9999-xxxx-yyyy-qqqq0000vvvv'
-
   const handleSubmit = (event) => {
     event.preventDefault()
     const newDelivery = {
       ...delivery,
-      VehicleID: delivery.vehicle === null ? reservedGuid : delivery.vehicle.id,
-      DriverID: delivery.driver === null ? delivery.DriverID : delivery.driver.id,
       // pickup address
-      PickupAddressID: pickupAddChanged ? reservedGuid : delivery.pickupAddress.id,
+      PickupAddressID: pickupAddChanged ? null : delivery.pickupAddress.id,
       PickupAddressHouseNumber: delivery.pickupAddress.houseNumber,
       PickupAddressZipCode: delivery.pickupAddress.zipCode,
       PickupAddressCity: delivery.pickupAddress.city,
       PickupAddressCountry: delivery.pickupAddress.country,
       PickupAddressStreetName: delivery.pickupAddress.streetName,
       // delivery address
-      DeliveryAddressID: deliveryAddChanged ? reservedGuid : delivery.deliveryAddress.id,
+      DeliveryAddressID: deliveryAddChanged ? null : delivery.deliveryAddress.id,
       DeliveryAddressHouseNumber: delivery.deliveryAddress.houseNumber,
       DeliveryAddressZipCode: delivery.deliveryAddress.zipCode,
       DeliveryAddressCity: delivery.deliveryAddress.city,
       DeliveryAddressCountry: delivery.deliveryAddress.country,
       DeliveryAddressStreetName: delivery.deliveryAddress.streetName
     }
-    console.log(newDelivery)
     dispatch(updateDelivery(token, id, newDelivery))
   }
-
+  // toggle the delivery modal on and off
   const toggleDeliveryModal = () => {
     setShowDeliveryModal(state => !state)
   }
-
+  // toggle the pickup modal on and off
   const togglePickupModal = () => {
     setShowPickupModal(state => !state)
   }
-
-  const populateOptions = (options) => {
+  // create a drowpdown list of drivers with all the available drivers.
+  const populateDriverOptions = (options) => {
     return options.map((option, index) => (
       <option key={index} value={option.id} selected={driver === option.name}>{option.name}</option>
     ))
   }
-
+  // if the driver changed, then set the new driver
   const onDriverChange = (e) => {
     delivery.DriverID = e.target.value
     dispatch(setDelivery(delivery))
   }
-
+  // if status changes, then set the new status of the delivery. 
   const onStatusChange = (e) => {
     delivery.status = e.target.value
     dispatch(setDelivery(delivery))
   }
-
-  const updateAddressesState = (didCh, val) => {
+  // set the delivery or pickup address changed.
+  const updateAddressesState = (val) => {
     if (val === 'delivery') {
       setDeliveryAddChanged(true)
     }
@@ -125,9 +121,19 @@ const Delivery = () => {
       setPickupAddChanged(true)
     }
   }
+  // creates a dropdown list of the available vehicles.
+  const populateVehicleOptions = (options) => {
+    return options.map((option, index) => (
+      <option key={index} value={option.id} selected={vehicle === option.licensePlate}>{option.licensePlate}</option>
+    ))
+  }
+  // if the state of the vehicle changes, then set the state of the vehicle as the new vehicle ID
+  const onVehicleChange = (e) => {
+    delivery.VehicleID = e.target.value
+    dispatch(setDelivery(delivery))
+  }
 
   return (
-    // TODO: make selection list for available options such as driver, vehicle, status etc.
     <div className='row align-items-start border rounded shadow mt-3 pr-2'>
       <div className='col col-md-6'>
         <p>Id: {id}</p>
@@ -136,14 +142,13 @@ const Delivery = () => {
             <label className='mt-3 mx-3'>Recipient</label><input className='border-none my-3 ml-auto' disabled={editable} type='text' name='recipient' onChange={handleChange} defaultValue={delivery?.recipient} />
           </div>
           <div className='row'>
-            {/* <label className='mt-3 mx-3'>Status</label><input className='border-none my-3 ml-auto' disabled={editable} type='text' name='status' onChange={handleChange} defaultValue={configData.STATUS[delivery?.status]} /> */}
             <label className='mt-3 mx-3'>Status</label>
             <select onChange={onStatusChange} className='border-none my-3 ml-auto'>
-              <option key={-1} value={-1} disabled={true}>--</option>
-              <option key={1} value={1} selected={delivery.status === 1 ? true : false}>Í ferli</option>
-              <option key={2} value={2} selected={delivery.status === 2 ? true : false}>Á leiðinni</option>
-              <option key={3} value={3} selected={delivery.status === 3 ? true : false}>Móttekin</option>
-              <option key={4} value={4} selected={delivery.status === 4 ? true : false}>Týnd</option>
+              <option key={-1} value={-1} disabled>--</option>
+              <option key={1} value={1} selected={delivery.status === 1}>Í ferli</option>
+              <option key={2} value={2} selected={delivery.status === 2}>Á leiðinni</option>
+              <option key={3} value={3} selected={delivery.status === 3}>Móttekin</option>
+              <option key={4} value={4} selected={delivery.status === 4}>Týnd</option>
             </select>
           </div>
           <div className='row'>
@@ -152,8 +157,8 @@ const Delivery = () => {
           <div className='row'>
             <label className='mt-3 mx-3'>Driver</label>
             <select onChange={onDriverChange} className='border-none my-3 ml-auto'>
-              <option key={-1} value={-1} >--</option>
-              {populateOptions(users)}
+              <option key={-1} value={-1}>--</option>
+              {populateDriverOptions(users)}
             </select>
           </div>
           <div className='row'>
@@ -163,7 +168,11 @@ const Delivery = () => {
             <label className='mt-3 mx-3'>PickupAddress</label><input className='border-none my-3 ml-auto' disabled={editable} type='text' name='pickupAddress' onClick={togglePickupModal} value={pickupAddress} />
           </div>
           <div className='row'>
-            <label className='mt-3 mx-3'>Vehicle</label><input className='border-none my-3 ml-auto' disabled={editable} type='text' name='licensePlate' onChange={e => dispatch(setDelivery({ ...delivery, vehicle: { ...delivery.vehicle, licensePlate: e.target.value } }))} defaultValue={vehicle} />
+            <label className='mt-3 mx-3'>Vehicle</label>
+            <select onChange={onVehicleChange} className='border-none my-3 ml-auto'>
+              <option key={-1} value={-1}>--</option>
+              {populateVehicleOptions(vehicles)}
+            </select>
           </div>
         </form>
       </div>

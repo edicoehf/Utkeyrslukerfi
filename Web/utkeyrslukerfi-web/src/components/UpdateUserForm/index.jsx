@@ -21,6 +21,7 @@ const UpdateUserForm = ({ user }) => {
       methods.setValue('email', user.email)
       methods.setValue('role', user.role)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user])
 
   const submitForm = (data) => {

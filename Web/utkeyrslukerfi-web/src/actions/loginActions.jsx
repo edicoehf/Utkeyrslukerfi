@@ -7,7 +7,7 @@ export const setLogin = (email, password) => async (dispatch) => {
     const body = await loginService.login({ email, password })
 
     if (body?.errors) {
-      for (const [key, value] of Object.entries(body.errors)) {
+      for (const [, value] of Object.entries(body.errors)) {
         toastr.error(value)
       }
     }

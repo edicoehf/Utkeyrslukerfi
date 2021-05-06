@@ -24,16 +24,10 @@ export const RESET_ERROR = 'RESET_ERROR'
 export const GET_DRIVERS = 'GET_DRIVERS'
 export const GET_VEHICLES = 'GET_VEHICLES'
 
-// URLS
-<<<<<<< HEAD
-export const USER_URL = 'https://localhost:5001/api/users'
-export const DELIVERY_URL = 'https://localhost:5001/api/deliveries'
-export const LOGIN_URL = 'https://localhost:5001/api/account/login'
-export const LOGOUT_URL = 'https://localhost:5001/api/account/logout'
-export const VEHICLE_URL = 'https://localhost:5001/api/vehicles'
-=======
+
 export const USER_URL = 'https://utkeyrslukerfiapi.azurewebsites.net/api/users'
 export const DELIVERY_URL = 'https://utkeyrslukerfiapi.azurewebsites.net/api/deliveries'
 export const LOGIN_URL = 'https://utkeyrslukerfiapi.azurewebsites.net/api/account/login'
 export const LOGOUT_URL = 'https://utkeyrslukerfiapi.azurewebsites.net/api/account/logout'
->>>>>>> a5db7c989cd055fe2ddb0ef805543db97816e97c
+export const VEHICLE_URL = 'https://utkeyrslukerfiapi.azurewebsites.net/api/vehicles'
+

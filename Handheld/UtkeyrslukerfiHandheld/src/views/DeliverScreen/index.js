@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { View, Text, Button } from 'react-native'
+import { View, Text, ToastAndroid } from 'react-native'
 import BarcodeForm from '../../components/BarcodeForm'
 import CommentBox from '../../components/CommentBox'
 import ProductTable from '../../components/ProductTable'
@@ -7,11 +7,12 @@ import RemoveButton from '../../components/RemoveButton'
 import CheckBox from '@react-native-community/checkbox'
 import { useDispatch, useSelector } from 'react-redux'
 import { setStep } from '../../actions/signingProcessActions'
+import BasicButton from '../../components/BasicButton'
+import styles from '../../styles/deliverScreen'
 
 // Driver can scan in packages in current delivery, comment on the delivery and continue with the delivery
 const DeliverScreen = ({ route, navigation }) => {
   // TODO:
-  // - css
   // - add consecutive screens that depend on checkbox
   // - Make sure back buttons decrement steps
   const { delivery } = route.params
@@ -20,7 +21,7 @@ const DeliverScreen = ({ route, navigation }) => {
   const [customerComment, setCustomerComment] = useState('')
   const [driverComment, setDriverComment] = useState('')
   const [tableData, setTableData] = useState([])
-  const tableHeaders = ['Sendingarnúmer', 'Pakki í sendingu', '']
+  const tableHeaders = ['Sendingarnr.', 'Pakki í sendingu', '']
   const [receiverNotHome, setReveiverNotHome] = useState(false)
   const signingProcess = useSelector(({ signingProcess }) => signingProcess)
   const dispatch = useDispatch()
@@ -44,6 +45,7 @@ const DeliverScreen = ({ route, navigation }) => {
 
   // All packages in current delivery about to be delivered should be scanned
   const addBarcode = () => {
+    if (!barcode) { ToastAndroid.showWithGravity('Strikamerki er ekki til staðar', ToastAndroid.LONG, ToastAndroid.TOP) }
     if (delivery.packages.some(p => p.id === barcode)) {
       setTableData([
         ...tableData,
@@ -54,6 +56,8 @@ const DeliverScreen = ({ route, navigation }) => {
         }
       ])
       setCount(count + 1)
+    } else {
+      ToastAndroid.showWithGravity('Rangt strikamerki', ToastAndroid.LONG, ToastAndroid.TOP)
     }
     setBarcode('')
   }
@@ -61,19 +65,21 @@ const DeliverScreen = ({ route, navigation }) => {
   // Navigate to sign page, camera page or delivery received page depending on delivery process
   const continueWithDelivery = () => {
     const route = signingProcess.process[signingProcess.step]
-    dispatch(setStep(signingProcess.step + 1))
-    navigation.navigate(route)
+    dispatch(setStep(1))
+    navigation.navigate(route, { delivery: delivery })
   }
 
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <BarcodeForm barcode={barcode} setBarcode={setBarcode} enterBarcode={addBarcode} />
-      <ProductTable tableHeaders={tableHeaders} tableData={tableData} />
+      <BarcodeForm barcode={barcode} setBarcode={setBarcode} enterBarcode={addBarcode} labelText='Strikamerki pakka' />
+      <ProductTable tableHeaders={tableHeaders} tableData={tableData} numberOfObjects={2} />
       <CommentBox label='Athugasemd viðskiptavinar' editable={false} comment={customerComment} setComment={setCustomerComment} />
       <CommentBox label='Athugasemd bílstjóra' editable comment={driverComment} setComment={setDriverComment} />
-      <CheckBox value={receiverNotHome} onValueChange={setReveiverNotHome} />
-      <Text>Móttakandi ekki við</Text>
-      <Button title='Áfram' onPress={continueWithDelivery} accessibilityLabel='Continue with delivery.' />
+      <View style={styles.container}>
+        <CheckBox value={receiverNotHome} onValueChange={setReveiverNotHome} />
+        <Text style={styles.check}>Móttakandi ekki við</Text>
+        <BasicButton buttonText='Áfram' onPressFunction={continueWithDelivery} />
+      </View>
     </View>
   )
 }

@@ -13,6 +13,7 @@
   },
   "SIGNING_PROCESS": [
     "SignForDelivery",
+    "ImageOnDelivery",
     "DeliveryReceived"
   ]
 }

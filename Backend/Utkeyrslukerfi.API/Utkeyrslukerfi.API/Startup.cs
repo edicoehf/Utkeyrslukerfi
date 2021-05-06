@@ -19,6 +19,8 @@ using Utkeyrslukerfi.API.Middlewares;
 using Hangfire;
 using Hangfire.MemoryStorage;
 using System.Collections.Specialized;
+using Utkeyrslukerfi.API.Repositories.IContext;
+using System.Collections.Generic;
 
 namespace Utkeyrslukerfi.API
 {
@@ -76,6 +78,8 @@ namespace Utkeyrslukerfi.API
                       }
                     );
             });
+            // Register service and implementation for the db context, need lambda expression to resolve an actual instance through the container
+            services.AddScoped<IUtkeyrslukerfiDbContext>(provider => provider.GetService<UtkeyrslukerfiDbContext>());
             services.AddAuthentication(config =>
             {
                 config.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -83,13 +87,17 @@ namespace Utkeyrslukerfi.API
             }).AddJwtTokenAuthentication(Configuration);
             services.AddCors(options =>
             {
-                options.AddPolicy(name: MyAllowSpecificOrigins,
-                                    builder =>
-                                    {
-                                        builder.WithOrigins("http://localhost:3000")
-                                                  .AllowAnyHeader()
-                                                  .AllowAnyMethod(); ;
-                                    });
+                var CorsAddresses = Configuration.GetSection("CorsAddresses:Addresses").Get<List<string>>();
+                foreach (var address in CorsAddresses)
+                {
+                    options.AddPolicy(name: MyAllowSpecificOrigins,
+                                        builder =>
+                                        {
+                                            builder.WithOrigins(address)
+                                                    .AllowAnyHeader()
+                                                    .AllowAnyMethod(); ;
+                                        });
+                }
             });
 
             // Adding Mapper

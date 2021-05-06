@@ -3,6 +3,7 @@ import { View, Text, ToastAndroid } from 'react-native'
 import { useSelector } from 'react-redux'
 import BarcodeForm from '../../components/BarcodeForm'
 import deliveryService from '../../services/deliveryService'
+import styles from '../../styles/searchPageStyles'
 
 // Driver can scan a delivery barcode and get details about it or deliver a delivery
 const SearchScreen = ({ navigation }) => {
@@ -33,29 +34,31 @@ const SearchScreen = ({ navigation }) => {
 
   const getDelivery = async (barcode) => {
     if (!barcode) {
-      ToastAndroid.show('Strikamerki er ekki til staðar', ToastAndroid.LONG)
+      ToastAndroid.showWithGravity('Strikamerki er ekki til staðar', ToastAndroid.LONG, ToastAndroid.TOP)
       return
     }
     try {
       const del = await deliveryService.getDelivery(token, barcode)
       if (del?.errors) {
-        ToastAndroid.show(del.errors.Message[0], ToastAndroid.LONG)
+        ToastAndroid.showWithGravity(del.errors.Message[0], ToastAndroid.LONG, ToastAndroid.TOP)
         return
       }
       return del
     } catch (error) {
-      ToastAndroid.show(error, ToastAndroid.LONG)
+      ToastAndroid.showWithGravity(error, ToastAndroid.LONG, ToastAndroid.TOP)
     }
   }
 
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>Skanna fyrir nánri upplýsingar</Text>
-      <Text>Strikamerki sendingar</Text>
-      <BarcodeForm barcode={barcodeDetails} setBarcode={setBarcodeDetails} enterBarcode={searchForDelivery} />
-      <Text>Skanna til að afhenda</Text>
-      <Text>Strikamerki sendingar</Text>
-      <BarcodeForm barcode={barcodeDeliver} setBarcode={setBarcodeDeliver} enterBarcode={deliverDelivery} />
+    <View style={styles.mainView}>
+      <View style={styles.section}>
+        <Text style={styles.mainText}>Skanna fyrir nánari upplýsingar</Text>
+        <BarcodeForm barcode={barcodeDetails} setBarcode={setBarcodeDetails} enterBarcode={searchForDelivery} labelText='Strikamerki sendingar' />
+      </View>
+      <View style={styles.section}>
+        <Text style={styles.mainText}>Skanna til að afhenda</Text>
+        <BarcodeForm barcode={barcodeDeliver} setBarcode={setBarcodeDeliver} enterBarcode={deliverDelivery} labelText='Strikamerki sendingar' />
+      </View>
     </View>
   )
 }

@@ -7,15 +7,16 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Utkeyrslukerfi.API.Repositories.Helpers;
+using Utkeyrslukerfi.API.Repositories.IContext;
 
 namespace Utkeyrslukerfi.API.Repositories.Implementations
 {
     public class FetchDataRepository : IFetchDataRepository
     {
-        private readonly UtkeyrslukerfiDbContext _dbContext;
+        private readonly IUtkeyrslukerfiDbContext _dbContext;
         private readonly IConfiguration _config;
 
-        public FetchDataRepository(UtkeyrslukerfiDbContext dbContext, IConfiguration configuration)
+        public FetchDataRepository(IUtkeyrslukerfiDbContext dbContext, IConfiguration configuration)
         {
             _config = configuration.GetSection("ExternalDeliveryMapping");
             _dbContext = dbContext;
@@ -238,6 +239,8 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
             deliveryAddress.HouseNumber = GetAddressSubsection(data, "DeliveryAddress", "HouseNumber");
             deliveryAddress.StreetName = GetAddressSubsection(data, "DeliveryAddress", "StreetName");
             deliveryAddress.ZipCode = GetAddressSubsection(data, "DeliveryAddress", "ZipCode");
+            deliveryAddress.XCoords = GetAddressSubsection(data, "DeliveryAddress", "XCoords");
+            deliveryAddress.YCoords = GetAddressSubsection(data, "DeliveryAddress", "YCoords");
             _dbContext.Addresses.Add(deliveryAddress);
             delivery.DeliveryAddress = deliveryAddress;
             return delivery;
@@ -345,6 +348,26 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
             return delivery;
         }
         /// <summary>
+        /// Checks if the api has some data for us to set in Signoff, 
+        /// if not it defaults to 5 which means to take name and signiture
+        /// </summary>
+        /// <param name="delivery">Delivery Entity</param>
+        /// <param name="data">api response in json format</param>
+        /// <returns>Delivery with Signoff Added to it</returns>
+        private Delivery AddSignoff(Delivery delivery, JToken data)
+        {
+            var signoff = new Signoff();
+            signoff.ID = Guid.NewGuid();
+            if (_config.GetSection("Signoff").Value == null)
+            {
+                signoff.Settings = 5;
+                _dbContext.Signoffs.Add(signoff);
+                delivery.Signoff = signoff;
+                return delivery;
+            }
+            return delivery;
+        }
+        /// <summary>
         /// Takes in api respose on the Json format, and extracts data 
         /// from it to create a new delivery in our database.
         /// </summary>
@@ -363,6 +386,7 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
             entity = AddStatus(entity, delivery);
             entity = AddVehicle(entity, delivery);
             entity = AddDeliveryDate(entity, delivery);
+            entity = AddSignoff(entity, delivery);
             _dbContext.Deliveries.Add(entity);
             AddPackages(entity, delivery);
             _dbContext.SaveChangesAsync();

@@ -9,6 +9,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.7.1" />
     <PackageReference Include="xunit" Version="2.4.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="5.0.5" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
@@ -21,6 +22,9 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Utkeyrslukerfi.API\Utkeyrslukerfi.API\Utkeyrslukerfi.API.csproj" />
+    <ProjectReference Include="..\Utkeyrslukerfi.API\Utkeyrslukerfi.API.Repositories\Utkeyrslukerfi.API.Repositories.csproj" />
+    <ProjectReference Include="..\Utkeyrslukerfi.API\Utkeyrslukerfi.API.Models\Utkeyrslukerfi.API.Models.csproj" />
+    <ProjectReference Include="..\Utkeyrslukerfi.API\Utkeyrslukerfi.API.Services\Utkeyrslukerfi.API.Services.csproj" />
   </ItemGroup>
 
 </Project>

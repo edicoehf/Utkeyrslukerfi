@@ -43,6 +43,12 @@ namespace Utkeyrslukerfi.API.Migrations
                     b.Property<string>("StreetName")
                         .HasColumnType("text");
 
+                    b.Property<string>("XCoords")
+                        .HasColumnType("text");
+
+                    b.Property<string>("YCoords")
+                        .HasColumnType("text");
+
                     b.Property<string>("ZipCode")
                         .HasColumnType("text");
 
@@ -90,7 +96,7 @@ namespace Utkeyrslukerfi.API.Migrations
                     b.Property<string>("Seller")
                         .HasColumnType("text");
 
-                    b.Property<int>("Status")
+                    b.Property<int?>("Status")
                         .HasColumnType("int");
 
                     b.Property<byte[]>("VehicleID")
@@ -187,8 +193,11 @@ namespace Utkeyrslukerfi.API.Migrations
                     b.Property<string>("Recipient")
                         .HasColumnType("text");
 
-                    b.Property<string>("SignatureUri")
-                        .HasColumnType("text");
+                    b.Property<string>("SignatureURI")
+                       .HasColumnType("text");
+
+                    b.Property<int?>("Settings")
+                        .HasColumnType("int");                     
 
                     b.HasKey("ID");
 

@@ -17,6 +17,9 @@ on:
 jobs:
   # This workflow contains a single job called "build"
   build:
+    env:
+      VALIDATE_JSCPD: false
+      VALIDATE_JAVA: false
     # The type of runner that the job will run on
     name: Linter
     runs-on: ubuntu-latest

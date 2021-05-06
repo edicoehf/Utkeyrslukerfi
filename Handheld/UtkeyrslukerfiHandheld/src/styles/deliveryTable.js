@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native'
+import { LIGHTER_BLUE } from '../constants'
 
 const styles = StyleSheet.create({
   container: {
@@ -12,9 +13,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-evenly',
     alignItems: 'center',
-    backgroundColor: '#37C2D0',
-    borderTopEndRadius: 10,
-    borderTopStartRadius: 10,
+    backgroundColor: LIGHTER_BLUE,
+    borderTopEndRadius: 1,
+    borderTopStartRadius: 1,
     height: 50
   },
   tableRow: {
@@ -35,6 +36,9 @@ const styles = StyleSheet.create({
   columnRowTxt: {
     width: '33%',
     textAlign: 'center'
+  },
+  flatList: {
+    width: '100%'
   }
 })
 

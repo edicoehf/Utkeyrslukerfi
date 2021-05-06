@@ -13,7 +13,7 @@ namespace Utkeyrslukerfi.API.Models.Entities
         public string Seller { get; set; }
         public string DriverComment { get; set; }
         public string CustomerComment { get; set; }
-        public int Status { get; set; }
+        public int? Status { get; set; }
         [ForeignKey("Address")]
         public Guid PickupAddressID { get; set; }
         public Address PickupAddress { get; set; }

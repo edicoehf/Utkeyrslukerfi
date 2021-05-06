@@ -7,7 +7,7 @@ const vehicleService = () => {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`
       }
-    }).then(d => d.json()).then(d => d),
+    }).then(d => d.json()).then(d => d)
   }
 }
 
