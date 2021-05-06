@@ -14,8 +14,8 @@ const styles = StyleSheet.create({
     justifyContent: 'space-evenly',
     alignItems: 'center',
     backgroundColor: LIGHTER_BLUE,
-    borderTopEndRadius: 10,
-    borderTopStartRadius: 10,
+    borderTopEndRadius: 1,
+    borderTopStartRadius: 1,
     height: 50
   },
   tableRow: {
@@ -29,13 +29,16 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   columnHeaderTxt: {
-    color: 'white',
+    color: 'black',
     fontWeight: 'bold',
     fontSize: 14
   },
   columnRowTxt: {
     width: '33%',
     textAlign: 'center'
+  },
+  flatList: {
+    width: '100%'
   }
 })
 

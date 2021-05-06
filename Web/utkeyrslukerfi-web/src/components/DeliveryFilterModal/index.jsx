@@ -73,7 +73,10 @@ const UserFilterModal = ({ visible, deliveries, setDeliveries, deliveryState, up
           />
           <DatePicker
             selected={endDate}
-            onChange={date => setEndDate(date)}
+            onChange={date => {
+              date.setMinutes(date.getMinutes() + 30)
+              setEndDate(date)
+            }}
             selectsEnd
             startDate={startDate}
             endDate={endDate}

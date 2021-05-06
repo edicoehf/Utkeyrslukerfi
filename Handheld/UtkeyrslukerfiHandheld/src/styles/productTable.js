@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
     backgroundColor: LIGHTER_BLUE,
     borderTopEndRadius: 10,
     borderTopStartRadius: 10,
-    height: 50,
+    height: 33,
     width: windowWidth * 0.9,
     paddingRight: '10%'
   },
@@ -52,6 +52,11 @@ const styles = StyleSheet.create({
     paddingBottom: '1%',
     width: windowWidth * 0.90,
     justifyContent: 'flex-start'
+  },
+  mainView: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center'
   }
 })
 

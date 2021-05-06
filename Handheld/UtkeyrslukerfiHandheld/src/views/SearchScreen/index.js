@@ -3,6 +3,7 @@ import { View, Text, ToastAndroid } from 'react-native'
 import { useSelector } from 'react-redux'
 import BarcodeForm from '../../components/BarcodeForm'
 import deliveryService from '../../services/deliveryService'
+import styles from '../../styles/searchPageStyles'
 
 // Driver can scan a delivery barcode and get details about it or deliver a delivery
 const SearchScreen = ({ navigation }) => {
@@ -44,16 +45,20 @@ const SearchScreen = ({ navigation }) => {
       }
       return del
     } catch (error) {
-      ToastAndroid.showWithGravity(error, ToastAndroid.LONG, ToastAndroid.TOP)
+      ToastAndroid.showWithGravity('Sending fannst ekki', ToastAndroid.LONG, ToastAndroid.TOP) // TODO: better error messages? 'Ekki náðist samband við netþjón'
     }
   }
 
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>Skanna fyrir nánari upplýsingar</Text>
-      <BarcodeForm barcode={barcodeDetails} setBarcode={setBarcodeDetails} enterBarcode={searchForDelivery} labelText='Strikamerki sendingar' />
-      <Text>Skanna til að afhenda</Text>
-      <BarcodeForm barcode={barcodeDeliver} setBarcode={setBarcodeDeliver} enterBarcode={deliverDelivery} labelText='Strikamerki sendingar' />
+    <View style={styles.mainView}>
+      <View style={styles.section}>
+        <Text style={styles.mainText}>Skanna fyrir nánari upplýsingar</Text>
+        <BarcodeForm barcode={barcodeDetails} setBarcode={setBarcodeDetails} enterBarcode={searchForDelivery} labelText='Strikamerki sendingar' />
+      </View>
+      <View style={styles.section}>
+        <Text style={styles.mainText}>Skanna til að afhenda</Text>
+        <BarcodeForm barcode={barcodeDeliver} setBarcode={setBarcodeDeliver} enterBarcode={deliverDelivery} labelText='Strikamerki sendingar' />
+      </View>
     </View>
   )
 }

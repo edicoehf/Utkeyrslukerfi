@@ -4,12 +4,12 @@ import DropDownPicker from 'react-native-dropdown-picker'
 import { useSelector } from 'react-redux'
 import styles from '../../styles/statusCodedropdown'
 
-const StatusCodeDropdown = ({ status, setStatus }) => {
+const StatusCodeDropdown = ({ status, setStatus, label }) => {
   const availableStatusCodes = useSelector(({ statusCode }) => statusCode)
 
   return (
     <View style={styles.mainContainer}>
-      <Text style={styles.label}>Staða</Text>
+      <Text style={styles.label}>{label}</Text>
       <DropDownPicker
         items={
           Object.keys(availableStatusCodes).map(function (k) {

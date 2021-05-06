@@ -1,9 +1,9 @@
 import React from 'react'
 import { View, Text, FlatList } from 'react-native'
 import styles from '../../styles/productTable'
-
+import { MAINLY_BLUE } from '../../constants'
 // Table for products containing barcode, status and more
-const ProductTable = ({ tableHeaders, tableData, numberOfObjects }) => {
+const ProductTable = ({ tableHeaders, tableData, numberOfObjects, label }) => {
   const tableHeaderComponent = () => (
     <View style={styles.tableHeader}>
       {
@@ -17,8 +17,8 @@ const ProductTable = ({ tableHeaders, tableData, numberOfObjects }) => {
   )
 
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text style={styles.label}>Skannaðir pakkar</Text>
+    <View style={styles.mainView}>
+      <Text style={styles.label}>{label}</Text>
       <FlatList
         data={tableData}
         style={styles.size}
@@ -27,7 +27,7 @@ const ProductTable = ({ tableHeaders, tableData, numberOfObjects }) => {
         stickyHeaderIndices={[0]}
         renderItem={({ item, index }) => {
           return (
-            <View style={{ ...styles.tableRow, backgroundColor: index % 2 === 1 ? '#F0FBFC' : 'white' }}>
+            <View style={{ ...styles.tableRow, backgroundColor: index % 2 === 1 ? MAINLY_BLUE : 'white' }}>
               {
                 Object.keys(item).map((k) => {
                   if (k !== 'status') {
