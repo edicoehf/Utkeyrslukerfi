@@ -358,7 +358,7 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
         {
             var signoff = new Signoff();
             signoff.ID = Guid.NewGuid();
-            if (_config.GetSection("Signoff").Value == null)
+            if (_config.GetSection("Signoff").Value.ToString() == "")
             {
                 signoff.Settings = 5;
                 _dbContext.Signoffs.Add(signoff);
