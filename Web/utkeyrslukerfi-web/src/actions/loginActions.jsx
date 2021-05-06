@@ -13,6 +13,7 @@ export const setLogin = (email, password) => async (dispatch) => {
     }
     if (body?.token) {
       localStorage.setItem('token', JSON.stringify(body.token))
+      localStorage.setItem('role', JSON.stringify(body.role))
       dispatch(setLoginSuccess(body))
     }
   } catch (err) {
@@ -20,23 +21,26 @@ export const setLogin = (email, password) => async (dispatch) => {
   }
 }
 
-const setLoginSuccess = (body) => ({
-  type: SET_LOGIN,
-  payload: body
-})
+const setLoginSuccess = (body) => (
+  {
+    type: SET_LOGIN,
+    payload: body
+  })
 
 export const getLogin = () => async (dispatch) => {
   try {
     const token = await JSON.parse(localStorage.getItem('token'))
-    dispatch(getLoginSuccess(token))
+    const role = await JSON.parse(localStorage.getItem('role'))
+    dispatch(getLoginSuccess(token, role))
   } catch (err) {
     console.log('Bad request, please try loading again.')
   }
 }
 
-const getLoginSuccess = (token) => ({
+const getLoginSuccess = (token, role) => ({
   type: GET_LOGIN,
-  payload: token
+  payload: token,
+  role: role
 })
 
 export const updatePassword = (token, password) => async (dispatch) => {
@@ -60,6 +64,7 @@ export const logout = (token) => async (dispatch) => {
   try {
     await loginService.logout(token)
     localStorage.removeItem('token')
+    localStorage.removeItem('role')
     dispatch(logoutSuccess())
   } catch (err) {
     console.log(err)
