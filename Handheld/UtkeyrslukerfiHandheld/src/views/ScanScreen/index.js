@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { View } from 'react-native'
+import { View, ToastAndroid } from 'react-native'
 import { useSelector } from 'react-redux'
 import BarcodeForm from '../../components/BarcodeForm'
 import BasicButton from '../../components/BasicButton'
@@ -17,7 +17,7 @@ const ScanScreen = () => {
   const [status, setStatus] = useState(2)
   const [barcode, setBarcode] = useState('')
   const [tableData, setTableData] = useState([])
-  const tableHeaders = ['Sendingarnr.', 'Fyrri staða', 'Ný staða', '']
+  const tableHeaders = ['Sendingarnr', 'Fyrri staða', 'Ný staða', '']
 
   // A ref is neccessary since the remove buttons contain callbacks that reference the state at the time of creation otherwise
   const tableDataRef = useRef()
@@ -33,9 +33,18 @@ const ScanScreen = () => {
 
   // Add item to table
   const addBarcode = async () => {
+    setBarcode('')
+    if (!barcode) {
+      ToastAndroid.showWithGravity('Strikamerki er ekki til staðar', ToastAndroid.LONG, ToastAndroid.TOP)
+      return
+    }
+    if (tableData.some(p => p.barcode === barcode)) { 
+      ToastAndroid.showWithGravity('Sending er nú þegar í töflu', ToastAndroid.LONG, ToastAndroid.TOP)
+      return
+    }
     try {
-      // Check if barcode is valid
       const delivery = await deliveryService.getDelivery(token, barcode)
+      
       setTableData([
         {
           barcode: barcode,
@@ -46,9 +55,8 @@ const ScanScreen = () => {
         },
         ...tableData
       ])
-      setBarcode('')
     } catch (error) {
-      console.log(error)
+      ToastAndroid.showWithGravity('Sending fannst ekki', ToastAndroid.LONG, ToastAndroid.TOP) // TODO: better error messages? 'Ekki náðist samband við netþjón'
     }
   }
 
@@ -56,16 +64,20 @@ const ScanScreen = () => {
   const updateDeliveries = async () => {
     try {
       const deliveriesData = { deliveries: tableData.map(d => { return { id: d.barcode, status: d.status } }) }
-      await deliveryService.updateDeliveries(token, deliveriesData)
+      const res = await deliveryService.updateDeliveries(token, deliveriesData)
       setTableData([])
+      if (res?.status === 400) { ToastAndroid.showWithGravity('Óheimil beiðni.', ToastAndroid.LONG, ToastAndroid.TOP) }
+      if (res?.status === 401) { ToastAndroid.showWithGravity('Notandi er ekki innskráður.', ToastAndroid.LONG, ToastAndroid.TOP) }
+      if (res?.status === 404) { ToastAndroid.showWithGravity('Sending fannst ekki.', ToastAndroid.LONG, ToastAndroid.TOP) }
+      if (res?.status === 204) { ToastAndroid.showWithGravity('Gögn vistuð', ToastAndroid.LONG, ToastAndroid.TOP) }
     } catch (error) {
-      console.log(error)
+      ToastAndroid.showWithGravity('Ekki náðist samband við netþjón', ToastAndroid.LONG, ToastAndroid.TOP)
     }
   }
 
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <StatusCodeDropdown status={status} setStatus={setStatus} />
+      <StatusCodeDropdown status={status} setStatus={setStatus} label={'Breyta í stöðu'} />
       <BarcodeForm barcode={barcode} setBarcode={setBarcode} enterBarcode={addBarcode} labelText='Strikamerki sendingar' />
       <ProductTable tableHeaders={tableHeaders} tableData={tableData} numberOfObjects={3} label={'Skannaðar sendingar'} />
       <BasicButton buttonText='Uppfæra' onPressFunction={updateDeliveries} />

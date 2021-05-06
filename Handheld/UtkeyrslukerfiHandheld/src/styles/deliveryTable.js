@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   columnHeaderTxt: {
-    color: 'white',
+    color: 'black',
     fontWeight: 'bold',
     fontSize: 14
   },

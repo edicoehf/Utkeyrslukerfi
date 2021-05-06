@@ -8,7 +8,7 @@ import _ from 'lodash'
 
 const DeliveryTable = ({ data }) => {
   const columns = ['id', 'status', 'date']
-  const columnText = ['Sendingarnúmer', 'Staða', 'Dagsetning']
+  const columnText = ['Sendingarnr', 'Staða', 'Staður'] // TODO: change to date
   const availableStatusCodes = useSelector(({ statusCode }) => statusCode)
   const [direction, setDirection] = useState(null)
   const [selectedColumn, setSelectedColumn] = useState(null)
