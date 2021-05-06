@@ -8,7 +8,7 @@ export const setLogin = (driver) => async (dispatch) => {
     if (body?.token) {
       await AsyncStorage.setItem('token', JSON.stringify(body.token))
       await AsyncStorage.setItem('driver', JSON.stringify(driver.id))
-      dispatch(setLoginSuccess({...body, driver: driver.id}))
+      dispatch(setLoginSuccess({ ...body, driver: driver.id }))
     }
   } catch (err) {
     console.log(err)

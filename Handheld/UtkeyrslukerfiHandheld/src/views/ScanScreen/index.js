@@ -38,13 +38,13 @@ const ScanScreen = () => {
       ToastAndroid.showWithGravity('Strikamerki er ekki til staðar', ToastAndroid.LONG, ToastAndroid.TOP)
       return
     }
-    if (tableData.some(p => p.barcode === barcode)) { 
+    if (tableData.some(p => p.barcode === barcode)) {
       ToastAndroid.showWithGravity('Sending er nú þegar í töflu', ToastAndroid.LONG, ToastAndroid.TOP)
       return
     }
     try {
       const delivery = await deliveryService.getDelivery(token, barcode)
-      
+
       setTableData([
         {
           barcode: barcode,
@@ -77,9 +77,9 @@ const ScanScreen = () => {
 
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <StatusCodeDropdown status={status} setStatus={setStatus} label={'Breyta í stöðu'} />
+      <StatusCodeDropdown status={status} setStatus={setStatus} label='Breyta í stöðu' />
       <BarcodeForm barcode={barcode} setBarcode={setBarcode} enterBarcode={addBarcode} labelText='Strikamerki sendingar' />
-      <ProductTable tableHeaders={tableHeaders} tableData={tableData} numberOfObjects={3} label={'Skannaðar sendingar'} />
+      <ProductTable tableHeaders={tableHeaders} tableData={tableData} numberOfObjects={3} label='Skannaðar sendingar' />
       <BasicButton buttonText='Uppfæra' onPressFunction={updateDeliveries} />
     </View>
   )

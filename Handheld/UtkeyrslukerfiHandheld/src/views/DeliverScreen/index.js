@@ -48,7 +48,7 @@ const DeliverScreen = ({ route, navigation }) => {
   const addBarcode = () => {
     if (!barcode) { ToastAndroid.showWithGravity('Strikamerki er ekki til staðar', ToastAndroid.LONG, ToastAndroid.TOP) }
     // Only add packages in this delivery && only add packages once
-    if (delivery.packages.some(p => p.id === barcode) && tableData.every(p => p.barcode != barcode)) {
+    if (delivery.packages.some(p => p.id === barcode) && tableData.every(p => p.barcode !== barcode)) {
       addToTable(barcode)
     } else {
       ToastAndroid.showWithGravity('Rangt strikamerki', ToastAndroid.LONG, ToastAndroid.TOP)
@@ -82,7 +82,7 @@ const DeliverScreen = ({ route, navigation }) => {
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
       <BarcodeForm barcode={barcode} setBarcode={setBarcode} enterBarcode={addBarcode} labelText='Strikamerki pakka' />
-      <ProductTable tableHeaders={tableHeaders} tableData={tableData} numberOfObjects={2} label={'Pakkar í sendingu'} />
+      <ProductTable tableHeaders={tableHeaders} tableData={tableData} numberOfObjects={2} label='Pakkar í sendingu' />
       <CommentBox label='Athugasemd viðskiptavinar' editable={false} comment={customerComment} setComment={setCustomerComment} />
       <CommentBox label='Athugasemd bílstjóra' editable comment={driverComment} setComment={setDriverComment} />
       <View style={styles.container}>
