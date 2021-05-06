@@ -16,37 +16,6 @@ const customStyles = {
   }
 }
 
-<<<<<<< HEAD
-const AddressModal = ({ canShow, updateModalState, didChange, isDelivery }) => {
-  // delivery from the store state
-  const delivery = useSelector(({ delivery }) => delivery)
-  const dispatch = useDispatch()
-  // the address that has to be updates. If it is a delivery address,
-  // then set dAddress as delivery address otherwise it will set as pickup address 
-  const [dAddres, setDAddress] = useState(isDelivery ? delivery.deliveryAddress : delivery.pickupAddress)
-  Modal.setAppElement('#root')
-  let subtitle
-  function afterOpenModal () {
-    subtitle.style.color = '#139ffd'
-  }
-  // function which will update the state of the delivery when update is clicked
-  const updateData = () => {
-    if (isDelivery) {
-      dispatch(setDelivery({
-        ...delivery,
-        deliveryAddress: dAddres
-      }))
-      didChange('delivery')
-    } else {
-      dispatch(setDelivery({
-        ...delivery,
-        pickupAddress: dAddres
-      }))
-      didChange('pickup')
-    }
-    // will update the state of the modal (from show to hide)
-    updateModalState()
-=======
 const AddressModal = ({ openModal, setOpenModal, address, setAddress }) => {
   const methods = useForm()
   Modal.setAppElement('#root')
@@ -56,7 +25,6 @@ const AddressModal = ({ openModal, setOpenModal, address, setAddress }) => {
     methods.setValue('housenumber', address.houseNumber)
     methods.setValue('city', address.city)
     methods.setValue('zipcode', address.zipCode)
->>>>>>> ddf75552399734b521ad3a5afa8c19cb02f5eeb5
   }
 
   const submitForm = (data) => {
