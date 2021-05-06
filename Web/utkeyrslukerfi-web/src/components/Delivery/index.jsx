@@ -26,12 +26,11 @@ const Delivery = () => {
     if (token) {
       dispatch(getPackages(token, id))
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line
   }, [token])
 
   useEffect(() => {
     dispatch(setDelivery(delivery))
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   })
 
   useEffect(() => {
@@ -39,7 +38,7 @@ const Delivery = () => {
       methods.setValue('deliveryAddress', delivery.deliveryAddress.streetName)
       methods.setValue('pickupAddress', delivery.pickupAddress.streetName)
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line
   }, [delivery])
 
   const navigateToPackage = (obj) => {
@@ -68,56 +67,53 @@ const Delivery = () => {
     dispatch(setDelivery(tempObj))
   }
 
-  const reservedGuid = '00000000-0000-0000-0000-000000000000'
-
   const handleSubmit = (event) => {
     event.preventDefault()
     const newDelivery = {
       ...delivery,
       // pickup address
-      PickupAddressID: pickupAddChanged ? reservedGuid : delivery.pickupAddress.id,
+      PickupAddressID: pickupAddChanged ? null : delivery.pickupAddress.id,
       PickupAddressHouseNumber: delivery.pickupAddress.houseNumber,
       PickupAddressZipCode: delivery.pickupAddress.zipCode,
       PickupAddressCity: delivery.pickupAddress.city,
       PickupAddressCountry: delivery.pickupAddress.country,
       PickupAddressStreetName: delivery.pickupAddress.streetName,
       // delivery address
-      DeliveryAddressID: deliveryAddChanged ? reservedGuid : delivery.deliveryAddress.id,
+      DeliveryAddressID: deliveryAddChanged ? null : delivery.deliveryAddress.id,
       DeliveryAddressHouseNumber: delivery.deliveryAddress.houseNumber,
       DeliveryAddressZipCode: delivery.deliveryAddress.zipCode,
       DeliveryAddressCity: delivery.deliveryAddress.city,
       DeliveryAddressCountry: delivery.deliveryAddress.country,
       DeliveryAddressStreetName: delivery.deliveryAddress.streetName
     }
-    console.log(newDelivery)
     dispatch(updateDelivery(token, id, newDelivery))
   }
-
+  // toggle the delivery modal on and off
   const toggleDeliveryModal = () => {
     setShowDeliveryModal(state => !state)
   }
-
+  // toggle the pickup modal on and off
   const togglePickupModal = () => {
     setShowPickupModal(state => !state)
   }
-
-  const populateOptions = (options) => {
+  // create a drowpdown list of drivers with all the available drivers.
+  const populateDriverOptions = (options) => {
     return options.map((option, index) => (
       <option key={index} value={option.id} selected={driver === option.name}>{option.name}</option>
     ))
   }
-
+  // if the driver changed, then set the new driver
   const onDriverChange = (e) => {
     delivery.DriverID = e.target.value
     dispatch(setDelivery(delivery))
   }
-
+  // if status changes, then set the new status of the delivery. 
   const onStatusChange = (e) => {
     delivery.status = e.target.value
     dispatch(setDelivery(delivery))
   }
-
-  const updateAddressesState = (didCh, val) => {
+  // set the delivery or pickup address changed.
+  const updateAddressesState = (val) => {
     if (val === 'delivery') {
       setDeliveryAddChanged(true)
     }
@@ -125,20 +121,19 @@ const Delivery = () => {
       setPickupAddChanged(true)
     }
   }
-
+  // creates a dropdown list of the available vehicles.
   const populateVehicleOptions = (options) => {
     return options.map((option, index) => (
       <option key={index} value={option.id} selected={vehicle === option.licensePlate}>{option.licensePlate}</option>
     ))
   }
-
+  // if the state of the vehicle changes, then set the state of the vehicle as the new vehicle ID
   const onVehicleChange = (e) => {
     delivery.VehicleID = e.target.value
     dispatch(setDelivery(delivery))
   }
 
   return (
-    // TODO: make selection list for available options such as driver, vehicle, status etc.
     <div className='row align-items-start border rounded shadow mt-3 pr-2'>
       <div className='col col-md-6'>
         <p>Id: {id}</p>
@@ -163,7 +158,7 @@ const Delivery = () => {
             <label className='mt-3 mx-3'>Driver</label>
             <select onChange={onDriverChange} className='border-none my-3 ml-auto'>
               <option key={-1} value={-1}>--</option>
-              {populateOptions(users)}
+              {populateDriverOptions(users)}
             </select>
           </div>
           <div className='row'>

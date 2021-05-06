@@ -9,11 +9,11 @@ import '../../styles/users.css'
 import UserFilterModal from '../../components/UserFilterModal'
 
 // Users - display all users in a table
-const Users = () => {
+const UsersList = () => {
   const history = useHistory()
   const token = useSelector(({ login }) => login.token)
   const users = useSelector(({ users }) => users)
-  const [userState, setUserState] = useState([])
+  const [usersState, setUsersState] = useState([])
   const [filterModal, setFilterModel] = useState(false)
   const dispatch = useDispatch()
 
@@ -25,11 +25,11 @@ const Users = () => {
     if (token) {
       dispatch(getUsers(token))
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line
   }, [token])
 
   useEffect(() => {
-    setUserState(users)
+    setUsersState(users)
   }, [users])
 
   const navigateToUser = (user) => {
@@ -41,7 +41,7 @@ const Users = () => {
   }
 
   const renderRows = () => {
-    return userState.map(function (user, id) {
+    return usersState.map(function (user, id) {
       return (
         <tr key={id}>
           <td>{user.id}</td>
@@ -58,18 +58,10 @@ const Users = () => {
       <table className='table table-bordered'>
         <thead className='thead-dark'>
           <tr>
-            <th>
-              ID
-            </th>
-            <th>
-              Nafn
-            </th>
-            <th>
-              Netfang
-            </th>
-            <th>
-              Starf
-            </th>
+            <th>ID</th>
+            <th>Nafn</th>
+            <th>Netfang</th>
+            <th>Starf</th>
             <th onClick={toggleModal} className='clickable'>
               {/* Edit pen icon */}
               <BsFunnel size='2em' color='white' />
@@ -79,7 +71,7 @@ const Users = () => {
         <tbody>
           {/* Loading the Add user plus */}
           {
-            users.length > 0 ? renderRows() : null
+            usersState.length > 0 ? renderRows() : null
           }
           <tr>
             <td onClick={() => navigateToCreateUser()}><ImPlus size='2em' className='clickable' /></td>
@@ -91,7 +83,7 @@ const Users = () => {
         </tbody>
       </table>
       {
-        users.length <= 0
+        usersState.length <= 0
           ? <div className='text-center'>
             <div className='spinner-border' role='status'>
               <span className='sr-only'>Loading...</span>
@@ -99,9 +91,9 @@ const Users = () => {
             </div>
           : null
       }
-      <UserFilterModal visible={filterModal} users={users} setUsers={setUserState} updateModalState={toggleModal} />
+      <UserFilterModal visible={filterModal} users={users} setUsers={setUsersState} updateModalState={toggleModal} />
     </div>
   )
 }
 
-export default Users
+export default UsersList

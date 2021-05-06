@@ -33,7 +33,6 @@ namespace Utkeyrslukerfi.API.Services.Helpers
         public static async Task<IEnumerable<T>> DeserializeJsonToList<T>(this HttpResponseMessage response, bool flatten, string encapsulatedDataName)
         {
             var json = await response.Content.ReadAsStringAsync();
-            // System.Console.WriteLine(json);
             // var jsonObject = JObject.Parse(json);
             // var data = jsonObject["data"];
             // if (flatten)

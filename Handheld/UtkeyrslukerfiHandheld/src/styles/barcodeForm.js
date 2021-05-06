@@ -11,9 +11,13 @@ const styles = StyleSheet.create({
     paddingTop: '2%',
     width: windowWidth * 0.70
   },
+  inputContainer: {
+    marginRight: 3,
+    marginTop: 1
+  },
   input: {
     backgroundColor: '#ffffff',
-    height: windowHeight * 0.05,
+    height: windowHeight * 0.06,
     width: windowWidth * 0.50,
     borderColor: '#cccccc',
     borderWidth: 0.5,
@@ -26,7 +30,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 5,
-    margin: '2%',
+    margin: 3,
     alignSelf: 'flex-end',
     marginTop: windowHeight * 0.025
   },
