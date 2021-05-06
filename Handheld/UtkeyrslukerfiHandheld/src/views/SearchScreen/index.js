@@ -45,7 +45,7 @@ const SearchScreen = ({ navigation }) => {
       }
       return del
     } catch (error) {
-      ToastAndroid.showWithGravity(error, ToastAndroid.LONG, ToastAndroid.TOP)
+      ToastAndroid.showWithGravity('Sending fannst ekki', ToastAndroid.LONG, ToastAndroid.TOP) // TODO: better error messages? 'Ekki náðist samband við netþjón'
     }
   }
 

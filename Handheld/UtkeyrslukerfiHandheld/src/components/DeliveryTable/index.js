@@ -8,8 +8,8 @@ import _ from 'lodash'
 import { format } from 'date-fns'
 
 const DeliveryTable = ({ data }) => {
-  const columns = ['id', 'status', 'deliveryDate']
-  const columnText = ['Sendingarnúmer', 'Staða', 'Dagsetning']
+  const columns = ['id', 'status', 'date']
+  const columnText = ['Sendingarnr', 'Staða', 'Dagsetning']
   const availableStatusCodes = useSelector(({ statusCode }) => statusCode)
   const [direction, setDirection] = useState(null)
   const [selectedColumn, setSelectedColumn] = useState(null)
