@@ -47,7 +47,7 @@ const SignoffSignature = ({ delivery, stepCounter, setStepCounter }) => {
       })
       return fileNameRet
     } catch (err) {
-      ToastAndroid.showWithGravity('Ekki náðist að hlaða inn myndinni á skýjið', ToastAndroid.LONG, ToastAndroid.TOP)
+      ToastAndroid.showWithGravity('Ekki náðist að flytja myndina upp í skýið', ToastAndroid.LONG, ToastAndroid.TOP)
     }
   }
 
