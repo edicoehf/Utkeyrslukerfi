@@ -4,6 +4,7 @@ import DropDownPicker from 'react-native-dropdown-picker'
 import { useSelector } from 'react-redux'
 import styles from '../../styles/statusCodedropdown'
 
+// Simple dropdown menu to select different status codes
 const StatusCodeDropdown = ({ status, setStatus, label }) => {
   const availableStatusCodes = useSelector(({ statusCode }) => statusCode)
 
