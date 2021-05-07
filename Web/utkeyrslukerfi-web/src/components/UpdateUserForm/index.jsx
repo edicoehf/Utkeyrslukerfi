@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useForm, FormProvider } from 'react-hook-form'
 import Form from 'react-bootstrap/Form'
 import { updateUser } from '../../actions/userActions'
@@ -14,6 +14,7 @@ const UpdateUserForm = ({ user }) => {
   const methods = useForm()
   const history = useHistory()
   const token = useSelector(({ login }) => login.token)
+  const [userRole, setUserRole] = useState()
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -22,6 +23,7 @@ const UpdateUserForm = ({ user }) => {
       methods.setValue('name', user.name)
       methods.setValue('email', user.email)
       methods.setValue('role', user.role)
+      setUserRole(user.role)
     }
     // eslint-disable-next-line
   }, [user])
@@ -50,14 +52,6 @@ const UpdateUserForm = ({ user }) => {
           minLen={2}
           typeOfForm='UpdateUser'
         />
-        <FormGroupInput
-          groupType='password'
-          label='Tímabundið lykilorð'
-          fieldType='password'
-          pattern={/^[^()[\]{}*&^%$#@!]+$/}
-          minLen={8}
-          typeOfForm='UpdateUser'
-        />
         <FormGroupDropdown
           groupType='role'
           label='Starf'
@@ -71,7 +65,19 @@ const UpdateUserForm = ({ user }) => {
             </>
           }
           typeOfForm='UpdateUser'
+          setState={setUserRole}
         />
+        {/* if the userRole is either driver, or disabled, there is no need for the password */}
+        {parseInt(userRole) === 3 || parseInt(userRole) === 4
+          ? null
+          : <FormGroupInput
+              groupType='password'
+              label='Tímabundið lykilorð'
+              fieldType='password'
+              pattern={/^[^()[\]{}*&^%$#@!]+$/}
+              minLen={8}
+              typeOfForm='UpdateUser'
+            />}
         <FormGroupButton
           label='Vista'
           typeOfForm='UpdateUser'

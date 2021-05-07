@@ -26,7 +26,7 @@ const User = () => {
         dispatch(getViewingUser(token, id))
       }
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line
   }, [id, token])
 
   return (

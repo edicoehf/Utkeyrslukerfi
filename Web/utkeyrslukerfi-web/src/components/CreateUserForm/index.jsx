@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useForm, FormProvider } from 'react-hook-form'
 import Form from 'react-bootstrap/Form'
 import { createUser } from '../../actions/userActions'
@@ -14,7 +14,7 @@ const CreateUserForm = () => {
   const methods = useForm()
   const token = useSelector(({ login }) => login.token)
   const dispatch = useDispatch()
-
+  const [userRole, setUserRole] = useState()
   const history = useHistory()
 
   const submitForm = async (data) => {
@@ -42,14 +42,6 @@ const CreateUserForm = () => {
             minLen={2}
             typeOfForm='CreateUser'
           />
-          <FormGroupInput
-            groupType='password'
-            label='Tímabundið lykilorð'
-            fieldType='password'
-            pattern={/^[^()[\]{}*&^%$#@!]+$/}
-            minLen={8}
-            typeOfForm='CreateUser'
-          />
           <FormGroupDropdown
             groupType='role'
             label='Starf'
@@ -63,7 +55,19 @@ const CreateUserForm = () => {
               </>
             }
             typeOfForm='CreateUser'
+            setState={setUserRole}
           />
+          {/* if the userRole is either driver, or disabled, there is no need for the password */}
+          {userRole === '3' || userRole === '4'
+            ? null
+            : <FormGroupInput
+                groupType='password'
+                label='Tímabundið lykilorð'
+                fieldType='password'
+                pattern={/^[^()[\]{}*&^%$#@!]+$/}
+                minLen={8}
+                typeOfForm='CreateUser'
+              />}
           <FormGroupButton
             label='Vista'
             typeOfForm='CreateUser'
