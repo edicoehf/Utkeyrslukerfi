@@ -10,15 +10,16 @@ const PackageList = ({ packages, deliveryID }) => {
     <div className='package-list'>
       <span className='package-title'>Packages</span>
       {packages.map((p) =>
-        (
-          <div
-            className='package'
-            onClick={() => navigateToPackage(p)}
-          >
-            <span>Strikamerki:</span>
-            <span>{p.id}</span>
-          </div>
-        )
+      (
+        <div
+          key={p.id}
+          className='package'
+          onClick={() => navigateToPackage(p)}
+        >
+          <span>Strikamerki:</span>
+          <span>{p.id}</span>
+        </div>
+      )
       )}
     </div>
   )
