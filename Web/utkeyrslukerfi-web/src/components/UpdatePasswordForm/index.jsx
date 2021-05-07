@@ -23,7 +23,7 @@ const UpdatePasswordForm = () => {
   }
 
   return (
-    <div className="password">
+    <div className='password'>
       <FormProvider {...methods}>
         <Form onSubmit={methods.handleSubmit(submitForm)} className='form form-horizontal'>
           <FormGroupInput

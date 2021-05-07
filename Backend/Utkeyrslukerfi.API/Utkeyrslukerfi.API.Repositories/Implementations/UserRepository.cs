@@ -84,7 +84,7 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
         {
             var tempUser = _dbContext.Users.FirstOrDefault(u => u.ID == id);
             if (tempUser == null) { throw new NotFoundException($"User with id: {id} is not found!"); }
-            var tempPass = HashingHelper.HashPassword(user.Password);
+            var tempPass = user.Password == null ? null : HashingHelper.HashPassword(user.Password);
 
             // Update old user with the new user
             tempUser.Name = user.Name;

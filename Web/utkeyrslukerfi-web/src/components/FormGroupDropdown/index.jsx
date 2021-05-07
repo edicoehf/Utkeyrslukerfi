@@ -6,7 +6,7 @@ import { useFormContext } from 'react-hook-form'
 import PropTypes from 'prop-types'
 
 // Dropdown for forms
-const FormGroupDropdown = ({ groupType, label, options, typeOfForm }) => {
+const FormGroupDropdown = ({ groupType, label, options, typeOfForm, setState }) => {
   const { register } = useFormContext()
 
   return (
@@ -20,6 +20,7 @@ const FormGroupDropdown = ({ groupType, label, options, typeOfForm }) => {
           custom
           name={groupType}
           ref={register}
+          onChange={(event) => setState(event.target.value)}
         >
           {options}
         </Form.Control>
