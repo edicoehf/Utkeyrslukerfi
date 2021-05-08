@@ -5,9 +5,9 @@ import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import { isWithinInterval } from 'date-fns'
 import FormGroupDropdown from '../FormGroupDropdown'
+import FormGroupButton from '../FormGroupButton'
 import Form from 'react-bootstrap/Form'
 import { useForm, FormProvider } from 'react-hook-form'
-import configData from '../../constants/config.json'
 
 const customStyles = {
   content: {
@@ -29,16 +29,13 @@ const UserFilterModal = ({ visible, deliveries, setDeliveries, deliveryState, up
   const [endDate, setEndDate] = useState(new Date(Date.now() + (6.048e+8 * 2)))
   const methods = useForm()
 
-  function getIDByStatus(status) {
-    return Object.keys(config.STATUS).find(key => config.STATUS[key] === status)
-  }
 
   const filter = (e) => {
     updateModalState()
     setDeliveries([])
     setDeliveries(deliveries.filter(d => isWithinInterval(new Date(d.deliveryDate), { start: startDate, end: endDate })))
     if (status !== '') {
-      setDeliveries(deliveryState => deliveryState.filter(d => d.status === parseInt(getIDByStatus(status))))
+      setDeliveries(deliveryState => deliveryState.filter(d => d.status === parseInt(status)))
     }
   }
 
@@ -47,15 +44,11 @@ const UserFilterModal = ({ visible, deliveries, setDeliveries, deliveryState, up
     updateModalState()
   }
 
-  const submitHandler = (e) => {
-    e.preventDefault()
-    filter()
-  }
-
   useEffect(() => {
     methods.setValue('status', deliveryState)
   })
 
+  // console.log(status)
   if (visible) {
     return (
       <Modal
@@ -66,7 +59,7 @@ const UserFilterModal = ({ visible, deliveries, setDeliveries, deliveryState, up
       >
         <h2>Sía sendingar</h2>
         <FormProvider {...methods}>
-          <Form onSubmit={methods.handleSubmit(submitHandler)}>
+          <Form onSubmit={methods.handleSubmit(filter)}>
             <div className='row pb-3'>
               <div className='col align-self-center'>
                 <FormGroupDropdown
@@ -74,14 +67,16 @@ const UserFilterModal = ({ visible, deliveries, setDeliveries, deliveryState, up
                   label='Staða'
                   options={
                     <>
-                      {Object.keys(configData.STATUS).map(function (key) {
+                      <option value={''}>{''}</option>
+                      {Object.keys(config.STATUS).map(function (key) {
                         return (
-                          <option key={key} value={key}>{configData.STATUS[key]}</option>
+                          <option key={key} value={key}>{config.STATUS[key]}</option>
                         )
                       })}
                     </>
                   }
                   typeOfForm='UserFilterModal'
+                  setState={setStatus}
                 />
               </div>
             </div>
@@ -117,16 +112,16 @@ const UserFilterModal = ({ visible, deliveries, setDeliveries, deliveryState, up
                 />
               </div>
             </div>
+            <div className='row pt-3'>
+              <div className='col'>
+                <FormGroupButton className='btn btn-primary' onClick={filter} label='Sía' />
+              </div>
+              <div className='col align-self-end'>
+                <FormGroupButton onClick={clearFilter} className='btn btn-outline-warning float-right mx-2'  label='Hreinsa síu' />
+              </div>
+            </div>
           </Form>
         </FormProvider>
-        <div className='row pt-3'>
-          <div className='col'>
-            <button className='btn btn-primary' onClick={filter}>Sía</button>
-          </div>
-          <div className='col align-self-end'>
-            <button onClick={clearFilter} className='btn btn-outline-warning float-right mx-2'>Hreinsa síu</button>
-          </div>
-        </div>
       </Modal>
     )
   }
