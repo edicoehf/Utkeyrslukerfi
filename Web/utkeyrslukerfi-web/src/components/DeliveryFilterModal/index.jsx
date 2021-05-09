@@ -63,7 +63,7 @@ const UserFilterModal = ({ visible, deliveries, setDeliveries, deliveryState, up
       >
         <h2>Sía sendingar</h2>
         <FormProvider {...methods}>
-          <Form onSubmit={methods.handleSubmit(filter)}>
+          <Form onSubmit={methods.handleSubmit(filter)} className='form form-horizontal'>
             <div className='row pb-3'>
               <div className='col align-self-center'>
                 <FormGroupDropdown
@@ -84,25 +84,26 @@ const UserFilterModal = ({ visible, deliveries, setDeliveries, deliveryState, up
                 />
               </div>
             </div>
-            <div className='row'>
+            <div className='row pb-3'>
               <div className='col pb-3'>
-                <span className='my-auto'>Frá</span>
+                <span className='my-auto'>Frá:</span>
               </div>
-              <div className='col align-self-start'>
+              <div className='col-sm-8 align-self-start'>
                 <DatePicker
                   selected={startDate}
                   onChange={date => setStartDate(date)}
                   selectsStart
                   startDate={startDate}
                   endDate={endDate}
+                  className="custom-select"
                 />
               </div>
             </div>
-            <div className='row'>
+            <div className='form-group row'>
               <div className='col align-self-start'>
-                <p className='my-auto'>Til</p>
+                <p className='my-auto'>Til:</p>
               </div>
-              <div className='col align-self-start'>
+              <div className='col-sm-8 align-self-start'>
                 <DatePicker
                   selected={endDate}
                   onChange={date => {
@@ -113,6 +114,7 @@ const UserFilterModal = ({ visible, deliveries, setDeliveries, deliveryState, up
                   startDate={startDate}
                   endDate={endDate}
                   minDate={startDate}
+                  className="custom-select"
                 />
               </div>
             </div>
@@ -121,7 +123,7 @@ const UserFilterModal = ({ visible, deliveries, setDeliveries, deliveryState, up
                 <FormGroupButton className='btn btn-primary' onClick={filter} label='Sía' />
               </div>
               <div className='col align-self-end'>
-                <FormGroupButton onClick={clearFilter} className='btn btn-outline-warning float-right mx-2'  label='Hreinsa síu' />
+                <FormGroupButton onClick={clearFilter} className='btn btn-outline-warning float-right mx-2'  label='Hreinsa' />
               </div>
             </div>
           </Form>
