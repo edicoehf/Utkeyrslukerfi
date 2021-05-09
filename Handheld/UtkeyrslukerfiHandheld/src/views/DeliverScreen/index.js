@@ -36,7 +36,13 @@ const DeliverScreen = ({ route, navigation }) => {
   useEffect(() => {
     if (delivery.driverComment) { setDriverComment(delivery.driverComment) }
     if (delivery.customerComment) { setCustomerComment(delivery.customerComment) }
-    if (tableData.length === 0) { delivery.packages.forEach(p => addToTable(p.id)) }
+    if (tableData.length === 0) { setTableData(delivery.packages.map((pck, idx) => {
+      return {
+        barcode: pck.id,
+        package: `${idx+1}/${delivery.packages.length}`,
+        button: <RemoveButton key={pck.id} barcode={pck.id} removeBarcode={removeBarcode} />
+      }
+    }))}
   }, [])
 
   // Remove item from table, barcodes need to be unique
@@ -46,7 +52,7 @@ const DeliverScreen = ({ route, navigation }) => {
 
   // All packages in current delivery about to be delivered should be scanned
   const addBarcode = () => {
-    if (!barcode) { ToastAndroid.showWithGravity('Strikamerki er ekki til staðar', ToastAndroid.LONG, ToastAndroid.TOP) }
+    if (!barcode) { return ToastAndroid.showWithGravity('Strikamerki er ekki til staðar', ToastAndroid.LONG, ToastAndroid.TOP) }
     // Only add packages in this delivery && only add packages once
     if (delivery.packages.some(p => p.id === barcode) && tableData.every(p => p.barcode !== barcode)) {
       addToTable(barcode)
