@@ -48,6 +48,10 @@ const UserFilterModal = ({ visible, deliveries, setDeliveries, deliveryState, up
     methods.setValue('status', deliveryState)
   })
 
+  useEffect(() => {
+    methods.setValue('status', status)
+  }, [status, methods])
+
   // console.log(status)
   if (visible) {
     return (
