@@ -4,33 +4,26 @@ import { launchCamera } from 'react-native-image-picker'
 import BasicButton from '../../components/BasicButton'
 import styles from '../../styles/signoffImage'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
-import { EAzureBlobStorageFile } from 'react-native-azure-blob-storage'
+import AzureBlobStorage from '../../resources/AzureBlobStorage.class'
 import { REACT_APP_STORAGE_KEY } from '@env'
 
 // Signoff Image, gets image of delivery during delivery
 const SignoffImage = ({ delivery, stepCounter, setStepCounter }) => {
   const [image, setImage] = useState(null)
 
-  // TODO: Blob configuration is not updating from signForDeliveryScreen, still saving to signatures container
-  useEffect(() => {
-    (async () => {
-      await EAzureBlobStorageFile.configure(
-        'utkeyrslukerfistorage',
-        REACT_APP_STORAGE_KEY,
-        'images'
-      )
-    })()
-  }, [])
-
   // Save image to azure blob storage
   const saveImageToBlobStorage = async () => {
     try {
-      await EAzureBlobStorageFile.uploadFile({
-        filePath: image.uri,
-        contentType: image.type,
-        fileName: image.fileName
+      const blobService = new AzureBlobStorage({
+        account: 'utkeyrslukerfistorage',
+        container: 'signatures',
+        key: REACT_APP_STORAGE_KEY
       })
+      console.log(image)
+      await blobService.createBlockBlob(image, image.fileName)
+      
     } catch (error) {
+      console.log(error)
       ToastAndroid.showWithGravity('Ekki náðist að flytja myndina upp í skýið', ToastAndroid.LONG, ToastAndroid.TOP)
     }
   }
