@@ -15,10 +15,12 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
     {
         private readonly IUtkeyrslukerfiDbContext _dbContext;
         private readonly IConfiguration _config;
+        private readonly IConfiguration _seedUserConfig;
 
         public JobRepository(IUtkeyrslukerfiDbContext dbContext, IConfiguration configuration)
         {
             _config = configuration.GetSection("ExternalDeliveryMapping");
+            _seedUserConfig = configuration.GetSection("SeedUser");
             _dbContext = dbContext;
         }
         /// <summary>
@@ -394,18 +396,19 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
 
         public void SeedUser()
         {
-            var tempPass = HashingHelper.HashPassword("supersecurepassword");
+            var tempPass = HashingHelper.HashPassword(_seedUserConfig.GetSection("Password").Value);
+            _dbContext.Users.FirstOrDefault(u => u.Email == _seedUserConfig.GetSection("Email").Value);
+            if (_dbContext.Users.FirstOrDefault(u => u.Email == _seedUserConfig.GetSection("Email").Value) != null) { return; }
             var user = new User()
             {
-                Name = "Admin",
-                Email = "admin@edico.is",
+                Name = _seedUserConfig.GetSection("Name").Value,
+                Email = _seedUserConfig.GetSection("Email").Value,
                 Password = tempPass,
-                Role = 1,
-                ChangePassword = false,
+                Role = 0,
+                ChangePassword = true,
                 CreatedOn = DateTime.UtcNow,
                 TokenID = 0,
             };
-
             _dbContext.Users.Add(user);
             _dbContext.SaveChanges();
         }
