@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import Container from '..'
-import { render, screen, cleanup } from '@testing-library/react'
+import { render as rtlRender, cleanup } from '@testing-library/react'
 import '@testing-library/jest-dom'
 
 
@@ -13,6 +13,6 @@ test('Renders the component without crashing', () => {
 })
 
 test('Renders Container correctly', () => {
-  const { getByTestId } = render(<Container />)
+  const { getByTestId } = rtlRender(<Container />)
   expect(getByTestId('container')).not.toBeEmptyDOMElement()
 })
