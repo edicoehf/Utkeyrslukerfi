@@ -60,7 +60,6 @@ const createVehicleSuccess = (vehicle) => ({
   payload: vehicle
 })
 
-
 export const updateVehicle = (token, id, vehicle) => async (dispatch) => {
   try {
     const res = await vehicleService.updateVehicle(token, id, vehicle)

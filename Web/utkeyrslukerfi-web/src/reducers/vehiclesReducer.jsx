@@ -1,5 +1,5 @@
 import {
-  GET_VEHICLES,
+  GET_VEHICLES
 } from '../constants'
 
 const vehiclesReducer = (state = [], action) => {

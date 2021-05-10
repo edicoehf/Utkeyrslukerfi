@@ -13,7 +13,7 @@ const UpdateVehicleForm = ({ vehicle }) => {
   const history = useHistory()
   const token = useSelector(({ login }) => login.token)
   const dispatch = useDispatch()
-  
+
   const submitForm = (data) => {
     dispatch(updateVehicle(token, vehicle.licensePlate, data))
     history.push('/vehicles')
@@ -30,10 +30,10 @@ const UpdateVehicleForm = ({ vehicle }) => {
     // eslint-disable-next-line
   }, [vehicle])
 
-  //TODO: Vehicle actions update er patch, tala um það
-  //TODO: spurja hvað þetta authorizeroles dæmi er
+  // TODO: Vehicle actions update er patch, tala um það
+  // TODO: spurja hvað þetta authorizeroles dæmi er
   return (
-      <FormProvider {...methods}>
+    <FormProvider {...methods}>
       <Form onSubmit={methods.handleSubmit(submitForm)} className='form form-horizontal'>
         <FormGroupInput
           groupType='licensePlate'

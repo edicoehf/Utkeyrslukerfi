@@ -29,10 +29,8 @@ const UserFilterModal = ({ visible, deliveries, setDeliveries, deliveryState, up
   const [endDate, setEndDate] = useState(new Date(Date.now() + (6.048e+8 * 2)))
   const methods = useForm()
 
-
   const filter = (e) => {
     updateModalState()
-    setDeliveries([])
     setDeliveries(deliveries.filter(d => isWithinInterval(new Date(d.deliveryDate), { start: startDate, end: endDate })))
     if (status !== '') {
       setDeliveries(deliveryState => deliveryState.filter(d => d.status === parseInt(status)))
@@ -52,7 +50,6 @@ const UserFilterModal = ({ visible, deliveries, setDeliveries, deliveryState, up
     methods.setValue('status', status)
   }, [status, methods])
 
-  // console.log(status)
   if (visible) {
     return (
       <Modal
@@ -71,7 +68,7 @@ const UserFilterModal = ({ visible, deliveries, setDeliveries, deliveryState, up
                   label='Staða'
                   options={
                     <>
-                      <option value={''}>{''}</option>
+                      <option value='' />
                       {Object.keys(config.STATUS).map(function (key) {
                         return (
                           <option key={key} value={key}>{config.STATUS[key]}</option>
@@ -95,7 +92,7 @@ const UserFilterModal = ({ visible, deliveries, setDeliveries, deliveryState, up
                   selectsStart
                   startDate={startDate}
                   endDate={endDate}
-                  className="custom-select"
+                  className='custom-select'
                 />
               </div>
             </div>
@@ -114,7 +111,7 @@ const UserFilterModal = ({ visible, deliveries, setDeliveries, deliveryState, up
                   startDate={startDate}
                   endDate={endDate}
                   minDate={startDate}
-                  className="custom-select"
+                  className='custom-select'
                 />
               </div>
             </div>
@@ -123,7 +120,7 @@ const UserFilterModal = ({ visible, deliveries, setDeliveries, deliveryState, up
                 <FormGroupButton className='btn btn-primary' onClick={filter} label='Sía' />
               </div>
               <div className='col align-self-end'>
-                <FormGroupButton onClick={clearFilter} className='btn btn-outline-warning float-right mx-2'  label='Hreinsa' />
+                <FormGroupButton onClick={clearFilter} className='btn btn-outline-warning float-right mx-2' label='Hreinsa' />
               </div>
             </div>
           </Form>

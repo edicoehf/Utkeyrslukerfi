@@ -13,44 +13,44 @@ const CreateVehicleForm = () => {
   const token = useSelector(({ login }) => login.token)
   const dispatch = useDispatch()
   const history = useHistory()
-  
+
   const submitForm = async (data) => {
     dispatch(createVehicle(token, data))
     history.push('/vehicles')
   }
-  
+
   return (
-    <div className="user">
+    <div className='user'>
       <FormProvider {...methods}>
         <Form onSubmit={methods.handleSubmit(submitForm)} className='form form-horizontal'>
-            <FormGroupInput
+          <FormGroupInput
             groupType='licensePlate'
             label='Númeraplata'
             fieldType='text'
             typeOfForm='UpdateVehicle'
-            />
-            <FormGroupInput
+          />
+          <FormGroupInput
             groupType='length'
             label='Lengd'
             fieldType='text'
             typeOfForm='UpdateVehicle'
-            />
-            <FormGroupInput
+          />
+          <FormGroupInput
             groupType='width'
             label='Breidd'
             fieldType='text'
             typeOfForm='UpdateVehicle'
-            />
-            <FormGroupInput
+          />
+          <FormGroupInput
             groupType='height'
             label='Hæð'
             fieldType='text'
             typeOfForm='UpdateVehicle'
-            />
-            <FormGroupButton
+          />
+          <FormGroupButton
             label='Vista'
             typeOfForm='UpdateUser'
-            />
+          />
         </Form>
       </FormProvider>
     </div>

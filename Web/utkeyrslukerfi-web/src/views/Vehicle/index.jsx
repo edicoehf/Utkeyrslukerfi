@@ -28,7 +28,7 @@ const Vehicle = () => {
   }, [id, token])
 
   return (
-    <div className="user">
+    <div className='user'>
       <UpdateVehicleForm vehicle={viewingVehicle} />
     </div>
   )

@@ -11,7 +11,7 @@ const VehicleList = () => {
   const vehicles = useSelector(({ vehicles }) => vehicles)
   const [vehicleState, setVehicleState] = useState([])
   const dispatch = useDispatch()
-  
+
   useEffect(() => {
     if (token) {
       dispatch(getVehicles(token))
@@ -26,7 +26,7 @@ const VehicleList = () => {
   const navigateToCreateVehicle = () => {
     history.push('/vehicles/create')
   }
-  
+
   return (
     <div className='vehicles'>
       <table className='table table-bordered'>
