@@ -1,5 +1,6 @@
 import {
   GET_VEHICLES,
+  CREATE_VEHICLE,
   SET_VIEWING_VEHICLE,
   GET_VIEWING_VEHICLE,
   UPDATE_VEHICLE
@@ -40,7 +41,26 @@ const getViewingVehicleSuccess = (vehicle) => ({
   payload: vehicle
 })
 
-// TODO: UPDATE_VEHICLE
+export const createVehicle = (token, vehicle) => async (dispatch) => {
+  try {
+    const body = await vehicleService.createVehicle(token, vehicle)
+
+    if (body?.status === 401) { toastr.error('Notandi er ekki innskráður.') }
+    if (body?.id) {
+      toastr.success('Nýjum notanda hefur verið bætt við!')
+      dispatch(createVehicleSuccess({ id: body.id, ...vehicle }))
+    }
+  } catch (err) {
+    toastr.error('Ekki náðist samband við netþjón.')
+  }
+}
+
+const createVehicleSuccess = (vehicle) => ({
+  type: CREATE_VEHICLE,
+  payload: vehicle
+})
+
+
 export const updateVehicle = (token, id, vehicle) => async (dispatch) => {
   try {
     const res = await vehicleService.updateVehicle(token, id, vehicle)

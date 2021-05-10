@@ -16,6 +16,7 @@ import Delivery from './views/Delivery'
 import Package from './views/Package'
 import VehicleList from './views/VehicleList'
 import Vehicle from './views/Vehicle'
+import CreateVehicle from './views/CreateVehicle'
 import CreateUser from './views/CreateUser'
 import NotFound from './views/NotFound'
 
@@ -47,6 +48,7 @@ const App = () => {
           <Route exact path='/deliveries/:id' component={Delivery} />
           <Route exact path='/deliveries/:delid/packages/:id' component={Package} />
           <Route exact path='/vehicles' component={VehicleList} />
+          <Route exact path='/vehicles/create' component={CreateVehicle} />
           <Route exact path='/vehicles/:id' component={Vehicle} />
           <Route exact path='*' component={NotFound} />
         </Switch>

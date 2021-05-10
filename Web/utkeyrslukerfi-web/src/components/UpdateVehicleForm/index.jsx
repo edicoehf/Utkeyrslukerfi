@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { useForm, FormProvider } from 'react-hook-form'
 import Form from 'react-bootstrap/Form'
 import { updateVehicle } from '../../actions/vehiclesActions'
@@ -15,7 +15,7 @@ const UpdateVehicleForm = ({ vehicle }) => {
   const dispatch = useDispatch()
   
   const submitForm = (data) => {
-    dispatch(updateVehicle(token, vehicle.id, data))
+    dispatch(updateVehicle(token, vehicle.licensePlate, data))
     history.push('/vehicles')
   }
 

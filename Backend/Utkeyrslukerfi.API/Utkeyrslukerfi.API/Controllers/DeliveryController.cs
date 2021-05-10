@@ -119,8 +119,7 @@ namespace Utkeyrslukerfi.API.Controllers
             return NoContent();
         }
         // create delivery
-        [Authorize(Roles = "1")]
-        [Authorize(Roles = "2")]
+        [Authorize(Roles = "1,2")]
         [HttpPost]
         [Route("", Name = "CreateDelivery")]
         public IActionResult CreateDelivery([FromBody] DeliveryInputModel delivery)

@@ -76,10 +76,10 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
         /// <param name="vehicle">Of type VehicleInputModel</param>
         /// <param name="id">Of type Guid</param>
         /// <returns>The ID of the newly created vehicle</returns>
-        public void UpdateVehicle(VehicleInputModel vehicle, Guid id)
+        public void UpdateVehicle(VehicleInputModel vehicle, string id)
         {
-            var tempVehicle = _dbContext.Vehicles.FirstOrDefault(v => v.ID == id);
-            if (tempVehicle == null) { throw new NotFoundException($"User with id: {id} is not found!"); }
+            var tempVehicle = _dbContext.Vehicles.FirstOrDefault(v => v.LicensePlate == id);
+            if (tempVehicle == null) { throw new NotFoundException($"Vehicle with id: {id} is not found!"); }
             tempVehicle.LicensePlate = vehicle.LicensePlate;
             tempVehicle.Length = vehicle.Length;
             tempVehicle.Height = vehicle.Height;

@@ -9,7 +9,7 @@ const VehicleDetails = ({ vehicle }) => {
 
   const navigateToVehicle = (vehicle) => {
     dispatch(setViewingVehicle(vehicle))
-    history.push(`/vehicles/${vehicle.id}`, { params: vehicle })
+    history.push(`/vehicles/${vehicle.licensePlate}`, { params: vehicle })
   }
 
   return (
