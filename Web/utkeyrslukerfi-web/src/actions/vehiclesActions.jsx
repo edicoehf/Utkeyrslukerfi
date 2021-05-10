@@ -47,7 +47,7 @@ export const createVehicle = (token, vehicle) => async (dispatch) => {
 
     if (body?.status === 401) { toastr.error('Notandi er ekki innskráður.') }
     if (body?.id) {
-      toastr.success('Nýjum notanda hefur verið bætt við!')
+      toastr.success('Nýr bíll hefur verið bætt við!')
       dispatch(createVehicleSuccess({ id: body.id, ...vehicle }))
     }
   } catch (err) {
@@ -69,7 +69,7 @@ export const updateVehicle = (token, id, vehicle) => async (dispatch) => {
     if (res?.status === 400) { toastr.error('Slæm beiðni.') }
     if (res?.status === 204) {
       dispatch(updateVehicleSuccess({ id, ...vehicle }))
-      toastr.success('Notandi hefur verið uppfærður!')
+      toastr.success('Bílinn hefur verið uppfærður!')
     }
   } catch (err) {
     toastr.error('Ekki náðist samband við netþjón.')
