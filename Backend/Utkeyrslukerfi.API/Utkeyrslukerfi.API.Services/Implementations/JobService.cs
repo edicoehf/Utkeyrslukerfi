@@ -59,8 +59,9 @@ namespace Utkeyrslukerfi.API.Services.Implementations
             return null;
         }
 
-        public void SeedUser(){ 
-          _jobRepository.SeedUser();
+        public void SeedUser()
+        {
+            _jobRepository.SeedUser();
         }
     }
 }

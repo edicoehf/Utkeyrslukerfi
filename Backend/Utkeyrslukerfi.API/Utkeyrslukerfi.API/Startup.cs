@@ -178,10 +178,10 @@ namespace Utkeyrslukerfi.API
             {
                 endpoints.MapControllers();
             });
-      // creating seed user
-      BackgroundJob.Enqueue<IJobService>((x) => x.SeedUser());
-      // starting cron jobs with hangfire
-      RecurringJob.AddOrUpdate<IJobService>(x => x.GetDeliveries(), Cron.Daily);
+            // creating seed user
+            BackgroundJob.Enqueue<IJobService>((x) => x.SeedUser());
+            // starting cron jobs with hangfire
+            RecurringJob.AddOrUpdate<IJobService>(x => x.GetDeliveries(), Cron.Daily);
         }
     }
 }

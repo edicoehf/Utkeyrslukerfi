@@ -394,20 +394,20 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
 
         public void SeedUser()
         {
-      var tempPass = HashingHelper.HashPassword("supersecurepassword");
-      var user = new User()
-      {
-        Name = "Admin",
-        Email = "admin@edico.is",
-        Password = tempPass,
-        Role = 1,
-        ChangePassword = false,
-        CreatedOn = DateTime.UtcNow,
-        TokenID = 0,
-      };
+            var tempPass = HashingHelper.HashPassword("supersecurepassword");
+            var user = new User()
+            {
+                Name = "Admin",
+                Email = "admin@edico.is",
+                Password = tempPass,
+                Role = 1,
+                ChangePassword = false,
+                CreatedOn = DateTime.UtcNow,
+                TokenID = 0,
+            };
 
-      _dbContext.Users.Add(user);
-      _dbContext.SaveChanges();
-    }
+            _dbContext.Users.Add(user);
+            _dbContext.SaveChanges();
+        }
     }
 }

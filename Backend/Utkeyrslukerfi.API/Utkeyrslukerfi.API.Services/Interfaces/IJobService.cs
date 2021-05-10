@@ -10,5 +10,5 @@ namespace Utkeyrslukerfi.API.Services.Interfaces
     {
         Task<IEnumerable<Delivery>> GetDeliveries();
         void SeedUser();
-  }
+    }
 }
