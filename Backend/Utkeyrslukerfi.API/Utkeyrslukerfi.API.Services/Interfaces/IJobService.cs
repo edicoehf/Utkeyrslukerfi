@@ -6,8 +6,9 @@ using Microsoft.Extensions.Configuration;
 
 namespace Utkeyrslukerfi.API.Services.Interfaces
 {
-    public interface IFetchDataService
+    public interface IJobService
     {
         Task<IEnumerable<Delivery>> GetDeliveries();
-    }
+        void SeedUser();
+  }
 }

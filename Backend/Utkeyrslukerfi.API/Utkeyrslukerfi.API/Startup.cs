@@ -122,7 +122,7 @@ namespace Utkeyrslukerfi.API
             services.AddTransient<IVehicleService, VehicleService>();
             services.AddTransient<IJwtTokenService, JwtTokenService>();
             services.AddTransient<IAccountService, AccountService>();
-            services.AddTransient<IFetchDataService, FetchDataService>();
+            services.AddTransient<IJobService, JobService>();
             // Since token service constructor takes in strings
             var jwtConfig = Configuration.GetSection("JwtConfig");
             services.AddTransient<ITokenService>((c) =>
@@ -141,7 +141,7 @@ namespace Utkeyrslukerfi.API
             services.AddTransient<ITokenRepository, TokenRepository>();
             services.AddTransient<IPackageRepository, PackageRepository>();
             services.AddTransient<IVehicleRepository, VehicleRepository>();
-            services.AddTransient<IFetchDataRepository, FetchDataRepository>();
+            services.AddTransient<IJobRepository, JobRepository>();
 
         }
 
@@ -178,8 +178,10 @@ namespace Utkeyrslukerfi.API
             {
                 endpoints.MapControllers();
             });
-            // starting cron jobs with hangfire
-            RecurringJob.AddOrUpdate<IFetchDataService>(x => x.GetDeliveries(), Cron.Daily);
+      // creating seed user
+      BackgroundJob.Enqueue<IJobService>((x) => x.SeedUser());
+      // starting cron jobs with hangfire
+      RecurringJob.AddOrUpdate<IJobService>(x => x.GetDeliveries(), Cron.Daily);
         }
     }
 }

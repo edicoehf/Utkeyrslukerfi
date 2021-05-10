@@ -12,18 +12,18 @@ using Utkeyrslukerfi.API.Services.Interfaces;
 
 namespace Utkeyrslukerfi.API.Services.Implementations
 {
-    public class FetchDataService : IFetchDataService
+    public class JobService : IJobService
     {
         static readonly HttpClient client = new();
         private readonly IMapper _mapper;
         private readonly IConfiguration _config;
-        private readonly IFetchDataRepository _fetchDataRepo;
+        private readonly IJobRepository _jobRepository;
 
-        public FetchDataService(IMapper mapper, IConfiguration config, IFetchDataRepository fetchDataRepo)
+        public JobService(IMapper mapper, IConfiguration config, IJobRepository jobRepository)
         {
             _mapper = mapper;
             _config = config;
-            _fetchDataRepo = fetchDataRepo;
+            _jobRepository = jobRepository;
         }
         /// <summary>
         /// Fetches the data from the external API, and returns the data on a Json Object format.
@@ -54,9 +54,13 @@ namespace Utkeyrslukerfi.API.Services.Implementations
 
             foreach (var item in response.Result)
             {
-                _fetchDataRepo.AddDelivery(item);
+                _jobRepository.AddDelivery(item);
             }
             return null;
+        }
+
+        public void SeedUser(){ 
+          _jobRepository.SeedUser();
         }
     }
 }

@@ -11,12 +11,12 @@ using Utkeyrslukerfi.API.Repositories.IContext;
 
 namespace Utkeyrslukerfi.API.Repositories.Implementations
 {
-    public class FetchDataRepository : IFetchDataRepository
+    public class JobRepository : IJobRepository
     {
         private readonly IUtkeyrslukerfiDbContext _dbContext;
         private readonly IConfiguration _config;
 
-        public FetchDataRepository(IUtkeyrslukerfiDbContext dbContext, IConfiguration configuration)
+        public JobRepository(IUtkeyrslukerfiDbContext dbContext, IConfiguration configuration)
         {
             _config = configuration.GetSection("ExternalDeliveryMapping");
             _dbContext = dbContext;
@@ -391,5 +391,23 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
             AddPackages(entity, delivery);
             _dbContext.SaveChangesAsync();
         }
+
+        public void SeedUser()
+        {
+      var tempPass = HashingHelper.HashPassword("supersecurepassword");
+      var user = new User()
+      {
+        Name = "Admin",
+        Email = "admin@edico.is",
+        Password = tempPass,
+        Role = 1,
+        ChangePassword = false,
+        CreatedOn = DateTime.UtcNow,
+        TokenID = 0,
+      };
+
+      _dbContext.Users.Add(user);
+      _dbContext.SaveChanges();
+    }
     }
 }
