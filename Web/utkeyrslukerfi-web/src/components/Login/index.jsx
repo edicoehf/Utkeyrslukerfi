@@ -15,7 +15,7 @@ const Login = () => {
   }
 
   return (
-    <div className='login-wrapper'>
+    <div data-testid='login' className='login-wrapper'>
       <form onSubmit={handleSubmit}>
         <label>
           <p>Netfang:</p>
