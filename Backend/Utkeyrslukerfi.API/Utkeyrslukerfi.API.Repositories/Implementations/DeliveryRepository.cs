@@ -40,6 +40,7 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
         public DeliveryDTO GetDelivery(string ID)
         {
             var delivery = _deliveryObj.FirstOrDefault(d => d.ID == ID);
+            if (delivery == null) { throw new NotFoundException($"No delivery with ID: {ID}"); }
             return _mapper.Map<DeliveryDTO>(delivery);
         }
         /// <summary>
