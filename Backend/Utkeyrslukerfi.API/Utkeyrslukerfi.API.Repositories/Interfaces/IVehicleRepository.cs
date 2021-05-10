@@ -18,6 +18,6 @@ namespace Utkeyrslukerfi.API.Repositories.Interfaces
         VehicleDTO GetVehicle(string ID);
         IEnumerable<VehicleDTO> GetVehicles(int pageSize, int pageNumber);
         Guid CreateVehicle(VehicleInputModel vehicle);
-        void UpdateVehicle(VehicleInputModel vehicle, string ID);
+        void UpdateVehicle(VehicleInputModel vehicle, Guid ID);
     }
 }

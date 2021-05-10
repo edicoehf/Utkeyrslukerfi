@@ -11,6 +11,7 @@ const Home = () => {
         {role === 1
           ? <NavLink className='home-btn' to='/users'><span>Notendur</span></NavLink>
           : <NavLink className='disabled-btn' to=''><span>Notendur</span></NavLink>}
+        <NavLink className='home-btn' to='/vehicles'><span>Bílar</span></NavLink>
         <NavLink className='home-btn' to='/deliveries'><span>Sendingar</span></NavLink>
       </div>
     </div>

@@ -10,6 +10,6 @@ namespace Utkeyrslukerfi.API.Services.Interfaces
         VehicleDTO GetVehicle(string id); // id = number plate
         IEnumerable<VehicleDTO> GetVehicles(int pageSize, int pageNumber);
         Guid CreateVehicle(VehicleInputModel vehicle);
-        void UpdateVehicle(VehicleInputModel vehicle, string id);
+        void UpdateVehicle(VehicleInputModel vehicle, Guid id);
     }
 }

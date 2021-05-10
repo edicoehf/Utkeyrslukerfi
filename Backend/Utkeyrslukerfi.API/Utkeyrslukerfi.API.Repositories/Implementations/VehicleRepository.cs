@@ -70,10 +70,22 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
             _dbContext.SaveChanges();
             return entity.ID;
         }
-        public void UpdateVehicle(VehicleInputModel vehicle, string id)
+        /// <summary>
+        /// Updates an existing vehicle
+        /// </summary>
+        /// <param name="vehicle">Of type VehicleInputModel</param>
+        /// <param name="id">Of type Guid</param>
+        /// <returns>The ID of the newly created vehicle</returns>
+        public void UpdateVehicle(VehicleInputModel vehicle, Guid id)
         {
-            // TODO:
-            // _dbContext.SaveChanges();
+            var tempVehicle = _dbContext.Vehicles.FirstOrDefault(v => v.ID == id);
+            if (tempVehicle == null) { throw new NotFoundException($"User with id: {id} is not found!"); }
+            tempVehicle.LicensePlate = vehicle.LicensePlate;
+            tempVehicle.Length = vehicle.Length;
+            tempVehicle.Height = vehicle.Height;
+            tempVehicle.Width = vehicle.Width;
+
+            _dbContext.SaveChanges();
         }
     }
 }

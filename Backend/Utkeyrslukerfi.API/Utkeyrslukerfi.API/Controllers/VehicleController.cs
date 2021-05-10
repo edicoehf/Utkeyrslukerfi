@@ -72,11 +72,11 @@ namespace Utkeyrslukerfi.API.Controllers
             var vehicles = _vehicleService.GetVehicles(pageSize, pageNumber);
             return Ok(vehicles);
         }
-        [Authorize(Roles = "1")]
-        [Authorize(Roles = "2")]
-        [HttpPatch]
+        // [Authorize(Roles = "1")]
+        // [Authorize(Roles = "2")]
+        [HttpPut]
         [Route("{id}", Name = "UpdateVehicle")]
-        public IActionResult UpdateVehicle([FromBody] VehicleInputModel vehicle, string id)
+        public IActionResult UpdateVehicle([FromBody] VehicleInputModel vehicle, Guid id)
         {
             if (!ModelState.IsValid)
             {

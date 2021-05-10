@@ -30,7 +30,7 @@ namespace Utkeyrslukerfi.API.Services.Implementations
             return _vehicleRepo.CreateVehicle(vehicle);
         }
 
-        public void UpdateVehicle(VehicleInputModel vehicle, string id)
+        public void UpdateVehicle(VehicleInputModel vehicle, Guid id)
         {
             _vehicleRepo.UpdateVehicle(vehicle, id);
         }
