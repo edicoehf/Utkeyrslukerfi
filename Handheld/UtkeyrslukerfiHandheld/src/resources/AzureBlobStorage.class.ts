@@ -32,7 +32,7 @@ class AzureBlobStorage {
 
   /**
    * Return a URL for the blob
-   * @param {string} account Name of azure blob storage account 
+   * @param {string} account Name of azure blob storage account
    * @param {string} container Name of container that the image should be uploaded to
    * @param {string} blob Name (and extension) of the blob (data to be uploaded)
    */
@@ -43,7 +43,7 @@ class AzureBlobStorage {
   ) {
     return `https://${account}.blob.core.windows.net/${container}/${blob}`
   }
-  
+
   /**
    * Create blob block and send request
    *
@@ -70,7 +70,7 @@ class AzureBlobStorage {
     const signature = Base64.stringify(hmacSHA256(utf8.encode(stringToSign), Base64.parse(this.getKey())))
 
     // Set appropriate headers
-    const requestHeaders: HeadersInit_ = new Headers()
+    const requestHeaders: HeadersInit = new Headers()
     requestHeaders.set('Authorization', `SharedKey ${account}:${signature}`)
     requestHeaders.set('Content-Type', file.type)
     requestHeaders.set('Content-Length', file.fileSize)
@@ -87,7 +87,7 @@ class AzureBlobStorage {
     if (res.status === 201) {
       return fileName
     } else {
-      throw new Error (`The received status code wasn't the expected one.\nExpected: 201\nReceived: ${res.status}\nResponse: ${res}`)
+      throw new Error(`The received status code wasn't the expected one.\nExpected: 201\nReceived: ${res.status}\nResponse: ${res}`)
     }
   }
 }
