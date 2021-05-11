@@ -17,18 +17,21 @@ class AzureBlobStorage {
     this.container = props.container
     this.key = props.key
   }
+
   getKey () {
     return this.key
   }
+
   getAccount () {
     return this.account
   }
+
   getContainer () {
     return this.container
   }
+
   /**
    * Return a URL for the blob
-   *
    * @param {string} account Name of azure blob storage account 
    * @param {string} container Name of container that the image should be uploaded to
    * @param {string} blob Name (and extension) of the blob (data to be uploaded)
@@ -40,6 +43,7 @@ class AzureBlobStorage {
   ) {
     return `https://${account}.blob.core.windows.net/${container}/${blob}`
   }
+  
   /**
    * Create blob block and send request
    *
@@ -76,17 +80,14 @@ class AzureBlobStorage {
     const res = await fetch(url, {
       method,
       headers: requestHeaders,
-      body: file,
+      body: file
     })
 
     // Should be status code 201
     if (res.status === 201) {
       return fileName
     } else {
-      throw {
-        message: `The received status code wasn\'t the expected one.\nExpected: 201\nReceived: ${res.status}`,
-        response: res,
-      }
+      throw new Error (`The received status code wasn't the expected one.\nExpected: 201\nReceived: ${res.status}\nResponse: ${res}`)
     }
   }
 }
