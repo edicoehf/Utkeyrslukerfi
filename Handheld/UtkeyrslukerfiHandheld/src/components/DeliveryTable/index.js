@@ -6,7 +6,7 @@ import styles from '../../styles/deliveryTable'
 import { getDeliveries } from '../../actions/deliveryActions'
 import _ from 'lodash'
 import { format } from 'date-fns'
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native'
 
 const DeliveryTable = ({ data }) => {
   const columns = ['id', 'status', 'date']
@@ -19,7 +19,7 @@ const DeliveryTable = ({ data }) => {
   const [refreshing, setRefreshing] = useState(false)
   const token = useSelector(({ login }) => login.token)
   const dispatch = useDispatch()
-  const navigation = useNavigation();
+  const navigation = useNavigation()
 
   const sortTable = (column) => {
     const newDirection = direction === 'desc' ? 'asc' : 'desc'
@@ -28,7 +28,7 @@ const DeliveryTable = ({ data }) => {
     setDirection(newDirection)
     setDeliveries(sortedData)
   }
-  
+
   const onRefresh = () => {
     // Clear old data of the list
     setDeliveries([])
