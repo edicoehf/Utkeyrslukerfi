@@ -6,6 +6,7 @@ import styles from '../../styles/signoffImage'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import AzureBlobStorage from '../../resources/AzureBlobStorage.class'
 import { REACT_APP_STORAGE_KEY } from '@env'
+import { AZURE_ACCOUNT_NAME, AZURE_CONTAINER_IMAGES } from '../../constants'
 
 // Signoff Image, gets image of delivery during delivery
 const SignoffImage = ({ delivery, stepCounter, setStepCounter }) => {
@@ -14,13 +15,16 @@ const SignoffImage = ({ delivery, stepCounter, setStepCounter }) => {
   // Save image to azure blob storage
   const saveImageToBlobStorage = async () => {
     try {
+      // Initialize blob service
       const blobService = new AzureBlobStorage({
-        account: 'utkeyrslukerfistorage',
-        container: 'images',
+        account: AZURE_ACCOUNT_NAME,
+        container: AZURE_CONTAINER_IMAGES,
         key: REACT_APP_STORAGE_KEY
       })
-      await blobService.createBlockBlob(image, image.fileName)
-      
+      // Upload image to Azure cloud storage
+      const fileName = await blobService.createBlockBlob(image, image.fileName)
+      return fileName
+
     } catch (error) {
       ToastAndroid.showWithGravity('Ekki náðist að flytja myndina upp í skýið', ToastAndroid.LONG, ToastAndroid.TOP)
     }
@@ -33,11 +37,14 @@ const SignoffImage = ({ delivery, stepCounter, setStepCounter }) => {
       return
     }
     // Save image to cloud
-    await saveImageToBlobStorage()
-    delivery.signoffImageURI = image.fileName
+    const fileName = await saveImageToBlobStorage()
 
-    // Mark SignoffImage as done (0)
-    setStepCounter(stepCounter ^ 2)
+    if (fileName) {
+      delivery.signoffImageURI = image.fileName
+  
+      // Mark SignoffImage as done (0)
+      setStepCounter(stepCounter ^ 2)
+    }
   }
 
   // Activate image picker, launch camera so user can take images

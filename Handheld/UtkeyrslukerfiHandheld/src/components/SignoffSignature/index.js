@@ -6,6 +6,7 @@ import styles from '../../styles/signoffSignature'
 import AzureBlobStorage from '../../resources/AzureBlobStorage.class'
 import { REACT_APP_STORAGE_KEY } from '@env'
 import * as FileSystem from 'react-native-fs'
+import { AZURE_ACCOUNT_NAME, AZURE_CONTAINER_SINGATUERES } from '../../constants'
 
 // Signoff Signature, gets receivers signature during delivery
 const SignoffSignature = ({ delivery, stepCounter, setStepCounter }) => {
@@ -20,19 +21,20 @@ const SignoffSignature = ({ delivery, stepCounter, setStepCounter }) => {
   // First the signature base64 needs to be saved to the phones cache and then uploaded to the blob storage
   const saveSignature = async (signature) => {
     try {
+      // Set necessary values
       const contentType = 'image/png'
       const b64Data = signature.replace('data:image/png;base64,', '')
       const fileSize = ((b64Data.length * (3/4)) - 1) // Size in Bytes
       const fileName = `signature${delivery.id}.png`
       const path = `file://${FileSystem.CachesDirectoryPath}/${fileName}`
 
-      // Save file
+      // Save file to device
       await FileSystem.writeFile(path, b64Data, 'base64')
 
       // Initialize blob service
       const blobService = new AzureBlobStorage({
-        account: 'utkeyrslukerfistorage',
-        container: 'signatures',
+        account: AZURE_ACCOUNT_NAME,
+        container: AZURE_CONTAINER_SINGATUERES,
         key: REACT_APP_STORAGE_KEY
       })
 
@@ -40,26 +42,27 @@ const SignoffSignature = ({ delivery, stepCounter, setStepCounter }) => {
       const fileNameRet = await blobService.createBlockBlob({
         fileName: fileName,
         fileSize: fileSize,
-        height: 1280,
         type: contentType,
-        uri: path,
-        width: 960
+        uri: path
       }, fileName)
+
       return fileNameRet
     } catch (err) {
-      console.log(err)
       ToastAndroid.showWithGravity('Ekki náðist að flytja myndina upp í skýið', ToastAndroid.LONG, ToastAndroid.TOP)
     }
   }
 
   // Save the signature
   const continueWithDelivery = async (signature) => {
-    // Set file name
+    // Save signature to cloud
     const fileName = await saveSignature(signature)
-    delivery.signoffSignatureURI = fileName
 
-    // Mark SignoffSignature as done (0)
-    setStepCounter(stepCounter ^ 4)
+    if (fileName) {
+      delivery.signoffSignatureURI = fileName
+  
+      // Mark SignoffSignature as done (0)
+      setStepCounter(stepCounter ^ 4)
+    }
   }
 
   return (
