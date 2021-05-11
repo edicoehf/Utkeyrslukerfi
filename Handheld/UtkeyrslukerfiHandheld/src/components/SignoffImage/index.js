@@ -24,7 +24,6 @@ const SignoffImage = ({ delivery, stepCounter, setStepCounter }) => {
       // Upload image to Azure cloud storage
       const fileName = await blobService.createBlockBlob(image, image.fileName)
       return fileName
-
     } catch (error) {
       ToastAndroid.showWithGravity('Ekki náðist að flytja myndina upp í skýið', ToastAndroid.LONG, ToastAndroid.TOP)
     }
@@ -41,7 +40,7 @@ const SignoffImage = ({ delivery, stepCounter, setStepCounter }) => {
 
     if (fileName) {
       delivery.signoffImageURI = image.fileName
-  
+
       // Mark SignoffImage as done (0)
       setStepCounter(stepCounter ^ 2)
     }

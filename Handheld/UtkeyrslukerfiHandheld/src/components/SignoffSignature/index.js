@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useRef } from 'react'
 import { View, ToastAndroid, Text } from 'react-native'
 import Signature from 'react-native-signature-canvas'
 import BasicButton from '../../components/BasicButton'
@@ -24,7 +24,7 @@ const SignoffSignature = ({ delivery, stepCounter, setStepCounter }) => {
       // Set necessary values
       const contentType = 'image/png'
       const b64Data = signature.replace('data:image/png;base64,', '')
-      const fileSize = ((b64Data.length * (3/4)) - 1) // Size in Bytes
+      const fileSize = ((b64Data.length * (3 / 4)) - 1) // Size in Bytes
       const fileName = `signature${delivery.id}.png`
       const path = `file://${FileSystem.CachesDirectoryPath}/${fileName}`
 
@@ -59,7 +59,7 @@ const SignoffSignature = ({ delivery, stepCounter, setStepCounter }) => {
 
     if (fileName) {
       delivery.signoffSignatureURI = fileName
-  
+
       // Mark SignoffSignature as done (0)
       setStepCounter(stepCounter ^ 4)
     }

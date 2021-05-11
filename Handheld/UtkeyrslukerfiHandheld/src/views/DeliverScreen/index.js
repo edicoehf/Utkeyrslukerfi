@@ -1,9 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { View, Text, ToastAndroid } from 'react-native'
-import BarcodeForm from '../../components/BarcodeForm'
+import { View, Text } from 'react-native'
 import CommentBox from '../../components/CommentBox'
 import ProductTable from '../../components/ProductTable'
-import RemoveButton from '../../components/RemoveButton'
 import CheckBox from '@react-native-community/checkbox'
 import BasicButton from '../../components/BasicButton'
 import styles from '../../styles/deliverScreen'
@@ -34,12 +32,14 @@ const DeliverScreen = ({ route, navigation }) => {
   useEffect(() => {
     if (delivery.driverComment) { setDriverComment(delivery.driverComment) }
     if (delivery.customerComment) { setCustomerComment(delivery.customerComment) }
-    if (tableData.length === 0) { setTableData(delivery.packages.map((pck, idx) => {
-      return {
-        barcode: pck.id,
-        package: `${idx+1}/${delivery.packages.length}`
-      }
-    }))}
+    if (tableData.length === 0) {
+      setTableData(delivery.packages.map((pck, idx) => {
+        return {
+          barcode: pck.id,
+          package: `${idx + 1}/${delivery.packages.length}`
+        }
+      }))
+    }
   }, [])
 
   // Navigate to signoff screen where already configured signoff methods will be shown
