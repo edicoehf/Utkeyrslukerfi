@@ -3,24 +3,13 @@ import { View, ToastAndroid, Text } from 'react-native'
 import Signature from 'react-native-signature-canvas'
 import BasicButton from '../../components/BasicButton'
 import styles from '../../styles/signoffSignature'
-import { EAzureBlobStorageFile } from 'react-native-azure-blob-storage'
+import AzureBlobStorage from '../../resources/AzureBlobStorage.class'
 import { REACT_APP_STORAGE_KEY } from '@env'
 import * as FileSystem from 'react-native-fs'
 
 // Signoff Signature, gets receivers signature during delivery
 const SignoffSignature = ({ delivery, stepCounter, setStepCounter }) => {
   const canvasRef = useRef()
-
-  // Set the correct configuration for the blob storage
-  useEffect(() => {
-    (async () => {
-      await EAzureBlobStorageFile.configure(
-        'utkeyrslukerfistorage',
-        REACT_APP_STORAGE_KEY,
-        'signatures'
-      )
-    })()
-  }, [])
 
   const handleEmpty = () => { ToastAndroid.showWithGravity('Undirskrift vantar.', ToastAndroid.LONG, ToastAndroid.TOP) }
 
@@ -33,20 +22,32 @@ const SignoffSignature = ({ delivery, stepCounter, setStepCounter }) => {
     try {
       const contentType = 'image/png'
       const b64Data = signature.replace('data:image/png;base64,', '')
+      const fileSize = ((b64Data.length * (3/4)) - 1) // Size in Bytes
       const fileName = `signature${delivery.id}.png`
       const path = `file://${FileSystem.CachesDirectoryPath}/${fileName}`
 
       // Save file
       await FileSystem.writeFile(path, b64Data, 'base64')
 
-      // Upload file to blob storage
-      const fileNameRet = await EAzureBlobStorageFile.uploadFile({
-        filePath: path,
-        contentType: contentType,
-        fileName: fileName
+      // Initialize blob service
+      const blobService = new AzureBlobStorage({
+        account: 'utkeyrslukerfistorage',
+        container: 'signatures',
+        key: REACT_APP_STORAGE_KEY
       })
+
+      // Upload file to blob storage
+      const fileNameRet = await blobService.createBlockBlob({
+        fileName: fileName,
+        fileSize: fileSize,
+        height: 1280,
+        type: contentType,
+        uri: path,
+        width: 960
+      }, fileName)
       return fileNameRet
     } catch (err) {
+      console.log(err)
       ToastAndroid.showWithGravity('Ekki náðist að flytja myndina upp í skýið', ToastAndroid.LONG, ToastAndroid.TOP)
     }
   }

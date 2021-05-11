@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { View, Text, ToastAndroid, ImageBackground, TouchableOpacity } from 'react-native'
 import { launchCamera } from 'react-native-image-picker'
 import BasicButton from '../../components/BasicButton'
@@ -16,14 +16,12 @@ const SignoffImage = ({ delivery, stepCounter, setStepCounter }) => {
     try {
       const blobService = new AzureBlobStorage({
         account: 'utkeyrslukerfistorage',
-        container: 'signatures',
+        container: 'images',
         key: REACT_APP_STORAGE_KEY
       })
-      console.log(image)
       await blobService.createBlockBlob(image, image.fileName)
       
     } catch (error) {
-      console.log(error)
       ToastAndroid.showWithGravity('Ekki náðist að flytja myndina upp í skýið', ToastAndroid.LONG, ToastAndroid.TOP)
     }
   }

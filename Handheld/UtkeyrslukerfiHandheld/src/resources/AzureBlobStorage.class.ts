@@ -2,15 +2,15 @@ import Base64 from 'crypto-js/enc-base64';
 import hmacSHA256 from 'crypto-js/hmac-sha256';
 
 export interface BlobStorageConnectionOptions {
-    account: String;
-    container: String;
-    key: String;
+    account: string;
+    container: string;
+    key: string;
   }
   
   class AzureBlobStorage {
-    private account: String;
-    private container: String;
-    private key: String;
+    private account: string;
+    private container: string;
+    private key: string;
   
     constructor(props: BlobStorageConnectionOptions) {
       this.account = props.account;
@@ -33,14 +33,14 @@ export interface BlobStorageConnectionOptions {
     /**
      * Return a URL for the blob
      *
-     * @param {String} account Name of azure blob storage account 
-     * @param {Strgin} container Name of container that the image should be uploaded to
-     * @param {String} blob Name (and extension) of the blob (data to be uploaded)
+     * @param {string} account Name of azure blob storage account 
+     * @param {string} container Name of container that the image should be uploaded to
+     * @param {string} blob Name (and extension) of the blob (data to be uploaded)
      */
     getBlockBlobUrl(
-      account: String,
-      container: String,
-      blob: String
+      account: string,
+      container: string,
+      blob: string
     ) {
       return `https://${account}.blob.core.windows.net/${container}/${blob}`;
     }
@@ -52,15 +52,15 @@ export interface BlobStorageConnectionOptions {
      * https://docs.microsoft.com/en-us/rest/api/storageservices/put-blob
      *
      * @param {import('react-native-document-picker').DocumentPickerResponse} file
-     * @param {String} fileName
-     * @returns {Promise<String>} Name of file
+     * @param {string} fileName
+     * @returns {Promise<string>} Name of file
      */
-    async createBlockBlob(file: any, fileName: String) {
+    async createBlockBlob(file: any, fileName: string) {
       const date = new Date();
       const account = this.getAccount();
       const container = this.getContainer();
       const method = 'PUT';
-  
+
       const url = this.getBlockBlobUrl(account, container, fileName);
       const stringToSign = `PUT\n\n${file.type}\n\nx-ms-date:${date.toUTCString()}\n/${account}/${container}/${fileName}`
 
@@ -73,7 +73,7 @@ export interface BlobStorageConnectionOptions {
       requestHeaders.set('Content-Type', file.type);
       requestHeaders.set('Content-Length', file.fileSize);
       requestHeaders.set('x-ms-date', date.toUTCString());
-    
+
       try {
         const res = await fetch(url, {
           method,
