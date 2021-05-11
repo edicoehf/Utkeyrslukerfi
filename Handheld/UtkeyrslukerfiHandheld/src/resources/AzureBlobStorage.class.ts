@@ -73,7 +73,6 @@ class AzureBlobStorage {
     const requestHeaders = new Headers()
     requestHeaders.set('Authorization', `SharedKey ${account}:${signature}`)
     requestHeaders.set('Content-Type', file.type)
-    requestHeaders.set('Content-Length', file.fileSize)
     requestHeaders.set('x-ms-date', date.toUTCString())
 
     // Send request
