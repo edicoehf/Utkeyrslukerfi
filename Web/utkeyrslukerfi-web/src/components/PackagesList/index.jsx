@@ -12,6 +12,7 @@ const PackageList = ({ packages, deliveryID }) => {
       {packages.map((p) =>
         (
           <div
+            key={p.id}
             className='package'
             onClick={() => navigateToPackage(p)}
           >

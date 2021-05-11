@@ -72,8 +72,7 @@ namespace Utkeyrslukerfi.API.Controllers
             var vehicles = _vehicleService.GetVehicles(pageSize, pageNumber);
             return Ok(vehicles);
         }
-        [Authorize(Roles = "1")]
-        [Authorize(Roles = "2")]
+        [Authorize(Roles = "1,2")]
         [HttpPatch]
         [Route("{id}", Name = "UpdateVehicle")]
         public IActionResult UpdateVehicle([FromBody] VehicleInputModel vehicle, string id)
@@ -85,8 +84,7 @@ namespace Utkeyrslukerfi.API.Controllers
             _vehicleService.UpdateVehicle(vehicle, id);
             return NoContent();
         }
-        [Authorize(Roles = "1")]
-        [Authorize(Roles = "2")]
+        [Authorize(Roles = "1,2")]
         [HttpPost]
         [Route("", Name = "CreateVehicle")]
         public IActionResult CreateVehicle([FromBody] VehicleInputModel vehicle)

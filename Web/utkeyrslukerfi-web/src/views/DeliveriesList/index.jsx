@@ -55,7 +55,7 @@ const DeliveriesList = () => {
           {
             deliveryState.length > 0
               ? deliveryState.map((deliv) => (
-                <DeliveryDetails delivery={deliv} />
+                <DeliveryDetails key={deliv.id} delivery={deliv} />
                 ))
               : null
           }
@@ -70,7 +70,7 @@ const DeliveriesList = () => {
           </div>
           : null
       }
-      <DeliveryFilterModal visible={filterModal} deliveries={deliveries} setDeliveries={setDeliveryState} updateModalState={toggleModal} />
+      <DeliveryFilterModal visible={filterModal} deliveries={deliveries} setDeliveries={setDeliveryState} deliveryState={deliveryState} updateModalState={toggleModal} />
     </div>
   )
 }

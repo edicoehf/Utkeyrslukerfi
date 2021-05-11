@@ -20,7 +20,7 @@ const FormGroupDropdown = ({ groupType, label, options, typeOfForm, setState }) 
           custom
           name={groupType}
           ref={register}
-          onChange={(event) => setState(event.target.value)}
+          onChange={event => { setState(event.target.value) }}
         >
           {options}
         </Form.Control>
