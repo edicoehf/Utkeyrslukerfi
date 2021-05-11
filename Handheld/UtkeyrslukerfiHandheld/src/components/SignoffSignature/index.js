@@ -1,26 +1,16 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useRef } from 'react'
 import { View, ToastAndroid, Text } from 'react-native'
 import Signature from 'react-native-signature-canvas'
 import BasicButton from '../../components/BasicButton'
 import styles from '../../styles/signoffSignature'
-import { EAzureBlobStorageFile } from 'react-native-azure-blob-storage'
+import AzureBlobStorage from '../../resources/AzureBlobStorage.class'
 import { REACT_APP_STORAGE_KEY } from '@env'
 import * as FileSystem from 'react-native-fs'
+import { AZURE_ACCOUNT_NAME, AZURE_CONTAINER_SINGATUERES } from '../../constants'
 
 // Signoff Signature, gets receivers signature during delivery
 const SignoffSignature = ({ delivery, stepCounter, setStepCounter }) => {
   const canvasRef = useRef()
-
-  // Set the correct configuration for the blob storage
-  useEffect(() => {
-    (async () => {
-      await EAzureBlobStorageFile.configure(
-        'utkeyrslukerfistorage',
-        REACT_APP_STORAGE_KEY,
-        'signatures'
-      )
-    })()
-  }, [])
 
   const handleEmpty = () => { ToastAndroid.showWithGravity('Undirskrift vantar.', ToastAndroid.LONG, ToastAndroid.TOP) }
 
@@ -31,20 +21,31 @@ const SignoffSignature = ({ delivery, stepCounter, setStepCounter }) => {
   // First the signature base64 needs to be saved to the phones cache and then uploaded to the blob storage
   const saveSignature = async (signature) => {
     try {
+      // Set necessary values
       const contentType = 'image/png'
       const b64Data = signature.replace('data:image/png;base64,', '')
+      const fileSize = ((b64Data.length * (3 / 4)) - 1) // Size in Bytes
       const fileName = `signature${delivery.id}.png`
       const path = `file://${FileSystem.CachesDirectoryPath}/${fileName}`
 
-      // Save file
+      // Save file to device
       await FileSystem.writeFile(path, b64Data, 'base64')
 
-      // Upload file to blob storage
-      const fileNameRet = await EAzureBlobStorageFile.uploadFile({
-        filePath: path,
-        contentType: contentType,
-        fileName: fileName
+      // Initialize blob service
+      const blobService = new AzureBlobStorage({
+        account: AZURE_ACCOUNT_NAME,
+        container: AZURE_CONTAINER_SINGATUERES,
+        key: REACT_APP_STORAGE_KEY
       })
+
+      // Upload file to blob storage
+      const fileNameRet = await blobService.createBlockBlob({
+        fileName: fileName,
+        fileSize: fileSize,
+        type: contentType,
+        uri: path
+      }, fileName)
+
       return fileNameRet
     } catch (err) {
       ToastAndroid.showWithGravity('Ekki náðist að flytja myndina upp í skýið', ToastAndroid.LONG, ToastAndroid.TOP)
@@ -53,12 +54,15 @@ const SignoffSignature = ({ delivery, stepCounter, setStepCounter }) => {
 
   // Save the signature
   const continueWithDelivery = async (signature) => {
-    // Set file name
+    // Save signature to cloud
     const fileName = await saveSignature(signature)
-    delivery.signoffSignatureURI = fileName
 
-    // Mark SignoffSignature as done (0)
-    setStepCounter(stepCounter ^ 4)
+    if (fileName) {
+      delivery.signoffSignatureURI = fileName
+
+      // Mark SignoffSignature as done (0)
+      setStepCounter(stepCounter ^ 4)
+    }
   }
 
   return (

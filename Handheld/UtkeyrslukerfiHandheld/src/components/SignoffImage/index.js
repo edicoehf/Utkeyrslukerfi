@@ -1,35 +1,29 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { View, Text, ToastAndroid, ImageBackground, TouchableOpacity } from 'react-native'
 import { launchCamera } from 'react-native-image-picker'
 import BasicButton from '../../components/BasicButton'
 import styles from '../../styles/signoffImage'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
-import { EAzureBlobStorageFile } from 'react-native-azure-blob-storage'
+import AzureBlobStorage from '../../resources/AzureBlobStorage.class'
 import { REACT_APP_STORAGE_KEY } from '@env'
+import { AZURE_ACCOUNT_NAME, AZURE_CONTAINER_IMAGES } from '../../constants'
 
 // Signoff Image, gets image of delivery during delivery
 const SignoffImage = ({ delivery, stepCounter, setStepCounter }) => {
   const [image, setImage] = useState(null)
 
-  // TODO: Blob configuration is not updating from signForDeliveryScreen, still saving to signatures container
-  useEffect(() => {
-    (async () => {
-      await EAzureBlobStorageFile.configure(
-        'utkeyrslukerfistorage',
-        REACT_APP_STORAGE_KEY,
-        'images'
-      )
-    })()
-  }, [])
-
   // Save image to azure blob storage
   const saveImageToBlobStorage = async () => {
     try {
-      await EAzureBlobStorageFile.uploadFile({
-        filePath: image.uri,
-        contentType: image.type,
-        fileName: image.fileName
+      // Initialize blob service
+      const blobService = new AzureBlobStorage({
+        account: AZURE_ACCOUNT_NAME,
+        container: AZURE_CONTAINER_IMAGES,
+        key: REACT_APP_STORAGE_KEY
       })
+      // Upload image to Azure cloud storage
+      const fileName = await blobService.createBlockBlob(image, image.fileName)
+      return fileName
     } catch (error) {
       ToastAndroid.showWithGravity('Ekki náðist að flytja myndina upp í skýið', ToastAndroid.LONG, ToastAndroid.TOP)
     }
@@ -42,11 +36,14 @@ const SignoffImage = ({ delivery, stepCounter, setStepCounter }) => {
       return
     }
     // Save image to cloud
-    await saveImageToBlobStorage()
-    delivery.signoffImageURI = image.fileName
+    const fileName = await saveImageToBlobStorage()
 
-    // Mark SignoffImage as done (0)
-    setStepCounter(stepCounter ^ 2)
+    if (fileName) {
+      delivery.signoffImageURI = image.fileName
+
+      // Mark SignoffImage as done (0)
+      setStepCounter(stepCounter ^ 2)
+    }
   }
 
   // Activate image picker, launch camera so user can take images

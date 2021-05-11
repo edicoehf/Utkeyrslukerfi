@@ -2,7 +2,7 @@ import React from 'react'
 import { Text, TextInput } from 'react-native'
 import styles from '../../styles/commentBox'
 
-// Form to search for, delivery or add delivery to a table
+// For drivers to insert a comment about deliveries
 const CommentBox = ({ label, editable, comment, setComment }) => {
   return (
     <>

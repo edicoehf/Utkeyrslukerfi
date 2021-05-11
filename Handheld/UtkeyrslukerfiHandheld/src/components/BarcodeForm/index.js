@@ -2,7 +2,7 @@ import React from 'react'
 import { TextInput, TouchableOpacity, Text, View } from 'react-native'
 import styles from '../../styles/barcodeForm'
 
-// Form to search for, delivery or add delivery to a table
+// Form to search for a delivery or add delivery to a table
 const BarcodeForm = ({ barcode, setBarcode, enterBarcode, labelText }) => {
   return (
     <View style={styles.container}>
