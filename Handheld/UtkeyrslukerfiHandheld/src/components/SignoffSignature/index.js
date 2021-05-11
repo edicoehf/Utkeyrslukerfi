@@ -32,11 +32,11 @@ const SignoffSignature = ({ delivery, stepCounter, setStepCounter }) => {
       await FileSystem.writeFile(path, b64Data, 'base64')
 
       // Initialize blob service
-      const blobService = new AzureBlobStorage({
-        account: AZURE_ACCOUNT_NAME,
-        container: AZURE_CONTAINER_SINGATUERES,
-        key: REACT_APP_STORAGE_KEY
-      })
+      const blobService = new AzureBlobStorage(
+        AZURE_ACCOUNT_NAME,
+        AZURE_CONTAINER_SINGATUERES,
+        REACT_APP_STORAGE_KEY
+      )
 
       // Upload file to blob storage
       const fileNameRet = await blobService.createBlockBlob({

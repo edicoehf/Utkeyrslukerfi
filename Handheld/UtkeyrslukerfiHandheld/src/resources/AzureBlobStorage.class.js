@@ -1,31 +1,24 @@
 import Base64 from 'crypto-js/enc-base64'
 import hmacSHA256 from 'crypto-js/hmac-sha256'
 
-export interface BlobStorageConnectionOptions {
-    account: string
-    container: string
-    key: string
-  }
-
 class AzureBlobStorage {
-  private account: string
-  private container: string
-  private key: string
-
-  constructor (props: BlobStorageConnectionOptions) {
-    this.account = props.account
-    this.container = props.container
-    this.key = props.key
+  constructor (account, container, key) {
+    this.account = account
+    this.container = container
+    this.key = key
   }
 
+  // Access key
   getKey () {
     return this.key
   }
 
+  // Account name
   getAccount () {
     return this.account
   }
 
+  // Container name
   getContainer () {
     return this.container
   }
@@ -36,11 +29,7 @@ class AzureBlobStorage {
    * @param {string} container Name of container that the image should be uploaded to
    * @param {string} blob Name (and extension) of the blob (data to be uploaded)
    */
-  getBlockBlobUrl (
-    account: string,
-    container: string,
-    blob: string
-  ) {
+  getBlockBlobUrl (account, container, blob) {
     return `https://${account}.blob.core.windows.net/${container}/${blob}`
   }
 
@@ -54,7 +43,7 @@ class AzureBlobStorage {
    * @param {string} fileName
    * @returns {Promise<string>} Name of file
    */
-  async createBlockBlob (file: any, fileName: string) {
+  async createBlockBlob (file, fileName) {
     // Set necessary values
     const date = new Date()
     const account = this.getAccount()

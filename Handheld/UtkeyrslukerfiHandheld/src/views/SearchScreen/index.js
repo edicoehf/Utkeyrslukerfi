@@ -33,9 +33,11 @@ const SearchScreen = ({ navigation }) => {
     if (selectedInputRef.current === 'deliver') { deliverDelivery(barcodeObj.data) } else { searchForDelivery(barcodeObj.data) }
   }
 
+  const onSearch = () => { searchForDelivery(barcodeDetails) }
+  const onDeliver = () => { deliverDelivery(barcodeDeliver) }
+
   // Got to details/deliver page if delivery exists
   const searchForDelivery = async (barcode) => {
-    if (!barcode) { barcode = barcodeDetails }
     const delivery = await getDelivery(barcode)
     setBarcodeDetails('')
     if (delivery) {
@@ -45,9 +47,7 @@ const SearchScreen = ({ navigation }) => {
 
   // Go to deliver page if delivery exists
   const deliverDelivery = async (barcode) => {
-    if (!barcode) { barcode = barcodeDeliver }
     const delivery = await getDelivery(barcode)
-    console.log('deliver it', delivery)
     setBarcodeDeliver('')
     if (delivery) {
       navigation.navigate('Deliver', { delivery: delivery })
@@ -74,11 +74,11 @@ const SearchScreen = ({ navigation }) => {
     <View style={styles.mainView}>
       <View style={styles.section}>
         <Text style={styles.mainText}>Skanna fyrir nánari upplýsingar</Text>
-        <BarcodeForm barcode={barcodeDetails} setBarcode={setBarcodeDetails} enterBarcode={searchForDelivery} labelText='Strikamerki sendingar' setOnFocus={setSelectedInput} onFocusString='details' />
+        <BarcodeForm barcode={barcodeDetails} setBarcode={setBarcodeDetails} enterBarcode={onSearch} labelText='Strikamerki sendingar' setOnFocus={setSelectedInput} onFocusString='details' />
       </View>
       <View style={styles.section}>
         <Text style={styles.mainText}>Skanna til að afhenda</Text>
-        <BarcodeForm barcode={barcodeDeliver} setBarcode={setBarcodeDeliver} enterBarcode={deliverDelivery} labelText='Strikamerki sendingar' setOnFocus={setSelectedInput} onFocusString='deliver' />
+        <BarcodeForm barcode={barcodeDeliver} setBarcode={setBarcodeDeliver} enterBarcode={onDeliver} labelText='Strikamerki sendingar' setOnFocus={setSelectedInput} onFocusString='deliver' />
       </View>
     </View>
   )
