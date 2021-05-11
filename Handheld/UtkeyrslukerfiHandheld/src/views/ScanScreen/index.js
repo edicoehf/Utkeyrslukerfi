@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { View, ToastAndroid } from 'react-native'
+import { View, ToastAndroid, DeviceEventEmitter } from 'react-native'
 import { useSelector } from 'react-redux'
 import BarcodeForm from '../../components/BarcodeForm'
 import BasicButton from '../../components/BasicButton'
@@ -26,31 +26,47 @@ const ScanScreen = () => {
     tableDataRef.current = [...tableData]
   }, [tableData])
 
+  useEffect(() => {
+    DeviceEventEmitter.addListener('barcode_scan', scanBarcode)
+  }, [])
+
   // Remove item from table, barcodes need to be unique
   const removeBarcode = (currentBarcode) => {
     setTableData(tableDataRef.current.filter(b => b.barcode !== currentBarcode))
   }
 
+  // On barcode scanned
+  const scanBarcode = (barcodeObj) => { addBarcodeToTable(barcodeObj.data) }
+
+  // On barcode entered
+  const addBarcode = () => { addBarcodeToTable(barcode); setBarcode(''); }
+
   // Add item to table
-  const addBarcode = async () => {
-    setBarcode('')
+  const addBarcodeToTable = async (barcode) => {
     if (!barcode) { return ToastAndroid.showWithGravity('Strikamerki er ekki til staðar', ToastAndroid.LONG, ToastAndroid.TOP) }
     if (tableData.some(p => p.barcode === barcode)) { return ToastAndroid.showWithGravity('Sending er nú þegar í töflu', ToastAndroid.LONG, ToastAndroid.TOP) }
     try {
-      const delivery = await deliveryService.getDelivery(token, barcode)
+      const res = await deliveryService.getDelivery(token, barcode)
 
-      setTableData([
-        {
-          barcode: barcode,
-          fromStatus: availableStatusCodes[delivery.status],
-          toStatus: availableStatusCodes[status],
-          button: <RemoveButton key={barcode} barcode={barcode} removeBarcode={removeBarcode} />,
-          status: status
-        },
-        ...tableData
-      ])
+      if (res?.status === 400) { return ToastAndroid.showWithGravity('Óheimil beiðni.', ToastAndroid.LONG, ToastAndroid.TOP) }
+      if (res?.status === 401) { return ToastAndroid.showWithGravity('Notandi er ekki innskráður.', ToastAndroid.LONG, ToastAndroid.TOP) }
+      if (res?.status === 404) { return ToastAndroid.showWithGravity('Sending fannst ekki.', ToastAndroid.LONG, ToastAndroid.TOP) }
+      if (res?.status === 200) {
+        const delivery = await res.json()
+        setTableData([
+          {
+            barcode: barcode,
+            fromStatus: availableStatusCodes[delivery.status],
+            toStatus: availableStatusCodes[status],
+            button: <RemoveButton key={barcode} barcode={barcode} removeBarcode={removeBarcode} />,
+            status: status
+          },
+          ...tableData
+        ])
+      }
+
     } catch (error) {
-      ToastAndroid.showWithGravity('Sending fannst ekki', ToastAndroid.LONG, ToastAndroid.TOP) // TODO: better error messages? 'Ekki náðist samband við netþjón'
+      ToastAndroid.showWithGravity('Ekki náðist samband við netþjón', ToastAndroid.LONG, ToastAndroid.TOP)
     }
   }
 
