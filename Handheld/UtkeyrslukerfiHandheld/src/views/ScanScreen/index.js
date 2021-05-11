@@ -48,7 +48,7 @@ const ScanScreen = () => {
 
   // Add item to table
   const addBarcodeToTable = async (barcode) => {
-    setBarcode('');
+    setBarcode('')
     if (!barcode) { return ToastAndroid.showWithGravity('Strikamerki er ekki til staðar', ToastAndroid.LONG, ToastAndroid.TOP) }
     if (tableData.some(p => p.barcode === barcode)) { return ToastAndroid.showWithGravity('Sending er nú þegar í töflu', ToastAndroid.LONG, ToastAndroid.TOP) }
     try {
