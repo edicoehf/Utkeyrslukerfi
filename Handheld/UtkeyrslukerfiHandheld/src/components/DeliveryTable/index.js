@@ -39,7 +39,6 @@ const DeliveryTable = ({ data }) => {
   }
 
   const navigateToDelivery = (delivery) => {
-    // const delivery = await getDelivery(barcodeDetails)
     if (delivery) {
       navigation.navigate('Details', { delivery: delivery })
     }
@@ -89,11 +88,11 @@ const DeliveryTable = ({ data }) => {
         }
         renderItem={({ item, index }) => {
           return (
-            <View /*onClick={navigateToDelivery(item)}*/ style={{ ...styles.tableRow, backgroundColor: index % 2 === 1 ? '#F0FBFC' : 'white' }}>
+            <TouchableOpacity onPress={() => { navigateToDelivery(item) }} style={{ ...styles.tableRow, backgroundColor: index % 2 === 1 ? '#F0FBFC' : 'white' }}>
               <Text style={{ ...styles.columnRowTxt, fontWeight: 'bold' }}>{item.id}</Text>
               <Text style={styles.columnRowTxt}>{availableStatusCodes[item.status]}</Text>
               <Text style={styles.columnRowTxt}>{format(new Date(item.deliveryDate), 'MMMM do, yyyy')}</Text>
-            </View>
+            </TouchableOpacity>
           )
         }}
       />
