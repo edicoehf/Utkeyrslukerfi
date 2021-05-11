@@ -7,6 +7,7 @@ import ProductTable from '../../components/ProductTable'
 import RemoveButton from '../../components/RemoveButton'
 import StatusCodeDropdown from '../../components/StatusCodeDropdown'
 import deliveryService from '../../services/deliveryService'
+import { useFocusEffect } from '@react-navigation/native'
 
 // This screen is used to scan multiple products and change their status
 const ScanScreen = () => {
@@ -26,9 +27,13 @@ const ScanScreen = () => {
     tableDataRef.current = [...tableData]
   }, [tableData])
 
-  useEffect(() => {
-    DeviceEventEmitter.addListener('barcode_scan', scanBarcode)
-  }, [])
+  useFocusEffect(
+    React.useCallback(() => {
+      // Add listener for scanner
+      const unsubscribe = DeviceEventEmitter.addListener('barcode_scan', scanBarcode)
+      return () => unsubscribe.remove() // Cleanup
+    }, [])
+  )
 
   // Remove item from table, barcodes need to be unique
   const removeBarcode = (currentBarcode) => {
@@ -39,10 +44,11 @@ const ScanScreen = () => {
   const scanBarcode = (barcodeObj) => { addBarcodeToTable(barcodeObj.data) }
 
   // On barcode entered
-  const addBarcode = () => { addBarcodeToTable(barcode); setBarcode(''); }
+  const addBarcode = () => { addBarcodeToTable(barcode) }
 
   // Add item to table
   const addBarcodeToTable = async (barcode) => {
+    setBarcode('');
     if (!barcode) { return ToastAndroid.showWithGravity('Strikamerki er ekki til staðar', ToastAndroid.LONG, ToastAndroid.TOP) }
     if (tableData.some(p => p.barcode === barcode)) { return ToastAndroid.showWithGravity('Sending er nú þegar í töflu', ToastAndroid.LONG, ToastAndroid.TOP) }
     try {
@@ -64,7 +70,6 @@ const ScanScreen = () => {
           ...tableData
         ])
       }
-
     } catch (error) {
       ToastAndroid.showWithGravity('Ekki náðist samband við netþjón', ToastAndroid.LONG, ToastAndroid.TOP)
     }

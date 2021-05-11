@@ -3,7 +3,7 @@ import { TextInput, TouchableOpacity, Text, View } from 'react-native'
 import styles from '../../styles/barcodeForm'
 
 // Form to search for a delivery or add delivery to a table
-const BarcodeForm = ({ barcode, setBarcode, enterBarcode, labelText }) => {
+const BarcodeForm = ({ barcode, setBarcode, enterBarcode, labelText, setOnFocus, onFocusString }) => {
   return (
     <View style={styles.container}>
       <View style={styles.inputContainer}>
@@ -13,6 +13,7 @@ const BarcodeForm = ({ barcode, setBarcode, enterBarcode, labelText }) => {
           value={barcode}
           placeholder='Strikamerki...'
           style={styles.input}
+          onFocus={() => setOnFocus(onFocusString)}
         />
       </View>
       <TouchableOpacity
