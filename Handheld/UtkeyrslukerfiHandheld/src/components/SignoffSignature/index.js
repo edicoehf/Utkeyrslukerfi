@@ -24,7 +24,7 @@ const SignoffSignature = ({ delivery, stepCounter, setStepCounter }) => {
       // Set necessary values
       const contentType = 'image/png'
       const b64Data = signature.replace('data:image/png;base64,', '')
-      // const fileSize = ((b64Data.length * (3 / 4)) - 1) // Size in Bytes
+      const fileSize = ((b64Data.length * (3 / 4)) - 1) // Size in Bytes
       const fileName = `signature${delivery.id}.png`
       const path = `file://${FileSystem.CachesDirectoryPath}/${fileName}`
 
@@ -41,7 +41,7 @@ const SignoffSignature = ({ delivery, stepCounter, setStepCounter }) => {
       // Upload file to blob storage
       const fileNameRet = await blobService.createBlockBlob({
         fileName: fileName,
-        // fileSize: fileSize,
+        fileSize: fileSize,
         type: contentType,
         uri: path
       }, fileName)
