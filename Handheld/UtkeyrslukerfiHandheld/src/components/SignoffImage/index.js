@@ -25,6 +25,7 @@ const SignoffImage = ({ delivery, stepCounter, setStepCounter }) => {
       const fileName = await blobService.createBlockBlob(image, image.fileName)
       return fileName
     } catch (error) {
+      console.log('Error at SignOffImage component: ', error)
       ToastAndroid.showWithGravity('Ekki náðist að flytja myndina upp í skýið', ToastAndroid.LONG, ToastAndroid.TOP)
     }
   }
