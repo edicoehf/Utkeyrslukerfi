@@ -70,7 +70,7 @@ class AzureBlobStorage {
     const signature = Base64.stringify(hmacSHA256(utf8.encode(stringToSign), Base64.parse(this.getKey())))
 
     // Set appropriate headers
-    const requestHeaders: HeadersInit = new Headers()
+    const requestHeaders = new Headers()
     requestHeaders.set('Authorization', `SharedKey ${account}:${signature}`)
     requestHeaders.set('Content-Type', file.type)
     requestHeaders.set('Content-Length', file.fileSize)
