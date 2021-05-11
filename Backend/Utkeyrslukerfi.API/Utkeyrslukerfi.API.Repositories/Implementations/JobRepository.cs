@@ -11,14 +11,16 @@ using Utkeyrslukerfi.API.Repositories.IContext;
 
 namespace Utkeyrslukerfi.API.Repositories.Implementations
 {
-    public class FetchDataRepository : IFetchDataRepository
+    public class JobRepository : IJobRepository
     {
         private readonly IUtkeyrslukerfiDbContext _dbContext;
         private readonly IConfiguration _config;
+        private readonly IConfiguration _seedUserConfig;
 
-        public FetchDataRepository(IUtkeyrslukerfiDbContext dbContext, IConfiguration configuration)
+        public JobRepository(IUtkeyrslukerfiDbContext dbContext, IConfiguration configuration)
         {
             _config = configuration.GetSection("ExternalDeliveryMapping");
+            _seedUserConfig = configuration.GetSection("SeedUser");
             _dbContext = dbContext;
         }
         /// <summary>
@@ -390,6 +392,25 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
             _dbContext.Deliveries.Add(entity);
             AddPackages(entity, delivery);
             _dbContext.SaveChangesAsync();
+        }
+
+        public void SeedUser()
+        {
+            var tempPass = HashingHelper.HashPassword(_seedUserConfig.GetSection("Password").Value);
+            _dbContext.Users.FirstOrDefault(u => u.Email == _seedUserConfig.GetSection("Email").Value);
+            if (_dbContext.Users.FirstOrDefault(u => u.Email == _seedUserConfig.GetSection("Email").Value) != null) { return; }
+            var user = new User()
+            {
+                Name = _seedUserConfig.GetSection("Name").Value,
+                Email = _seedUserConfig.GetSection("Email").Value,
+                Password = tempPass,
+                Role = 0,
+                ChangePassword = true,
+                CreatedOn = DateTime.UtcNow,
+                TokenID = 0,
+            };
+            _dbContext.Users.Add(user);
+            _dbContext.SaveChanges();
         }
     }
 }
