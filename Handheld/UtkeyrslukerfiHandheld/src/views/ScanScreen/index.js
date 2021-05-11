@@ -34,14 +34,8 @@ const ScanScreen = () => {
   // Add item to table
   const addBarcode = async () => {
     setBarcode('')
-    if (!barcode) {
-      ToastAndroid.showWithGravity('Strikamerki er ekki til staðar', ToastAndroid.LONG, ToastAndroid.TOP)
-      return
-    }
-    if (tableData.some(p => p.barcode === barcode)) {
-      ToastAndroid.showWithGravity('Sending er nú þegar í töflu', ToastAndroid.LONG, ToastAndroid.TOP)
-      return
-    }
+    if (!barcode) { return ToastAndroid.showWithGravity('Strikamerki er ekki til staðar', ToastAndroid.LONG, ToastAndroid.TOP) }
+    if (tableData.some(p => p.barcode === barcode)) { return ToastAndroid.showWithGravity('Sending er nú þegar í töflu', ToastAndroid.LONG, ToastAndroid.TOP) }
     try {
       const delivery = await deliveryService.getDelivery(token, barcode)
 
@@ -66,10 +60,10 @@ const ScanScreen = () => {
       const deliveriesData = { deliveries: tableData.map(d => { return { id: d.barcode, status: d.status } }) }
       const res = await deliveryService.updateDeliveries(token, deliveriesData)
       setTableData([])
-      if (res?.status === 400) { ToastAndroid.showWithGravity('Óheimil beiðni.', ToastAndroid.LONG, ToastAndroid.TOP) }
-      if (res?.status === 401) { ToastAndroid.showWithGravity('Notandi er ekki innskráður.', ToastAndroid.LONG, ToastAndroid.TOP) }
-      if (res?.status === 404) { ToastAndroid.showWithGravity('Sending fannst ekki.', ToastAndroid.LONG, ToastAndroid.TOP) }
-      if (res?.status === 204) { ToastAndroid.showWithGravity('Gögn vistuð', ToastAndroid.LONG, ToastAndroid.TOP) }
+      if (res?.status === 400) { return ToastAndroid.showWithGravity('Óheimil beiðni.', ToastAndroid.LONG, ToastAndroid.TOP) }
+      if (res?.status === 401) { return ToastAndroid.showWithGravity('Notandi er ekki innskráður.', ToastAndroid.LONG, ToastAndroid.TOP) }
+      if (res?.status === 404) { return ToastAndroid.showWithGravity('Sending fannst ekki.', ToastAndroid.LONG, ToastAndroid.TOP) }
+      if (res?.status === 204) { return ToastAndroid.showWithGravity('Gögn vistuð', ToastAndroid.LONG, ToastAndroid.TOP) }
     } catch (error) {
       ToastAndroid.showWithGravity('Ekki náðist samband við netþjón', ToastAndroid.LONG, ToastAndroid.TOP)
     }

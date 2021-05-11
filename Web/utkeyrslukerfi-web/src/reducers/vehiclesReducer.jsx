@@ -1,4 +1,6 @@
-import { GET_VEHICLES } from '../constants'
+import {
+  GET_VEHICLES
+} from '../constants'
 
 const vehiclesReducer = (state = [], action) => {
   switch (action.type) {

@@ -13,7 +13,7 @@ const SignoffName = ({ delivery, stepCounter, setStepCounter }) => {
       ToastAndroid.showWithGravity('Vinsamlegast settu inn nafn móttakanda.', ToastAndroid.LONG, ToastAndroid.TOP)
       return
     }
-    delivery.recipient = name
+    delivery.signoffRecipient = name
 
     // Mark SignoffName as done (0)
     setStepCounter(stepCounter ^ 1)

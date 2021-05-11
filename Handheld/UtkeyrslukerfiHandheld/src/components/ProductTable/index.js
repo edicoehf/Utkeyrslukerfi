@@ -2,6 +2,7 @@ import React from 'react'
 import { View, Text, FlatList } from 'react-native'
 import styles from '../../styles/productTable'
 import { MAINLY_BLUE } from '../../constants'
+
 // Table for products containing barcode, status and more
 const ProductTable = ({ tableHeaders, tableData, numberOfObjects, label }) => {
   const tableHeaderComponent = () => (

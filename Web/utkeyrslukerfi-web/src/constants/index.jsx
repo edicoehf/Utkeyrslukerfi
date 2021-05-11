@@ -23,6 +23,10 @@ export const RESET_ERROR = 'RESET_ERROR'
 
 export const GET_DRIVERS = 'GET_DRIVERS'
 export const GET_VEHICLES = 'GET_VEHICLES'
+export const CREATE_VEHICLE = 'CREATE_VEHICLE'
+export const GET_VIEWING_VEHICLE = 'GET_VIEWING_VEHICLE'
+export const SET_VIEWING_VEHICLE = 'SET_VIEWING_VEHICLE'
+export const UPDATE_VEHICLE = 'UPDATE_VEHICLE'
 
 export const USER_URL = 'https://utkeyrslukerfiapi.azurewebsites.net/api/users'
 export const DELIVERY_URL = 'https://utkeyrslukerfiapi.azurewebsites.net/api/deliveries'
