@@ -18,12 +18,16 @@ namespace Utkeyrslukerfi.API.Models.InputModels
         public string PickupAddressZipCode { get; set; }
         public string PickupAddressCity { get; set; }
         public string PickupAddressCountry { get; set; }
+        public string PickupAddressXCoords { get; set; }
+        public string PickupAddressYCoords { get; set; }
         // deliveries address
         public string DeliveryAddressStreetName { get; set; }
         public string DeliveryAddressHouseNumber { get; set; }
         public string DeliveryAddressZipCode { get; set; }
         public string DeliveryAddressCity { get; set; }
         public string DeliveryAddressCountry { get; set; }
+        public string DeliveryAddressXCoords { get; set; }
+        public string DeliveryAddressYCoords { get; set; }
         // vehicle
         public Guid? VehicleID { get; set; }
         public string VehicleLicensePlate { get; set; }
