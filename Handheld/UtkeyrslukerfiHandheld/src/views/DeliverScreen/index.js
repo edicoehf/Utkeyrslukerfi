@@ -28,7 +28,7 @@ const DeliverScreen = ({ route, navigation }) => {
     tableDataRef.current = [...tableData]
   }, [tableData])
 
-  // Set the values for the comment sections
+  // Set the values for the comment sections, add the packages to the table
   useEffect(() => {
     if (delivery.driverComment) { setDriverComment(delivery.driverComment) }
     if (delivery.customerComment) { setCustomerComment(delivery.customerComment) }
@@ -44,10 +44,11 @@ const DeliverScreen = ({ route, navigation }) => {
 
   // Navigate to signoff screen where already configured signoff methods will be shown
   const continueWithDelivery = () => {
-    // Set comment in case it was altered and change status to 'delivered'
+    // Set comment in case it was altered and change status to 'delivered' as well as updating the driver and date
     delivery.driverComment = driverComment
     delivery.status = 3
     delivery.driverID = driver
+    delivery.deliverDate = new Date()
 
     navigation.navigate('Signoff', { delivery: delivery })
   }
