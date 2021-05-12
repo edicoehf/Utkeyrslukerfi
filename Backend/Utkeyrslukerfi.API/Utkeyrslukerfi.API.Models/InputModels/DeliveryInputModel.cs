@@ -12,6 +12,7 @@ namespace Utkeyrslukerfi.API.Models.InputModels
         public string DriverComment { get; set; }
         public string CustomerComment { get; set; }
         public int? Status { get; set; }
+        public DateTime? DeliveryDate { get; set; }
         // pickup address
         public string PickupAddressStreetName { get; set; }
         public string PickupAddressHouseNumber { get; set; }
