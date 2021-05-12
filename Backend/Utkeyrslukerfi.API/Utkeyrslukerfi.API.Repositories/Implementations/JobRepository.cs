@@ -15,11 +15,12 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
     {
         private readonly IUtkeyrslukerfiDbContext _dbContext;
         private readonly IConfiguration _config;
+        private IConfiguration _configSubSection;
         private readonly IConfiguration _seedUserConfig;
 
         public JobRepository(IUtkeyrslukerfiDbContext dbContext, IConfiguration configuration)
         {
-            _config = configuration.GetSection("ExternalDeliveryMapping");
+            _config = configuration;
             _seedUserConfig = configuration.GetSection("SeedUser");
             _dbContext = dbContext;
         }
@@ -54,7 +55,7 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
         /// <returns>Delivery with Recipient added to it</returns>
         private Delivery AddRecipient(Delivery delivery, JToken data)
         {
-            var conf = _config.GetSection("Recipient").Value.ToString();
+            var conf = _configSubSection.GetSection("Recipient").Value.ToString();
             if (conf == "")
             {
                 return delivery;
@@ -78,7 +79,7 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
         /// <returns>Delivery with ID added to it</returns>
         private Delivery AddID(Delivery delivery, JToken data)
         {
-            var conf = _config.GetSection("ID").Value.ToString();
+            var conf = _configSubSection.GetSection("ID").Value.ToString();
             if (conf == "")
             {
                 return delivery;
@@ -102,7 +103,7 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
         /// <returns>Delivery with Seller added to it</returns>
         private Delivery AddSeller(Delivery delivery, JToken data)
         {
-            var conf = _config.GetSection("Seller").Value.ToString();
+            var conf = _configSubSection.GetSection("Seller").Value.ToString();
             if (conf == "")
             {
                 return delivery;
@@ -126,7 +127,7 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
         /// <returns>Delivery with Driver Comment added to it</returns>
         private Delivery AddDriverComment(Delivery delivery, JToken data)
         {
-            var conf = _config.GetSection("DriverComment").Value.ToString();
+            var conf = _configSubSection.GetSection("DriverComment").Value.ToString();
             if (conf == "")
             {
                 return delivery;
@@ -150,7 +151,7 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
         /// <returns>Delivery with Customer Comment added to it</returns>
         private Delivery AddCustomerComment(Delivery delivery, JToken data)
         {
-            var conf = _config.GetSection("CustomerComment").Value.ToString();
+            var conf = _configSubSection.GetSection("CustomerComment").Value.ToString();
             if (conf == "")
             {
                 return delivery;
@@ -174,12 +175,12 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
         /// <returns>Delivery with Status added to it</returns>
         private Delivery AddStatus(Delivery delivery, JToken data)
         {
-            var conf = _config.GetSection("Status").Value.ToString();
+            var conf = _configSubSection.GetSection("Status").Value.ToString();
             if (conf == "")
             {
                 return delivery;
             }
-            delivery.Status = Int32.Parse(_config.GetSection("Status").Value.ToString());
+            delivery.Status = Int32.Parse(_configSubSection.GetSection("Status").Value.ToString());
             return delivery;
         }
         /// <summary>
@@ -192,7 +193,7 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
         /// <returns>The relevant data from the api resonse in string format</returns>
         private String GetAddressSubsection(JToken data, String AddressType, String subsection)
         {
-            var conf = _config.GetSection(AddressType).GetSection(subsection).Value;
+            var conf = _configSubSection.GetSection(AddressType).GetSection(subsection).Value;
             if (conf == "" || conf == null)
             {
                 return null;
@@ -213,7 +214,7 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
         /// <returns>Delivery with PickupAddress added to it</returns>
         private Delivery AddPickupAddress(Delivery delivery, JToken data)
         {
-            if (_config.GetSection("DeliveryAddress").Value == "") { return delivery; }
+            if (_configSubSection.GetSection("DeliveryAddress").Value == "") { return delivery; }
             var pickupAddress = new Address();
             pickupAddress.City = GetAddressSubsection(data, "PickupAddress", "City");
             pickupAddress.Country = GetAddressSubsection(data, "PickupAddress", "Country");
@@ -234,7 +235,7 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
         /// <returns>Delivery with DeliveryAddress added to it</returns>
         private Delivery AddDeliveryAddress(Delivery delivery, JToken data)
         {
-            if (_config.GetSection("DeliveryAddress").Value == "") { return delivery; }
+            if (_configSubSection.GetSection("DeliveryAddress").Value == "") { return delivery; }
             var deliveryAddress = new Address();
             deliveryAddress.City = GetAddressSubsection(data, "DeliveryAddress", "City");
             deliveryAddress.Country = GetAddressSubsection(data, "DeliveryAddress", "Country");
@@ -259,7 +260,7 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
         // TODO implement this
         private Delivery AddVehicle(Delivery delivery, JToken data)
         {
-            if (_config.GetSection("Vehicle").ToString() == "")
+            if (_configSubSection.GetSection("Vehicle").ToString() == "")
             {
                 return delivery;
             }
@@ -275,7 +276,7 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
         /// <returns>Delivery with Driver added to it</returns>
         private Delivery AddDriver(Delivery delivery, JToken data)
         {
-            var conf = _config.GetSection("Driver").Value;
+            var conf = _configSubSection.GetSection("Driver").Value;
             if (conf == "")
             {
                 return delivery;
@@ -302,7 +303,8 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
             return delivery;
         }
         /// <summary>
-        /// Finds the packages in the api response, and adds them to the database
+        /// Finds the packages in the api response, and adds them to the database.
+        /// If the packages already exists in the database, they get updated insted.
         /// as of now the dimensions are not stored, but it should not be hard to
         /// implement, as it should be similar to what we do above
         /// </summary>
@@ -310,7 +312,7 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
         /// <param name="data">api response in json format</param>
         private void AddPackages(Delivery delivery, JToken data)
         {
-            var conf = _config.GetSection("Packages");
+            var conf = _configSubSection.GetSection("Packages");
             if (conf.GetSection("Name").Value == null) { return; }
             // get the array 
             var arr = data.SelectToken($".{conf.GetSection("Name").Value}");
@@ -318,16 +320,18 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
             foreach (var item in arr)
             {
                 // TODO Add dimensions and weight
-                var entity = new Package
-                {
-                    ID = item.SelectToken($".{conf.GetSection("ID").Value}").ToString(),
-                    Weight = 0.0,
-                    Length = 0.0,
-                    Height = 0.0,
-                    Width = 0.0,
-                    Delivery = delivery
-                };
-                _dbContext.Packages.Add(entity);
+                var packageID = item.SelectToken($".{conf.GetSection("ID").Value}").ToString();
+                var existingPackage = _dbContext.Packages.FirstOrDefault(p => p.ID == packageID);
+                var entity = new Package();
+                if (existingPackage != null) { entity = existingPackage; }
+                entity.ID = packageID;
+                entity.Weight = 0.0;
+                entity.Length = 0.0;
+                entity.Height = 0.0;
+                entity.Width = 0.0;
+                entity.Delivery = delivery;
+                if (existingPackage != null) { _dbContext.Packages.Update(entity); }
+                if (existingPackage == null) { _dbContext.Packages.Add(entity); }
             }
         }
         /// <summary>
@@ -341,7 +345,7 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
         /// <returns>Delivery with DeliveryDate added to it</returns>
         private Delivery AddDeliveryDate(Delivery delivery, JToken data)
         {
-            var conf = _config.GetSection("DeliveryDate").Value.ToString();
+            var conf = _configSubSection.GetSection("DeliveryDate").Value.ToString();
             if (conf == "")
             {
                 return delivery;
@@ -360,7 +364,7 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
         {
             var signoff = new Signoff();
             signoff.ID = Guid.NewGuid();
-            if (_config.GetSection("Signoff").Value.ToString() == "")
+            if (_configSubSection.GetSection("Signoff").Value.ToString() == "")
             {
                 signoff.Settings = 5;
                 _dbContext.Signoffs.Add(signoff);
@@ -371,13 +375,19 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
         }
         /// <summary>
         /// Takes in api respose on the Json format, and extracts data 
-        /// from it to create a new delivery in our database.
+        /// from it to create a new delivery in our database. 
+        /// If the deliveries already exist in the database they get updated
         /// </summary>
         /// <param name="delivery">api response on json format</param>
-        public void AddDelivery(JToken delivery)
+        public void AddDelivery(int index, JToken delivery)
         {
+            _configSubSection = _config.GetSection($"FetchDeliveriesConfig:Configs:{index}:ExternalDeliveryMapping");
+            var ID = _configSubSection.GetSection("ID").Value.ToString();
             var entity = new Delivery();
             entity = AddID(entity, delivery);
+            var existingEntity = _dbContext.Deliveries.FirstOrDefault(d => d.ID == entity.ID);
+            // Check if the delivery exists in the databse, if so overrides the new entity
+            if (existingEntity != null) { entity = existingEntity; }
             entity = AddCustomerComment(entity, delivery);
             entity = AddDeliveryAddress(entity, delivery);
             entity = AddDriver(entity, delivery);
@@ -389,7 +399,10 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
             entity = AddVehicle(entity, delivery);
             entity = AddDeliveryDate(entity, delivery);
             entity = AddSignoff(entity, delivery);
-            _dbContext.Deliveries.Add(entity);
+            // update the delivery instead of creating a new one
+            if (existingEntity != null) { _dbContext.Deliveries.Update(entity); }
+            // creating a new delivery
+            if (existingEntity == null) { _dbContext.Deliveries.Add(entity); }
             AddPackages(entity, delivery);
             _dbContext.SaveChangesAsync();
         }
