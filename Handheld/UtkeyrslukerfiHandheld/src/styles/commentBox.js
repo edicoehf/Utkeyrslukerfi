@@ -18,6 +18,15 @@ const styles = StyleSheet.create({
     width: windowWidth * 0.90,
     justifyContent: 'flex-start',
     paddingTop: '2%'
+  },
+  commentBoxDisabled: {
+    height: windowHeight * 0.10,
+    width: windowWidth * 0.90,
+    borderColor: LIGHT_GRAY,
+    borderWidth: 0.5,
+    borderRadius: 5,
+    textAlignVertical: 'top',
+    color: 'black'
   }
 })
 

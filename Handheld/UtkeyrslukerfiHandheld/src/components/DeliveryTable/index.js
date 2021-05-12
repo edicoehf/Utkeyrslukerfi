@@ -40,7 +40,7 @@ const DeliveryTable = ({ data }) => {
 
   const navigateToDelivery = (delivery) => {
     if (delivery) {
-      navigation.navigate('Details', { delivery: delivery })
+      navigation.navigate('Search', { screen: 'Details', params: { delivery: delivery }})
     }
   }
 

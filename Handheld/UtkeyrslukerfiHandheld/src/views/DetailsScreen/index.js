@@ -26,7 +26,7 @@ const DetailsScreen = ({ route, navigation }) => {
     if (delivery.driverComment) { setDriverComment(delivery.driverComment) }
     if (delivery.customerComment) { setCustomerComment(delivery.customerComment) }
     setDeliverButtonDisabled(STATUS_DELIVERED === delivery.status)
-  }, [])
+  })
 
   // Save drivers comment to db
   const saveComment = async () => {

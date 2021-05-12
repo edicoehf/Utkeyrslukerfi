@@ -9,7 +9,7 @@ const CommentBox = ({ label, editable, comment, setComment }) => {
       <Text style={styles.label}>{label}</Text>
       <TextInput
         placeholder='Athugasemd...'
-        style={styles.commentBox}
+        style={editable ? styles.commentBox : styles.commentBoxDisabled}
         multiline
         editable={editable}
         numberOfLines={4}

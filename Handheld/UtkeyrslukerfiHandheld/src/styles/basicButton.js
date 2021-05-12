@@ -25,7 +25,8 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     fontSize: 18,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    color: 'black'
   },
   buttonTextDisabled: {
     fontSize: 18,
