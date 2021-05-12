@@ -16,11 +16,11 @@ const SignoffImage = ({ delivery, stepCounter, setStepCounter }) => {
   const saveImageToBlobStorage = async () => {
     try {
       // Initialize blob service
-      const blobService = new AzureBlobStorage({
-        account: AZURE_ACCOUNT_NAME,
-        container: AZURE_CONTAINER_IMAGES,
-        key: REACT_APP_STORAGE_KEY
-      })
+      const blobService = new AzureBlobStorage(
+        AZURE_ACCOUNT_NAME,
+        AZURE_CONTAINER_IMAGES,
+        REACT_APP_STORAGE_KEY
+      )
       // Upload image to Azure cloud storage
       const fileName = await blobService.createBlockBlob(image, image.fileName)
       return fileName
