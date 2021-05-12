@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { View, Text, ToastAndroid } from 'react-native'
+import { Linking, View, Text, ToastAndroid } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
 import CommentBox from '../../components/CommentBox'
 import deliveryService from '../../services/deliveryService'
@@ -44,6 +44,10 @@ const DetailsScreen = ({ route, navigation }) => {
     navigation.navigate('Deliver', { delivery: delivery })
   }
 
+  const openMap = () => {
+    Linking.openURL('https://www.google.com/maps/search/?api=1&query=' + delivery.deliveryAddress.streetName + ' ' + delivery.deliveryAddress.houseNumber)
+  }
+
   return (
     <View style={styles.mainView}>
       <View style={styles.section}>
@@ -67,6 +71,7 @@ const DetailsScreen = ({ route, navigation }) => {
       <CommentBox label='Athugasemd viðskiptavinar' editable={false} comment={customerComment} setComment={setCustomerComment} />
       <CommentBox label='Athugasemd bílstjóra' editable comment={driverComment} setComment={setDriverComment} />
       <View style={styles.bottomButtons}>
+        <BasicButton buttonText='Opna kort' onPressFunction={openMap} />
         <BasicButton buttonText='Vista' onPressFunction={saveComment} />
         <BasicButton buttonText='Afhenda' onPressFunction={deliver} />
       </View>

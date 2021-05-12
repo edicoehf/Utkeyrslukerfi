@@ -6,7 +6,6 @@ export const getDrivers = () => async (dispatch) => {
     const drivers = await driverService.getDrivers()
     dispatch(getDriversSuccess(drivers))
   } catch (err) {
-    // TODO display this error message to the user
     console.log('Bad request, please try loading again.')
   }
 }
