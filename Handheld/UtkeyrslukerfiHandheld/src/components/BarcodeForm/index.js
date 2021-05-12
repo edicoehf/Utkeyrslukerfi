@@ -26,7 +26,7 @@ const BarcodeForm = ({ barcode, setBarcode, enterBarcode, labelText, setOnFocus,
       )
     }
   }
-  
+
   return (
     <View style={styles.container}>
       <View style={styles.inputContainer}>
