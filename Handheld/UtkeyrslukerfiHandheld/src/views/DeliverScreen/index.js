@@ -49,7 +49,7 @@ const DeliverScreen = ({ route, navigation }) => {
     delivery.driverComment = driverComment
     delivery.status = STATUS_DELIVERED
     delivery.driverID = driver
-    delivery.deliverDate = new Date()
+    // delivery.deliverDate = new Date() // TODO: test!!!
 
     navigation.navigate('Signoff', { delivery: delivery })
   }

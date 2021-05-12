@@ -61,7 +61,7 @@ const ScanScreen = () => {
       if (res?.status === 200) {
         const delivery = await res.json()
         if (delivery.status === status) { return ToastAndroid.showWithGravity('Sending er nú þegar með skráða stöðu.', ToastAndroid.LONG, ToastAndroid.TOP) }
-        
+
         setTableData([
           {
             barcode: barcode,
@@ -81,13 +81,15 @@ const ScanScreen = () => {
   // Update status for all deliveries currently in table
   const updateDeliveries = async () => {
     try {
-      const deliveriesData = { deliveries: tableData.map(d => { 
-        return { 
-          id: d.barcode, 
-          status: d.status,
-          driverID: driver
-        }
-      }) }
+      const deliveriesData = {
+        deliveries: tableData.map(d => {
+          return {
+            id: d.barcode,
+            status: d.status,
+            driverID: driver
+          }
+        })
+      }
       const res = await deliveryService.updateDeliveries(token, deliveriesData)
       setTableData([])
       if (res?.status === 400) { return ToastAndroid.showWithGravity('Óheimil beiðni.', ToastAndroid.LONG, ToastAndroid.TOP) }
