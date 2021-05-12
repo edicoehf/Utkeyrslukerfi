@@ -37,9 +37,9 @@ const setLoginSuccess = (login) => ({
 
 export const logout = (token) => async (dispatch) => {
   try {
-    await loginService.logout(token)
     await AsyncStorage.removeItem('token')
     await AsyncStorage.removeItem('driver')
+    await loginService.logout(token)
     dispatch(logoutSuccess())
   } catch (err) {
     console.log(err)
