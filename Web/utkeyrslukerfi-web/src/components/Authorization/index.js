@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { getLogin } from '../../actions/loginActions'
 import Login from '../../components/Login'
 
-// eslint-disable-next-line import/no-anonymous-default-export
+// eslint-disable-next-line
 export default function (Component) {
   const Authorization = () => {
     const dispatch = useDispatch()
