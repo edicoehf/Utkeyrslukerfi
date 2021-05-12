@@ -148,7 +148,9 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
                 delivery.PickupAddress.Country = newdelivery.PickupAddressCountry ?? delivery.PickupAddress.Country;
                 delivery.PickupAddress.HouseNumber = newdelivery.PickupAddressHouseNumber ?? delivery.PickupAddress.HouseNumber;
                 delivery.PickupAddress.StreetName = newdelivery.PickupAddressStreetName ?? delivery.PickupAddress.StreetName;
-                delivery.PickupAddress.ZipCode = newdelivery.DeliveryAddressZipCode ?? delivery.DeliveryAddress.ZipCode;
+                delivery.PickupAddress.ZipCode = newdelivery.PickupAddressZipCode ?? delivery.PickupAddress.ZipCode;
+                delivery.PickupAddress.XCoords = newdelivery.PickupAddressXCoords ?? delivery.PickupAddress.XCoords;
+                delivery.PickupAddress.YCoords = newdelivery.PickupAddressYCoords ?? delivery.PickupAddress.YCoords;
             }
             if (delivery.DeliveryAddress != null)
             {
@@ -157,6 +159,8 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
                 delivery.DeliveryAddress.HouseNumber = newdelivery.DeliveryAddressHouseNumber ?? delivery.DeliveryAddress.HouseNumber;
                 delivery.DeliveryAddress.StreetName = newdelivery.DeliveryAddressStreetName ?? delivery.DeliveryAddress.StreetName;
                 delivery.DeliveryAddress.ZipCode = newdelivery.DeliveryAddressZipCode ?? delivery.DeliveryAddress.ZipCode;
+                delivery.DeliveryAddress.XCoords = newdelivery.DeliveryAddressXCoords ?? delivery.DeliveryAddress.XCoords;
+                delivery.DeliveryAddress.YCoords = newdelivery.DeliveryAddressYCoords ?? delivery.DeliveryAddress.YCoords;
             }
             if (delivery.Vehicle != null || newdelivery.VehicleID != null)
             {
