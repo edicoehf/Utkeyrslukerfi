@@ -4,10 +4,9 @@ import styles from '../../styles/barcodeForm'
 
 // Form to search for a delivery or add delivery to a table
 const BarcodeForm = ({ barcode, setBarcode, enterBarcode, labelText, setOnFocus, onFocusString }) => {
-  return (
-    <View style={styles.container}>
-      <View style={styles.inputContainer}>
-        <Text style={styles.label}>{labelText}</Text>
+  const setTextInput = () => {
+    if (setOnFocus && onFocusString) {
+      return (
         <TextInput
           onChangeText={setBarcode}
           value={barcode}
@@ -15,6 +14,24 @@ const BarcodeForm = ({ barcode, setBarcode, enterBarcode, labelText, setOnFocus,
           style={styles.input}
           onFocus={() => setOnFocus(onFocusString)}
         />
+      )
+    } else {
+      return (
+        <TextInput
+          onChangeText={setBarcode}
+          value={barcode}
+          placeholder='Strikamerki...'
+          style={styles.input}
+        />
+      )
+    }
+  }
+  
+  return (
+    <View style={styles.container}>
+      <View style={styles.inputContainer}>
+        <Text style={styles.label}>{labelText}</Text>
+        {setTextInput()}
       </View>
       <TouchableOpacity
         onPress={enterBarcode}

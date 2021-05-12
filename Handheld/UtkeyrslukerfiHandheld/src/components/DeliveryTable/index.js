@@ -6,6 +6,7 @@ import styles from '../../styles/deliveryTable'
 import { getDeliveries } from '../../actions/deliveryActions'
 import _ from 'lodash'
 import { format } from 'date-fns'
+import { useNavigation } from '@react-navigation/native'
 
 const DeliveryTable = ({ data }) => {
   const columns = ['id', 'status', 'date']
@@ -18,6 +19,7 @@ const DeliveryTable = ({ data }) => {
   const [refreshing, setRefreshing] = useState(false)
   const token = useSelector(({ login }) => login.token)
   const dispatch = useDispatch()
+  const navigation = useNavigation()
 
   const sortTable = (column) => {
     const newDirection = direction === 'desc' ? 'asc' : 'desc'
@@ -26,6 +28,7 @@ const DeliveryTable = ({ data }) => {
     setDirection(newDirection)
     setDeliveries(sortedData)
   }
+
   const onRefresh = () => {
     // Clear old data of the list
     setDeliveries([])
@@ -34,6 +37,13 @@ const DeliveryTable = ({ data }) => {
     setDeliveries(data)
     setRefreshing(false)
   }
+
+  const navigateToDelivery = (delivery) => {
+    if (delivery) {
+      navigation.navigate('Details', { delivery: delivery })
+    }
+  }
+
   const tableHeader = () => (
     <View style={styles.tableHeader}>
       {
@@ -78,11 +88,11 @@ const DeliveryTable = ({ data }) => {
         }
         renderItem={({ item, index }) => {
           return (
-            <View style={{ ...styles.tableRow, backgroundColor: index % 2 === 1 ? '#F0FBFC' : 'white' }}>
+            <TouchableOpacity onPress={() => { navigateToDelivery(item) }} style={{ ...styles.tableRow, backgroundColor: index % 2 === 1 ? '#F0FBFC' : 'white' }}>
               <Text style={{ ...styles.columnRowTxt, fontWeight: 'bold' }}>{item.id}</Text>
               <Text style={styles.columnRowTxt}>{availableStatusCodes[item.status]}</Text>
               <Text style={styles.columnRowTxt}>{format(new Date(item.deliveryDate), 'MMMM do, yyyy')}</Text>
-            </View>
+            </TouchableOpacity>
           )
         }}
       />
