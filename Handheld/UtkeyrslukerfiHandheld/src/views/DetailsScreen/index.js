@@ -45,7 +45,7 @@ const DetailsScreen = ({ route, navigation }) => {
   }
 
   const openMap = () => {
-    Linking.openURL('https://www.google.com/maps/search/?api=1&query=' + delivery.deliveryAddress.streetName + ' ' + delivery.deliveryAddress.houseNumber);
+    Linking.openURL('https://www.google.com/maps/search/?api=1&query=' + delivery.deliveryAddress.streetName + ' ' + delivery.deliveryAddress.houseNumber)
   }
 
   return (
