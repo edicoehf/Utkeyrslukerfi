@@ -8,7 +8,7 @@ namespace Utkeyrslukerfi.API.Services.Interfaces
 {
     public interface IJobService
     {
-        Task<IEnumerable<Delivery>> GetDeliveries();
+        Task<IEnumerable<Delivery>> GetDeliveries(int section);
         void SeedUser();
     }
 }
