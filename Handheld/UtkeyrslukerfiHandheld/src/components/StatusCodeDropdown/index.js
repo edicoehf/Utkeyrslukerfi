@@ -34,7 +34,7 @@ const StatusCodeDropdown = ({ status, setStatus, label }) => {
 
 StatusCodeDropdown.propTypes = {
   // The number of the status, state to keep track of the current status
-  status: PropTypes.number.isRequired,
+  status: PropTypes.isRequired,
   // Function to update the status state
   setStatus: PropTypes.func.isRequired,
   // The label for the dropdown

@@ -17,7 +17,9 @@ const SignoffScreen = ({ route, navigation }) => {
   // Update database
   const updateDeliveryInDatabase = async () => {
     try {
+      delivery.deliverDate = new Date()
       const res = await deliveryService.updateDelivery(token, delivery)
+      delivery.deliverDate = JSON.stringify(delivery.deliverDate) // stringify so as no to get the non-serializable warning
       if (res?.status === 400) { return ToastAndroid.showWithGravity('Óheimil beiðni.', ToastAndroid.LONG, ToastAndroid.TOP) }
       if (res?.status === 401) { return ToastAndroid.showWithGravity('Notandi er ekki innskráður.', ToastAndroid.LONG, ToastAndroid.TOP) }
       if (res?.status === 404) { return ToastAndroid.showWithGravity('Sending fannst ekki.', ToastAndroid.LONG, ToastAndroid.TOP) }

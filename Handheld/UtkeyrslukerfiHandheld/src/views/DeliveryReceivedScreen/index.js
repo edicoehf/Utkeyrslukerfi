@@ -6,9 +6,6 @@ import Feather from 'react-native-vector-icons/Feather'
 
 // To confirm to the driver that the delivery has been received, there is nothing left to do
 const DeliveryReceivedScreen = ({ navigation }) => {
-  // TODO:
-  // - css
-
   const goHome = () => {
     navigation.navigate('Search')
   }
