@@ -122,7 +122,7 @@ const UpdateDelivery = ({ delivery }) => {
                 type='text'
                 name='pickupAddress'
                 onClick={() => setShowPickupModal(true)}
-                value={delivery?.pickupAddress?.streetName}
+                defaultValue={`${delivery?.pickupAddress?.streetName} ${delivery?.pickupAddress?.houseNumber}`}
               />
             </div>
           </div>
@@ -133,7 +133,7 @@ const UpdateDelivery = ({ delivery }) => {
                 className='form-control'
                 type='text' name='deliveryAddress'
                 onClick={() => setShowDeliveryModal(true)}
-                value={delivery?.deliveryAddress?.streetName}
+                defaultValue={`${delivery?.deliveryAddress?.streetName} ${delivery?.deliveryAddress?.houseNumber}`}
               />
             </div>
           </div>

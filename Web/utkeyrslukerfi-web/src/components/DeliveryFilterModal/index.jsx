@@ -50,8 +50,6 @@ const UserFilterModal = ({ visible, deliveries, setDeliveries, deliveryState, up
     methods.setValue('status', status)
   }, [status, methods])
 
-  console.log(startDate)
-  console.log(endDate)
   if (visible) {
     return (
       <Modal
