@@ -1,23 +1,22 @@
-import { NativeModules as RNNativeModules } from "react-native";
-import mockAsyncStorage from '@react-native-async-storage/async-storage/jest/async-storage-mock';
-import { createStackNavigator } from "@react-navigation/stack";
+import { NativeModules as RNNativeModules } from 'react-native'
+import mockAsyncStorage from '@react-native-async-storage/async-storage/jest/async-storage-mock'
 
-RNNativeModules.UIManager = RNNativeModules.UIManager || {};
-RNNativeModules.UIManager.RCTView = RNNativeModules.UIManager.RCTView || {};
+RNNativeModules.UIManager = RNNativeModules.UIManager || {}
+RNNativeModules.UIManager.RCTView = RNNativeModules.UIManager.RCTView || {}
 RNNativeModules.RNGestureHandlerModule = RNNativeModules.RNGestureHandlerModule || {
-  State: { BEGAN: "BEGAN", FAILED: "FAILED", ACTIVE: "ACTIVE", END: "END" },
+  State: { BEGAN: 'BEGAN', FAILED: 'FAILED', ACTIVE: 'ACTIVE', END: 'END' },
   attachGestureHandler: jest.fn(),
   createGestureHandler: jest.fn(),
   dropGestureHandler: jest.fn(),
-  updateGestureHandler: jest.fn(),
+  updateGestureHandler: jest.fn()
 
-};
+}
 RNNativeModules.PlatformConstants = RNNativeModules.PlatformConstants || {
   forceTouchAvailable: false
-};
+}
 
-jest.mock('@react-native-async-storage/async-storage', () => mockAsyncStorage);
-jest.mock('@react-navigation/native');
+jest.mock('@react-native-async-storage/async-storage', () => mockAsyncStorage)
+jest.mock('@react-navigation/native')
 jest.mock('@react-navigation/stack', () => {
   return {
     createStackNavigator: jest.fn()
@@ -78,6 +77,6 @@ jest.mock('react-native-fs', () => {
     ExternalStorageDirectoryPath: jest.fn(),
     TemporaryDirectoryPath: jest.fn(),
     LibraryDirectoryPath: jest.fn(),
-    PicturesDirectoryPath: jest.fn(),
-  };
-});
+    PicturesDirectoryPath: jest.fn()
+  }
+})
