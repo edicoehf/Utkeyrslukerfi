@@ -19,10 +19,10 @@ const DeliveryDetails = ({ delivery }) => {
       <td>{configData.STATUS[delivery.status]}</td>
       <td>{delivery.recipient}</td>
       <td>{delivery.seller === null ? 'N/A' : delivery.seller}</td>
-      <td>{delivery.driver === null ? 'N/A' : delivery.driver.name}</td>
+      <td>{delivery.driver === null ? 'N/A' : delivery.driver?.name}</td>
       <td>{delivery.deliveryDate === null ? 'N/A' : format(new Date(delivery.deliveryDate), 'MMMM do, yyyy')}</td>
-      <td>{delivery.deliveryAddress.streetName} {delivery.deliveryAddress.houseNumber}</td>
-      <td>{delivery.pickupAddress.streetName} {delivery.pickupAddress.houseNumber}</td>
+      <td>{delivery.deliveryAddress.streetName} {delivery.deliveryAddress?.houseNumber}</td>
+      <td>{delivery.pickupAddress.streetName} {delivery.pickupAddress?.houseNumber}</td>
       <td onClick={() => navigateToDelivery(delivery)} className='clickable'><BsPencilSquare size='1.5em' /></td>
     </tr>
   )

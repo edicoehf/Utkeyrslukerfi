@@ -45,3 +45,7 @@
 .col-sm-3 {
   padding: 0;
 }
+
+.react-datepicker-wrapper {
+  display: block;
+}
