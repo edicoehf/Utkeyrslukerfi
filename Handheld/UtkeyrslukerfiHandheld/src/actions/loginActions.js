@@ -1,6 +1,7 @@
 import { SET_LOGIN, GET_LOGIN, CLEAR_LOGIN } from '../constants'
 import loginService from '../services/loginService'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import { ToastAndroid } from 'react-native'
 
 export const setLogin = (driver) => async (dispatch) => {
   try {
@@ -11,7 +12,7 @@ export const setLogin = (driver) => async (dispatch) => {
       dispatch(setLoginSuccess({ ...body, driver: driver.id }))
     }
   } catch (err) {
-    console.log(err)
+    ToastAndroid.showWithGravity('Ekki tókst að skrá þig inn.', ToastAndroid.LONG, ToastAndroid.TOP)
   }
 }
 
@@ -21,7 +22,7 @@ export const getLogin = () => async (dispatch) => {
     const driver = JSON.parse(await AsyncStorage.getItem('driver'))
     dispatch(getLoginSuccess({ token, driver }))
   } catch (err) {
-    console.log('Bad request, please try loading again.')
+    ToastAndroid.showWithGravity('Ekki tókst að skrá þig inn.', ToastAndroid.LONG, ToastAndroid.TOP)
   }
 }
 
@@ -42,7 +43,7 @@ export const logout = (token) => async (dispatch) => {
     await loginService.logout(token)
     dispatch(logoutSuccess())
   } catch (err) {
-    console.log(err)
+    ToastAndroid.showWithGravity('Ekki náðist samband við netþjón.', ToastAndroid.LONG, ToastAndroid.TOP)
   }
 }
 

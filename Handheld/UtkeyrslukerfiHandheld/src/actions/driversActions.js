@@ -1,3 +1,4 @@
+import { ToastAndroid } from 'react-native'
 import { GET_DRIVERS } from '../constants'
 import driverService from '../services/driversService'
 
@@ -6,7 +7,7 @@ export const getDrivers = () => async (dispatch) => {
     const drivers = await driverService.getDrivers()
     dispatch(getDriversSuccess(drivers))
   } catch (err) {
-    console.log('Bad request, please try loading again.')
+    ToastAndroid.showWithGravity('Ekki tókst að ná í bílstjórana.', ToastAndroid.LONG, ToastAndroid.TOP)
   }
 }
 

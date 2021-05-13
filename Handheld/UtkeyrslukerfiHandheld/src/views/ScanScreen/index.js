@@ -11,8 +11,6 @@ import { useFocusEffect } from '@react-navigation/native'
 
 // This screen is used to scan multiple products and change their status
 const ScanScreen = () => {
-  // TODO:
-  // - css of error messages, error checking, error messages (error check, error messages, check if in table already?)
   const availableStatusCodes = useSelector(({ statusCode }) => statusCode)
   const token = useSelector(({ login }) => login.token)
   const driver = useSelector(({ login }) => login.driver)

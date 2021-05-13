@@ -29,38 +29,38 @@ const Login = () => {
   }
 
   return (
-      <ScrollView 
-        contentContainerStyle={styles.mainView}
-        refreshControl={
-          <RefreshControl
+    <ScrollView
+      contentContainerStyle={styles.mainView}
+      refreshControl={
+        <RefreshControl
           refreshing={refreshing}
           onRefresh={onRefresh}
-          />
+        />
         }
-      >
-        <View style={styles.dropDown}>
-          <Text style={styles.mainText}>Innskráning</Text>
-          <DropDownPicker
-            items={
+    >
+      <View style={styles.dropDown}>
+        <Text style={styles.mainText}>Innskráning</Text>
+        <DropDownPicker
+          items={
               drivers.map((driver) => {
                 return { label: driver.name, value: driver }
               })
             }
-            placeholder='Velja starfsmann...'
-            containerStyle={styles.containerStyle}
-            style={styles.dropDownPickerStyle}
-            itemStyle={styles.itemStyle}
-            dropDownStyle={styles.dropDownStyle}
-            onChangeItem={item => setSelected(item.value)}
-          />
-        </View>
-        <View style={styles.loginButton}>
-          <BasicButton
-            onPressFunction={handleSubmit}
-            buttonText='Skrá inn'
-          />
-        </View>
-      </ScrollView>
+          placeholder='Velja starfsmann...'
+          containerStyle={styles.containerStyle}
+          style={styles.dropDownPickerStyle}
+          itemStyle={styles.itemStyle}
+          dropDownStyle={styles.dropDownStyle}
+          onChangeItem={item => setSelected(item.value)}
+        />
+      </View>
+      <View style={styles.loginButton}>
+        <BasicButton
+          onPressFunction={handleSubmit}
+          buttonText='Skrá inn'
+        />
+      </View>
+    </ScrollView>
   )
 }
 

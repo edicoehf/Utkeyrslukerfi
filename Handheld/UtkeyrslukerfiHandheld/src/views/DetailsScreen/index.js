@@ -10,8 +10,6 @@ import { STATUS_DELIVERED } from '../../constants'
 
 // Driver can view details about delivery, comment on it or start delivery
 const DetailsScreen = ({ route, navigation }) => {
-  // TODO:
-  // - css
   const availableStatusCodes = useSelector(({ statusCode }) => statusCode)
   const { delivery } = route.params
   const [customerComment, setCustomerComment] = useState('')
