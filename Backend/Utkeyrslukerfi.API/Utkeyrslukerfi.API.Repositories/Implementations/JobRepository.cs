@@ -360,10 +360,12 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
         /// <param name="delivery">Delivery Entity</param>
         /// <param name="data">api response in json format</param>
         /// <returns>Delivery with Signoff Added to it</returns>
-        private Delivery AddSignoff(Delivery delivery, JToken data)
+        private Delivery AddSignoff(Delivery delivery, JToken data, bool updating)
         {
             var signoff = new Signoff();
             signoff.ID = Guid.NewGuid();
+            // if the delivery already exists, there is no need to update the signoff
+            if(updating) { return delivery; }
             if (_configSubSection.GetSection("Signoff").Value.ToString() == "")
             {
                 signoff.Settings = 5;
@@ -398,7 +400,7 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
             entity = AddStatus(entity, delivery);
             entity = AddVehicle(entity, delivery);
             entity = AddDeliveryDate(entity, delivery);
-            entity = AddSignoff(entity, delivery);
+            entity = AddSignoff(entity, delivery, existingEntity != null);
             // update the delivery instead of creating a new one
             if (existingEntity != null) { _dbContext.Deliveries.Update(entity); }
             // creating a new delivery
