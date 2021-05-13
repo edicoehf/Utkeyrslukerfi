@@ -63,14 +63,14 @@ const ScanScreen = () => {
         if (delivery.status === status) { return ToastAndroid.showWithGravity('Sending er nú þegar með skráða stöðu.', ToastAndroid.LONG, ToastAndroid.TOP) }
 
         setTableData([
+          ...tableData,
           {
             barcode: barcode,
             fromStatus: availableStatusCodes[delivery.status],
             toStatus: availableStatusCodes[status],
             button: <RemoveButton key={barcode} barcode={barcode} removeBarcode={removeBarcode} />,
             status: status
-          },
-          ...tableData
+          }
         ])
       }
     } catch (error) {

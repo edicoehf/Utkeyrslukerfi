@@ -42,19 +42,19 @@ namespace Utkeyrslukerfi.API.Services.Implementations
         /// Async task that adds deliveries to the database
         /// </summary>
         /// <returns>always returns null, can't be void since hangfire calls it</returns>
-        public Task<IEnumerable<Delivery>> GetDeliveries()
+        public Task<IEnumerable<Delivery>> GetDeliveries(int index)
         {
             // getting the values from the appsettings.json
-            string URL = _config.GetSection("ExternalAPIConfig").GetSection("ApiUrl").Value;
-            bool flatten = bool.Parse(_config.GetSection("ExternalAPIConfig").GetSection("flattenData").Value);
-            string encapsulatedDataName = _config.GetSection("ExternalAPIConfig").GetSection("encapsulatedDataName").Value;
+            string URL = _config.GetSection($"FetchDeliveriesConfig:Configs:{index}:ExternalAPIConfig").GetSection("ApiUrl").Value;
+            bool flatten = bool.Parse(_config.GetSection($"FetchDeliveriesConfig:Configs:{index}:ExternalAPIConfig").GetSection("flattenData").Value);
+            string encapsulatedDataName = _config.GetSection($"FetchDeliveriesConfig:Configs:{index}:ExternalAPIConfig").GetSection("encapsulatedDataName").Value;
 
             var response = GetDeliveriesAsync(URL, flatten, encapsulatedDataName);
             response.Wait();
 
             foreach (var item in response.Result)
             {
-                _jobRepository.AddDelivery(item);
+                _jobRepository.AddDelivery(index, item);
             }
             return null;
         }
