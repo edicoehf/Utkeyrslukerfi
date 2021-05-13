@@ -7,6 +7,7 @@ import { getDeliveries } from '../../actions/deliveryActions'
 import _ from 'lodash'
 import { format } from 'date-fns'
 import { useNavigation } from '@react-navigation/native'
+import PropTypes from 'prop-types'
 
 const DeliveryTable = ({ data }) => {
   const columns = ['id', 'status', 'date']
@@ -105,6 +106,11 @@ const DeliveryTable = ({ data }) => {
       }
     </View>
   )
+}
+
+DeliveryTable.propTypes = {
+  // The data in the table
+  data: PropTypes.array.isRequired
 }
 
 export default DeliveryTable
