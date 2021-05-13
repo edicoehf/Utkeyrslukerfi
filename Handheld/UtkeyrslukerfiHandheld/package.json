@@ -21,6 +21,7 @@
     "crypto-js": "^4.0.0",
     "date-fns": "^2.21.2",
     "lodash": "^4.17.21",
+    "prop-types": "^15.7.2",
     "react": "17.0.1",
     "react-native": "0.64.0",
     "react-native-azure-blob-storage": "^1.2.3",
