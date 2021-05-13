@@ -7,6 +7,7 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import AzureBlobStorage from '../../resources/AzureBlobStorage.class'
 import { REACT_APP_STORAGE_KEY } from '@env'
 import { AZURE_ACCOUNT_NAME, AZURE_CONTAINER_IMAGES } from '../../constants'
+import PropTypes from 'prop-types'
 
 // Signoff Image, gets image of delivery during delivery
 const SignoffImage = ({ delivery, stepCounter, setStepCounter }) => {
@@ -75,6 +76,15 @@ const SignoffImage = ({ delivery, stepCounter, setStepCounter }) => {
       </View>
     </>
   )
+}
+
+SignoffImage.propTypes = {
+  // The delivery object containing all the attributes of a delivery
+  delivery: PropTypes.object.isRequired,
+  // Will be used to goBack on the signoffs not just back to the delivery screen
+  stepCounter: PropTypes.number.isRequired,
+  // Function to update the stepCounter state
+  setStepCounter: PropTypes.func.isRequired
 }
 
 export default SignoffImage

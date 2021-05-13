@@ -51,7 +51,7 @@ const ScanScreen = () => {
   const addBarcodeToTable = async (barcode) => {
     setBarcode('')
     if (!barcode) { return ToastAndroid.showWithGravity('Strikamerki er ekki til staðar', ToastAndroid.LONG, ToastAndroid.TOP) }
-    if (tableData.some(p => p.barcode === barcode)) { return ToastAndroid.showWithGravity('Sending er nú þegar í töflu', ToastAndroid.LONG, ToastAndroid.TOP) }
+    if (tableDataRef.current.some(p => p.barcode === barcode)) { return ToastAndroid.showWithGravity('Sending er nú þegar í töflu', ToastAndroid.LONG, ToastAndroid.TOP) }
     try {
       const res = await deliveryService.getDelivery(token, barcode)
 
@@ -62,16 +62,15 @@ const ScanScreen = () => {
         const delivery = await res.json()
         if (delivery.status === status) { return ToastAndroid.showWithGravity('Sending er nú þegar með skráða stöðu.', ToastAndroid.LONG, ToastAndroid.TOP) }
 
-        setTableData([
+        setTableData(tableDataRef.current.concat(
           {
             barcode: barcode,
             fromStatus: availableStatusCodes[delivery.status],
             toStatus: availableStatusCodes[status],
             button: <RemoveButton key={barcode} barcode={barcode} removeBarcode={removeBarcode} />,
             status: status
-          },
-          ...tableData
-        ])
+          }
+        ))
       }
     } catch (error) {
       ToastAndroid.showWithGravity('Ekki náðist samband við netþjón', ToastAndroid.LONG, ToastAndroid.TOP)
