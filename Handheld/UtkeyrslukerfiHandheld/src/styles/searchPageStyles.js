@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native'
+import { LIGHT_GRAY } from '../constants'
 
 export default StyleSheet.create({
   mainView: {
@@ -10,7 +11,7 @@ export default StyleSheet.create({
     marginHorizontal: 5,
     padding: 5,
     borderRadius: 3,
-    borderColor: 'gray',
+    borderColor: LIGHT_GRAY,
     borderWidth: 1
   },
   mainText: {

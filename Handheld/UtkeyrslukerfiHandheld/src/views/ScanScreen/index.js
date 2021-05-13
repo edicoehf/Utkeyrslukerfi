@@ -15,6 +15,7 @@ const ScanScreen = () => {
   // - css of error messages, error checking, error messages (error check, error messages, check if in table already?)
   const availableStatusCodes = useSelector(({ statusCode }) => statusCode)
   const token = useSelector(({ login }) => login.token)
+  const driver = useSelector(({ login }) => login.driver)
   const [status, setStatus] = useState(2)
   const [barcode, setBarcode] = useState('')
   const [tableData, setTableData] = useState([])
@@ -59,6 +60,8 @@ const ScanScreen = () => {
       if (res?.status === 404) { return ToastAndroid.showWithGravity('Sending fannst ekki.', ToastAndroid.LONG, ToastAndroid.TOP) }
       if (res?.status === 200) {
         const delivery = await res.json()
+        if (delivery.status === status) { return ToastAndroid.showWithGravity('Sending er nú þegar með skráða stöðu.', ToastAndroid.LONG, ToastAndroid.TOP) }
+
         setTableData([
           {
             barcode: barcode,
@@ -78,7 +81,15 @@ const ScanScreen = () => {
   // Update status for all deliveries currently in table
   const updateDeliveries = async () => {
     try {
-      const deliveriesData = { deliveries: tableData.map(d => { return { id: d.barcode, status: d.status } }) }
+      const deliveriesData = {
+        deliveries: tableData.map(d => {
+          return {
+            id: d.barcode,
+            status: d.status,
+            driverID: driver
+          }
+        })
+      }
       const res = await deliveryService.updateDeliveries(token, deliveriesData)
       setTableData([])
       if (res?.status === 400) { return ToastAndroid.showWithGravity('Óheimil beiðni.', ToastAndroid.LONG, ToastAndroid.TOP) }

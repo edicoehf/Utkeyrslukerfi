@@ -5,6 +5,7 @@ import BarcodeForm from '../../components/BarcodeForm'
 import deliveryService from '../../services/deliveryService'
 import styles from '../../styles/searchPageStyles'
 import { useFocusEffect } from '@react-navigation/native'
+import { STATUS_DELIVERED } from '../../constants'
 
 // Driver can scan a delivery barcode and get details about it or deliver a delivery
 const SearchScreen = ({ navigation }) => {
@@ -50,6 +51,7 @@ const SearchScreen = ({ navigation }) => {
     const delivery = await getDelivery(barcode)
     setBarcodeDeliver('')
     if (delivery) {
+      if (delivery.status === STATUS_DELIVERED) { return ToastAndroid.showWithGravity('Sending hefur nú þegar verið afhent.', ToastAndroid.LONG, ToastAndroid.TOP) }
       navigation.navigate('Deliver', { delivery: delivery })
     }
   }

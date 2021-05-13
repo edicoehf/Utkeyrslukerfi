@@ -1,4 +1,5 @@
 import { Dimensions, StyleSheet } from 'react-native'
+import { LIGHT_GRAY } from '../constants'
 
 const windowHeight = Dimensions.get('window').height
 const windowWidth = Dimensions.get('window').width
@@ -8,7 +9,7 @@ const styles = StyleSheet.create({
     width: windowWidth * 0.9,
     height: windowWidth * 0.9,
     overflow: 'hidden',
-    borderColor: '#cccccc',
+    borderColor: LIGHT_GRAY,
     borderWidth: windowWidth * 0.005,
     borderRadius: 5,
     margin: windowHeight * 0.01
