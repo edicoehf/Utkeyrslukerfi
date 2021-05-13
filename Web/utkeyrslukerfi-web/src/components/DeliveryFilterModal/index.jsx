@@ -50,6 +50,8 @@ const UserFilterModal = ({ visible, deliveries, setDeliveries, deliveryState, up
     methods.setValue('status', status)
   }, [status, methods])
 
+  console.log(startDate)
+  console.log(endDate)
   if (visible) {
     return (
       <Modal
@@ -88,7 +90,10 @@ const UserFilterModal = ({ visible, deliveries, setDeliveries, deliveryState, up
               <div className='col-sm-8 align-self-start'>
                 <DatePicker
                   selected={startDate}
-                  onChange={date => setStartDate(date)}
+                  onChange={date => {
+                    date.setHours(0, 0, 0, 0);
+                    setStartDate(date)
+                  }}
                   selectsStart
                   startDate={startDate}
                   endDate={endDate}
@@ -104,7 +109,7 @@ const UserFilterModal = ({ visible, deliveries, setDeliveries, deliveryState, up
                 <DatePicker
                   selected={endDate}
                   onChange={date => {
-                    date.setMinutes(date.getMinutes() + 30)
+                    date.setHours(23, 59, 59, 0);
                     setEndDate(date)
                   }}
                   selectsEnd
