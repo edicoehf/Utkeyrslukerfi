@@ -6,7 +6,7 @@ import Button from 'react-bootstrap/Button'
 import PropTypes from 'prop-types'
 
 // Submit button for forms
-const FormGroupButton = ({ label, typeOfForm }) => {
+const FormGroupButton = ({ label, typeOfForm, func }) => {
   return (
     <Form.Group as={Row} controlId={`form${typeOfForm}Button`}>
       <Col sm={{ span: 1, offset: 6 }}>
