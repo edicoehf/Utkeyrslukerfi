@@ -1,6 +1,11 @@
 # Utkeyrslukerfi
 
-![example event parameter](https://github.com/edicoehf/Utkeyrslukerfi/actions/workflows/Backend.yml/badge.svg?event=pull_request)
+![Api deployment](https://github.com/edicoehf/Utkeyrslukerfi/actions/workflows/dotnet-api-cd.yml/badge.svg)
+![Api build](https://github.com/edicoehf/Utkeyrslukerfi/actions/workflows/dotnet-api-ci.yml/badge.svg)
+![Web build](https://github.com/edicoehf/Utkeyrslukerfi/actions/workflows/react-web-ci.yml/badge.svg)
+![Web deployment](https://github.com/edicoehf/Utkeyrslukerfi/actions/workflows/react-web-ci.yml/badge.svg)
+
+
 Lokaverkefni gert í samstarfi og fyrir Edico af nemendum í Háskólanum í Reykjavík
 
 Ná í migrations pakkann
