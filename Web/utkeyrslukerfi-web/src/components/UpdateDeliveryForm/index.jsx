@@ -47,6 +47,7 @@ const UpdateDelivery = ({ delivery }) => {
     setDeliveryAddress(delivery?.deliveryAddress)
     setPickupAddress(delivery?.pickupAddress)
     setDate(new Date(delivery?.deliveryDate))
+    console.log(delivery?.deliveryDate)
     // eslint-disable-next-line
   }, [delivery])
 
