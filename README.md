@@ -6,7 +6,7 @@
 ![Web deployment](https://github.com/edicoehf/Utkeyrslukerfi/actions/workflows/react-web-ci.yml/badge.svg)
 
 
-# Final Assignment developed by students of Reykjavik University in collaboration with Edico
+## Final Assignment developed by students of Reykjavik University in collaboration with Edico
 
 The product is a system that keeps track of deliveries, it consists of a web page that gives a certain overview for supervisors. It also has an application that allows drivers to keep track of the deliveries they are to deliver. As well as changing the status for the deliveries that specifies their location in the delivery process. Then there is a backend that both of those front ends communicate with.
 
@@ -96,8 +96,8 @@ export const AZURE_CONTAINER_SINGATUERES = 'signatures'
 
 ## Contributors
 
-Ermir Pellumbi
-Jóel Snær Garcia Thorarensen
-Margrét Sóley Kristinsdóttir
-Mikael Máni Jónsson
+- Ermir Pellumbi
+- Jóel Snær Garcia Thorarensen
+- Margrét Sóley Kristinsdóttir
+- Mikael Máni Jónsson
 
