@@ -25,18 +25,3 @@ it('App renders correctly', () => {
   expect(app).toMatchSnapshot()
 })
 
-it('App container renders correctly', () => {
-  const list = renderer.create(
-    <Provider store={createStore(reducers, applyMiddleware(thunk))}>
-        <AppContainer />
-    </Provider>
-  ).toJSON()
-  expect(list).toMatchSnapshot()
-
-})
-
-// it('checks if Async Storage is used', async () => {
-//   await asyncOperationOnAsyncStorage();
-
-//   expect(AsyncStorage.getItem).toBeCalledWith('token');
-// })
