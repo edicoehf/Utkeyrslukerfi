@@ -365,7 +365,7 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
             var signoff = new Signoff();
             signoff.ID = Guid.NewGuid();
             // if the delivery already exists, there is no need to update the signoff
-            if(updating) { return delivery; }
+            if (updating) { return delivery; }
             if (_configSubSection.GetSection("Signoff").Value.ToString() == "")
             {
                 signoff.Settings = 5;
