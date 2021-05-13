@@ -21,19 +21,19 @@ https://utkeyrslukerfiapi.azurewebsites.net/swagger/index.html
 Operations Manual:
 https://docs.google.com/document/d/1UPDtjVoit0I940uLsjCphrOYEHGYvVtTss3voHoZZUw/edit?usp=sharing
 
-# Setup
+## Setup
 
 Start with cloning the project by running the command below.
 ```
 git clone https://github.com/edicoehf/Utkeyrslukerfi.git
 ```
 
-## Database
+### Database
 
 For this project a MySQL database was used and is necessary to continue with the setup, although it is possible to use another SQL version.
 If another SQL version is used some small changes need to be made to the Startup file in the Backend.
 
-## Backend
+### Backend
 
 The latest version of .Net is necessary to continue.
 
@@ -67,7 +67,7 @@ dotnet ef database update
 
 In addition to the setup above multiple configurations can be made to this product and further details can be found in the operations manual accessible through a link in the link section above.
 
-## Web
+### Web
 
 The web does not need much to be run, only Node js and npm is required.
 
@@ -76,7 +76,7 @@ Therefore the only thing necessary is to run the command below to set up all the
 npm install
 ```
 
-## App
+### App
 
 The same thing goes for the app, both Node js and npm are required. Also, Android Studio needs to be set up correctly to run the app.
 
