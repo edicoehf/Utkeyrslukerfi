@@ -6,6 +6,7 @@ import deliveryService from '../../services/deliveryService'
 import BasicButton from '../../components/BasicButton'
 import styles from '../../styles/detailPageStyles'
 import { setRecipient } from '../../actions/recipientTitleActions'
+import { STATUS_DELIVERED } from '../../constants'
 
 // Driver can view details about delivery, comment on it or start delivery
 const DetailsScreen = ({ route, navigation }) => {
@@ -17,13 +18,15 @@ const DetailsScreen = ({ route, navigation }) => {
   const [driverComment, setDriverComment] = useState('')
   const dispatch = useDispatch()
   const token = useSelector(({ login }) => login.token)
+  const [deliverButtonDisabled, setDeliverButtonDisabled] = useState(false)
 
   useEffect(() => {
     // dispatching the name so it can be in the header
     dispatch(setRecipient(delivery.recipient))
     if (delivery.driverComment) { setDriverComment(delivery.driverComment) }
     if (delivery.customerComment) { setCustomerComment(delivery.customerComment) }
-  }, [])
+    setDeliverButtonDisabled(STATUS_DELIVERED === delivery.status)
+  }, [route.params])
 
   // Save drivers comment to db
   const saveComment = async () => {
@@ -73,7 +76,7 @@ const DetailsScreen = ({ route, navigation }) => {
       <View style={styles.bottomButtons}>
         <BasicButton buttonText='Opna kort' onPressFunction={openMap} />
         <BasicButton buttonText='Vista' onPressFunction={saveComment} />
-        <BasicButton buttonText='Afhenda' onPressFunction={deliver} />
+        <BasicButton buttonText='Afhenda' onPressFunction={deliver} disable={deliverButtonDisabled} />
       </View>
     </View>
   )

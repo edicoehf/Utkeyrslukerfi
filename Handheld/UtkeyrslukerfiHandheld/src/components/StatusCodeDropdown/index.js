@@ -3,6 +3,7 @@ import { Text, View } from 'react-native'
 import DropDownPicker from 'react-native-dropdown-picker'
 import { useSelector } from 'react-redux'
 import styles from '../../styles/statusCodedropdown'
+import PropTypes from 'prop-types'
 
 // Simple dropdown menu to select different status codes
 const StatusCodeDropdown = ({ status, setStatus, label }) => {
@@ -29,6 +30,15 @@ const StatusCodeDropdown = ({ status, setStatus, label }) => {
       />
     </View>
   )
+}
+
+StatusCodeDropdown.propTypes = {
+  // The number of the status, state to keep track of the current status
+  status: PropTypes.number.isRequired,
+  // Function to update the status state
+  setStatus: PropTypes.func.isRequired,
+  // The label for the dropdown
+  label: PropTypes.string.isRequired
 }
 
 export default StatusCodeDropdown

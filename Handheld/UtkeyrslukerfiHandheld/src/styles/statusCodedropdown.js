@@ -1,4 +1,5 @@
 import { Dimensions, StyleSheet } from 'react-native'
+import { GRAY_98 } from '../constants'
 
 const windowHeight = Dimensions.get('window').height
 const windowWidth = Dimensions.get('window').width
@@ -12,7 +13,7 @@ const styles = StyleSheet.create({
     width: windowWidth * 0.50
   },
   preDropdown: {
-    backgroundColor: '#fafafa'
+    backgroundColor: GRAY_98
   },
   dropdown: {
     minHeight: windowHeight * 0.10,

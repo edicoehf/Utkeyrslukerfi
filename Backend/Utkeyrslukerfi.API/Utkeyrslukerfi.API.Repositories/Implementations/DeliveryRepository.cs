@@ -141,7 +141,7 @@ namespace Utkeyrslukerfi.API.Repositories.Implementations
             delivery.DriverComment = newdelivery.DriverComment ?? delivery.DriverComment;
             delivery.CustomerComment = newdelivery.CustomerComment ?? delivery.CustomerComment;
             delivery.Status = newdelivery.Status ?? delivery.Status;
-
+            delivery.DeliveryDate = newdelivery.DeliveryDate ?? delivery.DeliveryDate;
             if (delivery.PickupAddress != null)
             {
                 delivery.PickupAddress.City = newdelivery.PickupAddressCity ?? delivery.PickupAddress.City;

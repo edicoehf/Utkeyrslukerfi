@@ -2,6 +2,7 @@ import React from 'react'
 import { View, Text, FlatList } from 'react-native'
 import styles from '../../styles/productTable'
 import { MAINLY_BLUE } from '../../constants'
+import PropTypes from 'prop-types'
 
 // Table for products containing barcode, status and more
 const ProductTable = ({ tableHeaders, tableData, numberOfObjects, label }) => {
@@ -45,6 +46,17 @@ const ProductTable = ({ tableHeaders, tableData, numberOfObjects, label }) => {
       />
     </View>
   )
+}
+
+ProductTable.propTypes = {
+  // Headers for the table
+  tableHeaders: PropTypes.array.isRequired,
+  // Data for the table
+  tableData: PropTypes.array.isRequired,
+  // Number of object to be visible in the table, css attribute
+  numberOfObjects: PropTypes.number.isRequired,
+  // Table label
+  label: PropTypes.string.isRequired
 }
 
 export default ProductTable

@@ -7,6 +7,7 @@ import AzureBlobStorage from '../../resources/AzureBlobStorage.class'
 import { REACT_APP_STORAGE_KEY } from '@env'
 import * as FileSystem from 'react-native-fs'
 import { AZURE_ACCOUNT_NAME, AZURE_CONTAINER_SINGATUERES } from '../../constants'
+import PropTypes from 'prop-types'
 
 // Signoff Signature, gets receivers signature during delivery
 const SignoffSignature = ({ delivery, stepCounter, setStepCounter }) => {
@@ -32,11 +33,11 @@ const SignoffSignature = ({ delivery, stepCounter, setStepCounter }) => {
       await FileSystem.writeFile(path, b64Data, 'base64')
 
       // Initialize blob service
-      const blobService = new AzureBlobStorage({
-        account: AZURE_ACCOUNT_NAME,
-        container: AZURE_CONTAINER_SINGATUERES,
-        key: REACT_APP_STORAGE_KEY
-      })
+      const blobService = new AzureBlobStorage(
+        AZURE_ACCOUNT_NAME,
+        AZURE_CONTAINER_SINGATUERES,
+        REACT_APP_STORAGE_KEY
+      )
 
       // Upload file to blob storage
       const fileNameRet = await blobService.createBlockBlob({
@@ -92,6 +93,15 @@ const SignoffSignature = ({ delivery, stepCounter, setStepCounter }) => {
       </View>
     </>
   )
+}
+
+SignoffSignature.propTypes = {
+  // The delivery object containing all the attributes of a delivery
+  delivery: PropTypes.object.isRequired,
+  // Will be used to goBack on the signoffs not just back to the delivery screen
+  stepCounter: PropTypes.number.isRequired,
+  // Function to update the stepCounter state
+  setStepCounter: PropTypes.func.isRequired
 }
 
 export default SignoffSignature

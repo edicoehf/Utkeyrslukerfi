@@ -5,3 +5,19 @@
 .clickable {
   cursor: pointer;
 }
+
+.hide {
+  display: none !important;
+}
+
+.login-container {
+  max-width: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  height: 100vh !important;
+  width: 100vw !important;
+}
+
+.login-container form {
+  width: 30% !important;
+}

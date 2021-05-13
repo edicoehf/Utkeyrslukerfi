@@ -181,7 +181,14 @@ namespace Utkeyrslukerfi.API
             // creating seed user
             BackgroundJob.Enqueue<IJobService>((x) => x.SeedUser());
             // starting cron jobs with hangfire
-            RecurringJob.AddOrUpdate<IJobService>(x => x.GetDeliveries(), Cron.Daily);
+            var Configs = Configuration.GetSection("FetchDeliveriesConfig:Configs");
+            int index = 0;
+            foreach (var section in Configs.GetChildren())
+            {
+                var url = Configuration.GetSection($"FetchDeliveriesConfig:Configs:{index}:ExternalAPIConfig:ApiUrl").Value;
+                RecurringJob.AddOrUpdate<IJobService>(url, x => x.GetDeliveries(index), Cron.Daily);
+                index++;
+            }
         }
     }
 }

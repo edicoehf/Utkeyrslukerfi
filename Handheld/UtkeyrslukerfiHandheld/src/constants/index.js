@@ -25,4 +25,10 @@ export const BLUE = '#4A79BA'
 export const LIGHTER_BLUE = '#81ABE4'
 export const LIGHT_BLUE = '#66C5FF'
 export const GRAY_98 = '#FAFAFA'
+export const LIGHT_GRAY = '#CCCCCC'
+export const DARK_GRAY = '#828282'
 export const MAINLY_BLUE = '#F0FBFC'
+export const WHITE = '#FFFFFF'
+
+// Status codes
+export const STATUS_DELIVERED = 3
