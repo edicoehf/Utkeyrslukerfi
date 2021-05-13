@@ -30,6 +30,7 @@ const UserFilterModal = ({ visible, deliveries, setDeliveries, deliveryState, up
   const methods = useForm()
 
   const filter = (e) => {
+    console.log("halló")
     updateModalState()
     setDeliveries(deliveries.filter(d => isWithinInterval(new Date(d.deliveryDate), { start: startDate, end: endDate })))
     if (status !== '') {
@@ -38,6 +39,7 @@ const UserFilterModal = ({ visible, deliveries, setDeliveries, deliveryState, up
   }
 
   const clearFilter = () => {
+    console.log("Halló")
     setDeliveries(deliveries)
     updateModalState()
   }
@@ -120,10 +122,10 @@ const UserFilterModal = ({ visible, deliveries, setDeliveries, deliveryState, up
             </div>
             <div className='row pt-3'>
               <div className='col'>
-                <FormGroupButton className='btn btn-primary' onClick={filter} label='Sía' />
+                <FormGroupButton className='btn btn-primary' label='Sía' />
               </div>
               <div className='col align-self-end'>
-                <FormGroupButton onClick={clearFilter} className='btn btn-outline-warning float-right mx-2' label='Hreinsa' />
+                <span onClick={() => clearFilter()} className='btn btn-outline-warning float-right mx-2'>Hreinsa</span>
               </div>
             </div>
           </Form>
