@@ -7,6 +7,7 @@ import { getDeliveries } from '../../actions/deliveryActions'
 import _ from 'lodash'
 import { format } from 'date-fns'
 import { useNavigation } from '@react-navigation/native'
+import PropTypes from 'prop-types'
 
 const DeliveryTable = ({ data }) => {
   const columns = ['id', 'status', 'date']
@@ -20,6 +21,7 @@ const DeliveryTable = ({ data }) => {
   const token = useSelector(({ login }) => login.token)
   const dispatch = useDispatch()
   const navigation = useNavigation()
+  const driver = useSelector(({ login }) => login.driver)
 
   const sortTable = (column) => {
     const newDirection = direction === 'desc' ? 'asc' : 'desc'
@@ -40,7 +42,7 @@ const DeliveryTable = ({ data }) => {
 
   const navigateToDelivery = (delivery) => {
     if (delivery) {
-      navigation.navigate('Details', { delivery: delivery })
+      navigation.navigate('Search', { screen: 'Details', params: { delivery: delivery } })
     }
   }
 
@@ -67,7 +69,6 @@ const DeliveryTable = ({ data }) => {
   )
 
   const tableBody = () => {
-    // TODO: Laga þessa þvælu
     if (counter <= 0) {
       setDeliveries(data)
       setCounter(counter + 1)
@@ -87,13 +88,15 @@ const DeliveryTable = ({ data }) => {
           />
         }
         renderItem={({ item, index }) => {
-          return (
-            <TouchableOpacity onPress={() => { navigateToDelivery(item) }} style={{ ...styles.tableRow, backgroundColor: index % 2 === 1 ? '#F0FBFC' : 'white' }}>
-              <Text style={{ ...styles.columnRowTxt, fontWeight: 'bold' }}>{item.id}</Text>
-              <Text style={styles.columnRowTxt}>{availableStatusCodes[item.status]}</Text>
-              <Text style={styles.columnRowTxt}>{format(new Date(item.deliveryDate), 'MMMM do, yyyy')}</Text>
-            </TouchableOpacity>
-          )
+          if (item.driver?.id === driver && item.status === 2) {
+            return (
+              <TouchableOpacity onPress={() => { navigateToDelivery(item) }} style={{ ...styles.tableRow, backgroundColor: index % 2 === 1 ? '#F0FBFC' : 'white' }}>
+                <Text style={{ ...styles.columnRowTxt, fontWeight: 'bold' }}>{item.id}</Text>
+                <Text style={styles.columnRowTxt}>{availableStatusCodes[item.status]}</Text>
+                <Text style={styles.columnRowTxt}>{format(new Date(item.deliveryDate), 'MMMM do, yyyy')}</Text>
+              </TouchableOpacity>
+            )
+          }
         }}
       />
     )
@@ -105,6 +108,11 @@ const DeliveryTable = ({ data }) => {
       }
     </View>
   )
+}
+
+DeliveryTable.propTypes = {
+  // The data in the table
+  data: PropTypes.array.isRequired
 }
 
 export default DeliveryTable

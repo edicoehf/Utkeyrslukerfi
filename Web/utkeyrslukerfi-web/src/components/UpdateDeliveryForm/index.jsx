@@ -13,6 +13,7 @@ import FormGroupDropdown from '../FormGroupDropdown'
 import { useForm, FormProvider } from 'react-hook-form'
 import configData from '../../constants/config.json'
 import PackageList from '../PackagesList'
+import DatePicker from 'react-datepicker'
 
 const UpdateDelivery = ({ delivery }) => {
   const vehicles = useSelector(({ vehicles }) => vehicles)
@@ -23,6 +24,7 @@ const UpdateDelivery = ({ delivery }) => {
 
   const [deliveryAddress, setDeliveryAddress] = useState({})
   const [pickupAddress, setPickupAddress] = useState({})
+  const [date, setDate] = useState(new Date())
 
   const { id } = useParams()
   const history = useHistory()
@@ -44,6 +46,7 @@ const UpdateDelivery = ({ delivery }) => {
     methods.setValue('vehicleID', delivery?.vehicle?.id)
     setDeliveryAddress(delivery?.deliveryAddress)
     setPickupAddress(delivery?.pickupAddress)
+    setDate(new Date(delivery?.deliveryDate))
     // eslint-disable-next-line
   }, [delivery])
 
@@ -57,8 +60,8 @@ const UpdateDelivery = ({ delivery }) => {
       driver: data.driver === '' ? null : drivers.find((d) => d.id === data.driverID),
       seller: data.seller === '' ? null : data.seller,
       status: data.status === '' ? null : data.status,
-      vehicle: data.driverID === '' ? null : vehicles.find((v) => v.id === data.vehicleID)
-      // deliveryDate: data.deliveryDate,
+      vehicle: data.driverID === '' ? null : vehicles.find((v) => v.id === data.vehicleID),
+      deliveryDate: date
     }
     dispatch(updateDelivery(token, id, newDelivery))
     history.push('/deliveries')
@@ -148,6 +151,12 @@ const UpdateDelivery = ({ delivery }) => {
             }
             typeOfForm='UpdateDelivery'
           />
+          <div className='form-group row'>
+            <label>Sendingar dagsetning:</label>
+            <div className='col-sm-8'>
+              <DatePicker selected={date} onChange={newDate => setDate(newDate)} className='custom-select' />
+            </div>
+          </div>
           <FormGroupButton
             label='Vista'
             typeOfForm='UpdateDelivery'

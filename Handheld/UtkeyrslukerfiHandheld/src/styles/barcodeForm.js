@@ -1,5 +1,5 @@
 import { Dimensions, StyleSheet } from 'react-native'
-import { LIGHTER_BLUE } from '../constants'
+import { LIGHTER_BLUE, LIGHT_GRAY, WHITE } from '../constants'
 
 const windowHeight = Dimensions.get('window').height
 const windowWidth = Dimensions.get('window').width
@@ -16,10 +16,10 @@ const styles = StyleSheet.create({
     marginTop: 1
   },
   input: {
-    backgroundColor: '#ffffff',
+    backgroundColor: WHITE,
     height: windowHeight * 0.06,
     width: windowWidth * 0.50,
-    borderColor: '#cccccc',
+    borderColor: LIGHT_GRAY,
     borderWidth: 0.5,
     borderRadius: 5
   },
