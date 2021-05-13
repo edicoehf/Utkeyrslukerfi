@@ -1,7 +1,7 @@
 import React from 'react'
 import { TextInput, TouchableOpacity, Text, View } from 'react-native'
 import styles from '../../styles/barcodeForm'
-import PropTypes from 'prop-types';
+import PropTypes from 'prop-types'
 
 // Form to search for a delivery or add delivery to a table
 const BarcodeForm = ({ barcode, setBarcode, enterBarcode, labelText, setOnFocus, onFocusString }) => {
@@ -53,8 +53,8 @@ BarcodeForm.propTypes = {
   enterBarcode: PropTypes.func.isRequired,
   // Label for the input box
   labelText: PropTypes.string.isRequired,
-  // Function that triggers when the input box is focused on, 
-  // used to register which input box is being filled out in SearchScreen 
+  // Function that triggers when the input box is focused on,
+  // used to register which input box is being filled out in SearchScreen
   setOnFocus: PropTypes.func,
   // String that specifies which input box should be focused on
   onFocusString: PropTypes.string
