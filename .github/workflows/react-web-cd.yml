@@ -35,7 +35,7 @@ jobs:
     - name: Run Azure webapp deploy action using publish profile credentials
       uses: azure/webapps-deploy@v2
       with:
-        app-name: utkeyrslukerfi-web
+        app-name: utkeyrslukerfi-website
         slot-name: Production
         publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_8AF0E08939DC4B888B36E94328DB613A }}
         package: ./Web/utkeyrslukerfi-web/build/
