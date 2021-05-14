@@ -30,7 +30,6 @@ const UserFilterModal = ({ visible, deliveries, setDeliveries, deliveryState, up
   const methods = useForm()
 
   const filter = (e) => {
-    console.log("halló")
     updateModalState()
     setDeliveries(deliveries.filter(d => isWithinInterval(new Date(d.deliveryDate), { start: startDate, end: endDate })))
     if (status !== '') {
@@ -39,7 +38,6 @@ const UserFilterModal = ({ visible, deliveries, setDeliveries, deliveryState, up
   }
 
   const clearFilter = () => {
-    console.log("Halló")
     setDeliveries(deliveries)
     updateModalState()
   }
