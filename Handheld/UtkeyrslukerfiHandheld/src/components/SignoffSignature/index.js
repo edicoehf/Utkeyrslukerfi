@@ -49,7 +49,6 @@ const SignoffSignature = ({ delivery, stepCounter, setStepCounter }) => {
 
       return fileNameRet
     } catch (err) {
-      console.log('Error at SignoffSignature component: ', err)
       ToastAndroid.showWithGravity('Ekki náðist að flytja myndina upp í skýið', ToastAndroid.LONG, ToastAndroid.TOP)
     }
   }
