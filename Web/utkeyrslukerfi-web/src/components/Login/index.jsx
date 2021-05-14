@@ -15,11 +15,11 @@ const Login = () => {
   }
 
   return (
-    <div className='login-wrapper'>
+    <div data-testid='login' className='login-wrapper'>
       <form onSubmit={handleSubmit}>
         <label>
           <p>Netfang:</p>
-          <input type='text' onChange={e => setUserName(e.target.value)} />
+          <input type='text' name='netfang' onChange={e => setUserName(e.target.value)} />
         </label>
         <label>
           <p>Lykilorð: </p>
