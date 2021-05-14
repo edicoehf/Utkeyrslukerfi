@@ -30,6 +30,6 @@ jobs:
       - name: 'Run Azure webapp deploy action using azure credentials' 
         uses: azure/webapps-deploy@v2 
         with:  
-          app-name: UtkeyrslukerfiAPI
+          app-name: utkeyrslukerfibakendi
           publish-profile: ${{ secrets.PUBLISH_PROFILE }}
           package: ./Backend/Utkeyrslukerfi.API/Utkeyrslukerfi.API/utkeyrslukerfiApp
