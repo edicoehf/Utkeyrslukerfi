@@ -96,8 +96,8 @@ export const AZURE_CONTAINER_SINGATUERES = 'signatures'
 
 ## Contributors
 
-- Ermir Pellumbi
-- Jóel Snær Garcia Thorarensen
-- Margrét Sóley Kristinsdóttir
-- Mikael Máni Jónsson
+- [Ermir Pellumbi](https://github.com/ertolv)
+- [Jóel Snær Garcia Thorarensen](https://github.com/joelsnaer)
+- [Margrét Sóley Kristinsdóttir](https://github.com/MaggaSK97)
+- [Mikael Máni Jónsson](https://github.com/MikaelMani99)
 
