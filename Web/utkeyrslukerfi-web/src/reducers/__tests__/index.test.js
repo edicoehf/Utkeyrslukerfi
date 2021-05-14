@@ -7,7 +7,7 @@ const initialState = {
   login: {
     changePassword: false,
     role: 4,
-    token: '',
+    token: ''
   },
   pack: [],
   packages: [],
@@ -22,7 +22,7 @@ describe('Testing Reducer', () => {
     expect(reducer(undefined, {})).toEqual({ ...initialState })
   })
   it('Shoud test GET_USERS action', () => {
-    let users = [
+    const users = [
       {
         id: '1760f20c-788b-4694-19b2-08d913986ac6',
         name: 'skrifstofa',
